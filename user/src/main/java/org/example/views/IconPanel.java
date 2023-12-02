@@ -27,19 +27,19 @@ public class IconPanel extends JPanel {
         setPreferredSize(new Dimension(Constants.ICON_PANEL_WIDTH, Constants.ICON_PANEL_HEIGHT));
         setLayout(new FlowLayout(FlowLayout.CENTER, 0, 20));
 
-        homeIcon = new ImageIcon("../../../../resources/home.png");
+        homeIcon = new ImageIcon("src/main/resources/home.png");
         homeButton = new JButton(homeIcon);
 
-        chatIcon = new ImageIcon("../../../../resources/home.png");
+        chatIcon = new ImageIcon("src/main/resources/home.png");
         chatButton = new JButton(chatIcon);
 
-        friendIcon = new ImageIcon("../../../../resources/home.png");
+        friendIcon = new ImageIcon("src/main/resources/home.png");
         friendButton = new JButton(friendIcon);
 
-        requestIcon = new ImageIcon("../../../../resources/home.png");
+        requestIcon = new ImageIcon("src/main/resources/home.png");
         requestButton = new JButton(requestIcon);
 
-        blockIcon = new ImageIcon("../../../../resources/home.png");
+        blockIcon = new ImageIcon("src/main/resources/home.png");
         blockButton = new JButton(blockIcon);
 
         homeButton.setBackground(null);
