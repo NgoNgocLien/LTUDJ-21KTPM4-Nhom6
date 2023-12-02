@@ -41,17 +41,17 @@ public class MainChatView extends JFrame {
         setVisible(true);
     }
 
-//    public static void main(String[] args) {
-//        ArrayList<User> users = new ArrayList<User>();
-//        users.add(new User("John Doe", "@johndoe"));
-//        users.add(new User("Jane Doe", "@janedoe"));
-//        users.add(new User("John Smith", "@johnsmith"));
-//        users.add(new User("Jane Smith", "@janesmith"));
-//        users.add(new User("John Doe", "@johndoe"));
-//        users.add(new User("Jane Doe", "@janedoe"));
-//        users.add(new User("John Smith", "@johnsmith"));
-//        users.add(new User("Jane Smith", "@janesmith"));
-//
-//        new MainChatView(users);
-//    }
+    public static void main(String[] args) {
+        ArrayList<User> users = new ArrayList<User>();
+        users.add(new User("John Doe", "@johndoe"));
+        users.add(new User("Jane Doe", "@janedoe"));
+        users.add(new User("John Smith", "@johnsmith"));
+        users.add(new User("Jane Smith", "@janesmith"));
+        users.add(new User("John Doe", "@johndoe"));
+        users.add(new User("Jane Doe", "@janedoe"));
+        users.add(new User("John Smith", "@johnsmith"));
+        users.add(new User("Jane Smith", "@janesmith"));
+
+        new MainChatView(users);
+    }
 }
