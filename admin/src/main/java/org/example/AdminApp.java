@@ -1,5 +1,10 @@
 package org.example;
+import javax.swing.table.*;
+import java.awt.*;
 import javax.swing.*;
+import java.util.*;
+import javax.swing.event.*;
+import java.text.*;
 
 public class AdminApp extends javax.swing.JFrame{
 
@@ -12,6 +17,9 @@ public class AdminApp extends javax.swing.JFrame{
 //         }
 
         initComponents();
+        groupMainPanel.setVisible(false);
+        reportMainPanel.setVisible(false);
+        dataMainPanel.setVisible(false);
     }
 
     private void initComponents() {
@@ -45,11 +53,11 @@ public class AdminApp extends javax.swing.JFrame{
         groupNavButton.setBorderPainted(false);
         groupNavButton.setFocusable(false);
         groupNavButton.setPreferredSize(new java.awt.Dimension(50, 50));
-//        groupNavButton.addActionListener(new java.awt.event.ActionListener() {
-//            public void actionPerformed(java.awt.event.ActionEvent evt) {
-//                groupNavButtonActionPerformed(evt);
-//            }
-//        });
+        groupNavButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                groupNavButtonActionPerformed(evt);
+            }
+        });
 
         userNavButton.setBackground(new java.awt.Color(23, 70, 162));
         userNavButton.setForeground(new java.awt.Color(255, 255, 255));
@@ -57,11 +65,11 @@ public class AdminApp extends javax.swing.JFrame{
         userNavButton.setBorderPainted(false);
         userNavButton.setFocusable(false);
         userNavButton.setPreferredSize(new java.awt.Dimension(50, 50));
-//        userNavButton.addActionListener(new java.awt.event.ActionListener() {
-//            public void actionPerformed(java.awt.event.ActionEvent evt) {
-//                userNavButtonActionPerformed(evt);
-//            }
-//        });
+        userNavButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                userNavButtonActionPerformed(evt);
+            }
+        });
 
         dataNavButton.setBackground(new java.awt.Color(23, 70, 162));
         dataNavButton.setForeground(new java.awt.Color(255, 255, 255));
@@ -69,11 +77,11 @@ public class AdminApp extends javax.swing.JFrame{
         dataNavButton.setBorderPainted(false);
         dataNavButton.setFocusable(false);
         dataNavButton.setPreferredSize(new java.awt.Dimension(50, 50));
-//        dataNavButton.addActionListener(new java.awt.event.ActionListener() {
-//            public void actionPerformed(java.awt.event.ActionEvent evt) {
-//                dataNavButtonActionPerformed(evt);
-//            }
-//        });
+        dataNavButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                dataNavButtonActionPerformed(evt);
+            }
+        });
 
         reportNavButton.setBackground(new java.awt.Color(23, 70, 162));
         reportNavButton.setForeground(new java.awt.Color(255, 255, 255));
@@ -81,11 +89,11 @@ public class AdminApp extends javax.swing.JFrame{
         reportNavButton.setBorderPainted(false);
         reportNavButton.setFocusable(false);
         reportNavButton.setPreferredSize(new java.awt.Dimension(50, 50));
-//        reportNavButton.addActionListener(new java.awt.event.ActionListener() {
-//            public void actionPerformed(java.awt.event.ActionEvent evt) {
-//                reportNavButtonActionPerformed(evt);
-//            }
-//        });
+        reportNavButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                reportNavButtonActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout navbarLayout = new javax.swing.GroupLayout(navbar);
         navbar.setLayout(navbarLayout);
@@ -130,11 +138,11 @@ public class AdminApp extends javax.swing.JFrame{
         searchButton.setFocusable(false);
         searchButton.setMargin(new java.awt.Insets(2, 5, 3, 5));
         searchButton.setPreferredSize(new java.awt.Dimension(57, 35));
-//        searchButton.addActionListener(new java.awt.event.ActionListener() {
-//            public void actionPerformed(java.awt.event.ActionEvent evt) {
-//                searchButtonActionPerformed(evt);
-//            }
-//        });
+        searchButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                searchButtonActionPerformed(evt);
+            }
+        });
 
         groupTable.setFont(new java.awt.Font("Arial", 0, 12)); // NOI18N
         groupTable.setModel(new javax.swing.table.DefaultTableModel(
@@ -168,11 +176,11 @@ public class AdminApp extends javax.swing.JFrame{
         groupTable.setSelectionMode(javax.swing.ListSelectionModel.SINGLE_SELECTION);
         groupTable.getTableHeader().setResizingAllowed(false);
         groupTable.getTableHeader().setReorderingAllowed(false);
-//        groupTable.addMouseListener(new java.awt.event.MouseAdapter() {
-//            public void mouseClicked(java.awt.event.MouseEvent evt) {
-//                groupTableMouseClicked(evt);
-//            }
-//        });
+        groupTable.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                groupTableMouseClicked(evt);
+            }
+        });
         groupScrollPane.setViewportView(groupTable);
         if (groupTable.getColumnModel().getColumnCount() > 0) {
             groupTable.getColumnModel().getColumn(0).setResizable(false);
@@ -252,11 +260,11 @@ public class AdminApp extends javax.swing.JFrame{
         viewAllGroupButton.setFocusable(false);
         viewAllGroupButton.setMargin(new java.awt.Insets(2, 5, 3, 5));
         viewAllGroupButton.setPreferredSize(new java.awt.Dimension(57, 35));
-//        viewAllGroupButton.addActionListener(new java.awt.event.ActionListener() {
-//            public void actionPerformed(java.awt.event.ActionEvent evt) {
-//                viewAllGroupButtonActionPerformed(evt);
-//            }
-//        });
+        viewAllGroupButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                viewAllGroupButtonActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout groupMainPanelLayout = new javax.swing.GroupLayout(groupMainPanel);
         groupMainPanel.setLayout(groupMainPanelLayout);
@@ -314,6 +322,227 @@ public class AdminApp extends javax.swing.JFrame{
         pack();
     }
 
+    private void searchButtonActionPerformed(java.awt.event.ActionEvent evt) {
+        String text = searchInput.getText();
+        System.out.println(text);
+
+        if (text.equals("") || text.equals("Enter group name ...") ){
+            JOptionPane.showMessageDialog(null, "You have not entered anything to search", "Error", JOptionPane.ERROR_MESSAGE);
+        }
+        else{
+            DefaultTableModel model = (DefaultTableModel) groupTable.getModel();
+            model.setRowCount(0);
+
+//            Object[][] data = adminController.searchGroupName(text);
+//            for (Object[] row : data) {
+//                model.addRow(row);
+//            }
+
+            DefaultTableModel adminModel = (DefaultTableModel) adminTable.getModel();
+            adminModel.setRowCount(0);
+
+            DefaultTableModel memberModel = (DefaultTableModel) memberTable.getModel();
+            memberModel.setRowCount(0);
+        }
+    }
+
+    private void groupNavButtonActionPerformed(java.awt.event.ActionEvent evt) {
+
+        DefaultTableModel model = (DefaultTableModel) groupTable.getModel();
+        model.setRowCount(0);
+
+//        Object[][] data = adminController.getAllGroup();
+//        for (Object[] row : data) {
+//            model.addRow(row);
+//        }
+
+        // sort
+        TableRowSorter<DefaultTableModel> sorter = new TableRowSorter<>(model);
+        groupTable.setRowSorter(sorter);
+
+        Comparator<Integer> integerComparator = Comparator.comparing(Integer::valueOf);
+        sorter.setComparator(0, integerComparator);
+        sorter.setSortKeys(
+                java.util.Collections.singletonList(
+                        new javax.swing.RowSorter.SortKey(0, SortOrder.ASCENDING)
+                )
+        );
+        sorter.setSortKeys(
+                java.util.Collections.singletonList(
+                        new javax.swing.RowSorter.SortKey(1, SortOrder.ASCENDING)
+                )
+        );
+        sorter.setSortKeys(
+                java.util.Collections.singletonList(
+                        new javax.swing.RowSorter.SortKey(2, SortOrder.ASCENDING)
+                )
+        );
+
+        sorter = new TableRowSorter<DefaultTableModel>(model) {
+            @Override
+            public boolean isSortable(int column) {
+                return (column == 0) || (column == 1) || (column == 2) ;
+            }
+        };
+        groupTable.setRowSorter(sorter);
+
+        // chỉnh header
+        JTableHeader headerAdmin = adminTable.getTableHeader();
+        headerAdmin.setBackground(blue);
+        headerAdmin.setForeground(Color.WHITE);
+
+        JTableHeader headerMember = memberTable.getTableHeader();
+        headerMember.setBackground(blue);
+        headerMember.setForeground(Color.WHITE);
+
+        // chỉnh center
+        ((DefaultTableCellRenderer)groupTable.getDefaultRenderer(String.class)).setHorizontalAlignment(SwingConstants.CENTER);
+        ((DefaultTableCellRenderer)groupTable.getDefaultRenderer(Integer.class)).setHorizontalAlignment(SwingConstants.CENTER);
+        groupTable.setPreferredScrollableViewportSize(groupTable.getPreferredSize());
+
+        reportMainPanel.setVisible(false);
+        getContentPane().remove(reportMainPanel);
+        dataMainPanel.setVisible(false);
+        getContentPane().remove(dataMainPanel);
+        getContentPane().add(groupMainPanel);
+        groupMainPanel.setVisible(true);
+
+
+    }
+
+    private void userNavButtonActionPerformed(java.awt.event.ActionEvent evt) {
+        groupMainPanel.setVisible(false);
+        getContentPane().remove(groupMainPanel);
+        reportMainPanel.setVisible(false);
+        getContentPane().remove(reportMainPanel);
+        dataMainPanel.setVisible(false);
+        getContentPane().remove(dataMainPanel);
+    }
+
+    private void dataNavButtonActionPerformed(java.awt.event.ActionEvent evt) {
+        groupMainPanel.setVisible(false);
+        getContentPane().remove(groupMainPanel);
+        reportMainPanel.setVisible(false);
+        getContentPane().remove(reportMainPanel);
+        getContentPane().add(dataMainPanel);
+        dataMainPanel.setVisible(true);
+
+    }
+
+    private void reportNavButtonActionPerformed(java.awt.event.ActionEvent evt) {
+        DefaultTableModel model = (DefaultTableModel) reportTable.getModel();
+        model.setRowCount(0);
+
+//        Object[][] data = adminController.getAllReport();
+//        for (Object[] row : data) {
+//            model.addRow(row);
+//        }
+
+        // sort
+        TableRowSorter<DefaultTableModel> sorter = new TableRowSorter<>(model);
+        reportTable.setRowSorter(sorter);
+
+        Comparator<Integer> integerComparator = Comparator.comparing(Integer::valueOf);
+        sorter.setComparator(0, integerComparator);
+        sorter.setSortKeys(
+                java.util.Collections.singletonList(
+                        new javax.swing.RowSorter.SortKey(0, SortOrder.ASCENDING)
+                )
+        );
+        sorter.setSortKeys(
+                java.util.Collections.singletonList(
+                        new javax.swing.RowSorter.SortKey(1, SortOrder.ASCENDING)
+                )
+        );
+        sorter.setSortKeys(
+                java.util.Collections.singletonList(
+                        new javax.swing.RowSorter.SortKey(2, SortOrder.ASCENDING)
+                )
+        );
+
+        sorter = new TableRowSorter<DefaultTableModel>(model) {
+            @Override
+            public boolean isSortable(int column) {
+                return (column == 0) || (column == 1) || (column == 2) ;
+            }
+        };
+        reportTable.setRowSorter(sorter);
+
+        // chỉnh center
+        ((DefaultTableCellRenderer)reportTable.getDefaultRenderer(String.class)).setHorizontalAlignment(SwingConstants.CENTER);
+        ((DefaultTableCellRenderer)reportTable.getDefaultRenderer(Integer.class)).setHorizontalAlignment(SwingConstants.CENTER);
+        groupTable.setPreferredScrollableViewportSize(reportTable.getPreferredSize());
+
+        disableUserButton.setVisible(false);
+
+        groupMainPanel.setVisible(false);
+        getContentPane().remove(groupMainPanel);
+        dataMainPanel.setVisible(false);
+        getContentPane().remove(dataMainPanel);
+        getContentPane().add(reportMainPanel);
+        reportMainPanel.setVisible(true);
+    }
+
+    private void groupTableMouseClicked(java.awt.event.MouseEvent evt) {
+        int index = groupTable.getSelectedRow();
+        TableModel model = groupTable.getModel();
+        int selected_id = Integer.parseInt(model.getValueAt(index, 0).toString());
+
+        DefaultTableModel adminModel = (DefaultTableModel) adminTable.getModel();
+        adminModel.setRowCount(0);
+
+//        Object[][] admin = adminController.getAllAdmin(selected_id);
+//        for (Object[] row : admin) {
+//            adminModel.addRow(row);
+//        }
+
+        ((DefaultTableCellRenderer)adminTable.getDefaultRenderer(String.class)).setHorizontalAlignment(SwingConstants.CENTER);
+        adminTable.setPreferredScrollableViewportSize(adminTable.getPreferredSize());
+
+        DefaultTableModel memberModel = (DefaultTableModel) memberTable.getModel();
+        memberModel.setRowCount(0);
+
+//        Object[][] member = adminController.getAllMember(selected_id);
+//        for (Object[] row : member) {
+//            memberModel.addRow(row);
+//        }
+
+        ((DefaultTableCellRenderer)memberTable.getDefaultRenderer(String.class)).setHorizontalAlignment(SwingConstants.CENTER);
+        memberTable.setPreferredScrollableViewportSize(memberTable.getPreferredSize());
+    }
+
+    private void viewAllGroupButtonActionPerformed(java.awt.event.ActionEvent evt) {
+        DefaultTableModel model = (DefaultTableModel) groupTable.getModel();
+        model.setRowCount(0);
+
+//        Object[][] data = adminController.getAllGroup();
+//        for (Object[] row : data) {
+//            model.addRow(row);
+//        }
+
+        searchInput.setText("Enter group name ...");
+
+        DefaultTableModel adminModel = (DefaultTableModel) adminTable.getModel();
+        adminModel.setRowCount(0);
+
+        DefaultTableModel memberModel = (DefaultTableModel) memberTable.getModel();
+        memberModel.setRowCount(0);
+    }
+
+    public static boolean isValidDate(String dateStr) {
+        SimpleDateFormat dateFormat = new SimpleDateFormat("dd-MM-yyyy");
+        dateFormat.setLenient(false);
+
+        try {
+            dateFormat.parse(dateStr);
+            return true;
+        } catch (ParseException e) {
+            return false;
+        }
+    }
+
+//    AdminController adminController = new AdminController();
+    Color blue = new Color(23,70,162);
 
     private javax.swing.JLabel activeTitle;
     private javax.swing.JPanel activeUserMainPanel;
