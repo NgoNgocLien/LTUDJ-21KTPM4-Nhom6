@@ -14,7 +14,7 @@ public class ChatPanel extends JPanel {
         setBackground(null);
 
         chatnamePanel = new ChatnamePanel(fullname, status);
-//        messagePanel = new MessagePanel(fullname, username, isFriend);
+        messagePanel = new MessagePanel(fullname, username, isFriend);
         inputPanel = new InputPanel();
         // messagePanel = MessagePanel();
         // inputPanel = InputPanel();

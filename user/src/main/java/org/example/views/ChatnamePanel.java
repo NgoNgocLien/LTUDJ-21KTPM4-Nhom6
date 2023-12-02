@@ -45,7 +45,7 @@ public class ChatnamePanel extends JPanel {
         titlePanel.add(fullnameLabel, BorderLayout.NORTH);
         titlePanel.add(statusLabel, BorderLayout.SOUTH);
 
-        moreIcon = new ImageIcon("images/more.png");
+        moreIcon = new ImageIcon("src/main/resources/more.png");
         moreButton = new JButton(moreIcon);
         moreButton.setBackground(null);
         moreButton.setBorderPainted(false);

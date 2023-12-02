@@ -1,4 +1,5 @@
 package org.example;
+
 import javax.swing.*;
 import java.awt.*;
 
@@ -8,7 +9,7 @@ public class LoginSignUpScreen extends JFrame {
 
     public LoginSignUpScreen() {
         setExtendedState(JFrame.MAXIMIZED_BOTH);
-        setTitle("Login/Sign Up Screen");
+        setTitle("Messenger");
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setLocationRelativeTo(null);
 
@@ -41,19 +42,19 @@ public class LoginSignUpScreen extends JFrame {
         gbc.gridy = 1;
         add(passwordField, gbc);
 
-        gbc.gridx = 0;
+        gbc.gridx = 1;
         gbc.gridy = 2;
-        gbc.gridwidth = 2;
+//        gbc.gridwidth = 2;
         add(loginButton, gbc);
 
-        gbc.gridx = 0;
+        gbc.gridx = 1;
         gbc.gridy = 3;
         add(signUpButton, gbc);
 
 
-        gbc.gridx = 0;
+        gbc.gridx = 1;
         gbc.gridy = 4;
-        gbc.insets = new Insets(100, 0, 0 , 0);
+        gbc.insets = new Insets(100, 0, 0, 0);
         add(forgotButton, gbc);
 
         // Add action listeners
@@ -67,8 +68,10 @@ public class LoginSignUpScreen extends JFrame {
         char[] passwordChars = passwordField.getPassword();
         String password = new String(passwordChars);
 
-        // Perform login logic here (e.g., validate credentials)
-        JOptionPane.showMessageDialog(this, "Login not implemented yet!");
+        // Perform login asynchronously
+        Client_Socket.LoginWorker loginWorker = new Client_Socket.LoginWorker(username, password);
+        loginWorker.execute();
+        System.out.println("login");
     }
 
     private void signUp() {
@@ -80,11 +83,7 @@ public class LoginSignUpScreen extends JFrame {
         JOptionPane.showMessageDialog(this, "Sign Up not implemented yet!");
     }
 
-    private void forgot(){
+    private void forgot() {
         JOptionPane.showMessageDialog(this, "Forgot pass not implemented");
-    }
-
-    public static void main(String[] args) {
-        SwingUtilities.invokeLater(() -> new LoginSignUpScreen().setVisible(true));
     }
 }
