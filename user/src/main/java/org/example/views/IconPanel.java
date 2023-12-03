@@ -25,21 +25,22 @@ public class IconPanel extends JPanel {
     public IconPanel() {
         setBackground(null);
         setPreferredSize(new Dimension(Constants.ICON_PANEL_WIDTH, Constants.ICON_PANEL_HEIGHT));
-        setLayout(new FlowLayout(FlowLayout.CENTER, 0, 20));
+//        setLayout(new FlowLayout(FlowLayout.CENTER, 0, 20));
+        setLayout(new BorderLayout());
 
         homeIcon = new ImageIcon("src/main/resources/home.png");
         homeButton = new JButton(homeIcon);
 
-        chatIcon = new ImageIcon("src/main/resources/home.png");
+        chatIcon = new ImageIcon("src/main/resources/chat.png");
         chatButton = new JButton(chatIcon);
 
-        friendIcon = new ImageIcon("src/main/resources/home.png");
+        friendIcon = new ImageIcon("src/main/resources/friends.png");
         friendButton = new JButton(friendIcon);
 
-        requestIcon = new ImageIcon("src/main/resources/home.png");
+        requestIcon = new ImageIcon("src/main/resources/request.png");
         requestButton = new JButton(requestIcon);
 
-        blockIcon = new ImageIcon("src/main/resources/home.png");
+        blockIcon = new ImageIcon("src/main/resources/block.png");
         blockButton = new JButton(blockIcon);
 
         homeButton.setBackground(null);
@@ -72,11 +73,20 @@ public class IconPanel extends JPanel {
         blockButton.setContentAreaFilled(false);
         blockButton.setCursor(new Cursor(Cursor.HAND_CURSOR));
 
-        add(chatButton);
-        add(friendButton);
-        add(requestButton);
-        add(blockButton);
-        add(homeButton);
+        JPanel topIcons = new JPanel();
+        topIcons.setLayout(new FlowLayout(FlowLayout.CENTER, 0, 20));
+        topIcons.setPreferredSize(new Dimension(Constants.ICON_PANEL_WIDTH, 100 * 4));
+        topIcons.add(chatButton);
+        topIcons.add(friendButton);
+        topIcons.add(requestButton);
+        topIcons.add(blockButton);
+
+//        add(chatButton);
+//        add(friendButton);
+//        add(requestButton);
+//        add(blockButton);
+        add(topIcons, BorderLayout.NORTH);
+        add(homeButton, BorderLayout.SOUTH);
     }
 }
 

@@ -1,5 +1,6 @@
 package org.example;
 
+import org.example.models.DemoUser;
 import org.example.models.User;
 import org.example.views.MainChatView;
 
@@ -80,17 +81,17 @@ public class LoginSignUpScreen extends JFrame {
         String password = new String(passwordChars);
 
         if (LoginWorker.loginRequest(username, password, socket)) {
-            ArrayList<User> users = new ArrayList<User>();
-            users.add(new User("John Doe", "@johndoe"));
-            users.add(new User("Jane Doe", "@janedoe"));
-            users.add(new User("John Smith", "@johnsmith"));
-            users.add(new User("Jane Smith", "@janesmith"));
+            ArrayList<DemoUser> users = new ArrayList<DemoUser>();
+            users.add(new DemoUser("John Doe", "@johndoe"));
+            users.add(new DemoUser("Jane Doe", "@janedoe"));
+            users.add(new DemoUser("John Smith", "@johnsmith"));
+            users.add(new DemoUser("Jane Smith", "@janesmith"));
 
             SwingUtilities.invokeLater(() -> {
                 this.setVisible(false);
                 this.dispose(); // Release resources associated with the frame
             });
-            new MainChatView(users);
+//            new MainChatView(users);
         } else JOptionPane.showMessageDialog(this, "Login failed!!!");
     }
 
