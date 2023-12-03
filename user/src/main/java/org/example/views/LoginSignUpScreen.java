@@ -1,9 +1,8 @@
-package org.example;
+package org.example.views;
 
 import org.example.models.DemoUser;
 import org.example.models.User;
-import org.example.views.MainChatView;
-
+import org.example.utilities.LoginWorker;
 import javax.swing.*;
 import java.awt.*;
 import java.io.IOException;
