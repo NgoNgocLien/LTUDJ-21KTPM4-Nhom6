@@ -42,7 +42,14 @@ public class AdminApp extends javax.swing.JFrame{
         memberTitle = new javax.swing.JLabel();
         viewAllGroupButton = new javax.swing.JButton();
         reportMainPanel = new javax.swing.JPanel();
-
+        reportTitle = new javax.swing.JLabel();
+        searchReportTimeInput = new javax.swing.JTextField();
+        searchUsernameInput = new javax.swing.JTextField();
+        searchReportButton = new javax.swing.JButton();
+        viewAllReportButton = new javax.swing.JButton();
+        disableUserButton = new javax.swing.JButton();
+        reportScrollPane = new javax.swing.JScrollPane();
+        reportTable = new javax.swing.JTable();
         dataMainPanel = new javax.swing.JPanel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
@@ -322,6 +329,154 @@ public class AdminApp extends javax.swing.JFrame{
 
         getContentPane().add(groupMainPanel, java.awt.BorderLayout.CENTER);
 
+        reportMainPanel.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
+
+        reportTitle.setFont(new java.awt.Font("Arial", 1, 18)); // NOI18N
+        reportTitle.setForeground(new java.awt.Color(23, 70, 162));
+        reportTitle.setText("SPAM REPORT");
+
+        searchReportTimeInput.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
+        searchReportTimeInput.setText("Enter date ( dd-mm-yyyy) ...");
+        searchReportTimeInput.setPreferredSize(new java.awt.Dimension(124, 35));
+//        searchReportTimeInput.addActionListener(new java.awt.event.ActionListener() {
+//            public void actionPerformed(java.awt.event.ActionEvent evt) {
+//                searchReportTimeInputActionPerformed(evt);
+//            }
+//        });
+
+        searchUsernameInput.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
+        searchUsernameInput.setText("Enter username ...");
+        searchUsernameInput.setPreferredSize(new java.awt.Dimension(124, 35));
+//        searchUsernameInput.addActionListener(new java.awt.event.ActionListener() {
+//            public void actionPerformed(java.awt.event.ActionEvent evt) {
+//                searchUsernameInputActionPerformed(evt);
+//            }
+//        });
+
+        searchReportButton.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
+        searchReportButton.setText("Search");
+        searchReportButton.setFocusable(false);
+        searchReportButton.setMargin(new java.awt.Insets(2, 5, 3, 5));
+        searchReportButton.setPreferredSize(new java.awt.Dimension(57, 35));
+        searchReportButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                searchReportButtonActionPerformed(evt);
+            }
+        });
+
+        viewAllReportButton.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
+        viewAllReportButton.setText("View all reports");
+        viewAllReportButton.setFocusable(false);
+        viewAllReportButton.setMargin(new java.awt.Insets(2, 5, 3, 5));
+        viewAllReportButton.setPreferredSize(new java.awt.Dimension(57, 35));
+        viewAllReportButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                viewAllReportButtonActionPerformed(evt);
+            }
+        });
+
+        disableUserButton.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
+        disableUserButton.setText("Disable account");
+        disableUserButton.setFocusable(false);
+        disableUserButton.setMargin(new java.awt.Insets(2, 5, 3, 5));
+        disableUserButton.setPreferredSize(new java.awt.Dimension(57, 35));
+        disableUserButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                disableUserButtonActionPerformed(evt);
+            }
+        });
+
+        reportTable.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
+        reportTable.setModel(new javax.swing.table.DefaultTableModel(
+                new Object [][] {
+                        {null, null, null, null},
+                        {null, null, null, null},
+                        {null, null, null, null},
+                        {null, null, null, null}
+                },
+                new String [] {
+                        "No", "Username", "Report time", "Account status"
+                }
+        ) {
+            Class[] types = new Class [] {
+                    java.lang.Integer.class, java.lang.Object.class, java.lang.Object.class, java.lang.Object.class
+            };
+            boolean[] canEdit = new boolean [] {
+                    false, false, false, false
+            };
+
+            public Class getColumnClass(int columnIndex) {
+                return types [columnIndex];
+            }
+
+            public boolean isCellEditable(int rowIndex, int columnIndex) {
+                return canEdit [columnIndex];
+            }
+        });
+        reportTable.setRowHeight(30);
+        reportTable.setSelectionMode(javax.swing.ListSelectionModel.SINGLE_SELECTION);
+        reportTable.setSelectionMode(javax.swing.ListSelectionModel.SINGLE_SELECTION);
+        reportTable.getTableHeader().setResizingAllowed(false);
+        reportTable.getTableHeader().setReorderingAllowed(false);
+        reportTable.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                reportTableMouseClicked(evt);
+            }
+        });
+        reportScrollPane.setViewportView(reportTable);
+        if (reportTable.getColumnModel().getColumnCount() > 0) {
+            reportTable.getColumnModel().getColumn(0).setResizable(false);
+            reportTable.getColumnModel().getColumn(0).setPreferredWidth(20);
+            reportTable.getColumnModel().getColumn(1).setResizable(false);
+            reportTable.getColumnModel().getColumn(1).setPreferredWidth(90);
+            reportTable.getColumnModel().getColumn(2).setResizable(false);
+            reportTable.getColumnModel().getColumn(2).setPreferredWidth(75);
+            reportTable.getColumnModel().getColumn(3).setResizable(false);
+            reportTable.getColumnModel().getColumn(3).setPreferredWidth(95);
+        }
+
+        javax.swing.GroupLayout reportMainPanelLayout = new javax.swing.GroupLayout(reportMainPanel);
+        reportMainPanel.setLayout(reportMainPanelLayout);
+        reportMainPanelLayout.setHorizontalGroup(
+                reportMainPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGroup(reportMainPanelLayout.createSequentialGroup()
+                                .addGap(66, 66, 66)
+                                .addGroup(reportMainPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                        .addComponent(reportTitle)
+                                        .addGroup(reportMainPanelLayout.createSequentialGroup()
+                                                .addGroup(reportMainPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                                                        .addComponent(reportScrollPane, javax.swing.GroupLayout.Alignment.LEADING)
+                                                        .addGroup(reportMainPanelLayout.createSequentialGroup()
+                                                                .addComponent(searchReportTimeInput, javax.swing.GroupLayout.PREFERRED_SIZE, 210, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                                                .addGap(12, 12, 12)
+                                                                .addComponent(searchUsernameInput, javax.swing.GroupLayout.PREFERRED_SIZE, 246, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                                                .addComponent(searchReportButton, javax.swing.GroupLayout.PREFERRED_SIZE, 75, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                                                .addGap(98, 98, 98)
+                                                                .addComponent(viewAllReportButton, javax.swing.GroupLayout.PREFERRED_SIZE, 123, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                                                .addGap(29, 29, 29)
+                                                .addComponent(disableUserButton, javax.swing.GroupLayout.PREFERRED_SIZE, 121, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                                .addContainerGap(625, Short.MAX_VALUE))
+        );
+        reportMainPanelLayout.setVerticalGroup(
+                reportMainPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGroup(reportMainPanelLayout.createSequentialGroup()
+                                .addGap(31, 31, 31)
+                                .addComponent(reportTitle)
+                                .addGap(29, 29, 29)
+                                .addGroup(reportMainPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                        .addComponent(searchReportTimeInput, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addComponent(searchUsernameInput, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addComponent(searchReportButton, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addComponent(viewAllReportButton, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addComponent(disableUserButton, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addGap(34, 34, 34)
+                                .addComponent(reportScrollPane, javax.swing.GroupLayout.PREFERRED_SIZE, 249, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addContainerGap(1679, Short.MAX_VALUE))
+        );
+
+        getContentPane().add(reportMainPanel, java.awt.BorderLayout.CENTER);
+
         pack();
     }
 
@@ -436,10 +591,10 @@ public class AdminApp extends javax.swing.JFrame{
         DefaultTableModel model = (DefaultTableModel) reportTable.getModel();
         model.setRowCount(0);
 
-//        Object[][] data = adminController.getAllReport();
-//        for (Object[] row : data) {
-//            model.addRow(row);
-//        }
+        Object[][] data = adminController.getAllReport();
+        for (Object[] row : data) {
+            model.addRow(row);
+        }
 
         // sort
         TableRowSorter<DefaultTableModel> sorter = new TableRowSorter<>(model);
@@ -532,6 +687,81 @@ public class AdminApp extends javax.swing.JFrame{
         memberModel.setRowCount(0);
     }
 
+    private void reportTableMouseClicked(java.awt.event.MouseEvent evt) {
+        int index = reportTable.getSelectedRow();
+        TableModel model = reportTable.getModel();
+
+        String status = model.getValueAt(index, 3).toString();
+
+        if (status.equals("Enabled")){
+            disableUserButton.setVisible(true);
+        }
+        else{
+            disableUserButton.setVisible(false);
+        }
+
+    }
+
+    private void viewAllReportButtonActionPerformed(java.awt.event.ActionEvent evt) {
+        DefaultTableModel model = (DefaultTableModel) reportTable.getModel();
+        model.setRowCount(0);
+
+        Object[][] data = adminController.getAllReport();
+        for (Object[] row : data) {
+            model.addRow(row);
+        }
+
+        searchReportTimeInput.setText("Enter date ( dd-mm-yyyy) ...");
+        searchUsernameInput.setText("Enter username ...");
+
+    }
+
+    private void searchReportButtonActionPerformed(java.awt.event.ActionEvent evt) {
+        String username = searchUsernameInput.getText();
+        String date = searchReportTimeInput.getText();
+
+        if ((username.isEmpty() || username.equals("Enter username ...")) && (date.isEmpty() || date.equals("Enter date ( dd-mm-yyyy) ..."))){
+            JOptionPane.showMessageDialog(null, "Empty username and date", "Error", JOptionPane.ERROR_MESSAGE);
+        }
+        else if (!isValidDate(date) && (!date.equals("Enter date ( dd-mm-yyyy) ...") && !date.isEmpty())){
+            JOptionPane.showMessageDialog(null, "Invalid date", "Error", JOptionPane.ERROR_MESSAGE);
+        }
+        else {
+            DefaultTableModel model = (DefaultTableModel) reportTable.getModel();
+            model.setRowCount(0);
+
+            if (username.equals("Enter username ...")){
+                username = "";
+            }
+            if (date.equals("Enter date ( dd-mm-yyyy) ..."))
+                date = "";
+
+            String[] dateToArray = date.split("-");
+
+            Object[][] data = adminController.searchReport(username, dateToArray);
+            for (Object[] row : data) {
+                model.addRow(row);
+            }
+        }
+    }
+
+    private void disableUserButtonActionPerformed(java.awt.event.ActionEvent evt) {
+//        int index = reportTable.getSelectedRow();
+//        TableModel model = reportTable.getModel();
+//        String selected_username = model.getValueAt(index, 1).toString();
+//        adminController.disableUser(selected_username);
+//
+//        DefaultTableModel reportModel = (DefaultTableModel) reportTable.getModel();
+//        reportModel.setRowCount(0);
+//
+//        Object[][] report = adminController.getAllReport();
+//        for (Object[] row : report) {
+//            reportModel.addRow(row);
+//        }
+//
+//        disableUserButton.setVisible(false);
+    }
+
     public static boolean isValidDate(String dateStr) {
         SimpleDateFormat dateFormat = new SimpleDateFormat("dd-MM-yyyy");
         dateFormat.setLenient(false);
@@ -589,5 +819,5 @@ public class AdminApp extends javax.swing.JFrame{
     private javax.swing.JButton userNavButton;
     private javax.swing.JButton viewAllGroupButton;
     private javax.swing.JButton viewAllReportButton;
-
+    private javax.swing.JButton searchReportButton;
 }

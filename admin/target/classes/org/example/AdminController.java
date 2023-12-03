@@ -189,5 +189,139 @@ public class AdminController {
         return null;
     }
 
+    Object[][] getAllReport(){
+        try{
+            Statement stmt = conn.createStatement();
+            String sql;
+            sql = "SELECT u.username, s.report_time, u.is_locked "
+                    + "FROM SPAM s "
+                    + "INNER JOIN MESSAGE m ON m.id_message = s.id_message "
+                    + "INNER JOIN USER u ON u.username = m.sender ";
+            ResultSet rs = stmt.executeQuery(sql);
+            List<Object[]> rows = new ArrayList<>();
+            int i = 1;
+            while(rs.next()){
+                //Retrieve by column name
+                String username = rs.getString("username");
+                Date report_time = rs.getDate("report_time");
+                Timestamp timestamp = new Timestamp(report_time.getTime());
+
+                LocalDateTime localDateTime = timestamp.toLocalDateTime();
+                DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-MM-yyyy HH:mm:ss");
+                String format_time = localDateTime.format(formatter);
+
+                int is_lock = rs.getInt("is_locked");
+                String lock_text = (is_lock == 1) ? "Disabled" : "Enabled";
+
+                Object[] row = {i, username, format_time, lock_text};
+                // Add the row to the list
+                rows.add(row);
+                i++;
+            }
+
+            rs.close();
+            stmt.close();
+
+            Object[][] data = new Object[rows.size()][];
+            rows.toArray(data);
+
+            return data;
+        }catch(SQLException se){
+            //Handle errors for JDBC
+            se.printStackTrace();
+        }catch(Exception e){ //Handle errors for Class.forName
+            e.printStackTrace();
+        }
+        return null;
+    }
+
+    Object[][] searchReport(String text, String[] date){
+        try{
+            String sql = "SELECT u.username, s.report_time, u.is_locked "
+                    + "FROM SPAM s "
+                    + "INNER JOIN MESSAGE m ON m.id_message = s.id_message "
+                    + "INNER JOIN USER u ON u.username = m.sender ";
+            PreparedStatement stmt;
+            if (text.isEmpty()){
+                sql += "WHERE DAY(s.report_time) = ? "
+                        + "AND MONTH(s.report_time) = ? "
+                        + "AND YEAR(s.report_time) = ?;";
+                stmt = conn.prepareStatement(sql);
+                stmt.setString(1, date[0]);
+                stmt.setString(2, date[1]);
+                stmt.setString(3, date[2]);
+            }
+            else if (date.length != 3){
+                sql += "WHERE u.username LIKE ?";
+                stmt = conn.prepareStatement(sql);
+                stmt.setString(1, "%" + text + "%");
+            }
+            else {
+                sql += "WHERE DAY(s.report_time) = ? "
+                        + "AND MONTH(s.report_time) = ? "
+                        + "AND YEAR(s.report_time) = ? "
+                        + "AND u.username LIKE ? ;";
+                stmt = conn.prepareStatement(sql);
+                stmt.setString(1, date[0]);
+                stmt.setString(2, date[1]);
+                stmt.setString(3, date[2]);
+                stmt.setString(4, "%" + text + "%");
+            }
+
+            ResultSet rs = stmt.executeQuery();
+
+            List<Object[]> rows = new ArrayList<>();
+            int i = 1;
+            while(rs.next()){
+                //Retrieve by column name
+                String username = rs.getString("username");
+                Date report_time = rs.getDate("report_time");
+                Timestamp timestamp = new Timestamp(report_time.getTime());
+
+                LocalDateTime localDateTime = timestamp.toLocalDateTime();
+                DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-MM-yyyy HH:mm:ss");
+                String format_time = localDateTime.format(formatter);
+
+                int is_lock = rs.getInt("is_locked");
+                String lock_text = (is_lock == 1) ? "Disabled" : "Enabled";
+
+                Object[] row = {i, username, format_time, lock_text};
+                // Add the row to the list
+                rows.add(row);
+                i++;
+            }
+            rs.close();
+            stmt.close();
+
+            Object[][] data = new Object[rows.size()][];
+            rows.toArray(data);
+
+            return data;
+        }catch(SQLException se){
+            //Handle errors for JDBC
+            se.printStackTrace();
+        }catch(Exception e){ //Handle errors for Class.forName
+            e.printStackTrace();
+        }
+        return null;
+    }
+
+    void disableUser(String username){
+        try{
+            String sql;
+            sql = "UPDATE USER SET is_locked = 1 WHERE username = ?";
+
+            PreparedStatement stmt = conn.prepareStatement(sql);
+            stmt.setString(1, username);
+            stmt.executeUpdate();
+            stmt.close();
+
+        }catch(SQLException se){
+            //Handle errors for JDBC
+            se.printStackTrace();
+        }catch(Exception e){ //Handle errors for Class.forName
+            e.printStackTrace();
+        }
+    }
 }
 
