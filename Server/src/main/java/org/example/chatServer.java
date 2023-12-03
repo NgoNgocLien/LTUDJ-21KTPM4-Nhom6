@@ -10,7 +10,7 @@ public class chatServer {
     private final List<ClientHandler> clients = new ArrayList<>();
 
     public void startServer() {
-        try (ServerSocket serverSocket = new ServerSocket(145)) {
+        try (ServerSocket serverSocket = new ServerSocket(1435)) {
             System.out.println("Server started. Listening on port 12345...");
 
             while (true) {
@@ -20,7 +20,6 @@ public class chatServer {
                 ClientHandler clientHandler = new ClientHandler(this, clientSocket);
                 clients.add(clientHandler);
                 new Thread(clientHandler).start();
-                System.out.println("dm start");
             }
         } catch (IOException e) {
             e.printStackTrace();

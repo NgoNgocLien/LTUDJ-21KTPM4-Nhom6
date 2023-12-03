@@ -45,13 +45,13 @@ public class ClientHandler implements Runnable {
 
 
                 // Send a response back to the client
-                String message = input.nextLine();
-                if (message.equalsIgnoreCase("/quit")) {
-                    server.removeClient(this);
-                    break;
-                }
+//                String message = input.nextLine();
+//                if (message.equalsIgnoreCase("/quit")) {
+//                    server.removeClient(this);
+//                    break;
+//                }
 
-                server.broadcastMessage("Client " + clientSocket + ": " + message, this);
+//                server.broadcastMessage("Client " + clientSocket + ": " + message, this);
             }
         } catch (IOException | SQLException | ClassNotFoundException e) {
             throw new RuntimeException(e);

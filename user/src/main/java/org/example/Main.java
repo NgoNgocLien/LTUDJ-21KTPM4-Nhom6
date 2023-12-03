@@ -50,14 +50,13 @@
 //}
 
 
-//package org.example;
-//
-//import javax.swing.*;
-//
-//public class Main {
-//    public static void main(String[] args) {
-//        SwingUtilities.invokeLater(() -> new LoginSignUpScreen().setVisible(true));
-//        Client_Socket.start();
-//    }
-//}
+package org.example;
 
+import javax.swing.*;
+
+public class Main {
+    public static void main(String[] args) {
+        Client_Socket.start();
+        SwingUtilities.invokeLater(() -> new LoginSignUpScreen(Client_Socket.getSocket()).setVisible(true));
+    }
+}

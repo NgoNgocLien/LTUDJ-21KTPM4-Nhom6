@@ -1,15 +1,21 @@
 package org.example;
 
+import org.example.models.User;
+import org.example.views.MainChatView;
+
 import javax.swing.*;
 import java.awt.*;
+import java.io.IOException;
+import java.net.Socket;
+import java.util.ArrayList;
 
 public class LoginSignUpScreen extends JFrame {
     private final JTextField usernameField;
     private final JPasswordField passwordField;
 
-    public LoginSignUpScreen() {
+    public LoginSignUpScreen(Socket socket) {
         setExtendedState(JFrame.MAXIMIZED_BOTH);
-        setTitle("Messenger");
+        setTitle("Regnessem");
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setLocationRelativeTo(null);
 
@@ -44,7 +50,6 @@ public class LoginSignUpScreen extends JFrame {
 
         gbc.gridx = 1;
         gbc.gridy = 2;
-//        gbc.gridwidth = 2;
         add(loginButton, gbc);
 
         gbc.gridx = 1;
@@ -58,32 +63,44 @@ public class LoginSignUpScreen extends JFrame {
         add(forgotButton, gbc);
 
         // Add action listeners
-        loginButton.addActionListener(e -> login());
-        signUpButton.addActionListener(e -> signUp());
-        forgotButton.addActionListener(e -> forgot());
+        loginButton.addActionListener(e -> {
+            try {
+                login(socket);
+            } catch (IOException ex) {
+                throw new RuntimeException(ex);
+            }
+        });
+        signUpButton.addActionListener(e -> signUp(socket));
+        forgotButton.addActionListener(e -> forgot(socket));
     }
 
-    private void login() {
+    private void login(Socket socket) throws IOException {
         String username = usernameField.getText();
         char[] passwordChars = passwordField.getPassword();
         String password = new String(passwordChars);
 
-        // Perform login asynchronously
-        Client_Socket.LoginWorker loginWorker = new Client_Socket.LoginWorker(username, password);
-        loginWorker.execute();
-        System.out.println("login");
+        if (LoginWorker.loginRequest(username, password, socket)) {
+            ArrayList<User> users = new ArrayList<User>();
+            users.add(new User("John Doe", "@johndoe"));
+            users.add(new User("Jane Doe", "@janedoe"));
+            users.add(new User("John Smith", "@johnsmith"));
+            users.add(new User("Jane Smith", "@janesmith"));
+
+            SwingUtilities.invokeLater(() -> {
+                this.setVisible(false);
+                this.dispose(); // Release resources associated with the frame
+            });
+            new MainChatView(users);
+        } else JOptionPane.showMessageDialog(this, "Login failed!!!");
     }
 
-    private void signUp() {
-        String username = usernameField.getText();
-        char[] passwordChars = passwordField.getPassword();
-        String password = new String(passwordChars);
+    private void signUp(Socket socket) {
 
         // Perform sign up logic here (e.g., create a new user)
         JOptionPane.showMessageDialog(this, "Sign Up not implemented yet!");
     }
 
-    private void forgot() {
+    private void forgot(Socket socket) {
         JOptionPane.showMessageDialog(this, "Forgot pass not implemented");
     }
 }
