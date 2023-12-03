@@ -5,33 +5,20 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="306fe892-f6be-4249-9327-1572c1ca91dd" name="Changes" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/admin/target/classes/database-solid.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/admin/target/classes/flag-solid.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/admin/target/classes/org/example/AdminApp$1.class" beforeDir="false" afterPath="$PROJECT_DIR$/admin/target/classes/org/example/AdminApp$1.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/admin/target/classes/org/example/AdminApp$10.class" beforeDir="false" afterPath="$PROJECT_DIR$/admin/target/classes/org/example/AdminApp$10.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/admin/target/classes/org/example/AdminApp$11.class" beforeDir="false" afterPath="$PROJECT_DIR$/admin/target/classes/org/example/AdminApp$11.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/admin/target/classes/org/example/AdminApp$12.class" beforeDir="false" afterPath="$PROJECT_DIR$/admin/target/classes/org/example/AdminApp$12.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/admin/target/classes/org/example/AdminApp$13.class" beforeDir="false" afterPath="$PROJECT_DIR$/admin/target/classes/org/example/AdminApp$13.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/admin/target/classes/org/example/AdminApp$14.class" beforeDir="false" afterPath="$PROJECT_DIR$/admin/target/classes/org/example/AdminApp$14.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/admin/target/classes/org/example/AdminApp$15.class" beforeDir="false" afterPath="$PROJECT_DIR$/admin/target/classes/org/example/AdminApp$15.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/admin/target/classes/org/example/AdminApp$16.class" beforeDir="false" afterPath="$PROJECT_DIR$/admin/target/classes/org/example/AdminApp$16.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/admin/target/classes/org/example/AdminApp$17.class" beforeDir="false" afterPath="$PROJECT_DIR$/admin/target/classes/org/example/AdminApp$17.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/admin/target/classes/org/example/AdminApp$2.class" beforeDir="false" afterPath="$PROJECT_DIR$/admin/target/classes/org/example/AdminApp$2.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/admin/target/classes/org/example/AdminApp$3.class" beforeDir="false" afterPath="$PROJECT_DIR$/admin/target/classes/org/example/AdminApp$3.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/admin/target/classes/org/example/AdminApp$4.class" beforeDir="false" afterPath="$PROJECT_DIR$/admin/target/classes/org/example/AdminApp$4.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/admin/target/classes/org/example/AdminApp$5.class" beforeDir="false" afterPath="$PROJECT_DIR$/admin/target/classes/org/example/AdminApp$5.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/admin/target/classes/org/example/AdminApp$6.class" beforeDir="false" afterPath="$PROJECT_DIR$/admin/target/classes/org/example/AdminApp$6.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/admin/target/classes/org/example/AdminApp$7.class" beforeDir="false" afterPath="$PROJECT_DIR$/admin/target/classes/org/example/AdminApp$7.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/admin/target/classes/org/example/AdminApp$8.class" beforeDir="false" afterPath="$PROJECT_DIR$/admin/target/classes/org/example/AdminApp$8.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/admin/target/classes/org/example/AdminApp$9.class" beforeDir="false" afterPath="$PROJECT_DIR$/admin/target/classes/org/example/AdminApp$9.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/admin/target/classes/org/example/AdminApp.class" beforeDir="false" afterPath="$PROJECT_DIR$/admin/target/classes/org/example/AdminApp.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/admin/target/classes/org/example/AdminController.class" beforeDir="false" afterPath="$PROJECT_DIR$/admin/target/classes/org/example/AdminController.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/admin/target/classes/user-solid.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/admin/target/classes/users-solid.png" beforeDir="false" />
+      <change afterPath="$PROJECT_DIR$/user/src/main/java/org/example/views/SignUpScreen.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/user/target/classes/org/example/views/SignUpScreen$1.class" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/user/target/classes/org/example/views/SignUpScreen.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/user/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/user/.idea/misc.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/user/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/user/pom.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/user/src/main/java/org/example/utilities/DatabaseHandler.java" beforeDir="false" afterPath="$PROJECT_DIR$/user/src/main/java/org/example/utilities/DatabaseHandler.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/user/src/main/java/org/example/views/IconPanel.java" beforeDir="false" afterPath="$PROJECT_DIR$/user/src/main/java/org/example/views/IconPanel.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/user/src/main/java/org/example/views/UserListPanel.java" beforeDir="false" afterPath="$PROJECT_DIR$/user/src/main/java/org/example/views/UserListPanel.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/user/target/classes/Facebook_Messenger_logo_2020.svg.webp" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/user/target/classes/home.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/user/target/classes/more.png" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/user/target/classes/org/example/utilities/DatabaseHandler.class" beforeDir="false" afterPath="$PROJECT_DIR$/user/target/classes/org/example/utilities/DatabaseHandler.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/user/target/classes/org/example/views/IconPanel.class" beforeDir="false" afterPath="$PROJECT_DIR$/user/target/classes/org/example/views/IconPanel.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/user/target/classes/org/example/views/UserListPanel.class" beforeDir="false" afterPath="$PROJECT_DIR$/user/target/classes/org/example/views/UserListPanel.class" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -49,12 +36,12 @@
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
   </component>
-  <component name="GitHubPullRequestSearchHistory"><![CDATA[{
-  "lastFilter": {
-    "state": "OPEN",
-    "assignee": "pmlinh21"
+  <component name="GitHubPullRequestSearchHistory">{
+  &quot;lastFilter&quot;: {
+    &quot;state&quot;: &quot;OPEN&quot;,
+    &quot;assignee&quot;: &quot;pmlinh21&quot;
   }
-}]]></component>
+}</component>
   <component name="GithubPullRequestsUISettings">
     <option name="selectedUrlAndAccountId">
       <UrlAndAccount>
@@ -85,7 +72,7 @@
     "RunOnceActivity.ShowReadmeOnStart": "true",
     "SHARE_PROJECT_CONFIGURATION_FILES": "true",
     "WebServerToolWindowFactoryState": "false",
-    "git-widget-placeholder": "main",
+    "git-widget-placeholder": "Merging main",
     "ignore.virus.scanning.warn.message": "true",
     "jdk.selected.JAVA_MODULE": "21",
     "last_opened_file_path": "F:/LTUDJ-Project/LTUDJ-21KTPM4-Nhom6/user",
@@ -252,6 +239,7 @@
       <workItem from="1701548227480" duration="3085000" />
       <workItem from="1701548227480" duration="2354000" />
       <workItem from="1701596712676" duration="35000" />
+      <workItem from="1701610232317" duration="19000" />
     </task>
     <servers />
   </component>
