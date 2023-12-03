@@ -104,32 +104,38 @@ public class DatabaseHandler {
                 "       OR (F.username2 = ? AND M.sent_time > F.user2_deleteChat) " +
                 ") " +
                 "SELECT " +
-                "    sender, " +
-                "    to_user, " +
-                "    content, " +
-                "    seen_time " +
-                "FROM RankedMessages " +
-                "WHERE row_num = 1 " +
-                "ORDER BY sent_time DESC";
+                "    R.sender, " +
+                "    R.to_user, " +
+                "    R.content, " +
+                "    R.seen_time, " +
+                "    U.fullname AS friend_name " +
+                "FROM RankedMessages R " +
+                "JOIN USER U ON ((U.username != ? AND R.to_user = U.username) OR (U.username != ? AND R.sender = U.username)) " +
+                "WHERE R.row_num = 1 " +
+                "ORDER BY R.sent_time DESC;";
         PreparedStatement stmt = conn.prepareStatement(sql);
         stmt.setString(1, username);
         stmt.setString(2, username);
         stmt.setString(3, username);
+        stmt.setString(4, username);
+        stmt.setString(5, username);
 
         ResultSet rs = stmt.executeQuery();
         RecentChat chats = new RecentChat(username);
         while (rs.next()) {
-            String sender, to_user, content;
+            String sender, to_user, content, friend_name;
             boolean seen;
             sender = rs.getString("sender");
             to_user = rs.getString("to_user");
             content = rs.getString("content");
             seen = rs.getTimestamp("seen_time") != null;
+            friend_name = rs.getString("friend_name");
             if (sender.equals(username))
-                chats.addChat(to_user, "You: " + content, seen);
+                chats.addChat(friend_name, "You: " + content, seen);
             else
-                chats.addChat(sender, content, seen);
+                chats.addChat(friend_name, content, seen);
         }
         return chats;
     }
+
 }

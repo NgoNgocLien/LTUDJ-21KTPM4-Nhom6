@@ -45,33 +45,18 @@ public class MainChatView extends JFrame {
 
     public static void main(String[] args) {
         try {
-            String username = "ncluan";
+            String username = "hthang";
             DatabaseHandler DB = new DatabaseHandler();
             User currentUser = DB.getUser(username);
 
             ArrayList<ArrayList<Object>> recentChats = DB.getRecentChat(username).getChatList();
-            for (ArrayList<Object> chats : recentChats) {
-                System.out.println(chats.get(0) + " " + chats.get(1) + " " + chats.get(2));
-            }
             new MainChatView(recentChats);
 
+            DB.clearEnvironment();
         } catch (SQLException se) {
             se.printStackTrace();
         } catch (Exception e) {
             e.printStackTrace();
         }
-
-//        ArrayList<User> users = new ArrayList<User>();
-//        users.add(new User("John Doe", "@johndoe"));
-//        users.add(new User("Jane Doe", "@janedoe"));
-//        users.add(new User("John Smith", "@johnsmith"));
-//        users.add(new User("Jane Smith", "@janesmith"));
-//        users.add(new User("John Doe", "@johndoe"));
-//        users.add(new User("Jane Doe", "@janedoe"));
-//        users.add(new User("John Smith", "@johnsmith"));
-//        users.add(new User("Jane Smith", "@janesmith"));
-
-
-
     }
 }
