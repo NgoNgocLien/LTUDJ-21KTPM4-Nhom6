@@ -1,4 +1,4 @@
-package org.example;
+package org.example.utilities;
 
 import javax.swing.*;
 import java.io.IOException;
@@ -6,7 +6,7 @@ import java.io.InputStream;
 import java.io.OutputStream;
 import java.net.Socket;
 
-import static org.example.Client_Socket.socket;
+import static org.example.utilities.Client_Socket.socket;
 
 public class LoginWorker extends SwingWorker<Void, Void> {
     private String username;
@@ -17,7 +17,7 @@ public class LoginWorker extends SwingWorker<Void, Void> {
         this.password = password;
     }
 
-    static boolean loginRequest(String username, String password, Socket socket) throws IOException {
+    public static boolean loginRequest(String username, String password, Socket socket) throws IOException {
         InputStream inputStream = socket.getInputStream();
         OutputStream outputStream = socket.getOutputStream();
         String userName_Pass = username + ":" + password;

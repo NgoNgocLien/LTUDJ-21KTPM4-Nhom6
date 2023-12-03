@@ -5,6 +5,7 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+
 public class SignUpScreen extends JFrame {
 
     private JTextField usernameField, fullNameField, addressField, genderField, birthdateField, emailField;
