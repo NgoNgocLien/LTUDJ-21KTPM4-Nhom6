@@ -1,4 +1,4 @@
-package org.example;
+package org.example.utilities;
 
 import javax.swing.*;
 import java.io.IOException;
