@@ -746,20 +746,20 @@ public class AdminApp extends javax.swing.JFrame{
     }
 
     private void disableUserButtonActionPerformed(java.awt.event.ActionEvent evt) {
-//        int index = reportTable.getSelectedRow();
-//        TableModel model = reportTable.getModel();
-//        String selected_username = model.getValueAt(index, 1).toString();
-//        adminController.disableUser(selected_username);
-//
-//        DefaultTableModel reportModel = (DefaultTableModel) reportTable.getModel();
-//        reportModel.setRowCount(0);
-//
-//        Object[][] report = adminController.getAllReport();
-//        for (Object[] row : report) {
-//            reportModel.addRow(row);
-//        }
-//
-//        disableUserButton.setVisible(false);
+        int index = reportTable.getSelectedRow();
+        TableModel model = reportTable.getModel();
+        String selected_username = model.getValueAt(index, 1).toString();
+        adminController.disableUser(selected_username);
+
+        DefaultTableModel reportModel = (DefaultTableModel) reportTable.getModel();
+        reportModel.setRowCount(0);
+
+        Object[][] report = adminController.getAllReport();
+        for (Object[] row : report) {
+            reportModel.addRow(row);
+        }
+
+        disableUserButton.setVisible(false);
     }
 
     public static boolean isValidDate(String dateStr) {
