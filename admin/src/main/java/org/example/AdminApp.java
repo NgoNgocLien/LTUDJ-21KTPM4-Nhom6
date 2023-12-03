@@ -336,10 +336,10 @@ public class AdminApp extends javax.swing.JFrame{
             DefaultTableModel model = (DefaultTableModel) groupTable.getModel();
             model.setRowCount(0);
 
-//            Object[][] data = adminController.searchGroupName(text);
-//            for (Object[] row : data) {
-//                model.addRow(row);
-//            }
+            Object[][] data = adminController.searchGroupName(text);
+            for (Object[] row : data) {
+                model.addRow(row);
+            }
 
             DefaultTableModel adminModel = (DefaultTableModel) adminTable.getModel();
             adminModel.setRowCount(0);
@@ -494,10 +494,10 @@ public class AdminApp extends javax.swing.JFrame{
         DefaultTableModel adminModel = (DefaultTableModel) adminTable.getModel();
         adminModel.setRowCount(0);
 
-//        Object[][] admin = adminController.getAllAdmin(selected_id);
-//        for (Object[] row : admin) {
-//            adminModel.addRow(row);
-//        }
+        Object[][] admin = adminController.getAllAdmin(selected_id);
+        for (Object[] row : admin) {
+            adminModel.addRow(row);
+        }
 
         ((DefaultTableCellRenderer)adminTable.getDefaultRenderer(String.class)).setHorizontalAlignment(SwingConstants.CENTER);
         adminTable.setPreferredScrollableViewportSize(adminTable.getPreferredSize());
@@ -505,10 +505,10 @@ public class AdminApp extends javax.swing.JFrame{
         DefaultTableModel memberModel = (DefaultTableModel) memberTable.getModel();
         memberModel.setRowCount(0);
 
-//        Object[][] member = adminController.getAllMember(selected_id);
-//        for (Object[] row : member) {
-//            memberModel.addRow(row);
-//        }
+        Object[][] member = adminController.getAllMember(selected_id);
+        for (Object[] row : member) {
+            memberModel.addRow(row);
+        }
 
         ((DefaultTableCellRenderer)memberTable.getDefaultRenderer(String.class)).setHorizontalAlignment(SwingConstants.CENTER);
         memberTable.setPreferredScrollableViewportSize(memberTable.getPreferredSize());

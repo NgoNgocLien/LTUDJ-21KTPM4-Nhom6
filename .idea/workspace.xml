@@ -5,14 +5,22 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="306fe892-f6be-4249-9327-1572c1ca91dd" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/admin/src/main/java/org/example/AdminController.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/admin/admin.iml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/admin/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/admin/pom.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Server/target/classes/org/example/ClientHandler.class" beforeDir="false" afterPath="$PROJECT_DIR$/Server/target/classes/org/example/ClientHandler.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Server/target/classes/org/example/Main.class" beforeDir="false" afterPath="$PROJECT_DIR$/Server/target/classes/org/example/Main.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Server/target/classes/org/example/chatServer.class" beforeDir="false" afterPath="$PROJECT_DIR$/Server/target/classes/org/example/chatServer.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/admin/src/main/java/org/example/AdminApp.java" beforeDir="false" afterPath="$PROJECT_DIR$/admin/src/main/java/org/example/AdminApp.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/admin/target/classes/database-solid.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/admin/target/classes/flag-solid.png" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/admin/target/classes/org/example/AdminApp.class" beforeDir="false" afterPath="$PROJECT_DIR$/admin/target/classes/org/example/AdminApp.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/admin/target/classes/org/example/Main$1.class" beforeDir="false" afterPath="$PROJECT_DIR$/admin/target/classes/org/example/Main$1.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/admin/target/classes/org/example/Main.class" beforeDir="false" afterPath="$PROJECT_DIR$/admin/target/classes/org/example/Main.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/admin/target/classes/org/example/AdminApp.java" beforeDir="false" afterPath="$PROJECT_DIR$/admin/target/classes/org/example/AdminApp.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/admin/target/classes/org/example/AdminController.class" beforeDir="false" afterPath="$PROJECT_DIR$/admin/target/classes/org/example/AdminController.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/admin/target/classes/user-solid.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/admin/target/classes/users-solid.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/user/target/classes/org/example/Client_Socket.class" beforeDir="false" afterPath="$PROJECT_DIR$/user/target/classes/org/example/Client_Socket.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/user/target/classes/org/example/LoginSignUpScreen.class" beforeDir="false" afterPath="$PROJECT_DIR$/user/target/classes/org/example/LoginSignUpScreen.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/user/target/classes/org/example/LoginWorker.class" beforeDir="false" afterPath="$PROJECT_DIR$/user/target/classes/org/example/LoginWorker.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/user/target/classes/org/example/Main.class" beforeDir="false" afterPath="$PROJECT_DIR$/user/target/classes/org/example/Main.class" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -214,7 +222,8 @@
       <workItem from="1701543572870" duration="157000" />
       <workItem from="1701543760476" duration="2997000" />
       <workItem from="1701546812110" duration="699000" />
-      <workItem from="1701547542451" duration="556000" />
+      <workItem from="1701547542451" duration="661000" />
+      <workItem from="1701548227480" duration="470000" />
     </task>
     <servers />
   </component>
