@@ -18,22 +18,22 @@ public class UserListPanel extends JPanel {
         setPreferredSize(new Dimension(Constants.USER_LIST_PANEL_WIDTH, Constants.USER_LIST_PANEL_HEIGHT));
         setBackground(null);
         setBorder(BorderFactory.createMatteBorder(0, 1, 0, 1, Color.BLACK));
-        setLayout(new FlowLayout(FlowLayout.LEFT, 0, 0));
+//        setLayout(new FlowLayout(FlowLayout.LEFT, 0, 0));
+        setLayout(new BorderLayout());
 
         searchPanel = new SearchPanel();
 
         buildUserListPanel(users);
 
-        add(searchPanel);
-        add(userListScrollPane);
+        add(searchPanel, BorderLayout.NORTH);
+        add(userListScrollPane, BorderLayout.CENTER);
     }
 
     private void buildUserListPanel(ArrayList<User> users) {
         userListPanel = new JPanel();
         userListPanel.setPreferredSize(new Dimension(Constants.USER_PANEL_WIDTH, Constants.USER_PANEL_HEIGHT * users.size() * 3));
         userListPanel.setBackground(null);
-        userListPanel.setLayout(new GridLayout(users.size() * 3, 1));
-
+        userListPanel.setLayout(new FlowLayout(FlowLayout.CENTER, 0, 0));
         for (int i = 0; i < users.size(); i++) {
             userListPanel.add(new UserPanel(users.get(i).getFullname(), users.get(i).getUsername()));
         }
@@ -45,8 +45,7 @@ public class UserListPanel extends JPanel {
         }
 
         userListScrollPane = new JScrollPane(userListPanel);
-        userListScrollPane.setPreferredSize(new Dimension(Constants.USER_PANEL_WIDTH, Constants.USER_LIST_PANEL_HEIGHT - Constants.SEARCH_PANEL_HEIGHT));
-        userListScrollPane.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_ALWAYS);
+        userListScrollPane.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED);
         userListScrollPane.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
     }
 }

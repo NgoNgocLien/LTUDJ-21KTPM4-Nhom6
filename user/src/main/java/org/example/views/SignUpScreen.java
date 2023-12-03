@@ -98,7 +98,8 @@ public class SignUpScreen extends JFrame {
         signUpButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                signUp();
+//                signUp();
             }
         });
     }
+}

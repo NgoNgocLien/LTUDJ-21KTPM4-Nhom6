@@ -5,7 +5,34 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="306fe892-f6be-4249-9327-1572c1ca91dd" name="Changes" comment="">
-      <change beforePath="$PROJECT_DIR$/admin/src/main/java/org/example/AdminApp.java" beforeDir="false" afterPath="$PROJECT_DIR$/admin/src/main/java/org/example/AdminApp.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/admin/target/classes/database-solid.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/admin/target/classes/flag-solid.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/admin/target/classes/org/example/AdminApp$1.class" beforeDir="false" afterPath="$PROJECT_DIR$/admin/target/classes/org/example/AdminApp$1.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/admin/target/classes/org/example/AdminApp$10.class" beforeDir="false" afterPath="$PROJECT_DIR$/admin/target/classes/org/example/AdminApp$10.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/admin/target/classes/org/example/AdminApp$11.class" beforeDir="false" afterPath="$PROJECT_DIR$/admin/target/classes/org/example/AdminApp$11.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/admin/target/classes/org/example/AdminApp$12.class" beforeDir="false" afterPath="$PROJECT_DIR$/admin/target/classes/org/example/AdminApp$12.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/admin/target/classes/org/example/AdminApp$13.class" beforeDir="false" afterPath="$PROJECT_DIR$/admin/target/classes/org/example/AdminApp$13.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/admin/target/classes/org/example/AdminApp$14.class" beforeDir="false" afterPath="$PROJECT_DIR$/admin/target/classes/org/example/AdminApp$14.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/admin/target/classes/org/example/AdminApp$15.class" beforeDir="false" afterPath="$PROJECT_DIR$/admin/target/classes/org/example/AdminApp$15.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/admin/target/classes/org/example/AdminApp$16.class" beforeDir="false" afterPath="$PROJECT_DIR$/admin/target/classes/org/example/AdminApp$16.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/admin/target/classes/org/example/AdminApp$17.class" beforeDir="false" afterPath="$PROJECT_DIR$/admin/target/classes/org/example/AdminApp$17.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/admin/target/classes/org/example/AdminApp$2.class" beforeDir="false" afterPath="$PROJECT_DIR$/admin/target/classes/org/example/AdminApp$2.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/admin/target/classes/org/example/AdminApp$3.class" beforeDir="false" afterPath="$PROJECT_DIR$/admin/target/classes/org/example/AdminApp$3.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/admin/target/classes/org/example/AdminApp$4.class" beforeDir="false" afterPath="$PROJECT_DIR$/admin/target/classes/org/example/AdminApp$4.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/admin/target/classes/org/example/AdminApp$5.class" beforeDir="false" afterPath="$PROJECT_DIR$/admin/target/classes/org/example/AdminApp$5.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/admin/target/classes/org/example/AdminApp$6.class" beforeDir="false" afterPath="$PROJECT_DIR$/admin/target/classes/org/example/AdminApp$6.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/admin/target/classes/org/example/AdminApp$7.class" beforeDir="false" afterPath="$PROJECT_DIR$/admin/target/classes/org/example/AdminApp$7.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/admin/target/classes/org/example/AdminApp$8.class" beforeDir="false" afterPath="$PROJECT_DIR$/admin/target/classes/org/example/AdminApp$8.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/admin/target/classes/org/example/AdminApp$9.class" beforeDir="false" afterPath="$PROJECT_DIR$/admin/target/classes/org/example/AdminApp$9.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/admin/target/classes/org/example/AdminApp.class" beforeDir="false" afterPath="$PROJECT_DIR$/admin/target/classes/org/example/AdminApp.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/admin/target/classes/org/example/AdminController.class" beforeDir="false" afterPath="$PROJECT_DIR$/admin/target/classes/org/example/AdminController.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/admin/target/classes/user-solid.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/admin/target/classes/users-solid.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/user/src/main/java/org/example/utilities/DatabaseHandler.java" beforeDir="false" afterPath="$PROJECT_DIR$/user/src/main/java/org/example/utilities/DatabaseHandler.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/user/src/main/java/org/example/views/UserListPanel.java" beforeDir="false" afterPath="$PROJECT_DIR$/user/src/main/java/org/example/views/UserListPanel.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/user/target/classes/org/example/utilities/DatabaseHandler.class" beforeDir="false" afterPath="$PROJECT_DIR$/user/target/classes/org/example/utilities/DatabaseHandler.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/user/target/classes/org/example/views/UserListPanel.class" beforeDir="false" afterPath="$PROJECT_DIR$/user/target/classes/org/example/views/UserListPanel.class" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -36,29 +63,29 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent">{
-  &quot;keyToString&quot;: {
-    &quot;ASKED_ADD_EXTERNAL_FILES&quot;: &quot;true&quot;,
-    &quot;ASKED_SHARE_PROJECT_CONFIGURATION_FILES&quot;: &quot;true&quot;,
-    &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
-    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
-    &quot;SHARE_PROJECT_CONFIGURATION_FILES&quot;: &quot;true&quot;,
-    &quot;WebServerToolWindowFactoryState&quot;: &quot;false&quot;,
-    &quot;git-widget-placeholder&quot;: &quot;main&quot;,
-    &quot;ignore.virus.scanning.warn.message&quot;: &quot;true&quot;,
-    &quot;jdk.selected.JAVA_MODULE&quot;: &quot;21&quot;,
-    &quot;last_opened_file_path&quot;: &quot;E:/mysql-connector-j-8.2.0.jar&quot;,
-    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
-    &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
-    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
-    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
-    &quot;project.structure.last.edited&quot;: &quot;Modules&quot;,
-    &quot;project.structure.proportion&quot;: &quot;0.15&quot;,
-    &quot;project.structure.side.proportion&quot;: &quot;0.2&quot;,
-    &quot;settings.editor.selected.configurable&quot;: &quot;preferences.keymap&quot;,
-    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "ASKED_ADD_EXTERNAL_FILES": "true",
+    "ASKED_SHARE_PROJECT_CONFIGURATION_FILES": "true",
+    "RunOnceActivity.OpenProjectViewOnStart": "true",
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "SHARE_PROJECT_CONFIGURATION_FILES": "true",
+    "WebServerToolWindowFactoryState": "false",
+    "git-widget-placeholder": "main",
+    "ignore.virus.scanning.warn.message": "true",
+    "jdk.selected.JAVA_MODULE": "21",
+    "last_opened_file_path": "F:/LTUDJ-Project/LTUDJ-21KTPM4-Nhom6/user",
+    "node.js.detected.package.eslint": "true",
+    "node.js.detected.package.tslint": "true",
+    "node.js.selected.package.eslint": "(autodetect)",
+    "node.js.selected.package.tslint": "(autodetect)",
+    "project.structure.last.edited": "Modules",
+    "project.structure.proportion": "0.15",
+    "project.structure.side.proportion": "0.2",
+    "settings.editor.selected.configurable": "preferences.keymap",
+    "vue.rearranger.settings.migration": "true"
   }
-}</component>
+}]]></component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
       <recent name="D:\THIRD-SEM1\JAVA\LTUDJ-21KTPM4-Nhom6\Client\src" />
@@ -209,6 +236,7 @@
       <workItem from="1701546812110" duration="699000" />
       <workItem from="1701547542451" duration="661000" />
       <workItem from="1701548227480" duration="2354000" />
+      <workItem from="1701596712676" duration="35000" />
     </task>
     <servers />
   </component>
