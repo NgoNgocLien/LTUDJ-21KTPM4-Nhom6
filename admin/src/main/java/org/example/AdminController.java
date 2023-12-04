@@ -392,9 +392,8 @@ public class AdminController {
         return null;
     }
 
-    Object[][] searchActiveUser(String start_date, String end_date, String name, String session, String option){
+    Object[][] searchActiveUser(String start_date, String end_date){
         try{
-            System.out.println(option);
 
             String sql = "SELECT username, fullname, creation_time, " +
                     " COUNT(DISTINCT login_time) as session_count, " +
@@ -410,32 +409,31 @@ public class AdminController {
                     "	INNER JOIN USER u ON h.username = u.username " +
                     "	LEFT JOIN MESSAGE m ON m.sender = u.username AND m.sent_time BETWEEN h.login_time AND h.logout_time " +
                     "	WHERE h.login_time > ? AND h.logout_time < ?  " +
-                    "	AND u.fullname LIKE ? " +
                     "	GROUP BY u.username, u.fullname, u.creation_time, h.login_time, h.logout_time, m.to_user, m.to_group) AS res " +
                     "GROUP BY username, fullname, creation_time ";
 
-            if (!session.isEmpty()){
-                switch (option){
-                    case "Equal to":
-                        sql += "HAVING session_count = ? ";
-                        break;
-                    case "Greater than":
-                        sql += "HAVING session_count > ? ";
-                        break;
-                    case "Less than":
-                        sql += "HAVING session_count < ? ";
-                        break;
-                }
-            }
+//            if (!session.isEmpty()){
+//                switch (option){
+//                    case "Equal to":
+//                        sql += "HAVING session_count = ? ";
+//                        break;
+//                    case "Greater than":
+//                        sql += "HAVING session_count ? ? ";
+//                        break;
+//                    case "Less than":
+//                        sql += "HAVING session_count < ? ";
+//                        break;
+//                }
+//            }
 
             PreparedStatement stmt;
             stmt = conn.prepareStatement(sql);
             stmt.setString(1, start_date);
             stmt.setString(2, end_date);
-            stmt.setString(3, "%" + name + "%");
-            if (!session.isEmpty()){
-                stmt.setString(4, session);
-            }
+//            stmt.setString(3, "%" + name + "%");
+//            if (!session.isEmpty()){
+//                 stmt.setString(4, session);
+//            }
 
             ResultSet rs = stmt.executeQuery();
 
