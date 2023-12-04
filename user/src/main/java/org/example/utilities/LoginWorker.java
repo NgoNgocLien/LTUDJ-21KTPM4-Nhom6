@@ -26,8 +26,8 @@ public class LoginWorker extends SwingWorker<Void, Void> {
         byte[] buffer = new byte[1024];
         int bytesRead = inputStream.read(buffer);
         String response = new String(buffer, 0, bytesRead);
-        if(response.equals("true")) return true;
-        else return false;
+        System.out.println(response);
+        return response.equals("true");
     }
 
     @Override

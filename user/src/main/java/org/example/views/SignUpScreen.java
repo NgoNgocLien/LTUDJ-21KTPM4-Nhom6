@@ -1,21 +1,25 @@
 package org.example.views;
 
 
+import org.example.utilities.SignupWorker;
+
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
+import java.io.IOException;
+import java.net.Socket;
 
 public class SignUpScreen extends JFrame {
 
-    private JTextField usernameField, fullNameField, addressField, genderField, birthdateField, emailField;
+    private JTextField usernameField, fullNameField, addressField, birthdateField, emailField;
     private JPasswordField passwordField;
     private JButton signUpButton;
 
-    public SignUpScreen() {
+    private JRadioButton jMale, jFemale;
+
+    public SignUpScreen(Socket socket) {
         setTitle("SignUp");
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        setSize(400, 300);
+        setExtendedState(JFrame.MAXIMIZED_BOTH);
         setLocationRelativeTo(null);
 
         // Create components
@@ -23,11 +27,15 @@ public class SignUpScreen extends JFrame {
         passwordField = new JPasswordField(20);
         fullNameField = new JTextField(20);
         addressField = new JTextField(20);
-        genderField = new JTextField(20);
+        jMale = new JRadioButton("Male");
+        jFemale = new JRadioButton("Female");
         birthdateField = new JTextField(20);
         emailField = new JTextField(20);
 
         signUpButton = new JButton("Sign Up");
+        ButtonGroup gender = new ButtonGroup();
+        gender.add(jFemale);
+        gender.add(jMale);
 
         // Set layout manager to GridBagLayout
         setLayout(new GridBagLayout());
@@ -73,7 +81,11 @@ public class SignUpScreen extends JFrame {
 
         gbc.gridx = 1;
         gbc.gridy = 4;
-        add(genderField, gbc);
+        add(jMale, gbc);
+
+        gbc.gridx = 2;
+        gbc.gridy = 4;
+        add(jFemale, gbc);
 
         gbc.gridx = 0;
         gbc.gridy = 5;
@@ -96,11 +108,27 @@ public class SignUpScreen extends JFrame {
         add(signUpButton, gbc);
 
         // Add action listener to SignUp button
-        signUpButton.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-//                signUp();
+        signUpButton.addActionListener(e -> {
+            try {
+                signUp(socket);
+            } catch (IOException ex) {
+                throw new RuntimeException(ex);
             }
         });
     }
+
+    private void signUp(Socket socket) throws IOException {
+        String username = usernameField.getText();
+        String password = new String(passwordField.getPassword());
+        String fullname = fullNameField.getText();
+        String address = addressField.getText();
+        String gender = "";
+        if (jMale.isSelected()) gender = "male";
+        else if (jFemale.isSelected()) gender = "female";
+        String birthdate = birthdateField.getText();
+        String email = emailField.getText();
+        SignupWorker.signupRequest(username, password, fullname, address, gender, birthdate, email, socket);
+    }
+
+
 }

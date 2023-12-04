@@ -55,4 +55,3 @@ public class StartChatPanel extends JPanel {
         add(statementPanel);
     }
 }
-
