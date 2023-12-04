@@ -8,6 +8,7 @@ public class ChatPanel extends JPanel {
     private JPanel messagePanel;
     private JPanel inputPanel;
     private JPanel chatnamePanel;
+    private JScrollPane messageScrollPane;
 
     public ChatPanel(String fullname, String username, String status, boolean isFriend) {
         setLayout(new BorderLayout());
@@ -16,15 +17,15 @@ public class ChatPanel extends JPanel {
         chatnamePanel = new ChatnamePanel(fullname, status);
         messagePanel = new MessagePanel(fullname, username, isFriend);
         inputPanel = new InputPanel();
-        // messagePanel = MessagePanel();
-        // inputPanel = InputPanel();
+
+        messageScrollPane = new JScrollPane(messagePanel);
+        messageScrollPane.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED);
+
+        JScrollBar verticalScrollBar = messageScrollPane.getVerticalScrollBar();
+        verticalScrollBar.setValue(verticalScrollBar.getMaximum());
 
         add(chatnamePanel, BorderLayout.NORTH);
-        add(messagePanel, BorderLayout.CENTER);
+        add(messageScrollPane, BorderLayout.CENTER);
         add(inputPanel, BorderLayout.SOUTH);
-    }
-
-    public void updateStatus(String status) {
-
     }
 }
