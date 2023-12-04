@@ -10,9 +10,9 @@ public class RecentChat {
         this.chats = new ArrayList<>();
     }
 
-    public void addChat(String friendUsername, String message, boolean seen) {
+    public void addChat(String chatName, String message, boolean seen) {
         ArrayList<Object> row = new ArrayList<>();
-        row.add(friendUsername);
+        row.add(chatName);
         row.add(message);
         row.add(seen);
         this.chats.add(row);

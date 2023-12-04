@@ -7,9 +7,9 @@ public class Constants {
     public static final int WINDOW_WIDTH = 1440;
     public static final int WINDOW_HEIGHT = 1024;
 
-    public static final String APP_TITLE = "Regnessem Koobecaf";
+    public static final String APP_TITLE = "Regnessem";
 
-    private static String fontFamily = "Arial";
+    private static String fontFamily = "Helvetica";
     public static final Font BIGGER_FONT = new Font(fontFamily, Font.BOLD, 30);
     public static final Font BIG_FONT = new Font(fontFamily, Font.BOLD, 22);
     public static final Font NORMAL_FONT = new Font(fontFamily, Font.PLAIN, 20);
