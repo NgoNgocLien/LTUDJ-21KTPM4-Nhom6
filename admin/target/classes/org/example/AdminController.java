@@ -323,5 +323,91 @@ public class AdminController {
             e.printStackTrace();
         }
     }
+
+    Object[][] getAllActiveUser(){
+        try{
+            Statement stmt = conn.createStatement();
+            String sql;
+            sql = "SELECT u.username, u.fullname, u.creation_time, COUNT(DISTINCT login_time) as session_count, "
+                    + "COUNT(DISTINCT to_user) as partner_count, COUNT(DISTINCT to_group) as group_count "
+                    + "FROM HISTORY_LOGIN h "
+                    + "INNER JOIN USER u ON h.username = u.username "
+                    + "INNER JOIN MESSAGE m ON m.sender = u.username "
+                    + "GROUP BY u.username, u.fullname, u.creation_time";
+            ResultSet rs = stmt.executeQuery(sql);
+            List<Object[]> rows = new ArrayList<>();
+            int i  = 1;
+            while(rs.next()){
+                //Retrieve by column name
+                String username = rs.getString("username");
+                String fullname = rs.getString("fullname");
+                Date create_time = rs.getDate("creation_time");
+                Timestamp timestamp = new Timestamp(create_time.getTime());
+
+                LocalDateTime localDateTime = timestamp.toLocalDateTime();
+//                LocalDate localDate = ((java.sql.Date) create_time).toLocalDate();
+                DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-MM-yyyy H:m:s");
+                String format_time = localDateTime.format(formatter);
+
+                int session_count = rs.getInt("session_count");
+                int partner_count = rs.getInt("partner_count");
+                int group_count = rs.getInt("group_count");
+                Object[] row = {i,username , fullname, format_time, session_count, partner_count, group_count};
+                // Add the row to the list
+                rows.add(row);
+                i++;
+            }
+
+            rs.close();
+            stmt.close();
+
+            Object[][] data = new Object[rows.size()][];
+            rows.toArray(data);
+
+            return data;
+        }catch(SQLException se){
+            //Handle errors for JDBC
+            se.printStackTrace();
+        }catch(Exception e){ //Handle errors for Class.forName
+            e.printStackTrace();
+        }
+        return null;
+    }
+
+    int[] getMonthlyActiveUser(String year){
+        try{
+            String sql = "SELECT MONTH(h.login_time) as month, COUNT(DISTINCT h.username) as user_count " +
+                    "FROM HISTORY_LOGIN h " +
+                    "WHERE YEAR(h.login_time) = ? " +
+                    "GROUP BY MONTH(h.login_time) ORDER BY month ;";
+            PreparedStatement stmt;
+            stmt = conn.prepareStatement(sql);
+            stmt.setString(1, year);
+
+            ResultSet rs = stmt.executeQuery();
+
+            int[] user_count_month = new int[12];
+            for (int i = 0; i < 12; i++)
+                user_count_month[i] = 0;
+            while(rs.next()){
+                //Retrieve by column name
+                int month = rs.getInt("month");
+                int user_count = rs.getInt("user_count");
+                System.out.println(month + " " + user_count);
+                user_count_month[month-1] = user_count;
+
+            }
+            rs.close();
+            stmt.close();
+
+            return user_count_month;
+        }catch(SQLException se){
+            //Handle errors for JDBC
+            se.printStackTrace();
+        }catch(Exception e){ //Handle errors for Class.forName
+            e.printStackTrace();
+        }
+        return null;
+    }
 }
 
