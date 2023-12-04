@@ -1,5 +1,13 @@
+/*
+ * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
+ * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
+ */
 package org.example;
 
+/**
+ *
+ * @author ACER
+ */
 import java.sql.*;
 import java.time.*;
 import java.time.format.DateTimeFormatter;
@@ -328,13 +336,109 @@ public class AdminController {
         try{
             Statement stmt = conn.createStatement();
             String sql;
-            sql = "SELECT u.username, u.fullname, u.creation_time, COUNT(DISTINCT login_time) as session_count, "
-                    + "COUNT(DISTINCT to_user) as partner_count, COUNT(DISTINCT to_group) as group_count "
-                    + "FROM HISTORY_LOGIN h "
-                    + "INNER JOIN USER u ON h.username = u.username "
-                    + "INNER JOIN MESSAGE m ON m.sender = u.username "
-                    + "GROUP BY u.username, u.fullname, u.creation_time";
+            sql = "SELECT username, fullname, creation_time " +
+                    ", COUNT(DISTINCT login_time) as session_count " +
+                    ", COUNT(DISTINCT to_user) as partner_count " +
+                    ", COUNT(DISTINCT to_group) as group_count " +
+                    "FROM( " +
+                    "	SELECT u.username, u.fullname, u.creation_time, h.login_time, h.logout_time,  " +
+                    "	CASE  " +
+                    "       WHEN m.to_group > 0 THEN null " +
+                    "       ELSE m.to_user " +
+                    "    END as to_user, m.to_group " +
+                    "	FROM HISTORY_LOGIN h  " +
+                    "	INNER JOIN USER u ON h.username = u.username " +
+                    "	LEFT JOIN MESSAGE m ON m.sender = u.username AND m.sent_time BETWEEN h.login_time AND h.logout_time " +
+                    "	GROUP BY u.username, u.fullname, u.creation_time, h.login_time, h.logout_time, m.to_user, m.to_group) AS res " +
+                    "GROUP BY username, fullname, creation_time ";
             ResultSet rs = stmt.executeQuery(sql);
+
+            List<Object[]> rows = new ArrayList<>();
+            int i  = 1;
+            while(rs.next()){
+                //Retrieve by column name
+                String username = rs.getString("username");
+                String fullname = rs.getString("fullname");
+                Date create_time = rs.getDate("creation_time");
+                Timestamp timestamp = new Timestamp(create_time.getTime());
+
+                LocalDateTime localDateTime = timestamp.toLocalDateTime();
+//                LocalDate localDate = ((java.sql.Date) create_time).toLocalDate();
+                DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-MM-yyyy H:m:s");
+                String format_time = localDateTime.format(formatter);
+
+                int session_count = rs.getInt("session_count");
+                int partner_count = rs.getInt("partner_count");
+                int group_count = rs.getInt("group_count");
+                Object[] row = {i,username , fullname, format_time, session_count, partner_count, group_count};
+                // Add the row to the list
+                rows.add(row);
+                i++;
+            }
+
+            rs.close();
+            stmt.close();
+
+            Object[][] data = new Object[rows.size()][];
+            rows.toArray(data);
+
+            return data;
+        }catch(SQLException se){
+            //Handle errors for JDBC
+            se.printStackTrace();
+        }catch(Exception e){ //Handle errors for Class.forName
+            e.printStackTrace();
+        }
+        return null;
+    }
+
+    Object[][] searchActiveUser(String start_date, String end_date, String name, String session, String option){
+        try{
+            System.out.println(option);
+
+            String sql = "SELECT username, fullname, creation_time, " +
+                    " COUNT(DISTINCT login_time) as session_count, " +
+                    " COUNT(DISTINCT to_user) as partner_count, " +
+                    " COUNT(DISTINCT to_group) as group_count " +
+                    "FROM( " +
+                    "	SELECT u.username, u.fullname, u.creation_time, h.login_time, h.logout_time,  " +
+                    "	CASE  " +
+                    "       WHEN m.to_group > 0 THEN null " +
+                    "       ELSE m.to_user " +
+                    "    END as to_user, m.to_group " +
+                    "	FROM HISTORY_LOGIN h  " +
+                    "	INNER JOIN USER u ON h.username = u.username " +
+                    "	LEFT JOIN MESSAGE m ON m.sender = u.username AND m.sent_time BETWEEN h.login_time AND h.logout_time " +
+                    "	WHERE h.login_time > ? AND h.logout_time < ?  " +
+                    "	AND u.fullname LIKE ? " +
+                    "	GROUP BY u.username, u.fullname, u.creation_time, h.login_time, h.logout_time, m.to_user, m.to_group) AS res " +
+                    "GROUP BY username, fullname, creation_time ";
+
+            if (!session.isEmpty()){
+                switch (option){
+                    case "Equal to":
+                        sql += "HAVING session_count = ? ";
+                        break;
+                    case "Greater than":
+                        sql += "HAVING session_count > ? ";
+                        break;
+                    case "Less than":
+                        sql += "HAVING session_count < ? ";
+                        break;
+                }
+            }
+
+            PreparedStatement stmt;
+            stmt = conn.prepareStatement(sql);
+            stmt.setString(1, start_date);
+            stmt.setString(2, end_date);
+            stmt.setString(3, "%" + name + "%");
+            if (!session.isEmpty()){
+                stmt.setString(4, session);
+            }
+
+            ResultSet rs = stmt.executeQuery();
+
             List<Object[]> rows = new ArrayList<>();
             int i  = 1;
             while(rs.next()){
@@ -393,7 +497,6 @@ public class AdminController {
                 //Retrieve by column name
                 int month = rs.getInt("month");
                 int user_count = rs.getInt("user_count");
-                System.out.println(month + " " + user_count);
                 user_count_month[month-1] = user_count;
 
             }
@@ -410,4 +513,3 @@ public class AdminController {
         return null;
     }
 }
-
