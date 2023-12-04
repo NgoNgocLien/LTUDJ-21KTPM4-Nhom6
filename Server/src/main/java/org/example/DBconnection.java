@@ -50,4 +50,26 @@ public class DBconnection {
         return false;
     }
 
+    public boolean signup(String[] parts) throws SQLException {
+        Statement stm = connection.createStatement();
+        String sql = "USE messenger_db";
+        stm.executeUpdate(sql);
+        try {
+            PreparedStatement preparedStatement = connection.prepareStatement("INSERT INTO user (username, password, fullname, address, birthdate, gender, email, creation_time, is_locked) VALUES (?, ?, ?, ?, ?, ?, ?, 2023-12-25, 0)");
+            preparedStatement.setString(1, parts[0]);
+            preparedStatement.setString(2, parts[1]);
+            preparedStatement.setString(3, parts[2]);
+            preparedStatement.setString(4, parts[3]);
+            preparedStatement.setString(5, parts[4]);
+            preparedStatement.setString(6, parts[5]);
+            preparedStatement.setString(7, parts[6]);
+
+
+            ResultSet resultSet = preparedStatement.executeQuery();
+            return true;
+        } catch (SQLException se) {
+            System.out.println(se.getErrorCode());
+        }
+        return false;
+    }
 }

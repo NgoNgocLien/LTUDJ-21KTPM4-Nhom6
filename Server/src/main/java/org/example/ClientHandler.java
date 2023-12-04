@@ -6,6 +6,7 @@ import java.io.OutputStream;
 import java.io.PrintWriter;
 import java.net.Socket;
 import java.sql.SQLException;
+import java.util.Arrays;
 import java.util.Scanner;
 
 public class ClientHandler implements Runnable {
@@ -34,14 +35,37 @@ public class ClientHandler implements Runnable {
                 // Read data from the client
                 byte[] buffer = new byte[1024];
                 int bytesRead = inputStream.read(buffer);
-                String clientMessage = new String(buffer, 0, bytesRead);
-                String[] parts = clientMessage.split(":");
-                String response_login;
-                if (dbcon.login(parts[0], parts[1])) {
-                    response_login = "true";
-                } else
-                    response_login = "false";
-                outputStream.write(response_login.getBytes());
+                String method = new String(buffer, 0, bytesRead);
+                System.out.println("check");
+                System.out.println(method);
+                System.out.println("check");
+
+                outputStream.write("ok".getBytes());
+                if (method.equals("login")) {
+                    System.out.println("user wnt to login");
+                    bytesRead = inputStream.read(buffer);
+                    String clientMessage = new String(buffer, 0, bytesRead);
+                    System.out.println(clientMessage);
+                    String[] parts = clientMessage.split(":");
+                    String response_login;
+                    if (dbcon.login(parts[0], parts[1]))
+                        response_login = "true";
+                    else
+                        response_login = "false";
+                    outputStream.write(response_login.getBytes());
+                } else if (method.equals("signup")) {
+                    System.out.println("user wnt to signup");
+                    bytesRead = inputStream.read(buffer);
+                    String clientMessage = new String(buffer, 0, bytesRead);
+                    System.out.println(clientMessage);
+                    String[] parts = clientMessage.split("\n");
+                    System.out.println(Arrays.toString(parts));
+                    String response_signup;
+                    if (dbcon.signup(parts))
+                        response_signup = "true";
+                    else response_signup = "false";
+                    outputStream.write(response_signup.getBytes());
+                }
 
 
                 // Send a response back to the client

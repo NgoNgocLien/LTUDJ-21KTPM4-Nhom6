@@ -2,10 +2,13 @@ package org.example.views;
 
 import org.example.models.DemoUser;
 import org.example.models.User;
+import org.example.utilities.Client_Socket;
 import org.example.utilities.LoginWorker;
 import javax.swing.*;
 import java.awt.*;
 import java.io.IOException;
+import java.io.InputStream;
+import java.io.OutputStream;
 import java.net.Socket;
 import java.util.ArrayList;
 
@@ -70,7 +73,13 @@ public class LoginSignUpScreen extends JFrame {
                 throw new RuntimeException(ex);
             }
         });
-        signUpButton.addActionListener(e -> signUp(socket));
+        signUpButton.addActionListener(e -> {
+            try {
+                signUp(socket);
+            } catch (IOException ex) {
+                throw new RuntimeException(ex);
+            }
+        });
         forgotButton.addActionListener(e -> forgot(socket));
     }
 
@@ -79,7 +88,19 @@ public class LoginSignUpScreen extends JFrame {
         char[] passwordChars = passwordField.getPassword();
         String password = new String(passwordChars);
 
+        OutputStream outputStream = socket.getOutputStream();
+        String method = "login";
+        outputStream.write(method.getBytes());
+
+        InputStream inputStream = socket.getInputStream();
+//        byte[] buffer = new byte[1024];
+//        int bytesRead = inputStream.read(buffer);
+//        String test = new String(buffer, 0, bytesRead);
+//        System.out.println(test);
+        inputStream.readNBytes(2);
+
         if (LoginWorker.loginRequest(username, password, socket)) {
+//            InputStream inputStream = socket.getInputStream();
             ArrayList<DemoUser> users = new ArrayList<DemoUser>();
             users.add(new DemoUser("John Doe", "@johndoe"));
             users.add(new DemoUser("Jane Doe", "@janedoe"));
@@ -94,10 +115,16 @@ public class LoginSignUpScreen extends JFrame {
         } else JOptionPane.showMessageDialog(this, "Login failed!!!");
     }
 
-    private void signUp(Socket socket) {
+    private void signUp(Socket socket) throws IOException {
+        OutputStream outputStream = socket.getOutputStream();
+        InputStream inputStream = socket.getInputStream();
+        String method = "signup";
+        outputStream.write(method.getBytes());
+        inputStream.readNBytes(2);
 
         // Perform sign up logic here (e.g., create a new user)
-        JOptionPane.showMessageDialog(this, "Sign Up not implemented yet!");
+        SwingUtilities.invokeLater(() -> new SignUpScreen(socket).setVisible(true));
+
     }
 
     private void forgot(Socket socket) {
