@@ -45,7 +45,7 @@ public class MainChatView extends JFrame {
 
     public static void main(String[] args) {
         try {
-            String username = "hthang";
+            String username = "ncluan";
             DatabaseHandler DB = new DatabaseHandler();
             User currentUser = DB.getUser(username);
 
