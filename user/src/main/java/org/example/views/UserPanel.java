@@ -13,7 +13,7 @@ public class UserPanel extends JPanel {
     private JLabel fullnameLabel;
     private JLabel subLabel;
 
-    public UserPanel(String fullname, String subtitle) {
+    public UserPanel(String fullname, String subtitle, boolean seen) {
         setPreferredSize(new Dimension(Constants.USER_PANEL_WIDTH, Constants.USER_PANEL_HEIGHT));
         setBackground(null);
         setLayout(new FlowLayout(FlowLayout.CENTER, 0, -4));
@@ -31,6 +31,12 @@ public class UserPanel extends JPanel {
         subLabel.setForeground(Color.GRAY);
         subLabel.setFont(Constants.SMALL_FONT);
         // subLabel.setAlignmentY(Component.TOP_ALIGNMENT);
+
+        if (!seen) {
+            fullnameLabel.setFont(Constants.NORMAL_BOLD_FONT);
+            subLabel.setFont(Constants.SMALL_BOLD_FONT);
+            subLabel.setForeground(Color.BLACK);
+        }
 
         add(fullnameLabel);
         add(subLabel);

@@ -14,7 +14,7 @@ public class UserListPanel extends JPanel {
     private JScrollPane userListScrollPane;
     private ArrayList<User> users;
 
-    public UserListPanel(ArrayList<User> users) {
+    public UserListPanel(ArrayList<ArrayList<Object>> userList) {
         setPreferredSize(new Dimension(Constants.USER_LIST_PANEL_WIDTH, Constants.USER_LIST_PANEL_HEIGHT));
         setBackground(null);
         setBorder(BorderFactory.createMatteBorder(0, 1, 0, 1, Color.BLACK));
@@ -23,25 +23,19 @@ public class UserListPanel extends JPanel {
 
         searchPanel = new SearchPanel();
 
-        buildUserListPanel(users);
+        buildUserListPanel(userList);
 
         add(searchPanel, BorderLayout.NORTH);
         add(userListScrollPane, BorderLayout.CENTER);
     }
 
-    private void buildUserListPanel(ArrayList<User> users) {
+    private void buildUserListPanel(ArrayList<ArrayList<Object>> userList) {
         userListPanel = new JPanel();
-        userListPanel.setPreferredSize(new Dimension(Constants.USER_PANEL_WIDTH, Constants.USER_PANEL_HEIGHT * users.size() * 3));
+        userListPanel.setPreferredSize(new Dimension(Constants.USER_PANEL_WIDTH, Constants.USER_PANEL_HEIGHT * userList.size()));
         userListPanel.setBackground(null);
         userListPanel.setLayout(new FlowLayout(FlowLayout.CENTER, 0, 0));
-        for (int i = 0; i < users.size(); i++) {
-            userListPanel.add(new UserPanel(users.get(i).getFullname(), users.get(i).getUsername()));
-        }
-        for (int i = 0; i < users.size(); i++) {
-            userListPanel.add(new UserPanel(users.get(i).getFullname(), users.get(i).getUsername()));
-        }
-        for (int i = 0; i < users.size(); i++) {
-            userListPanel.add(new UserPanel(users.get(i).getFullname(), users.get(i).getUsername()));
+        for (ArrayList<Object> objects : userList) {
+            userListPanel.add(new UserPanel((String) objects.get(0), (String) objects.get(1), (Boolean) objects.get(2)));
         }
 
         userListScrollPane = new JScrollPane(userListPanel);

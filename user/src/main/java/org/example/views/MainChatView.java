@@ -1,11 +1,16 @@
 package org.example.views;
 
+import org.example.models.RecentChat;
 import org.example.models.User;
 import org.example.utilities.Constants;
+import org.example.utilities.DatabaseHandler;
 
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.*;
+import java.sql.Array;
+import java.sql.SQLException;
+import java.time.LocalDate;
 import java.util.ArrayList;
 
 public class MainChatView extends JFrame {
@@ -14,7 +19,7 @@ public class MainChatView extends JFrame {
     private JPanel sidePanel;
     private JPanel chatPanel;
 
-    public MainChatView(ArrayList<User> users) {
+    public MainChatView(ArrayList<ArrayList<Object>> recentChats) {
         // try {
         //     // set windows look and feel
         //     UIManager.setLookAndFeel("com.sun.java.swing.plaf.windows.WindowsLookAndFeel");
@@ -28,30 +33,30 @@ public class MainChatView extends JFrame {
         setLayout(new BorderLayout());
         setBackground(Color.WHITE);
 
-        sidePanel = new SidePanel(users);
-
+        sidePanel = new SidePanel(recentChats);
         chatPanel = new ChatPanel("John Doe", "johndoe", "Online", true);
-        // chatPanel.setBackground(Color.GREEN);
-
-        // chatPanel = new ChatPanel();
 
         add(sidePanel, BorderLayout.WEST);
         add(chatPanel, BorderLayout.CENTER);
 
+        setExtendedState(JFrame.MAXIMIZED_BOTH);
         setVisible(true);
     }
 
     public static void main(String[] args) {
-        ArrayList<User> users = new ArrayList<User>();
-        users.add(new User("John Doe", "@johndoe"));
-        users.add(new User("Jane Doe", "@janedoe"));
-        users.add(new User("John Smith", "@johnsmith"));
-        users.add(new User("Jane Smith", "@janesmith"));
-        users.add(new User("John Doe", "@johndoe"));
-        users.add(new User("Jane Doe", "@janedoe"));
-        users.add(new User("John Smith", "@johnsmith"));
-        users.add(new User("Jane Smith", "@janesmith"));
+        try {
+            String username = "hthang";
+            DatabaseHandler DB = new DatabaseHandler();
+            User currentUser = DB.getUser(username);
 
-        new MainChatView(users);
+            ArrayList<ArrayList<Object>> recentChats = DB.getRecentChat(username).getChatList();
+            new MainChatView(recentChats);
+
+            DB.clearEnvironment();
+        } catch (SQLException se) {
+            se.printStackTrace();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 }
