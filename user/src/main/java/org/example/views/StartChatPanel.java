@@ -15,7 +15,7 @@ public class StartChatPanel extends JPanel {
     private JPanel statementPanel;
 
     public StartChatPanel(String fullname, String username, boolean isFriend) {
-        setLayout(new GridLayout(5, 1));
+        setLayout(new GridLayout(6, 1));
         setBackground(null);
 
         fullnameLabel = new JLabel(fullname);
@@ -53,5 +53,6 @@ public class StartChatPanel extends JPanel {
         add(usernamePanel);
         add(new JPanel());
         add(statementPanel);
+        add(new JPanel());
     }
 }

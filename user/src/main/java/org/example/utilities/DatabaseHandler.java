@@ -89,10 +89,11 @@ public class DatabaseHandler {
     }
 
     public RecentChat getRecentChat(String username) throws SQLException {
-        String sql = "WITH RankedMessages AS ( " +
+        String sql = "(WITH RankedMessages AS (" +
                 "    SELECT " +
                 "        M.sender, " +
                 "        M.to_user, " +
+                "        M.to_group, " +
                 "        M.content, " +
                 "        M.sent_time, " +
                 "        M.seen_time, " +
@@ -100,19 +101,45 @@ public class DatabaseHandler {
                 "                          ORDER BY M.sent_time DESC) AS row_num " +
                 "    FROM MESSAGE M " +
                 "    INNER JOIN FRIEND F ON ((M.sender = F.username1 AND M.to_user = F.username2) OR (M.sender = F.username2 AND M.to_user = F.username1)) " +
-                "    WHERE (F.username1 = ? AND M.sent_time > F.user1_deleteChat) " +
-                "       OR (F.username2 = ? AND M.sent_time > F.user2_deleteChat) " +
+                "    WHERE M.to_group IS NULL AND ((F.username1 = ? AND M.sent_time > F.user1_deleteChat) OR (F.username2 = ? AND M.sent_time > F.user2_deleteChat)) " +
                 ") " +
                 "SELECT " +
                 "    R.sender, " +
                 "    R.to_user, " +
+                "    R.to_group, " +
                 "    R.content, " +
                 "    R.seen_time, " +
-                "    U.fullname AS friend_name " +
+                "    U.fullname AS chat_name " +
                 "FROM RankedMessages R " +
-                "JOIN USER U ON ((U.username != ? AND R.to_user = U.username) OR (U.username != ? AND R.sender = U.username)) " +
+                "JOIN USER U ON (U.username != ? AND (R.to_user = U.username OR R.sender = U.username)) " +
                 "WHERE R.row_num = 1 " +
-                "ORDER BY R.sent_time DESC;";
+                "ORDER BY R.sent_time DESC) " +
+                "UNION " +
+                "(WITH RankedMessages AS (" +
+                "    SELECT " +
+                "        M.sender, " +
+                "        M.to_user, " +
+                "        M.to_group, " +
+                "        M.content, " +
+                "        M.sent_time, " +
+                "        M.seen_time, " +
+                "        ROW_NUMBER() OVER (PARTITION BY M.to_group " +
+                "                          ORDER BY M.sent_time DESC) AS row_num " +
+                "    FROM MESSAGE M " +
+                "    INNER JOIN GROUP_MEMBER GM ON (GM.username = ? AND GM.id_group = M.to_group) " +
+                "    WHERE M.sent_time > GM.delete_history " +
+                ")" +
+                "SELECT " +
+                "    R.sender, " +
+                "    R.to_user, " +
+                "    R.to_group, " +
+                "    R.content, " +
+                "    R.seen_time, " +
+                "    G.group_name AS chat_name " +
+                "FROM RankedMessages R " +
+                "JOIN GROUP_CHAT G ON (G.id_group = R.to_group) " +
+                "WHERE R.row_num = 1 " +
+                "ORDER BY R.sent_time DESC);";
         PreparedStatement stmt = conn.prepareStatement(sql);
         stmt.setString(1, username);
         stmt.setString(2, username);
@@ -123,17 +150,21 @@ public class DatabaseHandler {
         ResultSet rs = stmt.executeQuery();
         RecentChat chats = new RecentChat(username);
         while (rs.next()) {
-            String sender, to_user, content, friend_name;
+            String sender, to_user, to_group, content, chat_name;
             boolean seen;
             sender = rs.getString("sender");
             to_user = rs.getString("to_user");
+
             content = rs.getString("content");
-            seen = rs.getTimestamp("seen_time") != null;
-            friend_name = rs.getString("friend_name");
-            if (sender.equals(username))
-                chats.addChat(friend_name, "You: " + content, seen);
+            if (to_user.equals(username)) // whether the user saw the latest message from sender
+                seen = rs.getTimestamp("seen_time") != null;
             else
-                chats.addChat(friend_name, content, seen);
+                seen = true;
+            chat_name = rs.getString("chat_name");
+            if (sender.equals(username))
+                chats.addChat(chat_name, "You: " + content, seen);
+            else
+                chats.addChat(chat_name, sender + ": " + content, seen);
         }
         return chats;
     }

@@ -28,4 +28,6 @@ public class ChatPanel extends JPanel {
         add(messageScrollPane, BorderLayout.CENTER);
         add(inputPanel, BorderLayout.SOUTH);
     }
+
+
 }
