@@ -20,12 +20,12 @@ public class MainChatView extends JFrame {
     private JPanel chatPanel;
 
     public MainChatView(ArrayList<ArrayList<Object>> recentChats) {
-        // try {
-        //     // set windows look and feel
-        //     UIManager.setLookAndFeel("com.sun.java.swing.plaf.windows.WindowsLookAndFeel");
-        // } catch (Exception e) {
-        //     System.out.println("Error setting Windows look and feel: " + e);
-        // }
+//         try {
+//             // set windows look and feel
+//             UIManager.setLookAndFeel("com.sun.java.swing.plaf.windows.WindowsLookAndFeel");
+//         } catch (Exception e) {
+//             System.out.println("Error setting Windows look and feel: " + e);
+//         }
 
         setTitle(Constants.APP_TITLE);
         setSize(Constants.WINDOW_WIDTH, Constants.WINDOW_HEIGHT);
@@ -50,7 +50,7 @@ public class MainChatView extends JFrame {
             User currentUser = DB.getUser(username);
 
             ArrayList<ArrayList<Object>> recentChats = DB.getRecentChat(username).getChatList();
-            new MainChatView(recentChats);
+            MainChatView mainChatView = new MainChatView(recentChats);
 
             DB.clearEnvironment();
         } catch (SQLException se) {
