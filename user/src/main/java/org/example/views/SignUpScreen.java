@@ -89,7 +89,7 @@ public class SignUpScreen extends JFrame {
 
         gbc.gridx = 0;
         gbc.gridy = 5;
-        add(new JLabel("Birthdate:"), gbc);
+        add(new JLabel("Birthdate:(yyyy-mm-dd)"), gbc);
 
         gbc.gridx = 1;
         gbc.gridy = 5;
@@ -127,8 +127,14 @@ public class SignUpScreen extends JFrame {
         else if (jFemale.isSelected()) gender = "female";
         String birthdate = birthdateField.getText();
         String email = emailField.getText();
-        SignupWorker.signupRequest(username, password, fullname, address, gender, birthdate, email, socket);
+        if(SignupWorker.signupRequest(username, password, fullname, address, gender, birthdate, email, socket)){
+             SwingUtilities.invokeLater(() ->{
+                 JOptionPane.showMessageDialog(this,"Sign up successfully");
+                 this.setVisible(false);
+                 this.dispose();
+             });
+        } else {
+            JOptionPane.showMessageDialog(this, "Sign up failed");
+        }
     }
-
-
 }

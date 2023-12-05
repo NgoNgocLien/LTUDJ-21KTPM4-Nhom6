@@ -55,17 +55,24 @@ public class DBconnection {
         String sql = "USE messenger_db";
         stm.executeUpdate(sql);
         try {
-            PreparedStatement preparedStatement = connection.prepareStatement("INSERT INTO user (username, password, fullname, address, birthdate, gender, email, creation_time, is_locked) VALUES (?, ?, ?, ?, ?, ?, ?, 2023-12-25, 0)");
+            PreparedStatement preparedStatement = connection.prepareStatement("INSERT INTO user (username, password, fullname, address, gender, birthdate, email, creation_time, is_locked) VALUES (?, ?, ?, ?, ?, STR_TO_DATE(?, '%Y-%m-%d'), ?, now(), 0)");
+//            username
             preparedStatement.setString(1, parts[0]);
+            //password
             preparedStatement.setString(2, parts[1]);
+            //fullname
             preparedStatement.setString(3, parts[2]);
+            //address
             preparedStatement.setString(4, parts[3]);
-            preparedStatement.setString(5, parts[4]);
+            //gender
+            if (Objects.equals(parts[4], "male")) preparedStatement.setInt(5, 1);
+            else preparedStatement.setInt(5, 0);
+            //birthdate
             preparedStatement.setString(6, parts[5]);
+            //email
             preparedStatement.setString(7, parts[6]);
 
-
-            ResultSet resultSet = preparedStatement.executeQuery();
+            preparedStatement.executeUpdate();
             return true;
         } catch (SQLException se) {
             System.out.println(se.getErrorCode());

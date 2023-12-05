@@ -93,14 +93,9 @@ public class LoginSignUpScreen extends JFrame {
         outputStream.write(method.getBytes());
 
         InputStream inputStream = socket.getInputStream();
-//        byte[] buffer = new byte[1024];
-//        int bytesRead = inputStream.read(buffer);
-//        String test = new String(buffer, 0, bytesRead);
-//        System.out.println(test);
         inputStream.readNBytes(2);
 
         if (LoginWorker.loginRequest(username, password, socket)) {
-//            InputStream inputStream = socket.getInputStream();
             ArrayList<DemoUser> users = new ArrayList<DemoUser>();
             users.add(new DemoUser("John Doe", "@johndoe"));
             users.add(new DemoUser("Jane Doe", "@janedoe"));
@@ -111,7 +106,6 @@ public class LoginSignUpScreen extends JFrame {
                 this.setVisible(false);
                 this.dispose(); // Release resources associated with the frame
             });
-//            new MainChatView(users);
         } else JOptionPane.showMessageDialog(this, "Login failed!!!");
     }
 

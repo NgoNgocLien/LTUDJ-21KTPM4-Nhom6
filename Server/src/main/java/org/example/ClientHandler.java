@@ -36,6 +36,7 @@ public class ClientHandler implements Runnable {
                 byte[] buffer = new byte[1024];
                 int bytesRead = inputStream.read(buffer);
                 String method = new String(buffer, 0, bytesRead);
+
                 System.out.println("check");
                 System.out.println(method);
                 System.out.println("check");
@@ -53,18 +54,25 @@ public class ClientHandler implements Runnable {
                     else
                         response_login = "false";
                     outputStream.write(response_login.getBytes());
+
                 } else if (method.equals("signup")) {
                     System.out.println("user wnt to signup");
                     bytesRead = inputStream.read(buffer);
                     String clientMessage = new String(buffer, 0, bytesRead);
-                    System.out.println(clientMessage);
                     String[] parts = clientMessage.split("\n");
+
                     System.out.println(Arrays.toString(parts));
-                    String response_signup;
-                    if (dbcon.signup(parts))
-                        response_signup = "true";
-                    else response_signup = "false";
-                    outputStream.write(response_signup.getBytes());
+                    if (parts.length < 7) {
+                        outputStream.write("false".getBytes());
+                    } else {
+                        String response_signup;
+                        if (dbcon.signup(parts))
+                            response_signup = "true";
+                        else response_signup = "false";
+                        System.out.println("response");
+                        System.out.println(response_signup);
+                        outputStream.write(response_signup.getBytes());
+                    }
                 }
 
 
