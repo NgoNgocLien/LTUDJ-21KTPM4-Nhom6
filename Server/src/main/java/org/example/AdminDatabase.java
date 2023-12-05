@@ -70,5 +70,127 @@ public class AdminDatabase {
         return null;
     }
 
+    Object[][] getAllAdmin(String selected_id){
+        try{
+            String sql;
+            sql = "SELECT gm.username, u.fullname "
+                    + "FROM GROUP_MEMBER gm "
+                    + "INNER JOIN GROUP_CHAT gc ON gc.id_group = gm.id_group "
+                    + "INNER JOIN USER u ON u.username = gm.username "
+                    + "WHERE gm.id_group = ? AND gm.is_admin = 1";
 
+            PreparedStatement stmt = connection.prepareStatement(sql);
+            stmt.setString(1, selected_id);
+            ResultSet rs = stmt.executeQuery();
+
+            List<Object[]> rows = new ArrayList<>();
+
+            while(rs.next()){
+                //Retrieve by column name
+                String username = rs.getString("username");
+                String fullname = rs.getString("fullname");
+
+                Object[] row = {username, fullname};
+                rows.add(row);
+            }
+
+            rs.close();
+            stmt.close();
+
+            Object[][] data = new Object[rows.size()][];
+            rows.toArray(data);
+
+            return data;
+        }catch(SQLException se){
+            //Handle errors for JDBC
+            se.printStackTrace();
+        }catch(Exception e){ //Handle errors for Class.forName
+            e.printStackTrace();
+        }
+        return null;
+    }
+
+    Object[][] getAllMember(String selected_id){
+        try{
+            String sql;
+            sql = "SELECT gm.username, u.fullname "
+                    + "FROM GROUP_MEMBER gm "
+                    + "INNER JOIN GROUP_CHAT gc ON gc.id_group = gm.id_group "
+                    + "INNER JOIN USER u ON u.username = gm.username "
+                    + "WHERE gm.id_group = ? AND gm.is_admin = 0";
+
+            PreparedStatement stmt = connection.prepareStatement(sql);
+            stmt.setString(1, selected_id);
+            ResultSet rs = stmt.executeQuery();
+
+            List<Object[]> rows = new ArrayList<>();
+
+            while(rs.next()){
+                //Retrieve by column name
+                String username = rs.getString("username");
+                String fullname = rs.getString("fullname");
+
+                Object[] row = {username, fullname};
+                rows.add(row);
+            }
+
+            rs.close();
+            stmt.close();
+
+            Object[][] data = new Object[rows.size()][];
+            rows.toArray(data);
+
+            return data;
+        }catch(SQLException se){
+            //Handle errors for JDBC
+            se.printStackTrace();
+        }catch(Exception e){ //Handle errors for Class.forName
+            e.printStackTrace();
+        }
+        return null;
+    }
+
+    Object[][] searchGroupName(String text){
+        try{
+            String sql;
+            sql = "SELECT id_group, group_name, create_time "
+                    + "FROM GROUP_CHAT "
+                    + "WHERE group_name LIKE ?";
+
+            PreparedStatement stmt = connection.prepareStatement(sql);
+            stmt.setString(1, "%" + text + "%");
+            ResultSet rs = stmt.executeQuery();
+
+            List<Object[]> rows = new ArrayList<>();
+
+            while(rs.next()){
+                int id_group = rs.getInt("id_group");
+                String group_name = rs.getString("group_name");
+                Date create_time = rs.getDate("create_time");
+                Timestamp timestamp = new Timestamp(create_time.getTime());
+
+                LocalDateTime localDateTime = timestamp.toLocalDateTime();
+//                LocalDate localDate = ((java.sql.Date) create_time).toLocalDate();
+                DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-MM-yyyy H:m:s");
+                String format_time = localDateTime.format(formatter);
+
+                Object[] row = {id_group, group_name, format_time};
+                rows.add(row);
+            }
+
+            rs.close();
+            stmt.close();
+
+            Object[][] data = new Object[rows.size()][];
+            rows.toArray(data);
+
+            return data;
+        }catch(SQLException se){
+            //Handle errors for JDBC
+            se.printStackTrace();
+        }catch(Exception e){ //Handle errors for Class.forName
+            e.printStackTrace();
+        }
+        return null;
+    }
 }

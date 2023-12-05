@@ -20,14 +20,13 @@ public class AdminHandler implements Runnable {
     @Override
     public void run() {
         try {
-            System.out.println("check*");
             AdminDatabase dbcon = new AdminDatabase();
             dbcon.connect();
-            System.out.println("check0");
             while (true) {
 //                 Get the input and output streams of the client socket
                 InputStream inputStream = clientSocket.getInputStream();
                 OutputStream outputStream = clientSocket.getOutputStream();
+                ObjectOutputStream objectOutputStream = new ObjectOutputStream(clientSocket.getOutputStream());
 
                 System.out.println("check1");
                 // Read data from the client
@@ -36,20 +35,18 @@ public class AdminHandler implements Runnable {
                 String method = new String(buffer, 0, bytesRead);
                 System.out.println("check2");
                 System.out.println(method);
-                System.out.println("check3");
-
-//                outputStream.write("ok".getBytes());
 
                 switch (method){
-                    case "getAllGroup":
+                    case "getAllGroup":{
                         System.out.println("Admin get all group");
 
-                        Object[][] data = dbcon.getAllGroup();
-                        ObjectOutputStream objectOutputStream = new ObjectOutputStream(clientSocket.getOutputStream());
-                        objectOutputStream.writeObject(data);
+                        Object[][] data1 = dbcon.getAllGroup();
+//                        ObjectOutputStream objectOutputStream1 = new ObjectOutputStream(clientSocket.getOutputStream());
+                        objectOutputStream.reset();
+                        objectOutputStream.writeObject(data1);
                         objectOutputStream.flush();
 
-                        for (Object[] row : data) {
+                        for (Object[] row : data1) {
                             for (Object element : row) {
                                 System.out.print(element + " ");
                             }
@@ -58,13 +55,89 @@ public class AdminHandler implements Runnable {
 
                         System.out.println("Data sent to client.");
 
-                        objectOutputStream.close();
                         break;
+                    }
+
+                    case "getAllAdmin":{
+                        System.out.println("Admin get all admin");
+                        buffer = new byte[1024];
+                        bytesRead = inputStream.read(buffer);
+                        String selected_id = new String(buffer, 0, bytesRead);
+
+//                        String selected_id = "1";
+                        Object[][] data2 = dbcon.getAllAdmin(selected_id);
+//                        ObjectOutputStream objectOutputStream2 = new ObjectOutputStream(clientSocket.getOutputStream());
+                        objectOutputStream.reset();
+                        objectOutputStream.writeObject(data2);
+                        objectOutputStream.flush();
+
+                        for (Object[] row : data2) {
+                            for (Object element : row) {
+                                System.out.print(element + " ");
+                            }
+                            System.out.println();
+                        }
+
+                        System.out.println("Data sent to client.");
+
+                        break;
+                    }
+
+                    case "getAllMember":{
+                        System.out.println("Admin get all member");
+                        buffer = new byte[1024];
+                        bytesRead = inputStream.read(buffer);
+                        String selected_id = new String(buffer, 0, bytesRead);
+
+//                        String selected_id = "1";
+                        Object[][] data2 = dbcon.getAllMember(selected_id);
+                        objectOutputStream.reset();
+                        objectOutputStream.writeObject(data2);
+                        objectOutputStream.flush();
+
+                        for (Object[] row : data2) {
+                            for (Object element : row) {
+                                System.out.print(element + " ");
+                            }
+                            System.out.println();
+                        }
+
+                        System.out.println("Data sent to client.");
+
+                        break;
+                    }
+
+                    case "searchGroupName":{
+                        System.out.println("Admin search group name");
+                        buffer = new byte[1024];
+                        bytesRead = inputStream.read(buffer);
+                        String name = new String(buffer, 0, bytesRead);
+
+                        Object[][] data2 = dbcon.searchGroupName(name);
+
+                        objectOutputStream.reset();
+                        objectOutputStream.writeObject(data2);
+                        objectOutputStream.flush();
+
+                        for (Object[] row : data2) {
+                            for (Object element : row) {
+                                System.out.print(element + " ");
+                            }
+                            System.out.println();
+                        }
+
+                        System.out.println("Data sent to client.");
+
+                        break;
+                    }
+
                 }
             }
         } catch (IOException | ClassNotFoundException e) {
             throw new RuntimeException(e);
-        } finally {
+        }
+        finally {
+            System.out.println("ok");
             input.close();
             output.close();
             try {

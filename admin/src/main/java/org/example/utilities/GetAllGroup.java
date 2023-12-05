@@ -23,9 +23,9 @@ public class GetAllGroup extends SwingWorker<Void, Void> {
         ObjectInputStream objectInputStream = new ObjectInputStream(socket.getInputStream());
         Object[][] data = (Object[][]) objectInputStream.readObject();
 
-
-        objectInputStream.close();
-
+//        objectInputStream.close();
+        if (socket.isClosed())
+            System.out.println("1");
         return data;
     }
 

@@ -6,9 +6,11 @@ import javax.swing.*;
 import java.io.IOException;
 import java.net.Socket;
 import java.util.*;
-import javax.swing.event.*;
 import java.text.*;
 
+import org.example.utilities.GetAllAdmin;
+import org.example.utilities.GetAllMember;
+import org.example.utilities.SearchGroupName;
 import org.jfree.chart.*;
 import org.jfree.chart.plot.*;
 import org.jfree.data.category.*;
@@ -366,7 +368,13 @@ public class AdminApp extends javax.swing.JFrame {
         searchButton.setPreferredSize(new java.awt.Dimension(57, 35));
         searchButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                searchButtonActionPerformed(evt);
+                try {
+                    searchButtonActionPerformed(evt);
+                } catch (IOException e) {
+                    throw new RuntimeException(e);
+                } catch (ClassNotFoundException e) {
+                    throw new RuntimeException(e);
+                }
             }
         });
 
@@ -404,7 +412,13 @@ public class AdminApp extends javax.swing.JFrame {
         groupTable.getTableHeader().setReorderingAllowed(false);
         groupTable.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
-                groupTableMouseClicked(evt);
+                try {
+                    groupTableMouseClicked(evt);
+                } catch (IOException e) {
+                    throw new RuntimeException(e);
+                } catch (ClassNotFoundException e) {
+                    throw new RuntimeException(e);
+                }
             }
         });
         groupScrollPane.setViewportView(groupTable);
@@ -488,7 +502,13 @@ public class AdminApp extends javax.swing.JFrame {
         viewAllGroupButton.setPreferredSize(new java.awt.Dimension(57, 35));
         viewAllGroupButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                viewAllGroupButtonActionPerformed(evt);
+                try {
+                    viewAllGroupButtonActionPerformed(evt);
+                } catch (IOException e) {
+                    throw new RuntimeException(e);
+                } catch (ClassNotFoundException e) {
+                    throw new RuntimeException(e);
+                }
             }
         });
 
@@ -1041,10 +1061,9 @@ public class AdminApp extends javax.swing.JFrame {
     }// </editor-fold>
 
     private void searchInputActionPerformed(java.awt.event.ActionEvent evt) {
-
     }
 
-    private void searchButtonActionPerformed(java.awt.event.ActionEvent evt) {
+    private void searchButtonActionPerformed(java.awt.event.ActionEvent evt) throws IOException, ClassNotFoundException {
         String text = searchInput.getText();
         System.out.println(text);
 
@@ -1055,7 +1074,7 @@ public class AdminApp extends javax.swing.JFrame {
             DefaultTableModel model = (DefaultTableModel) groupTable.getModel();
             model.setRowCount(0);
 
-            Object[][] data = adminController.searchGroupName(text);
+            Object[][] data = SearchGroupName.request(text, socket);
             for (Object[] row : data) {
                 model.addRow(row);
             }
@@ -1085,6 +1104,9 @@ public class AdminApp extends javax.swing.JFrame {
         for (Object[] row : data) {
             model.addRow(row);
         }
+
+//        if (socket.isClosed())
+//            System.out.println("2");
 
         // sort
         TableRowSorter<DefaultTableModel> sorter = new TableRowSorter<>(model);
@@ -1277,7 +1299,7 @@ public class AdminApp extends javax.swing.JFrame {
         reportMainPanel.setVisible(true);
     }
 
-    private void groupTableMouseClicked(java.awt.event.MouseEvent evt) {
+    private void groupTableMouseClicked(java.awt.event.MouseEvent evt) throws IOException, ClassNotFoundException {
         int index = groupTable.getSelectedRow();
         TableModel model = groupTable.getModel();
         int selected_id = Integer.parseInt(model.getValueAt(index, 0).toString());
@@ -1285,7 +1307,10 @@ public class AdminApp extends javax.swing.JFrame {
         DefaultTableModel adminModel = (DefaultTableModel) adminTable.getModel();
         adminModel.setRowCount(0);
 
-        Object[][] admin = adminController.getAllAdmin(selected_id);
+//        System.out.println("*");
+//        if (socket.isClosed())
+//            System.out.println("Close");
+        Object[][] admin = GetAllAdmin.request(Integer.toString(selected_id), socket);
         for (Object[] row : admin) {
             adminModel.addRow(row);
         }
@@ -1296,7 +1321,7 @@ public class AdminApp extends javax.swing.JFrame {
         DefaultTableModel memberModel = (DefaultTableModel) memberTable.getModel();
         memberModel.setRowCount(0);
 
-        Object[][] member = adminController.getAllMember(selected_id);
+        Object[][] member = GetAllMember.request(Integer.toString(selected_id), socket);
         for (Object[] row : member) {
             memberModel.addRow(row);
         }
@@ -1305,11 +1330,11 @@ public class AdminApp extends javax.swing.JFrame {
         memberTable.setPreferredScrollableViewportSize(memberTable.getPreferredSize());
     }
 
-    private void viewAllGroupButtonActionPerformed(java.awt.event.ActionEvent evt) {
+    private void viewAllGroupButtonActionPerformed(java.awt.event.ActionEvent evt) throws IOException, ClassNotFoundException {
         DefaultTableModel model = (DefaultTableModel) groupTable.getModel();
         model.setRowCount(0);
 
-        Object[][] data = adminController.getAllGroup();
+        Object[][] data = GetAllGroup.request(socket);
         for (Object[] row : data) {
             model.addRow(row);
         }
@@ -1751,7 +1776,7 @@ public class AdminApp extends javax.swing.JFrame {
         activeUserMonthlyChartPanel.add(chartPanel, BorderLayout.NORTH);
     }
 
-    Socket socket;
+    private Socket socket;
     private Object[][] currentActiveUserList;
     AdminController adminController = new AdminController();
     Color blue = new Color (23,70,162);
