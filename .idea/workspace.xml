@@ -5,11 +5,21 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="306fe892-f6be-4249-9327-1572c1ca91dd" name="Changes" comment="">
+      <change afterPath="$PROJECT_DIR$/Server/src/main/java/org/example/AdminDatabase.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Server/src/main/java/org/example/AdminHandler.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Server/src/main/java/org/example/AdminServer.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/admin/src/main/java/org/example/utilities/AdminSocket.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/admin/src/main/java/org/example/utilities/GetAllGroup.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Server/src/main/java/org/example/Main.java" beforeDir="false" afterPath="$PROJECT_DIR$/Server/src/main/java/org/example/Main.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Server/src/main/java/org/example/chatServer.java" beforeDir="false" afterPath="$PROJECT_DIR$/Server/src/main/java/org/example/chatServer.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Server/target/classes/org/example/ClientHandler.class" beforeDir="false" afterPath="$PROJECT_DIR$/Server/target/classes/org/example/ClientHandler.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Server/target/classes/org/example/DBconnection.class" beforeDir="false" afterPath="$PROJECT_DIR$/Server/target/classes/org/example/DBconnection.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Server/target/classes/org/example/Main.class" beforeDir="false" afterPath="$PROJECT_DIR$/Server/target/classes/org/example/Main.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Server/target/classes/org/example/chatServer.class" beforeDir="false" afterPath="$PROJECT_DIR$/Server/target/classes/org/example/chatServer.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/admin/src/main/java/org/example/AdminApp.java" beforeDir="false" afterPath="$PROJECT_DIR$/admin/src/main/java/org/example/AdminApp.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/admin/src/main/java/org/example/AdminController.java" beforeDir="false" afterPath="$PROJECT_DIR$/admin/src/main/java/org/example/AdminController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/admin/src/main/java/org/example/Main.java" beforeDir="false" afterPath="$PROJECT_DIR$/admin/src/main/java/org/example/Main.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/admin/target/classes/org/example/AdminApp$1.class" beforeDir="false" afterPath="$PROJECT_DIR$/admin/target/classes/org/example/AdminApp$1.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/admin/target/classes/org/example/AdminApp$10.class" beforeDir="false" afterPath="$PROJECT_DIR$/admin/target/classes/org/example/AdminApp$10.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/admin/target/classes/org/example/AdminApp$11.class" beforeDir="false" afterPath="$PROJECT_DIR$/admin/target/classes/org/example/AdminApp$11.class" afterDir="false" />
@@ -56,18 +66,35 @@
       <change beforePath="$PROJECT_DIR$/admin/target/classes/org/example/AdminController.java" beforeDir="false" afterPath="$PROJECT_DIR$/admin/target/classes/org/example/AdminController.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/admin/target/classes/org/example/Main$1.class" beforeDir="false" afterPath="$PROJECT_DIR$/admin/target/classes/org/example/Main$1.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/admin/target/classes/org/example/Main.class" beforeDir="false" afterPath="$PROJECT_DIR$/admin/target/classes/org/example/Main.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/admin/target/classes/org/example/Main.java" beforeDir="false" afterPath="$PROJECT_DIR$/admin/target/classes/org/example/Main.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/user/target/classes/org/example/Main.class" beforeDir="false" afterPath="$PROJECT_DIR$/user/target/classes/org/example/Main.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/user/target/classes/org/example/models/DemoUser.class" beforeDir="false" afterPath="$PROJECT_DIR$/user/target/classes/org/example/models/DemoUser.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/user/target/classes/org/example/models/Friends.class" beforeDir="false" afterPath="$PROJECT_DIR$/user/target/classes/org/example/models/Friends.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/user/target/classes/org/example/models/RecentChat.class" beforeDir="false" afterPath="$PROJECT_DIR$/user/target/classes/org/example/models/RecentChat.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/user/target/classes/org/example/models/User.class" beforeDir="false" afterPath="$PROJECT_DIR$/user/target/classes/org/example/models/User.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/user/target/classes/org/example/utilities/Client_Socket.class" beforeDir="false" afterPath="$PROJECT_DIR$/user/target/classes/org/example/utilities/Client_Socket.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/user/target/classes/org/example/utilities/Constants.class" beforeDir="false" afterPath="$PROJECT_DIR$/user/target/classes/org/example/utilities/Constants.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/user/target/classes/org/example/utilities/DatabaseHandler.class" beforeDir="false" afterPath="$PROJECT_DIR$/user/target/classes/org/example/utilities/DatabaseHandler.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/user/target/classes/org/example/utilities/LoginWorker.class" beforeDir="false" afterPath="$PROJECT_DIR$/user/target/classes/org/example/utilities/LoginWorker.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/user/target/classes/org/example/utilities/SignupWorker.class" beforeDir="false" afterPath="$PROJECT_DIR$/user/target/classes/org/example/utilities/SignupWorker.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/user/target/classes/org/example/views/ChatPanel.class" beforeDir="false" afterPath="$PROJECT_DIR$/user/target/classes/org/example/views/ChatPanel.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/user/target/classes/org/example/views/ChatnamePanel.class" beforeDir="false" afterPath="$PROJECT_DIR$/user/target/classes/org/example/views/ChatnamePanel.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/user/target/classes/org/example/views/IconPanel.class" beforeDir="false" afterPath="$PROJECT_DIR$/user/target/classes/org/example/views/IconPanel.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/user/target/classes/org/example/views/InputPanel.class" beforeDir="false" afterPath="$PROJECT_DIR$/user/target/classes/org/example/views/InputPanel.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/user/target/classes/org/example/views/LoginSignUpScreen.class" beforeDir="false" afterPath="$PROJECT_DIR$/user/target/classes/org/example/views/LoginSignUpScreen.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/user/target/classes/org/example/views/MainChatView.class" beforeDir="false" afterPath="$PROJECT_DIR$/user/target/classes/org/example/views/MainChatView.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/user/target/classes/org/example/views/MemberNamePanel.class" beforeDir="false" afterPath="$PROJECT_DIR$/user/target/classes/org/example/views/MemberNamePanel.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/user/target/classes/org/example/views/MessagePanel.class" beforeDir="false" afterPath="$PROJECT_DIR$/user/target/classes/org/example/views/MessagePanel.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/user/target/classes/org/example/views/MessageTimePanel.class" beforeDir="false" afterPath="$PROJECT_DIR$/user/target/classes/org/example/views/MessageTimePanel.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/user/target/classes/org/example/views/OneMessagePanel.class" beforeDir="false" afterPath="$PROJECT_DIR$/user/target/classes/org/example/views/OneMessagePanel.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/user/target/classes/org/example/views/SearchPanel.class" beforeDir="false" afterPath="$PROJECT_DIR$/user/target/classes/org/example/views/SearchPanel.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/user/target/classes/org/example/views/SeenPanel.class" beforeDir="false" afterPath="$PROJECT_DIR$/user/target/classes/org/example/views/SeenPanel.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/user/target/classes/org/example/views/SidePanel.class" beforeDir="false" afterPath="$PROJECT_DIR$/user/target/classes/org/example/views/SidePanel.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/user/target/classes/org/example/views/SignUpScreen.class" beforeDir="false" afterPath="$PROJECT_DIR$/user/target/classes/org/example/views/SignUpScreen.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/user/target/classes/org/example/views/StartChatPanel.class" beforeDir="false" afterPath="$PROJECT_DIR$/user/target/classes/org/example/views/StartChatPanel.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/user/target/classes/org/example/views/UserListPanel.class" beforeDir="false" afterPath="$PROJECT_DIR$/user/target/classes/org/example/views/UserListPanel.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/user/target/classes/org/example/views/UserPanel$UserPanelListener.class" beforeDir="false" afterPath="$PROJECT_DIR$/user/target/classes/org/example/views/UserPanel$UserPanelListener.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/user/target/classes/org/example/views/UserPanel.class" beforeDir="false" afterPath="$PROJECT_DIR$/user/target/classes/org/example/views/UserPanel.class" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -84,12 +111,20 @@
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
   </component>
-  <component name="GitHubPullRequestSearchHistory">{
-    &quot;lastFilter&quot;: {
-    &quot;state&quot;: &quot;OPEN&quot;,
-    &quot;assignee&quot;: &quot;pmlinh21&quot;
+  <component name="GitHubPullRequestSearchHistory"><![CDATA[{
+  "history": [
+    {
+      "state": "OPEN",
+      "assignee": "pmlinh21",
+      "author": "pmlinh21"
     }
-    }</component>
+  ],
+  "lastFilter": {
+    "state": "OPEN",
+    "assignee": "pmlinh21",
+    "author": "pmlinh21"
+  }
+}]]></component>
   <component name="GithubPullRequestsUISettings">
     <option name="selectedUrlAndAccountId">
       <UrlAndAccount>
@@ -100,6 +135,9 @@
   </component>
   <component name="MarkdownSettingsMigration">
     <option name="stateVersion" value="1" />
+  </component>
+  <component name="ProblemsViewState">
+    <option name="selectedTabId" value="CurrentFile" />
   </component>
   <component name="ProjectColorInfo">{
     &quot;associatedIndex&quot;: 4
@@ -123,7 +161,7 @@
     &quot;git-widget-placeholder&quot;: &quot;main&quot;,
     &quot;ignore.virus.scanning.warn.message&quot;: &quot;true&quot;,
     &quot;jdk.selected.JAVA_MODULE&quot;: &quot;21&quot;,
-    &quot;last_opened_file_path&quot;: &quot;E:/jfreechart-1.0.19/lib/jfreechart-1.0.19.jar&quot;,
+    &quot;last_opened_file_path&quot;: &quot;E:/mysql-connector-j-8.2.0.jar&quot;,
     &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
     &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
     &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
@@ -131,7 +169,7 @@
     &quot;project.structure.last.edited&quot;: &quot;Modules&quot;,
     &quot;project.structure.proportion&quot;: &quot;0.15&quot;,
     &quot;project.structure.side.proportion&quot;: &quot;0.2&quot;,
-    &quot;settings.editor.selected.configurable&quot;: &quot;project.propCompiler&quot;,
+    &quot;settings.editor.selected.configurable&quot;: &quot;settings.qodana&quot;,
     &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
   }
 }</component>
@@ -143,6 +181,9 @@
       <recent name="D:\LTUDJ-21KTPM4-Nhom6\admin\src\main\resources\org.example" />
       <recent name="D:\THIRD-SEM1\JAVA\LTUDJ-21KTPM4-Nhom6" />
       <recent name="D:\THIRD-SEM1\JAVA\LTUDJ-21KTPM4-Nhom6\Server\src\main" />
+    </key>
+    <key name="CopyClassDialog.RECENTS_KEY">
+      <recent name="org.example" />
     </key>
   </component>
   <component name="RunManager" selected="Application.Main Admin">
@@ -172,12 +213,12 @@
         <option name="Make" enabled="true" />
       </method>
     </configuration>
-    <configuration name="Main (1)" type="Application" factoryName="Application" singleton="false" temporary="true" nameIsGenerated="true">
+    <configuration name="Main User" type="Application" factoryName="Application" singleton="false" temporary="true">
       <option name="MAIN_CLASS_NAME" value="org.example.Main" />
       <module name="user" />
       <extension name="coverage">
         <pattern>
-          <option name="PATTERN" value="org.example.*" />
+          <option name="PATTERN" value="org.example.utilities.*" />
           <option name="ENABLED" value="true" />
         </pattern>
       </extension>
@@ -187,7 +228,7 @@
     </configuration>
     <configuration name="Main" type="Application" factoryName="Application" singleton="false" temporary="true" nameIsGenerated="true">
       <option name="MAIN_CLASS_NAME" value="org.example.Main" />
-      <module name="Server" />
+      <module name="user" />
       <extension name="coverage">
         <pattern>
           <option name="PATTERN" value="org.example.utilities.*" />
@@ -257,7 +298,7 @@
     </configuration>
     <list>
       <item itemvalue="Application.Main (1)" />
-      <item itemvalue="Application.Main" />
+      <item itemvalue="Application.Main User" />
       <item itemvalue="Application.Main Server" />
       <item itemvalue="Application.MainChatView" />
       <item itemvalue="Application.Main Admin" />
@@ -265,10 +306,10 @@
     <recent_temporary>
       <list>
         <item itemvalue="Application.Main Admin" />
-        <item itemvalue="Application.MainChatView" />
-        <item itemvalue="Application.Main" />
-        <item itemvalue="Application.Main (1)" />
         <item itemvalue="Application.Main Server" />
+        <item itemvalue="Application.Main User" />
+        <item itemvalue="Application.MainChatView" />
+        <item itemvalue="Application.Main (1)" />
       </list>
     </recent_temporary>
   </component>
@@ -297,6 +338,10 @@
       <workItem from="1701704444407" duration="778000" />
       <workItem from="1701705258536" duration="414000" />
       <workItem from="1701705697832" duration="203000" />
+      <workItem from="1701750351363" duration="3482000" />
+      <workItem from="1701753887604" duration="444000" />
+      <workItem from="1701754465628" duration="150000" />
+      <workItem from="1701754632846" duration="17646000" />
     </task>
     <servers />
   </component>
