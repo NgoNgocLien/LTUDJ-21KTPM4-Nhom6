@@ -8,19 +8,24 @@ import java.util.List;
 
 public class chatServer {
     private final List<ClientHandler> clients = new ArrayList<>();
+//    private final List<AdminHandler> admins = new ArrayList<>();
 
     public void startServer() {
-        try (ServerSocket serverSocket = new ServerSocket(1435)) {
-            System.out.println("Server started. Listening on port 12345...");
+        try {
+            ServerSocket serverSocketUser = new ServerSocket(1435);
+            System.out.println("Server started. Listening on port 1435...");
 
             while (true) {
-                Socket clientSocket = serverSocket.accept();
-                System.out.println("New client connected: " + clientSocket);
+
+                Socket clientSocket = serverSocketUser.accept();
+                System.out.println("New user connected: " + clientSocket);
 
                 ClientHandler clientHandler = new ClientHandler(this, clientSocket);
                 clients.add(clientHandler);
+
                 new Thread(clientHandler).start();
             }
+
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -37,4 +42,5 @@ public class chatServer {
     public void removeClient(ClientHandler client) {
         clients.remove(client);
     }
+
 }

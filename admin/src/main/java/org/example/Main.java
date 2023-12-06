@@ -1,18 +1,20 @@
 package org.example;
 
-import javax.swing.UIManager;
-import javax.swing.UnsupportedLookAndFeelException;
-
+import org.example.utilities.AdminSocket;
 public class Main {
 
     public static void main(String[] args) {
         System.out.println("Hello world admin!");
+        AdminSocket.start();
 
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new AdminApp().setVisible(true);
+                System.out.println("Hello server!");
+                new AdminApp(AdminSocket.getSocket()).setVisible(true);
             }
         });
-
     }
 }
+
+// Main -> AdminSocket  -> chatServer
+//      -> AdminApp     -> ActionPerformed -> (utilities) -> AdminHandler -> AdminDatabase
