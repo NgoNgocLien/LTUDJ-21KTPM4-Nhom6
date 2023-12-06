@@ -16,5 +16,5 @@ public class Main {
     }
 }
 
-// Main -> AdminSocket  -> chatServer
-//      -> AdminApp     -> ActionPerformed -> (utilities) -> AdminHandler -> AdminDatabase
+//(admin) Main -> AdminSocket  -> chatServer
+//             -> AdminApp     -> ActionPerformed -> (utilities) -> (server) AdminHandler  -> AdminDatabase
