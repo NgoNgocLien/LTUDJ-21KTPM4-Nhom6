@@ -131,6 +131,139 @@ public class AdminHandler implements Runnable {
                         break;
                     }
 
+                    case "getAllReport":{
+                        System.out.println("Admin get all report");
+
+                        Object[][] data = dbcon.getAllReport();
+//                        ObjectOutputStream objectOutputStream1 = new ObjectOutputStream(clientSocket.getOutputStream());
+                        objectOutputStream.reset();
+                        objectOutputStream.writeObject(data);
+                        objectOutputStream.flush();
+
+                        for (Object[] row : data) {
+                            for (Object element : row) {
+                                System.out.print(element + " ");
+                            }
+                            System.out.println();
+                        }
+
+                        System.out.println("Data sent to client.");
+
+                        break;
+                    }
+
+                    case "searchReport":{
+                        System.out.println("Admin search report");
+
+                        buffer = new byte[1024];
+                        bytesRead = inputStream.read(buffer);
+                        String message = new String(buffer, 0, bytesRead);
+
+                        String[] messageSplit = message.split("\n");
+                        String username = messageSplit[0];
+                        System.out.println(username);
+                        String date = messageSplit[1];
+                        if (date.equals("(dd-mm-yyyy)"))
+                            date = "";
+
+                        Object[][] data1 = dbcon.searchReport(username, date.split("-"));
+//                        ObjectOutputStream objectOutputStream1 = new ObjectOutputStream(clientSocket.getOutputStream());
+                        objectOutputStream.reset();
+                        objectOutputStream.writeObject(data1);
+                        objectOutputStream.flush();
+
+                        for (Object[] row : data1) {
+                            for (Object element : row) {
+                                System.out.print(element + " ");
+                            }
+                            System.out.println();
+                        }
+
+                        System.out.println("Data sent to client.");
+
+                        break;
+                    }
+
+                    case "disableUser":{
+                        System.out.println("Admin disable user");
+
+                        buffer = new byte[1024];
+                        bytesRead = inputStream.read(buffer);
+                        String username = new String(buffer, 0, bytesRead);
+
+                        dbcon.disableUser(username);
+                        Object[][] data = dbcon.getAllReport();
+                        objectOutputStream.reset();
+                        objectOutputStream.writeObject(data);
+                        objectOutputStream.flush();
+
+                        System.out.println("Data sent to client.");
+
+                        break;
+                    }
+
+                    case "getAllActiveUser":{
+                        System.out.println("Admin get all report");
+
+                        Object[][] data1 = dbcon.getAllReport();
+//                        ObjectOutputStream objectOutputStream1 = new ObjectOutputStream(clientSocket.getOutputStream());
+                        objectOutputStream.reset();
+                        objectOutputStream.writeObject(data1);
+                        objectOutputStream.flush();
+
+                        for (Object[] row : data1) {
+                            for (Object element : row) {
+                                System.out.print(element + " ");
+                            }
+                            System.out.println();
+                        }
+
+                        System.out.println("Data sent to client.");
+
+                        break;
+                    }
+
+                    case "searchActiveUser":{
+                        System.out.println("Admin get all report");
+
+                        Object[][] data1 = dbcon.getAllReport();
+//                        ObjectOutputStream objectOutputStream1 = new ObjectOutputStream(clientSocket.getOutputStream());
+                        objectOutputStream.reset();
+                        objectOutputStream.writeObject(data1);
+                        objectOutputStream.flush();
+
+                        for (Object[] row : data1) {
+                            for (Object element : row) {
+                                System.out.print(element + " ");
+                            }
+                            System.out.println();
+                        }
+
+                        System.out.println("Data sent to client.");
+
+                        break;
+                    }
+
+                    case "getMonthlyActiveUser":{
+                        System.out.println("Admin get all report");
+
+                        Object[][] data1 = dbcon.getAllReport();
+//                        ObjectOutputStream objectOutputStream1 = new ObjectOutputStream(clientSocket.getOutputStream());
+                        objectOutputStream.reset();
+                        objectOutputStream.writeObject(data1);
+                        objectOutputStream.flush();
+
+                        for (Object[] row : data1) {
+                            for (Object element : row) {
+                                System.out.print(element + " ");
+                            }
+                            System.out.println();
+                        }
+
+                        System.out.println("Data sent to client.");
+
+                        break;
+                    }
                 }
             }
         } catch (IOException | ClassNotFoundException e) {

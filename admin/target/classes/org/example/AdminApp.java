@@ -8,15 +8,12 @@ import java.net.Socket;
 import java.util.*;
 import java.text.*;
 
-import org.example.utilities.GetAllAdmin;
-import org.example.utilities.GetAllMember;
-import org.example.utilities.SearchGroupName;
+import org.example.utilities.*;
 import org.jfree.chart.*;
 import org.jfree.chart.plot.*;
 import org.jfree.data.category.*;
 import org.jfree.chart.renderer.category.BarRenderer;
 
-import org.example.utilities.GetAllGroup;
 public class AdminApp extends javax.swing.JFrame {
 
     public AdminApp(Socket socket) {
@@ -118,9 +115,7 @@ public class AdminApp extends javax.swing.JFrame {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 try {
                     groupNavButtonActionPerformed(evt);
-                } catch (IOException e) {
-                    throw new RuntimeException(e);
-                } catch (ClassNotFoundException e) {
+                } catch (IOException | ClassNotFoundException e) {
                     throw new RuntimeException(e);
                 }
             }
@@ -158,7 +153,13 @@ public class AdminApp extends javax.swing.JFrame {
         reportNavButton.setPreferredSize(new java.awt.Dimension(50, 50));
         reportNavButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                reportNavButtonActionPerformed(evt);
+                try {
+                    reportNavButtonActionPerformed(evt);
+                } catch (IOException e) {
+                    throw new RuntimeException(e);
+                } catch (ClassNotFoundException e) {
+                    throw new RuntimeException(e);
+                }
             }
         });
 
@@ -196,19 +197,19 @@ public class AdminApp extends javax.swing.JFrame {
         searchReportTimeInput.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
         searchReportTimeInput.setText("( dd-mm-yyyy)");
         searchReportTimeInput.setPreferredSize(new java.awt.Dimension(124, 35));
-        searchReportTimeInput.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                searchReportTimeInputActionPerformed(evt);
-            }
-        });
+//        searchReportTimeInput.addActionListener(new java.awt.event.ActionListener() {
+//            public void actionPerformed(java.awt.event.ActionEvent evt) {
+//                searchReportTimeInputActionPerformed(evt);
+//            }
+//        });
 
         searchUsernameInput.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
         searchUsernameInput.setPreferredSize(new java.awt.Dimension(124, 35));
-        searchUsernameInput.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                searchUsernameInputActionPerformed(evt);
-            }
-        });
+//        searchUsernameInput.addActionListener(new java.awt.event.ActionListener() {
+//            public void actionPerformed(java.awt.event.ActionEvent evt) {
+//                searchUsernameInputActionPerformed(evt);
+//            }
+//        });
 
         searchReportButton.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
         searchReportButton.setText("Search");
@@ -217,7 +218,13 @@ public class AdminApp extends javax.swing.JFrame {
         searchReportButton.setPreferredSize(new java.awt.Dimension(57, 35));
         searchReportButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                searchReportButtonActionPerformed(evt);
+                try {
+                    searchReportButtonActionPerformed(evt);
+                } catch (IOException e) {
+                    throw new RuntimeException(e);
+                } catch (ClassNotFoundException e) {
+                    throw new RuntimeException(e);
+                }
             }
         });
 
@@ -228,7 +235,13 @@ public class AdminApp extends javax.swing.JFrame {
         viewAllReportButton.setPreferredSize(new java.awt.Dimension(57, 35));
         viewAllReportButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                viewAllReportButtonActionPerformed(evt);
+                try {
+                    viewAllReportButtonActionPerformed(evt);
+                } catch (IOException e) {
+                    throw new RuntimeException(e);
+                } catch (ClassNotFoundException e) {
+                    throw new RuntimeException(e);
+                }
             }
         });
 
@@ -239,7 +252,11 @@ public class AdminApp extends javax.swing.JFrame {
         disableUserButton.setPreferredSize(new java.awt.Dimension(57, 35));
         disableUserButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                disableUserButtonActionPerformed(evt);
+                try {
+                    disableUserButtonActionPerformed(evt);
+                } catch (IOException | ClassNotFoundException e) {
+                    throw new RuntimeException(e);
+                }
             }
         });
 
@@ -355,11 +372,11 @@ public class AdminApp extends javax.swing.JFrame {
 
         searchInput.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
         searchInput.setPreferredSize(new java.awt.Dimension(124, 35));
-        searchInput.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                searchInputActionPerformed(evt);
-            }
-        });
+//        searchInput.addActionListener(new java.awt.event.ActionListener() {
+//            public void actionPerformed(java.awt.event.ActionEvent evt) {
+//                searchInputActionPerformed(evt);
+//            }
+//        });
 
         searchButton.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
         searchButton.setText("Search");
@@ -414,9 +431,7 @@ public class AdminApp extends javax.swing.JFrame {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 try {
                     groupTableMouseClicked(evt);
-                } catch (IOException e) {
-                    throw new RuntimeException(e);
-                } catch (ClassNotFoundException e) {
+                } catch (IOException | ClassNotFoundException e) {
                     throw new RuntimeException(e);
                 }
             }
@@ -504,9 +519,7 @@ public class AdminApp extends javax.swing.JFrame {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 try {
                     viewAllGroupButtonActionPerformed(evt);
-                } catch (IOException e) {
-                    throw new RuntimeException(e);
-                } catch (ClassNotFoundException e) {
+                } catch (IOException | ClassNotFoundException e) {
                     throw new RuntimeException(e);
                 }
             }
@@ -624,41 +637,41 @@ public class AdminApp extends javax.swing.JFrame {
         startDateInput.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
         startDateInput.setText("(dd-mm-yyyy)");
         startDateInput.setPreferredSize(new java.awt.Dimension(124, 35));
-        startDateInput.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                startDateInputActionPerformed(evt);
-            }
-        });
+//        startDateInput.addActionListener(new java.awt.event.ActionListener() {
+//            public void actionPerformed(java.awt.event.ActionEvent evt) {
+//                startDateInputActionPerformed(evt);
+//            }
+//        });
 
         startHourInput.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
         startHourInput.setHorizontalAlignment(javax.swing.JTextField.CENTER);
         startHourInput.setText("0");
         startHourInput.setPreferredSize(new java.awt.Dimension(124, 35));
-        startHourInput.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                startHourInputActionPerformed(evt);
-            }
-        });
+//        startHourInput.addActionListener(new java.awt.event.ActionListener() {
+//            public void actionPerformed(java.awt.event.ActionEvent evt) {
+//                startHourInputActionPerformed(evt);
+//            }
+//        });
 
         startMinInput.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
         startMinInput.setHorizontalAlignment(javax.swing.JTextField.CENTER);
         startMinInput.setText("0");
         startMinInput.setPreferredSize(new java.awt.Dimension(124, 35));
-        startMinInput.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                startMinInputActionPerformed(evt);
-            }
-        });
+//        startMinInput.addActionListener(new java.awt.event.ActionListener() {
+//            public void actionPerformed(java.awt.event.ActionEvent evt) {
+//                startMinInputActionPerformed(evt);
+//            }
+//        });
 
         startSecInput.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
         startSecInput.setHorizontalAlignment(javax.swing.JTextField.CENTER);
         startSecInput.setText("0");
         startSecInput.setPreferredSize(new java.awt.Dimension(124, 35));
-        startSecInput.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                startSecInputActionPerformed(evt);
-            }
-        });
+//        startSecInput.addActionListener(new java.awt.event.ActionListener() {
+//            public void actionPerformed(java.awt.event.ActionEvent evt) {
+//                startSecInputActionPerformed(evt);
+//            }
+//        });
 
         activeTitle7.setFont(new java.awt.Font("Arial", 1, 14)); // NOI18N
         activeTitle7.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
@@ -671,11 +684,11 @@ public class AdminApp extends javax.swing.JFrame {
         endDateInput.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
         endDateInput.setText("(dd-mm-yyyy)");
         endDateInput.setPreferredSize(new java.awt.Dimension(124, 35));
-        endDateInput.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                endDateInputActionPerformed(evt);
-            }
-        });
+//        endDateInput.addActionListener(new java.awt.event.ActionListener() {
+//            public void actionPerformed(java.awt.event.ActionEvent evt) {
+//                endDateInputActionPerformed(evt);
+//            }
+//        });
 
         searchDateButton.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
         searchDateButton.setText("Search");
@@ -701,19 +714,19 @@ public class AdminApp extends javax.swing.JFrame {
 
         searchNameInput.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
         searchNameInput.setPreferredSize(new java.awt.Dimension(124, 35));
-        searchNameInput.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                searchNameInputActionPerformed(evt);
-            }
-        });
+//        searchNameInput.addActionListener(new java.awt.event.ActionListener() {
+//            public void actionPerformed(java.awt.event.ActionEvent evt) {
+//                searchNameInputActionPerformed(evt);
+//            }
+//        });
 
         searchSessionInput.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
         searchSessionInput.setPreferredSize(new java.awt.Dimension(124, 35));
-        searchSessionInput.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                searchSessionInputActionPerformed(evt);
-            }
-        });
+//        searchSessionInput.addActionListener(new java.awt.event.ActionListener() {
+//            public void actionPerformed(java.awt.event.ActionEvent evt) {
+//                searchSessionInputActionPerformed(evt);
+//            }
+//        });
 
         activeUserScrollPane1.setMaximumSize(new java.awt.Dimension(32767, 600));
         activeUserScrollPane1.setPreferredSize(new java.awt.Dimension(452, 500));
@@ -749,11 +762,11 @@ public class AdminApp extends javax.swing.JFrame {
         activeUserTable.getTableHeader().setResizingAllowed(false);
         activeUserTable.getTableHeader().setReorderingAllowed(false);
         activeUserTable.setUpdateSelectionOnSort(false);
-        activeUserTable.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                activeUserTableMouseClicked(evt);
-            }
-        });
+//        activeUserTable.addMouseListener(new java.awt.event.MouseAdapter() {
+//            public void mouseClicked(java.awt.event.MouseEvent evt) {
+//                activeUserTableMouseClicked(evt);
+//            }
+//        });
         activeUserScrollPane1.setViewportView(activeUserTable);
         if (activeUserTable.getColumnModel().getColumnCount() > 0) {
             activeUserTable.getColumnModel().getColumn(0).setResizable(false);
@@ -817,31 +830,31 @@ public class AdminApp extends javax.swing.JFrame {
         endHourInput.setHorizontalAlignment(javax.swing.JTextField.CENTER);
         endHourInput.setText("0");
         endHourInput.setPreferredSize(new java.awt.Dimension(124, 35));
-        endHourInput.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                endHourInputActionPerformed(evt);
-            }
-        });
+//        endHourInput.addActionListener(new java.awt.event.ActionListener() {
+//            public void actionPerformed(java.awt.event.ActionEvent evt) {
+//                endHourInputActionPerformed(evt);
+//            }
+//        });
 
         endMinInput.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
         endMinInput.setHorizontalAlignment(javax.swing.JTextField.CENTER);
         endMinInput.setText("0");
         endMinInput.setPreferredSize(new java.awt.Dimension(124, 35));
-        endMinInput.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                endMinInputActionPerformed(evt);
-            }
-        });
+//        endMinInput.addActionListener(new java.awt.event.ActionListener() {
+//            public void actionPerformed(java.awt.event.ActionEvent evt) {
+//                endMinInputActionPerformed(evt);
+//            }
+//        });
 
         endSecInput.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
         endSecInput.setHorizontalAlignment(javax.swing.JTextField.CENTER);
         endSecInput.setText("0");
         endSecInput.setPreferredSize(new java.awt.Dimension(124, 35));
-        endSecInput.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                endSecInputActionPerformed(evt);
-            }
-        });
+//        endSecInput.addActionListener(new java.awt.event.ActionListener() {
+//            public void actionPerformed(java.awt.event.ActionEvent evt) {
+//                endSecInputActionPerformed(evt);
+//            }
+//        });
 
         activeTitle9.setFont(new java.awt.Font("Arial", 1, 14)); // NOI18N
         activeTitle9.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
@@ -974,11 +987,11 @@ public class AdminApp extends javax.swing.JFrame {
 
         searchYearInput.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
         searchYearInput.setPreferredSize(new java.awt.Dimension(124, 35));
-        searchYearInput.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                searchYearInputActionPerformed(evt);
-            }
-        });
+//        searchYearInput.addActionListener(new java.awt.event.ActionListener() {
+//            public void actionPerformed(java.awt.event.ActionEvent evt) {
+//                searchYearInputActionPerformed(evt);
+//            }
+//        });
 
         searchYearButton.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
         searchYearButton.setText("Apply");
@@ -1059,9 +1072,6 @@ public class AdminApp extends javax.swing.JFrame {
 
         pack();
     }// </editor-fold>
-
-    private void searchInputActionPerformed(java.awt.event.ActionEvent evt) {
-    }
 
     private void searchButtonActionPerformed(java.awt.event.ActionEvent evt) throws IOException, ClassNotFoundException {
         String text = searchInput.getText();
@@ -1242,14 +1252,14 @@ public class AdminApp extends javax.swing.JFrame {
 
     }
 
-    private void reportNavButtonActionPerformed(java.awt.event.ActionEvent evt) {
+    private void reportNavButtonActionPerformed(java.awt.event.ActionEvent evt) throws IOException, ClassNotFoundException {
         searchReportTimeInput.setText("(dd-mm-yyyy)");
         searchUsernameInput.setText("");
 
         DefaultTableModel model = (DefaultTableModel) reportTable.getModel();
         model.setRowCount(0);
 
-        Object[][] data = adminController.getAllReport();
+        Object[][] data = GetAllReport.request(socket);
         for (Object[] row : data) {
             model.addRow(row);
         }
@@ -1363,11 +1373,11 @@ public class AdminApp extends javax.swing.JFrame {
 
     }
 
-    private void viewAllReportButtonActionPerformed(java.awt.event.ActionEvent evt) {
+    private void viewAllReportButtonActionPerformed(java.awt.event.ActionEvent evt) throws IOException, ClassNotFoundException {
         DefaultTableModel model = (DefaultTableModel) reportTable.getModel();
         model.setRowCount(0);
 
-        Object[][] data = adminController.getAllReport();
+        Object[][] data = GetAllReport.request(socket);
         for (Object[] row : data) {
             model.addRow(row);
         }
@@ -1377,15 +1387,7 @@ public class AdminApp extends javax.swing.JFrame {
 
     }
 
-    private void searchReportTimeInputActionPerformed(java.awt.event.ActionEvent evt) {
-        // TODO add your handling code here:
-    }
-
-    private void searchUsernameInputActionPerformed(java.awt.event.ActionEvent evt) {
-        // TODO add your handling code here:
-    }
-
-    private void searchReportButtonActionPerformed(java.awt.event.ActionEvent evt) {
+    private void searchReportButtonActionPerformed(java.awt.event.ActionEvent evt) throws IOException, ClassNotFoundException {
         String username = searchUsernameInput.getText();
         String date = searchReportTimeInput.getText();
 
@@ -1399,41 +1401,28 @@ public class AdminApp extends javax.swing.JFrame {
             DefaultTableModel model = (DefaultTableModel) reportTable.getModel();
             model.setRowCount(0);
 
-            if (date.equals("(dd-mm-yyyy)"))
-                date = "";
-
-            String[] dateToArray = date.split("-");
-
-            Object[][] data = adminController.searchReport(username, dateToArray);
+            Object[][] data = SearchReport.request(username, date, socket);
             for (Object[] row : data) {
                 model.addRow(row);
             }
         }
     }
 
-    private void disableUserButtonActionPerformed(java.awt.event.ActionEvent evt) {
+    private void disableUserButtonActionPerformed(java.awt.event.ActionEvent evt) throws IOException, ClassNotFoundException {
         int index = reportTable.getSelectedRow();
         TableModel model = reportTable.getModel();
         String selected_username = model.getValueAt(index, 1).toString();
-        adminController.disableUser(selected_username);
+
+        Object[][] data = DisableUser.request(selected_username, socket);
 
         DefaultTableModel reportModel = (DefaultTableModel) reportTable.getModel();
         reportModel.setRowCount(0);
 
-        Object[][] report = adminController.getAllReport();
-        for (Object[] row : report) {
+        for (Object[] row : data) {
             reportModel.addRow(row);
         }
 
         disableUserButton.setVisible(false);
-    }
-
-    private void startDateInputActionPerformed(java.awt.event.ActionEvent evt) {
-        // TODO add your handling code here:
-    }
-
-    private void endDateInputActionPerformed(java.awt.event.ActionEvent evt) {
-        // TODO add your handling code here:
     }
 
     private void searchDateButtonActionPerformed(java.awt.event.ActionEvent evt) {
@@ -1511,18 +1500,6 @@ public class AdminApp extends javax.swing.JFrame {
 //            }
 
         }
-    }
-
-    private void activeUserTableMouseClicked(java.awt.event.MouseEvent evt) {
-        // TODO add your handling code here:
-    }
-
-    private void searchNameInputActionPerformed(java.awt.event.ActionEvent evt) {
-        // TODO add your handling code here:
-    }
-
-    private void searchSessionInputActionPerformed(java.awt.event.ActionEvent evt) {
-        // TODO add your handling code here:
     }
 
     private void searchNameSessionButtonActionPerformed(java.awt.event.ActionEvent evt) {
@@ -1641,9 +1618,6 @@ public class AdminApp extends javax.swing.JFrame {
         }
     }
 
-    private void searchYearInputActionPerformed(java.awt.event.ActionEvent evt) {
-        // TODO add your handling code here:
-    }
 
     private void searchYearButtonActionPerformed(java.awt.event.ActionEvent evt) {
         try {
@@ -1675,30 +1649,6 @@ public class AdminApp extends javax.swing.JFrame {
         activeUserMonthlyChartPanel.revalidate();
         activeUserMonthlyChartPanel.repaint();
         createActiveUsersChart("2023");
-    }
-
-    private void startHourInputActionPerformed(java.awt.event.ActionEvent evt) {
-        // TODO add your handling code here:
-    }
-
-    private void startMinInputActionPerformed(java.awt.event.ActionEvent evt) {
-        // TODO add your handling code here:
-    }
-
-    private void startSecInputActionPerformed(java.awt.event.ActionEvent evt) {
-        // TODO add your handling code here:
-    }
-
-    private void endHourInputActionPerformed(java.awt.event.ActionEvent evt) {
-        // TODO add your handling code here:
-    }
-
-    private void endMinInputActionPerformed(java.awt.event.ActionEvent evt) {
-        // TODO add your handling code here:
-    }
-
-    private void endSecInputActionPerformed(java.awt.event.ActionEvent evt) {
-        // TODO add your handling code here:
     }
 
     public static boolean isValidDate(String dateStr) {
