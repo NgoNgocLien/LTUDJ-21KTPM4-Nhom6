@@ -2,14 +2,14 @@ package org.example.models;
 
 import java.util.ArrayList;
 
-public class RecentChat {
+public class SideChatInfo {
     private String myUsername;
     private String chatId;
     private String chatName;
     private String subtitle;
     private boolean seen;
     private boolean isGroup;
-    public RecentChat(String myUsername, String chatId, String chatName, String subtitle, boolean seen, boolean isGroup) {
+    public SideChatInfo(String myUsername, String chatId, String chatName, String subtitle, boolean seen, boolean isGroup) {
         this.myUsername = myUsername;
         this.chatId = chatId;
         this.chatName = chatName;

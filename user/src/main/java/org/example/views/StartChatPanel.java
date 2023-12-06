@@ -14,9 +14,21 @@ public class StartChatPanel extends JPanel {
     private JPanel usernamePanel;
     private JPanel statementPanel;
 
-    public StartChatPanel(String fullname, String username, boolean isFriend) {
-        setLayout(new GridLayout(6, 1));
+    public StartChatPanel(String fullname, String username, boolean isFriend, boolean isGroup) {
+        setLayout(new GridLayout(5, 1));
         setBackground(null);
+
+        if (!isGroup && !isFriend && fullname.isEmpty() && username.isEmpty()) {
+            fullname = "Welcome back!";
+            username = "";
+            statementLabel = new JLabel("Please select a user to start chatting.");
+        }
+        else if (isGroup)
+            statementLabel = new JLabel("You are a member of this group. Let start chatting!");
+        else if (isFriend)
+            statementLabel = new JLabel("You are friend with this user. You can now chat with your friend.");
+        else
+            statementLabel = new JLabel("You are not friend with this user. You cannot send messages now.");
 
         fullnameLabel = new JLabel(fullname);
         fullnameLabel.setFont(Constants.BIGGER_FONT);
@@ -26,10 +38,6 @@ public class StartChatPanel extends JPanel {
         usernameLabel.setFont(Constants.NORMAL_FONT);
         usernameLabel.setForeground(Color.GRAY);
 
-        if (isFriend)
-            statementLabel = new JLabel("You are friend with this user. You can now chat with your friend.");
-        else
-            statementLabel = new JLabel("You are not friend with this user. You cannot send messages now.");
         statementLabel.setFont(Constants.NORMAL_FONT);
         statementLabel.setForeground(Color.GRAY);
 
@@ -51,7 +59,6 @@ public class StartChatPanel extends JPanel {
         add(new JPanel());
         add(fullnamePanel);
         add(usernamePanel);
-        add(new JPanel());
         add(statementPanel);
         add(new JPanel());
     }

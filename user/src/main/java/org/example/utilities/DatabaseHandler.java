@@ -1,12 +1,11 @@
 package org.example.utilities;
 
-import org.example.models.Friends;
-import org.example.models.RecentChat;
-import org.example.models.User;
+import org.example.models.*;
 
 import javax.xml.transform.Result;
 import java.sql.*;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 
 public class DatabaseHandler {
@@ -88,7 +87,7 @@ public class DatabaseHandler {
         return friendList;
     }
 
-    public RecentChat getRecentChat(String username) throws SQLException {
+    public ArrayList<SideChatInfo> getRecentChat(String username) throws SQLException {
         String sql = "(WITH RankedMessages AS (" +
                 "    SELECT " +
                 "        M.sender, " +
@@ -148,25 +147,109 @@ public class DatabaseHandler {
         stmt.setString(5, username);
 
         ResultSet rs = stmt.executeQuery();
-        RecentChat chats = new RecentChat(username);
+        ArrayList<SideChatInfo> chats = new ArrayList<>();
         while (rs.next()) {
             String sender, to_user, to_group, content, chat_name;
             boolean seen;
+
             sender = rs.getString("sender");
             to_user = rs.getString("to_user");
-
+            to_group = rs.getObject("to_group") != null ? String.valueOf(rs.getInt("to_group")) : "";
             content = rs.getString("content");
+
+            String chatId;
+            if (sender.equals(username)) {
+                content = "You: " + content;
+                chatId = to_user;
+            }
+            else {
+                content = sender + ": " + content;
+                chatId = sender;
+            }
+
+            chat_name = rs.getString("chat_name");
+
             if (to_user.equals(username)) // whether the user saw the latest message from sender
                 seen = rs.getTimestamp("seen_time") != null;
             else
                 seen = true;
-            chat_name = rs.getString("chat_name");
-            if (sender.equals(username))
-                chats.addChat(chat_name, "You: " + content, seen);
-            else
-                chats.addChat(chat_name, sender + ": " + content, seen);
+
+            if (to_group.isEmpty()) {
+                chats.add(new SideChatInfo(username, chatId, chat_name, content, seen, false));
+            } else {
+                chats.add(new SideChatInfo(username, to_group, chat_name, content, seen, true));
+            }
         }
         return chats;
     }
 
+    public ArrayList<Message> getMessages(SideChatInfo chatInfo) throws SQLException {
+        if (chatInfo.getIsGroup()) {
+            String sql = "(WITH SimilarMessage AS " +
+                    "(SELECT M.*, ROW_NUMBER() OVER (PARTITION BY sent_time) AS row_num " +
+                    "FROM MESSAGE M " +
+                    "WHERE M.sender = ? AND M.to_group = ?)" +
+                    "SELECT id_message, sender, to_user, to_group, content, sent_time, seen_time " +
+                    "FROM SimilarMessage " +
+                    "WHERE row_num = 1) " +
+                    "UNION " +
+                    "(SELECT * " +
+                    "FROM MESSAGE " +
+                    "WHERE to_user = ? AND to_group IS NOT NULL)" +
+                    "ORDER BY sent_time";
+            PreparedStatement stmt = conn.prepareStatement(sql);
+            stmt.setString(1, chatInfo.getMyUsername());
+            stmt.setInt(2, Integer.parseInt(chatInfo.getChatId()));
+            stmt.setString(3, chatInfo.getMyUsername());
+            ArrayList<Message> messages = new ArrayList<>();
+            ResultSet rs = stmt.executeQuery();
+            while (rs.next()) {
+                int id;
+                String sender, to_user, content;
+                int to_group;
+                LocalDateTime sent_time, seen_time;
+
+                id = rs.getInt("id_message");
+                sender = rs.getString("sender");
+                to_user = rs.getString("to_user"); // nonsense
+                to_group = rs.getInt("to_group");
+                content = rs.getString("content");
+                sent_time = rs.getTimestamp("sent_time") != null ? rs.getTimestamp("sent_time").toLocalDateTime() : null;
+                seen_time = rs.getTimestamp("seen_time") != null ? rs.getTimestamp("seen_time").toLocalDateTime() : null;
+
+                messages.add(new Message(chatInfo.getMyUsername(), id, sender, to_user, to_group, content, sent_time, seen_time));
+            }
+            return messages;
+        } else {
+            String sql = "SELECT * " +
+                    "FROM MESSAGE M " +
+                    "WHERE ((M.sender = ? AND M.to_user = ?) OR (M.sender = ? AND M.to_user = ?)) AND M.to_group IS NULL " +
+                    "ORDER BY sent_time";
+            PreparedStatement stmt = conn.prepareStatement(sql);
+            stmt.setString(1, chatInfo.getMyUsername());
+            stmt.setString(2, chatInfo.getChatId());
+            stmt.setString(3, chatInfo.getChatId());
+            stmt.setString(4, chatInfo.getMyUsername());
+
+            ResultSet rs = stmt.executeQuery();
+            ArrayList<Message> messages = new ArrayList<>();
+            while (rs.next()) {
+                int id;
+                String sender, to_user, content;
+                int to_group;
+                LocalDateTime sent_time, seen_time;
+
+                id = rs.getInt("id_message");
+                sender = rs.getString("sender");
+                to_user = rs.getString("to_user");
+                to_group = rs.getObject("to_group") != null ? rs.getInt("to_group") : -1; // nonsense
+                content = rs.getString("content");
+                sent_time = rs.getTimestamp("sent_time") != null ? rs.getTimestamp("sent_time").toLocalDateTime() : null;
+                seen_time = rs.getTimestamp("seen_time") != null ? rs.getTimestamp("seen_time").toLocalDateTime() : null;
+
+                messages.add(new Message(chatInfo.getMyUsername(), id, sender, to_user, to_group, content, sent_time, seen_time));
+            }
+            return messages;
+        }
+    }
 }

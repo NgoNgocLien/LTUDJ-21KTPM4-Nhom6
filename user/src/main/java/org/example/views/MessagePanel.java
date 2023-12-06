@@ -1,10 +1,14 @@
 package org.example.views;
+import org.example.models.Message;
+import org.example.models.SideChatInfo;
+
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.FlowLayout;
 import java.awt.GridLayout;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 
 import javax.swing.*;
 
@@ -12,59 +16,56 @@ public class MessagePanel extends JPanel {
     private JPanel messageListPanel;
     private JPanel startPanel;
     private JPanel oneMessagePanel;
-    private JPanel timestampPanel;
+//    private JPanel timestampPanel;
     private JPanel seenPanel;
+//    private JScrollPane messageScrollPane;
 
-    public MessagePanel(String fullname, String username, boolean isFriend) {
+    public MessagePanel(SideChatInfo chatInfo, ArrayList<Message> messages) {
         setLayout(new BorderLayout());
-
-        startPanel = new StartChatPanel(fullname, username, isFriend);
-
         messageListPanel = new JPanel();
         messageListPanel.setLayout(new BoxLayout(messageListPanel, BoxLayout.Y_AXIS));
 
+        buildMessagePanel(chatInfo, messages);
+
+        add(messageListPanel, BorderLayout.SOUTH);
+    }
+
+    public void buildMessagePanel(SideChatInfo chatInfo, ArrayList<Message> messages) {
+        messageListPanel.removeAll();
+        if (chatInfo.getIsGroup()) {
+            startPanel = new StartChatPanel(chatInfo.getChatName(), "", false, true);
+        } else {
+            startPanel = new StartChatPanel(chatInfo.getChatName(), chatInfo.getChatId(), true, false);
+        }
         messageListPanel.add(startPanel);
 
-        timestampPanel = new MessageTimePanel(LocalDateTime.of(2021, 5, 1, 10, 10, 10));
-        messageListPanel.add(timestampPanel);
+        if (messages.size() == 0) {
+            return;
+        }
 
-        oneMessagePanel = new OneMessagePanel("Lorem ipsum dolor sit amet, consectetur adipiscing elit.", true);
-        messageListPanel.add(oneMessagePanel);
+        LocalDateTime lastTimestamp = null;
+        String lastSender = null;
+        for (Message message : messages) {
+            if (lastTimestamp == null || message.getSentTime().getDayOfYear() != lastTimestamp.getDayOfYear()) {
+                lastTimestamp = message.getSentTime();
+                MessageTimePanel timestampPanel = new MessageTimePanel(lastTimestamp);
+                messageListPanel.add(timestampPanel);
+            }
+            if (message.getSender().equals(chatInfo.getMyUsername())) {
+                oneMessagePanel = new OneMessagePanel(message.getContent(), true);
+                messageListPanel.add(oneMessagePanel);
+            } else {
+                if (chatInfo.getIsGroup() && !message.getSender().equals(lastSender)) {
+                    lastSender = message.getSender();
+                    MemberNamePanel memberNamePanel = new MemberNamePanel(message.getSender());
+                    messageListPanel.add(memberNamePanel);
+                }
+                oneMessagePanel = new OneMessagePanel(message.getContent(), false);
+                messageListPanel.add(oneMessagePanel);
+            }
+        }
 
-        oneMessagePanel = new OneMessagePanel("Lorem ipsum dolor sit amet, consectetur adipiscing elit.", true);
-        messageListPanel.add(oneMessagePanel);
-
-        oneMessagePanel = new OneMessagePanel("Lorem ipsum dolor sit amet, consectetur adipiscing elit. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Hihi", false);
-        messageListPanel.add(oneMessagePanel);
-
-        oneMessagePanel = new OneMessagePanel("Lorem ipsum dolor sit amet, consectetur adipiscing elit. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Hihi", false);
-        messageListPanel.add(oneMessagePanel);
-
-        oneMessagePanel = new OneMessagePanel("Lorem ipsum dolor sit amet, consectetur adipiscing elit. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Hihi", true);
-        messageListPanel.add(oneMessagePanel);
-
-        oneMessagePanel = new OneMessagePanel("Lorem ipsum dolor sit amet, consectetur adipiscing elit. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Hihi", false);
-        messageListPanel.add(oneMessagePanel);
-
-        oneMessagePanel = new OneMessagePanel("Lorem ipsum dolor sit amet, consectetur adipiscing elit. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Hihi", false);
-        messageListPanel.add(oneMessagePanel);
-
-        oneMessagePanel = new OneMessagePanel("Lorem ipsum dolor sit amet, consectetur adipiscing elit. Lorem ipsum dolor sit amet.", true);
-        messageListPanel.add(oneMessagePanel);
-
-        oneMessagePanel = new OneMessagePanel("Lorem ipsum dolor sit amet, consecte.", true);
-        messageListPanel.add(oneMessagePanel);
-
-        oneMessagePanel = new OneMessagePanel("Lorem ipsum dolor sit amet, consecte.", false);
-        messageListPanel.add(oneMessagePanel);
-
-        oneMessagePanel = new OneMessagePanel("Lorem ipsum dolor sit amet.", false);
-        messageListPanel.add(oneMessagePanel);
-
-        seenPanel = new SeenPanel(true);
-        messageListPanel.add(seenPanel);
-
-        // add(startPanel, BorderLayout.NORTH);
-        add(messageListPanel, BorderLayout.SOUTH);
+//        seenPanel = new SeenPanel();
+//        messageListPanel.add(seenPanel);
     }
 }

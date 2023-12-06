@@ -7,16 +7,16 @@ import javax.swing.*;
 import javax.swing.border.EmptyBorder;
 
 public class ChatnamePanel extends JPanel {
-    private String fullname;
+    private String chatName;
     private String status;
 
-    private JLabel fullnameLabel;
+    private JLabel chatNameLabel;
     private JLabel statusLabel;
     private JButton moreButton;
     private ImageIcon moreIcon;
 
-    public ChatnamePanel(String fullname, String status) {
-        this.fullname = fullname;
+    public ChatnamePanel(String chatName, String status) {
+        this.chatName = chatName;
         this.status = status;
 
         setPreferredSize(new Dimension(Constants.WINDOW_WIDTH - Constants.SIDE_PANEL_WIDTH, Constants.SEARCH_PANEL_HEIGHT));
@@ -30,10 +30,10 @@ public class ChatnamePanel extends JPanel {
         titlePanel.setBackground(null);
         titlePanel.setBorder(new EmptyBorder(0, 20, 0, 0));
 
-        fullnameLabel = new JLabel(fullname);
-        fullnameLabel.setFont(Constants.BIG_FONT);
-        fullnameLabel.setForeground(Color.BLACK);
-        fullnameLabel.setCursor(new Cursor(Cursor.HAND_CURSOR));
+        chatNameLabel = new JLabel(chatName);
+        chatNameLabel.setFont(Constants.BIG_FONT);
+        chatNameLabel.setForeground(Color.BLACK);
+        chatNameLabel.setCursor(new Cursor(Cursor.HAND_CURSOR));
 
         statusLabel = new JLabel(status);
         statusLabel.setFont(Constants.SMALL_FONT);
@@ -42,7 +42,7 @@ public class ChatnamePanel extends JPanel {
         else if (status.equals("Offline"))
             statusLabel.setForeground(Color.GRAY);
 
-        titlePanel.add(fullnameLabel, BorderLayout.NORTH);
+        titlePanel.add(chatNameLabel, BorderLayout.NORTH);
         titlePanel.add(statusLabel, BorderLayout.SOUTH);
 
         moreIcon = new ImageIcon("src/main/resources/more.png");
@@ -55,5 +55,15 @@ public class ChatnamePanel extends JPanel {
 
         add(titlePanel, BorderLayout.WEST);
         add(moreButton, BorderLayout.EAST);
+    }
+
+    public void setChatName(String chatName) {
+        this.chatName = chatName;
+        chatNameLabel.setText(chatName);
+    }
+
+    public void setStatus(String status) {
+        this.status = status;
+        statusLabel.setText(status);
     }
 }
