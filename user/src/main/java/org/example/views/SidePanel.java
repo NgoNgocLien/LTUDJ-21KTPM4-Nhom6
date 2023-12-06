@@ -18,7 +18,6 @@ public class SidePanel extends JPanel {
         setBackground(null);
 
         iconPanel = new IconPanel();
-
         userListPanel = new UserListPanel(userList);
 
         add(iconPanel, BorderLayout.WEST);

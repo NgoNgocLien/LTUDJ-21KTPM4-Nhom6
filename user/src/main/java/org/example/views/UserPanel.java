@@ -7,19 +7,28 @@ import java.awt.*;
 import java.awt.event.*;
 
 public class UserPanel extends JPanel {
-    private String fullname;
+    private String chatName;
     private String subtitle;
+    private boolean seen;
+    private String chatId;
+    private boolean isGroup;
 
     private JLabel fullnameLabel;
     private JLabel subLabel;
 
-    public UserPanel(String fullname, String subtitle, boolean seen) {
+    public UserPanel(String chatName, String subtitle, boolean seen) {
+        this.chatName = chatName;
+        this.subtitle = subtitle;
+        this.seen = seen;
+//        this.chatId = chatId;
+//        this.isGroup = isGroup;
+
         setPreferredSize(new Dimension(Constants.USER_PANEL_WIDTH, Constants.USER_PANEL_HEIGHT));
         setBackground(null);
         setLayout(new FlowLayout(FlowLayout.CENTER, 0, -2));
         setBorder(BorderFactory.createMatteBorder(0, 0, 1, 0, Color.BLACK));
 
-        fullnameLabel = new JLabel(fullname);
+        fullnameLabel = new JLabel(chatName);
         fullnameLabel.setPreferredSize(new Dimension(Constants.USER_PANEL_WIDTH - 40, Constants.USER_PANEL_FULLNAME_HEIGHT));
         fullnameLabel.setBackground(null);
         fullnameLabel.setForeground(Color.BLACK);
@@ -30,7 +39,6 @@ public class UserPanel extends JPanel {
         subLabel.setBackground(null);
         subLabel.setForeground(Color.GRAY);
         subLabel.setFont(Constants.SMALL_FONT);
-        // subLabel.setAlignmentY(Component.TOP_ALIGNMENT);
 
         if (!seen) {
             fullnameLabel.setFont(Constants.NORMAL_BOLD_FONT);
@@ -43,11 +51,15 @@ public class UserPanel extends JPanel {
         addMouseListener(new UserPanelListener(this));
     }
 
-    public String getFullname() { return this.fullname; }
+    public String getChatName() { return this.chatName; }
+    public String getSubtitle() { return this.subtitle; }
+    public boolean getSeen() { return this.seen; }
+    public String getChatId() { return this.chatId; }
+    public boolean getIsGroup() { return this.isGroup; }
 
     private class UserPanelListener extends MouseAdapter {
-        private JPanel panel;
-        public UserPanelListener(JPanel panel) {
+        private UserPanel panel;
+        public UserPanelListener(UserPanel panel) {
             this.panel = panel;
         }
         @Override
@@ -57,7 +69,7 @@ public class UserPanel extends JPanel {
         @Override
         public void mouseClicked(MouseEvent e) {
             // Your action when the panel is clicked
-            System.out.println("Panel clicked!");
+            System.out.println(panel.getChatId() + " " + panel.getIsGroup());
         }
         @Override
         public void mouseExited(MouseEvent e) {
