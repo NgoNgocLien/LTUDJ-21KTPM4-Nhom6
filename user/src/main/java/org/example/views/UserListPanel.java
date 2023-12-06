@@ -25,17 +25,25 @@ public class UserListPanel extends JPanel {
 
         searchPanel = new SearchPanel();
         this.userList = userList;
+
+        userListPanel = new JPanel();
+        userListPanel.setPreferredSize(new Dimension(Constants.USER_PANEL_WIDTH, Constants.USER_PANEL_HEIGHT * userList.size()));
+        userListPanel.setBackground(null);
+        userListPanel.setLayout(new FlowLayout(FlowLayout.CENTER, 0, 0));
+
+        userListScrollPane = new JScrollPane(userListPanel);
+        userListScrollPane.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED);
+        userListScrollPane.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
+
         buildUserListPanel(userList);
 
         add(searchPanel, BorderLayout.NORTH);
         add(userListScrollPane, BorderLayout.CENTER);
     }
 
-    private void buildUserListPanel(ArrayList<SideChatInfo> userList) {
-        userListPanel = new JPanel();
-        userListPanel.setPreferredSize(new Dimension(Constants.USER_PANEL_WIDTH, Constants.USER_PANEL_HEIGHT * userList.size()));
-        userListPanel.setBackground(null);
-        userListPanel.setLayout(new FlowLayout(FlowLayout.CENTER, 0, 0));
+    public void buildUserListPanel(ArrayList<SideChatInfo> userList) {
+        if (userListPanel != null)
+            userListPanel.removeAll();
 
         userPanels = new ArrayList<>();
         for (SideChatInfo chatInfo : userList) {
@@ -43,10 +51,10 @@ public class UserListPanel extends JPanel {
             userPanels.add(userPanel);
             userListPanel.add(userPanel);
         }
-
-        userListScrollPane = new JScrollPane(userListPanel);
-        userListScrollPane.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED);
-        userListScrollPane.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
+        SwingUtilities.invokeLater(() -> {
+            revalidate();  // Revalidate the panel
+            repaint();     // Repaint the panel
+        });
     }
 
     public ArrayList<UserPanel> getUserPanels() { return this.userPanels; }

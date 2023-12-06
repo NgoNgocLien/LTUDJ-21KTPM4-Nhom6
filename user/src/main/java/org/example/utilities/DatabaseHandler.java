@@ -183,6 +183,114 @@ public class DatabaseHandler {
         return chats;
     }
 
+    public ArrayList<SideChatInfo> getGroupChat(String username) throws SQLException {
+        String sql = "WITH RankedMessages AS (  " +
+                "    SELECT " +
+                "        M.sender, " +
+                "        M.to_user, " +
+                "        M.to_group, " +
+                "        M.content, " +
+                "        M.sent_time, " +
+                "        M.seen_time, " +
+                "        ROW_NUMBER() OVER (PARTITION BY M.to_group " +
+                "                          ORDER BY M.sent_time DESC) AS row_num " +
+                "    FROM MESSAGE M " +
+                "    INNER JOIN GROUP_MEMBER GM ON (GM.username = ? AND GM.id_group = M.to_group) " +
+                "    WHERE M.sent_time > GM.delete_history " +
+                ") " +
+                "SELECT " +
+                "    R.sender, " +
+                "    R.to_user, " +
+                "    R.to_group, " +
+                "    R.content, " +
+                "    R.seen_time, " +
+                "    G.group_name AS chat_name " +
+                "FROM RankedMessages R " +
+                "JOIN GROUP_CHAT G ON (G.id_group = R.to_group) " +
+                "WHERE R.row_num = 1 " +
+                "ORDER BY R.sent_time DESC";
+        PreparedStatement stmt = conn.prepareStatement(sql);
+        stmt.setString(1, username);
+
+        ResultSet rs = stmt.executeQuery();
+        ArrayList<SideChatInfo> chats = new ArrayList<>();
+        while (rs.next()) {
+            String sender, to_user, to_group, content, chat_name;
+            boolean seen;
+
+            sender = rs.getString("sender");
+            to_user = rs.getString("to_user");
+            to_group = rs.getObject("to_group") != null ? String.valueOf(rs.getInt("to_group")) : "";
+            content = rs.getString("content");
+
+            String chatId;
+            if (sender.equals(username)) {
+                content = "You: " + content;
+                chatId = to_user;
+            }
+            else {
+                content = sender + ": " + content;
+                chatId = sender;
+            }
+
+            chat_name = rs.getString("chat_name");
+
+            if (to_user.equals(username)) // whether the user saw the latest message from sender
+                seen = rs.getTimestamp("seen_time") != null;
+            else
+                seen = true;
+
+            if (to_group.isEmpty()) {
+                chats.add(new SideChatInfo(username, chatId, chat_name, content, seen, false));
+            } else {
+                chats.add(new SideChatInfo(username, to_group, chat_name, content, seen, true));
+            }
+        }
+        return chats;
+    }
+
+    public ArrayList<SideChatInfo> getBlockUsers(String username) throws SQLException {
+        String sql = "";
+        PreparedStatement stmt = conn.prepareStatement(sql);
+        stmt.setString(1, username);
+
+        ResultSet rs = stmt.executeQuery();
+        ArrayList<SideChatInfo> chats = new ArrayList<>();
+        while (rs.next()) {
+            String sender, to_user, to_group, content, chat_name;
+            boolean seen;
+
+            sender = rs.getString("sender");
+            to_user = rs.getString("to_user");
+            to_group = rs.getObject("to_group") != null ? String.valueOf(rs.getInt("to_group")) : "";
+            content = rs.getString("content");
+
+            String chatId;
+            if (sender.equals(username)) {
+                content = "You: " + content;
+                chatId = to_user;
+            }
+            else {
+                content = sender + ": " + content;
+                chatId = sender;
+            }
+
+            chat_name = rs.getString("chat_name");
+
+            if (to_user.equals(username)) // whether the user saw the latest message from sender
+                seen = rs.getTimestamp("seen_time") != null;
+            else
+                seen = true;
+
+            if (to_group.isEmpty()) {
+                chats.add(new SideChatInfo(username, chatId, chat_name, content, seen, false));
+            } else {
+                chats.add(new SideChatInfo(username, to_group, chat_name, content, seen, true));
+            }
+        }
+        return chats;
+    }
+
     public ArrayList<Message> getMessages(SideChatInfo chatInfo) throws SQLException {
         if (chatInfo.getIsGroup()) {
             String sql = "(WITH SimilarMessage AS " +

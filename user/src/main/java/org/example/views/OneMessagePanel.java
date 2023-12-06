@@ -14,7 +14,7 @@ public class OneMessagePanel extends JPanel {
         setBackground(null);
 
         messageLabel = new JLabel(message);
-        if (messageLabel.getPreferredSize().width > 600){
+        if (messageLabel.getPreferredSize().width > 500){
             messageLabel = new JLabel("<html><p style='width: 600'>" + message + "</p></html>");
         }
         messageLabel.setFont(Constants.NORMAL_FONT);

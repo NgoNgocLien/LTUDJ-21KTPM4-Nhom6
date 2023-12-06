@@ -1,5 +1,6 @@
 package org.example.utilities;
 
+import javax.swing.*;
 import java.awt.*;
 
 public class Constants {
@@ -19,9 +20,9 @@ public class Constants {
     public static final Font BUTTON_FONT = new Font(fontFamily, Font.PLAIN, 18);
 
     public static final Color DARK_BLUE  = new Color(23, 70, 162);
-    public static final Color BACKGROUND_COLOR = new Color(255, 255, 255);
-    public static final Color HOVER_COLOR = new Color(184, 207, 229);
-
+    public static final Color BACKGROUND_COLOR = new Color(238, 238, 238);
+//    public static final Color HOVER_COLOR = new Color(184, 207, 229);
+    public static final Color HOVER_COLOR = Color.LIGHT_GRAY;
 
     // SIDE PANEL
     public static final int SIDE_PANEL_WIDTH = 500;

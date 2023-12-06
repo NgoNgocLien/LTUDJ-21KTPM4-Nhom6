@@ -18,7 +18,7 @@ public class MessagePanel extends JPanel {
     private JPanel oneMessagePanel;
 //    private JPanel timestampPanel;
     private JPanel seenPanel;
-//    private JScrollPane messageScrollPane;
+    private JScrollPane messageScrollPane;
 
     public MessagePanel(SideChatInfo chatInfo, ArrayList<Message> messages) {
         setLayout(new BorderLayout());
@@ -27,7 +27,7 @@ public class MessagePanel extends JPanel {
 
         buildMessagePanel(chatInfo, messages);
 
-        add(messageListPanel, BorderLayout.SOUTH);
+//        add(messageScrollPane, BorderLayout.SOUTH);
     }
 
     public void buildMessagePanel(SideChatInfo chatInfo, ArrayList<Message> messages) {
@@ -65,6 +65,19 @@ public class MessagePanel extends JPanel {
             }
         }
 
+        if (messageScrollPane != null)
+            remove(messageScrollPane);
+        messageScrollPane = new JScrollPane(messageListPanel);
+        messageScrollPane.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED);
+        messageScrollPane.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
+        messageScrollPane.setBorder(BorderFactory.createEmptyBorder());
+        messageScrollPane.getVerticalScrollBar().setValue(messageScrollPane.getVerticalScrollBar().getMaximum());
+        add(messageScrollPane, BorderLayout.SOUTH);
+
+        SwingUtilities.invokeLater(() -> {
+            revalidate();  // Revalidate the panel
+            repaint();     // Repaint the panel
+        });
 //        seenPanel = new SeenPanel();
 //        messageListPanel.add(seenPanel);
     }

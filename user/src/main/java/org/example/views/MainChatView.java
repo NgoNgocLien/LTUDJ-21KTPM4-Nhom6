@@ -17,7 +17,7 @@ import java.time.LocalDate;
 import java.util.ArrayList;
 
 public class MainChatView extends JFrame {
-    private JPanel iconPanel;
+    private IconPanel iconPanel;
     private UserListPanel userListPanel;
     private ChatPanel chatPanel;
 
@@ -51,6 +51,10 @@ public class MainChatView extends JFrame {
 
         setExtendedState(JFrame.MAXIMIZED_BOTH);
         setVisible(true);
+    }
+
+    public IconPanel getIconPanel() {
+        return iconPanel;
     }
 
     public UserListPanel getUserListPanel() {
