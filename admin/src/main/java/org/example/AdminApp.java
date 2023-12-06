@@ -141,7 +141,11 @@ public class AdminApp extends javax.swing.JFrame {
         dataNavButton.setPreferredSize(new java.awt.Dimension(50, 50));
         dataNavButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                dataNavButtonActionPerformed(evt);
+                try {
+                    dataNavButtonActionPerformed(evt);
+                } catch (IOException | ClassNotFoundException e) {
+                    throw new RuntimeException(e);
+                }
             }
         });
 
@@ -697,7 +701,11 @@ public class AdminApp extends javax.swing.JFrame {
         searchDateButton.setPreferredSize(new java.awt.Dimension(57, 35));
         searchDateButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                searchDateButtonActionPerformed(evt);
+                try {
+                    searchDateButtonActionPerformed(evt);
+                } catch (IOException | ClassNotFoundException e) {
+                    throw new RuntimeException(e);
+                }
             }
         });
 
@@ -708,7 +716,11 @@ public class AdminApp extends javax.swing.JFrame {
         resetButton1.setPreferredSize(new java.awt.Dimension(57, 35));
         resetButton1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                resetButton1ActionPerformed(evt);
+                try {
+                    resetButton1ActionPerformed(evt);
+                } catch (IOException | ClassNotFoundException e) {
+                    throw new RuntimeException(e);
+                }
             }
         });
 
@@ -1016,7 +1028,11 @@ public class AdminApp extends javax.swing.JFrame {
         resetButton3.setPreferredSize(new java.awt.Dimension(57, 35));
         resetButton3.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                resetButton3ActionPerformed(evt);
+                try {
+                    resetButton3ActionPerformed(evt);
+                } catch (IOException | ClassNotFoundException e) {
+                    throw new RuntimeException(e);
+                }
             }
         });
 
@@ -1181,7 +1197,7 @@ public class AdminApp extends javax.swing.JFrame {
         getContentPane().remove(dataMainPanel);
     }
 
-    private void dataNavButtonActionPerformed(java.awt.event.ActionEvent evt) {
+    private void dataNavButtonActionPerformed(java.awt.event.ActionEvent evt) throws IOException, ClassNotFoundException {
         startDateInput.setText("(dd-mm-yyyy)");
         endDateInput.setText("(dd-mm-yyyy)");
 
@@ -1200,7 +1216,7 @@ public class AdminApp extends javax.swing.JFrame {
         DefaultTableModel model = (DefaultTableModel) activeUserTable.getModel();
         model.setRowCount(0);
 
-        currentActiveUserList = adminController.getAllActiveUser();
+        currentActiveUserList = GetAllActiveUser.request(socket);
         for (Object[] row : currentActiveUserList) {
             model.addRow(row);
         }
@@ -1364,12 +1380,7 @@ public class AdminApp extends javax.swing.JFrame {
 
         String status = model.getValueAt(index, 3).toString();
 
-        if (status.equals("Enabled")){
-            disableUserButton.setVisible(true);
-        }
-        else{
-            disableUserButton.setVisible(false);
-        }
+        disableUserButton.setVisible(status.equals("Enabled"));
 
     }
 
@@ -1425,7 +1436,7 @@ public class AdminApp extends javax.swing.JFrame {
         disableUserButton.setVisible(false);
     }
 
-    private void searchDateButtonActionPerformed(java.awt.event.ActionEvent evt) {
+    private void searchDateButtonActionPerformed(java.awt.event.ActionEvent evt) throws IOException, ClassNotFoundException {
         String start_date = startDateInput.getText();
         String start_hour = startHourInput.getText();
         String start_min = startMinInput.getText();
@@ -1437,10 +1448,10 @@ public class AdminApp extends javax.swing.JFrame {
         String end_sec = endSecInput.getText();
 
 
-        if ((!start_date.equals("(dd-mm-yyyy)") || start_date.isEmpty()) && !isValidDate(start_date)){
+        if ((!start_date.equals("(dd-mm-yyyy)") && !start_date.isEmpty()) && !isValidDate(start_date)){
             JOptionPane.showMessageDialog(null, "Invalid start date", "Error", JOptionPane.ERROR_MESSAGE);
         }
-        else if ((!end_date.equals("(dd-mm-yyyy)") || end_date.isEmpty()) && !isValidDate(end_date)){
+        else if ((!end_date.equals("(dd-mm-yyyy)") && !end_date.isEmpty()) && !isValidDate(end_date)){
             JOptionPane.showMessageDialog(null, "Invalid end date", "Error", JOptionPane.ERROR_MESSAGE);
         } else{
             if (start_date.equals("(dd-mm-yyyy)") || start_date.isEmpty() ){
@@ -1471,6 +1482,11 @@ public class AdminApp extends javax.swing.JFrame {
             endMinInput.setText(endMin);
             endSecInput.setText(endSec);
 
+            searchNameInput.setText("");
+            searchSessionInput.setText("");
+            sessionCountDropdown.setSelectedItem("Equal to");
+
+
             String[] startDateArray = start_date.split("-");
             String[] endDateArray = end_date.split("-");
 
@@ -1488,7 +1504,7 @@ public class AdminApp extends javax.swing.JFrame {
             DefaultTableModel model = (DefaultTableModel) activeUserTable.getModel();
             model.setRowCount(0);
 
-            currentActiveUserList = adminController.searchActiveUser( start_date, end_date);
+            currentActiveUserList = SearchActiveUser.request( start_date, end_date, socket);
             for (Object[] row : currentActiveUserList) {
                 model.addRow(row);
             }
@@ -1583,7 +1599,7 @@ public class AdminApp extends javax.swing.JFrame {
         }
     }
 
-    private void resetButton1ActionPerformed(java.awt.event.ActionEvent evt) {
+    private void resetButton1ActionPerformed(java.awt.event.ActionEvent evt) throws IOException, ClassNotFoundException {
         startDateInput.setText("(dd-mm-yyyy)");
         endDateInput.setText("(dd-mm-yyyy)");
 
@@ -1595,10 +1611,14 @@ public class AdminApp extends javax.swing.JFrame {
         endMinInput.setText("0");
         endSecInput.setText("0");
 
+        searchNameInput.setText("");
+        searchSessionInput.setText("");
+        sessionCountDropdown.setSelectedItem("Equal to");
+
         DefaultTableModel model = (DefaultTableModel) activeUserTable.getModel();
         model.setRowCount(0);
 
-        Object[][] data = adminController.getAllActiveUser();
+        Object[][] data = GetAllActiveUser.request(socket);
         for (Object[] row : data) {
             model.addRow(row);
         }
@@ -1634,14 +1654,14 @@ public class AdminApp extends javax.swing.JFrame {
             } else{
                 JOptionPane.showMessageDialog(null, "Year must be between 1990 and 2023", "Error", JOptionPane.ERROR_MESSAGE);
             }
-        } catch (NumberFormatException e) {
+        } catch (NumberFormatException | IOException | ClassNotFoundException e) {
             if (!searchYearInput.getText().isEmpty())
                 JOptionPane.showMessageDialog(null, "Invalid year", "Error", JOptionPane.ERROR_MESSAGE);
             e.printStackTrace();
         }
     }
 
-    private void resetButton3ActionPerformed(java.awt.event.ActionEvent evt) {
+    private void resetButton3ActionPerformed(java.awt.event.ActionEvent evt) throws IOException, ClassNotFoundException {
         Date date = new Date();
         searchYearInput.setText(Integer.toString(date.getYear() + 1900));
 
@@ -1686,14 +1706,14 @@ public class AdminApp extends javax.swing.JFrame {
         return "";
     }
 
-    public void createActiveUsersChart(String year){
+    public void createActiveUsersChart(String year) throws IOException, ClassNotFoundException {
         String[] monthNames = {
                 "Jan", "Feb", "Mar", "Apr", "May", "Jun",
                 "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"
         };
         DefaultCategoryDataset dataset = new DefaultCategoryDataset();
 
-        int[] data = adminController.getMonthlyActiveUser(year);
+        int[] data = GetMonthlyActiveUser.request(year, socket);
         for (int i = 0; i < 12; i++){
             System.out.println(data[i]);
             dataset.addValue(data[i], "Active users", monthNames[i]);
