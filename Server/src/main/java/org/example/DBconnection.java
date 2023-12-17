@@ -1,6 +1,11 @@
 package org.example;
 
 import java.sql.*;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.List;
 import java.util.Objects;
 
 
@@ -76,6 +81,33 @@ public class DBconnection {
             return true;
         } catch (SQLException se) {
             System.out.println(se.getErrorCode());
+        }
+        return false;
+    }
+
+    boolean updatePwd(String email, String pwd) throws SQLException {
+        Statement stm = connection.createStatement();
+        String sql = "USE db_chat";
+        stm.executeUpdate(sql);
+
+        try{
+            String sql1;
+            sql1 = "UPDATE USER SET password = ? WHERE email = ?";
+
+            PreparedStatement stmt = connection.prepareStatement(sql1);
+            stmt.setString(1, pwd);
+            stmt.setString(2, email);
+            int row = stmt.executeUpdate();
+            stmt.close();
+
+            if (row > 0)
+                return true;
+
+        }catch(SQLException se){
+            //Handle errors for JDBC
+            se.printStackTrace();
+        }catch(Exception e){ //Handle errors for Class.forName
+            e.printStackTrace();
         }
         return false;
     }
