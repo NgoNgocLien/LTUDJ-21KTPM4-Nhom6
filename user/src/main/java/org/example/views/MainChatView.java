@@ -1,6 +1,9 @@
 package org.example.views;
 
+import org.example.controllers.MainControllers;
+import org.example.models.Message;
 import org.example.models.RecentChat;
+import org.example.models.SideChatInfo;
 import org.example.models.User;
 import org.example.utilities.Constants;
 import org.example.utilities.DatabaseHandler;
@@ -14,12 +17,11 @@ import java.time.LocalDate;
 import java.util.ArrayList;
 
 public class MainChatView extends JFrame {
-    private JPanel iconPanel;
-    private JPanel userListPanel;
-    private JPanel sidePanel;
-    private JPanel chatPanel;
+    private IconPanel iconPanel;
+    private UserListPanel userListPanel;
+    private ChatPanel chatPanel;
 
-    public MainChatView(ArrayList<ArrayList<Object>> recentChats) {
+    public MainChatView(ArrayList<SideChatInfo> recentChats, ArrayList<Message> messages) {
 //         try {
 //             // set windows look and feel
 //             UIManager.setLookAndFeel("com.sun.java.swing.plaf.windows.WindowsLookAndFeel");
@@ -33,8 +35,16 @@ public class MainChatView extends JFrame {
         setLayout(new BorderLayout());
         setBackground(Color.WHITE);
 
-        sidePanel = new SidePanel(recentChats);
-        chatPanel = new ChatPanel("John Doe", "johndoe", "Online", true);
+        JPanel sidePanel = new JPanel();
+        sidePanel.setPreferredSize(new Dimension(Constants.SIDE_PANEL_WIDTH, Constants.SIDE_PANEL_HEIGHT));
+        sidePanel.setLayout(new BorderLayout());
+        sidePanel.setBackground(null);
+        iconPanel = new IconPanel();
+        userListPanel = new UserListPanel(recentChats);
+        sidePanel.add(iconPanel, BorderLayout.WEST);
+        sidePanel.add(userListPanel, BorderLayout.EAST);
+
+        chatPanel = new ChatPanel(recentChats.get(0), messages);
 
         add(sidePanel, BorderLayout.WEST);
         add(chatPanel, BorderLayout.CENTER);
@@ -43,20 +53,15 @@ public class MainChatView extends JFrame {
         setVisible(true);
     }
 
-    public static void main(String[] args) {
-        try {
-            String username = "bphuong";
-            DatabaseHandler DB = new DatabaseHandler();
-            User currentUser = DB.getUser(username);
+    public IconPanel getIconPanel() {
+        return iconPanel;
+    }
 
-            ArrayList<ArrayList<Object>> recentChats = DB.getRecentChat(username).getChatList();
-            MainChatView mainChatView = new MainChatView(recentChats);
+    public UserListPanel getUserListPanel() {
+        return userListPanel;
+    }
 
-            DB.clearEnvironment();
-        } catch (SQLException se) {
-            se.printStackTrace();
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
+    public ChatPanel getChatPanel() {
+        return chatPanel;
     }
 }

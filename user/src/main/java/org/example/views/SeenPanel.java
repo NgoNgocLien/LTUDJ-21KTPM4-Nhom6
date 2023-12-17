@@ -30,4 +30,12 @@ public class SeenPanel extends JPanel {
 
         add(seenPanel);
     }
+
+    public void setSeen(boolean seen) {
+        this.seen = seen;
+        if (seen)
+            seenLabel.setForeground(Color.GRAY);
+        else
+            seenLabel.setForeground(null);
+    }
 }

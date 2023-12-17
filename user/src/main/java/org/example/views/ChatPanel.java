@@ -1,21 +1,28 @@
 package org.example.views;
 
+import org.example.models.Message;
+import org.example.models.SideChatInfo;
+
 import java.awt.BorderLayout;
+import java.lang.reflect.Array;
+import java.util.ArrayList;
 
 import javax.swing.*;
 
 public class ChatPanel extends JPanel {
-    private JPanel messagePanel;
-    private JPanel inputPanel;
-    private JPanel chatnamePanel;
+    private SideChatInfo chatInfo;
+    private ArrayList<Message> messages;
+    private MessagePanel messagePanel;
+    private InputPanel inputPanel;
+    private ChatnamePanel chatnamePanel;
     private JScrollPane messageScrollPane;
 
-    public ChatPanel(String fullname, String username, String status, boolean isFriend) {
+    public ChatPanel(SideChatInfo chatInfo, ArrayList<Message> messages) {
         setLayout(new BorderLayout());
         setBackground(null);
 
-        chatnamePanel = new ChatnamePanel(fullname, status);
-        messagePanel = new MessagePanel(fullname, username, isFriend);
+        chatnamePanel = new ChatnamePanel(chatInfo.getChatName(), "Unknown");
+        messagePanel = new MessagePanel(chatInfo, messages);
         inputPanel = new InputPanel();
 
         messageScrollPane = new JScrollPane(messagePanel);
@@ -29,5 +36,8 @@ public class ChatPanel extends JPanel {
         add(inputPanel, BorderLayout.SOUTH);
     }
 
+    public MessagePanel getMessagePanel() { return messagePanel; }
+    public InputPanel getInputPanel() { return inputPanel; }
+    public ChatnamePanel getChatnamePanel() { return chatnamePanel; }
 
 }
