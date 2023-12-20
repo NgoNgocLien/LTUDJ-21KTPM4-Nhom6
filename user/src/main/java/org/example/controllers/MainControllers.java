@@ -32,7 +32,7 @@ public class MainControllers {
 
     public static void main(String[] args) {
         try {
-            String username = "bphuong";
+            String username = "tdung";
             DatabaseHandler DB = new DatabaseHandler();
             User currentUser = DB.getUser(username);
 

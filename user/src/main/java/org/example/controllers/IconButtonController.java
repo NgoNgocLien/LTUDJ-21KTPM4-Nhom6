@@ -1,7 +1,7 @@
 package org.example.controllers;
 
-import org.example.models.User;
 import org.example.models.SideChatInfo;
+import org.example.models.User;
 import org.example.utilities.Constants;
 import org.example.utilities.DatabaseHandler;
 import org.example.views.MainChatView;
