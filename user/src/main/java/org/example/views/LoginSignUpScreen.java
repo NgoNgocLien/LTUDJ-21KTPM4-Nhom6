@@ -3,12 +3,14 @@ package org.example.views;
 import org.example.models.DemoUser;
 import org.example.models.User;
 import org.example.utilities.Client_Socket;
+import org.example.utilities.ForgetPwd;
 import org.example.utilities.LoginWorker;
 import javax.swing.*;
 import java.awt.*;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
+import java.io.PrintWriter;
 import java.net.Socket;
 import java.util.ArrayList;
 
@@ -80,7 +82,13 @@ public class LoginSignUpScreen extends JFrame {
                 throw new RuntimeException(ex);
             }
         });
-        forgotButton.addActionListener(e -> forgot(socket));
+        forgotButton.addActionListener(e -> {
+            try {
+                forgot(socket);
+            } catch (IOException ex) {
+                throw new RuntimeException(ex);
+            }
+        });
     }
 
     private void login(Socket socket) throws IOException {
@@ -121,7 +129,20 @@ public class LoginSignUpScreen extends JFrame {
 
     }
 
-    private void forgot(Socket socket) {
-        JOptionPane.showMessageDialog(this, "Forgot pass not implemented");
+    private void forgot(Socket socket) throws IOException {
+        String email = JOptionPane.showInputDialog(this, "Enter your email to reset the password:");
+        if (email != null && !email.isEmpty()) {
+            OutputStream outputStream = socket.getOutputStream();
+            String method = "forgetpassword";
+            outputStream.write(method.getBytes());
+
+            InputStream inputStream = socket.getInputStream();
+            inputStream.readNBytes(2);
+
+            if (ForgetPwd.request(email, socket))
+                JOptionPane.showMessageDialog(this, "We sent the new password to your email", "Reset password",JOptionPane.INFORMATION_MESSAGE);
+            else
+                JOptionPane.showMessageDialog(this, "Reset password unsuccessfully. Do again", "Error", JOptionPane.ERROR_MESSAGE);
+        }
     }
 }

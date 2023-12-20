@@ -1,13 +1,17 @@
 package org.example;
 
+import com.mysql.cj.Session;
+
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
 import java.io.PrintWriter;
 import java.net.Socket;
 import java.sql.SQLException;
-import java.util.Arrays;
-import java.util.Scanner;
+import java.util.*;
+import javax.mail.*;
+import javax.mail.internet.*;
+import javax.activation.*;
 
 public class ClientHandler implements Runnable {
     private final chatServer server;
@@ -55,7 +59,8 @@ public class ClientHandler implements Runnable {
                         response_login = "false";
                     outputStream.write(response_login.getBytes());
 
-                } else if (method.equals("signup")) {
+                }
+                else if (method.equals("signup")) {
                     System.out.println("user wnt to signup");
                     bytesRead = inputStream.read(buffer);
                     String clientMessage = new String(buffer, 0, bytesRead);
@@ -73,6 +78,37 @@ public class ClientHandler implements Runnable {
                         System.out.println(response_signup);
                         outputStream.write(response_signup.getBytes());
                     }
+                }
+                else if (method.equals("forgetpassword")) {
+                    System.out.println("user forget pwd");
+                    bytesRead = inputStream.read(buffer);
+                    String email = new String(buffer, 0, bytesRead);
+
+                    System.out.println(email);
+
+                    // random mật khẩu
+                    String allowedChars = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
+                    Random random = new Random();
+                    int length = 15;
+                    StringBuilder password = new StringBuilder(length);
+
+                    for (int i = 0; i < length; i++) {
+                        int randomIndex = random.nextInt(allowedChars.length());
+                        char randomChar = allowedChars.charAt(randomIndex);
+                        password.append(randomChar);
+                    }
+
+                    String newPwd = password.toString();
+
+                    String response = "false";
+                    if (dbcon.updatePwd(email, newPwd) && sendMail(email, newPwd)){
+                        response = "true";
+                    }
+
+                    System.out.println("response");
+                    System.out.println(response);
+                    outputStream.write(response.getBytes());
+//
                 }
 
 
@@ -100,5 +136,55 @@ public class ClientHandler implements Runnable {
 
     public void sendMessage(String message) {
         output.println(message);
+    }
+
+    public boolean sendMail(String to, String newPwd){
+        final String from = "adsmap102@gmail.com";
+        final String password = "bqdfbiawmwgsnesh";
+
+        Properties props = new Properties();
+        props.put("mail.smtp.host", "smtp.gmail.com"); // SMTP HOST
+        props.put("mail.smtp.port", "587"); // TLS 587 SSL 465
+        props.put("mail.smtp.auth", "true");
+        props.put("mail.smtp.starttls.enable", "true");
+
+        Authenticator auth = new Authenticator() {
+            @Override
+            protected PasswordAuthentication getPasswordAuthentication() {
+                return new PasswordAuthentication(from, password);
+            }
+        };
+
+        javax.mail.Session session = javax.mail.Session.getInstance(props, auth);
+        MimeMessage msg = new MimeMessage(session);
+
+        try {
+            // Kiểu nội dung
+            msg.addHeader("Content-type", "text/HTML; charset=UTF-8");
+
+            // Người gửi
+            msg.setFrom(from);
+
+            // Người nhận
+            msg.setRecipients(Message.RecipientType.TO, InternetAddress.parse(to, false));
+
+            msg.setSentDate(new Date());
+
+            if (newPwd.isEmpty()){
+                msg.setSubject("Change your password");
+                msg.setContent("You changed password successfully", "text/HTML; charset=UTF-8");
+            } else{
+                msg.setSubject("Reset your password");
+                msg.setContent("<p>Your new password is <strong>" + newPwd + "</strong></p>", "text/HTML; charset=UTF-8");
+            }
+
+            Transport.send(msg);
+            System.out.println("Gửi email thành công");
+            return true;
+        } catch (Exception e) {
+            System.out.println("Gặp lỗi trong quá trình gửi email");
+            e.printStackTrace();
+            return false;
+        }
     }
 }
