@@ -1,103 +1,121 @@
 package org.example.views;
 
+import jiconfont.icons.font_awesome.FontAwesome;
+import jiconfont.swing.IconFontSwing;
 import org.example.utilities.Constants;
 
 import javax.swing.*;
-import javax.swing.border.Border;
-
+import javax.swing.border.EmptyBorder;
 import java.awt.*;
-import java.awt.event.*;
 
 public class IconPanel extends JPanel {
+    private Icon homeIcon;
+    private Icon chatIcon;
+    private Icon friendIcon;
+    private Icon groupIcon;
+    private Icon requestIcon;
+    private Icon blockIcon;
+    private Icon logoutIcon;
 
-    private JButton chatButton;
-    private JButton groupButton;
-    private JButton friendButton;
-    private JButton requestButton;
-    private JButton blockButton;
-    private JButton homeButton;
-
-    private ImageIcon chatIcon;
-    private ImageIcon groupIcon;
-    private ImageIcon friendIcon;
-    private ImageIcon requestIcon;
-    private ImageIcon blockIcon;
-    private ImageIcon homeIcon;
+    private JLabel homeIconLabel;
+    private JLabel chatIconLabel;
+    private JLabel friendIconLabel;
+    private JLabel groupIconLabel;
+    private JLabel requestIconLabel;
+    private JLabel blockIconLabel;
+    private JLabel logoutIconLabel;
 
     public IconPanel() {
-        setBackground(null);
-        setPreferredSize(new Dimension(Constants.ICON_PANEL_WIDTH, Constants.ICON_PANEL_HEIGHT));
-//        setLayout(new FlowLayout(FlowLayout.CENTER, 0, 20));
+        setBackground(Constants.COLOR_PRIMARY);
         setLayout(new BorderLayout());
 
-        homeIcon = new ImageIcon("src/main/resources/home.png");
-        homeButton = new JButton(homeIcon);
+        JPanel upperPanel = new JPanel();
+        upperPanel.setBackground(Constants.COLOR_PRIMARY);
+        upperPanel.setLayout(new GridLayout(6, 1, 0, 0));
 
-        chatIcon = new ImageIcon("src/main/resources/chat.png");
-        chatButton = new JButton(chatIcon);
+        JPanel lowerPanel = new JPanel();
+        lowerPanel.setBackground(Constants.COLOR_PRIMARY);
 
-        groupIcon = new ImageIcon("src/main/resources/group.png");
-        groupButton = new JButton(groupIcon);
+        // Register the IconFont
+        IconFontSwing.register(FontAwesome.getIconFont());
 
-        friendIcon = new ImageIcon("src/main/resources/friends.png");
-        friendButton = new JButton(friendIcon);
+        // Initialize the Icons
+        homeIcon = IconFontSwing.buildIcon(FontAwesome.HOME, 40, Constants.COLOR_ICON_PRIMARY);
+        chatIcon = IconFontSwing.buildIcon(FontAwesome.COMMENT, 40, Constants.COLOR_ICON_PRIMARY);
+        friendIcon = IconFontSwing.buildIcon(FontAwesome.USER, 40, Constants.COLOR_ICON_PRIMARY);
+        groupIcon = IconFontSwing.buildIcon(FontAwesome.USERS, 40, Constants.COLOR_ICON_PRIMARY);
+        requestIcon = IconFontSwing.buildIcon(FontAwesome.BELL, 40, Constants.COLOR_ICON_PRIMARY);
+        blockIcon = IconFontSwing.buildIcon(FontAwesome.BAN, 40, Constants.COLOR_ICON_PRIMARY);
+        logoutIcon = IconFontSwing.buildIcon(FontAwesome.SIGN_OUT, 40, Constants.COLOR_ICON_PRIMARY);
 
-        requestIcon = new ImageIcon("src/main/resources/request.png");
-        requestButton = new JButton(requestIcon);
+        // Initialize the Labels
+        homeIconLabel = new JLabel(homeIcon);
+        homeIconLabel.setPreferredSize(new Dimension(60, 70));
+        homeIconLabel.setOpaque(true);
+        homeIconLabel.setBackground(Constants.COLOR_PRIMARY);
 
-        blockIcon = new ImageIcon("src/main/resources/block.png");
-        blockButton = new JButton(blockIcon);
+        chatIconLabel = new JLabel(chatIcon);
+        chatIconLabel.setPreferredSize(new Dimension(60, 70));
+        chatIconLabel.setOpaque(true);
+        chatIconLabel.setBackground(Constants.COLOR_SECONDARY);
 
-        homeButton.setBackground(Constants.BACKGROUND_COLOR);
-        homeButton.setBorderPainted(false);
-//        homeButton.setFocusPainted(false);
-        homeButton.setContentAreaFilled(false);
-        homeButton.setCursor(new Cursor(Cursor.HAND_CURSOR));
-        homeButton.setPreferredSize(new Dimension(80, 80));
+        friendIconLabel = new JLabel(friendIcon);
+        friendIconLabel.setPreferredSize(new Dimension(60, 70));
+        friendIconLabel.setOpaque(true);
+        friendIconLabel.setBackground(Constants.COLOR_PRIMARY);
 
-        chatButton.setBackground(Constants.BACKGROUND_COLOR);
-        chatButton.setBorderPainted(false);
-        chatButton.setCursor(new Cursor(Cursor.HAND_CURSOR));
-        chatButton.setPreferredSize(new Dimension(80, 80));
+        groupIconLabel = new JLabel(groupIcon);
+        groupIconLabel.setPreferredSize(new Dimension(60, 70));
+        groupIconLabel.setOpaque(true);
+        groupIconLabel.setBackground(Constants.COLOR_PRIMARY);
 
-        groupButton.setBackground(Constants.BACKGROUND_COLOR);
-        groupButton.setBorderPainted(false);
-        groupButton.setCursor(new Cursor(Cursor.HAND_CURSOR));
-        groupButton.setPreferredSize(new Dimension(80, 80));
+        requestIconLabel = new JLabel(requestIcon);
+        requestIconLabel.setPreferredSize(new Dimension(60, 70));
+        requestIconLabel.setOpaque(true);
+        requestIconLabel.setBackground(Constants.COLOR_PRIMARY);
 
-        friendButton.setBackground(Constants.BACKGROUND_COLOR);
-        friendButton.setBorderPainted(false);
-        friendButton.setCursor(new Cursor(Cursor.HAND_CURSOR));
-        friendButton.setPreferredSize(new Dimension(80, 80));
+        blockIconLabel = new JLabel(blockIcon);
+        blockIconLabel.setPreferredSize(new Dimension(60, 70));
+        blockIconLabel.setOpaque(true);
+        blockIconLabel.setBackground(Constants.COLOR_PRIMARY);
 
-        requestButton.setBackground(Constants.BACKGROUND_COLOR);
-        requestButton.setBorderPainted(false);
-        requestButton.setCursor(new Cursor(Cursor.HAND_CURSOR));
-        requestButton.setPreferredSize(new Dimension(80, 80));
+        logoutIconLabel = new JLabel(logoutIcon);
+        logoutIconLabel.setPreferredSize(new Dimension(60, 70));
+        logoutIconLabel.setOpaque(true);
+        logoutIconLabel.setBackground(Constants.COLOR_PRIMARY);
 
-        blockButton.setBackground(Constants.BACKGROUND_COLOR);
-        blockButton.setBorderPainted(false);
-        blockButton.setCursor(new Cursor(Cursor.HAND_CURSOR));
-        blockButton.setPreferredSize(new Dimension(80, 80));
+        // Add the Labels to the Panel
+        upperPanel.add(homeIconLabel);
+        upperPanel.add(chatIconLabel);
+        upperPanel.add(friendIconLabel);
+        upperPanel.add(groupIconLabel);
+        upperPanel.add(requestIconLabel);
+        upperPanel.add(blockIconLabel);
 
-        JPanel topIcons = new JPanel();
-        topIcons.setLayout(new FlowLayout(FlowLayout.CENTER, 0, 0));
-        topIcons.setPreferredSize(new Dimension(Constants.ICON_PANEL_WIDTH, 100 * 5));
-        topIcons.add(chatButton);
-        topIcons.add(groupButton);
-        topIcons.add(friendButton);
-        topIcons.add(requestButton);
-        topIcons.add(blockButton);
+        lowerPanel.add(logoutIconLabel);
 
-        add(topIcons, BorderLayout.NORTH);
-        add(homeButton, BorderLayout.SOUTH);
+        // Add the Panels to the Main Panel
+        add(upperPanel, BorderLayout.NORTH);
+        add(lowerPanel, BorderLayout.SOUTH);
     }
 
-    public JButton getChatButton() { return this.chatButton; }
-    public JButton getGroupButton() { return this.groupButton; }
-    public JButton getFriendButton() { return this.friendButton; }
-    public JButton getRequestButton() { return this.requestButton; }
-    public JButton getBlockButton() { return this.blockButton; }
-    public JButton getHomeButton() { return this.homeButton; }
-}
+    public JLabel getHomeIconLabel() { return homeIconLabel; }
+    public JLabel getChatIconLabel() { return chatIconLabel; }
+    public JLabel getFriendIconLabel() { return friendIconLabel; }
+    public JLabel getGroupIconLabel() { return groupIconLabel; }
+    public JLabel getRequestIconLabel() { return requestIconLabel; }
+    public JLabel getBlockIconLabel() { return blockIconLabel; }
+    public JLabel getLogoutIconLabel() { return logoutIconLabel; }
 
+    public void setFocusLabel(JLabel label) {
+        homeIconLabel.setBackground(Constants.COLOR_PRIMARY);
+        chatIconLabel.setBackground(Constants.COLOR_PRIMARY);
+        friendIconLabel.setBackground(Constants.COLOR_PRIMARY);
+        groupIconLabel.setBackground(Constants.COLOR_PRIMARY);
+        requestIconLabel.setBackground(Constants.COLOR_PRIMARY);
+        blockIconLabel.setBackground(Constants.COLOR_PRIMARY);
+        logoutIconLabel.setBackground(Constants.COLOR_PRIMARY);
+
+        label.setBackground(Constants.COLOR_SECONDARY);
+    }
+}

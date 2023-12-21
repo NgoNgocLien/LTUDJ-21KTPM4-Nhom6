@@ -1,58 +1,33 @@
 package org.example.utilities;
 
-import javax.swing.*;
 import java.awt.*;
-
 public class Constants {
-    // VIEWS
-    public static final int WINDOW_WIDTH = 1440;
-    public static final int WINDOW_HEIGHT = 1024;
+    public static final String APP_NAME = "Chat App";
 
-    public static final String APP_TITLE = "Regnessem";
+    // COLOR
+    public static final Color DARK_BLUE = new Color(23, 70, 162);
+    //    public static final Color LIGHT_BLUE = new Color(83, 126, 201);
+    public static final Color LIGHT_BLUE = new Color(57, 94, 178);
+    public static final Color LIGHTER_BLUE = new Color(92, 124, 208);
+    public static final Color COLOR_BACKGROUND = Color.WHITE;
+    public static final Color COLOR_PRIMARY = DARK_BLUE;
+    public static final Color COLOR_SECONDARY = LIGHT_BLUE;
+    public static final Color COLOR_TERTIARY = LIGHTER_BLUE;
+    public static final Color COLOR_TEXT_PRIMARY = Color.BLACK;
+    public static final Color COLOR_TEXT_SECONDARY = Color.GRAY;
+    public static final Color COLOR_TEXT_LIGHT_SECONDARY = Color.LIGHT_GRAY;
+    public static final Color COLOR_TEXT_LIGHT = Color.WHITE;
+    public static final Color COLOR_ICON_PRIMARY = Color.WHITE;
+    public static final Color COLOR_ICON_SECONDARY = new Color(218, 218, 218);
+    public static final Color COLOR_ONLINE = new Color(99, 212, 113);
 
-    private static String fontFamily = "Helvetica";
-    public static final Font BIGGER_FONT = new Font(fontFamily, Font.BOLD, 30);
-    public static final Font BIG_FONT = new Font(fontFamily, Font.BOLD, 22);
-    public static final Font NORMAL_FONT = new Font(fontFamily, Font.PLAIN, 20);
-    public static final Font NORMAL_BOLD_FONT = new Font(fontFamily, Font.BOLD, 20);
-    public static final Font SMALL_FONT = new Font(fontFamily, Font.PLAIN, 18);
-    public static final Font SMALL_BOLD_FONT = new Font(fontFamily, Font.BOLD, 18);
-    public static final Font BUTTON_FONT = new Font(fontFamily, Font.PLAIN, 18);
-
-    public static final Color DARK_BLUE  = new Color(23, 70, 162);
-    public static final Color BACKGROUND_COLOR = new Color(238, 238, 238);
-//    public static final Color HOVER_COLOR = new Color(184, 207, 229);
-    public static final Color HOVER_COLOR = Color.LIGHT_GRAY;
-
-    // SIDE PANEL
-    public static final int SIDE_PANEL_WIDTH = 500;
-    public static final int SIDE_PANEL_HEIGHT = 800;
-
-    // ICON PANEL
-    public static final int ICON_PANEL_WIDTH = 80;
-    public static final int ICON_PANEL_HEIGHT = 800;
-
-    // USER LIST PANEL
-    public static final int USER_LIST_PANEL_WIDTH = 420;
-    public static final int USER_LIST_PANEL_HEIGHT = 800;
-
-    public static final int USER_PANEL_WIDTH = 418;
-    public static final int USER_PANEL_HEIGHT = 70;
-
-    public static final int USER_PANEL_FULLNAME_HEIGHT = 40;
-    public static final int USER_PANEL_SUBLABEL_HEIGHT = 30;
-
-    // SEARCH PANEL
-    public static final int SEARCH_PANEL_WIDTH = 418;
-    public static final int SEARCH_PANEL_HEIGHT = 80;
-
-    public static final int SEARCH_FIELD_WIDTH = 270;
-    public static final int SEARCH_FIELD_HEIGHT = 40;
-
-    public static final int SEARCH_BUTTON_WIDTH = 100;
-    public static final int SEARCH_BUTTON_HEIGHT = 40;
-
-    // private final int SEARCH_BUTTON_WIDTH = 100;
-    // private final int SEARCH_BUTTON_HEIGHT = 40;
+    // FONT
+    private static final String FONT_NAME = "Segoe UI";
+    public static final Font FONT_NORMAL = new Font(FONT_NAME, Font.PLAIN, 18);
+    public static final Font FONT_BOLD = new Font(FONT_NAME, Font.BOLD, 18);
+    public static final Font FONT_SMALL= new Font(FONT_NAME, Font.PLAIN, 16);
+    public static final Font FONT_SMALL_BOLD = new Font(FONT_NAME, Font.BOLD, 16);
+    public static final Font FONT_LARGE = new Font(FONT_NAME, Font.PLAIN, 20);
+    public static final Font FONT_LARGE_BOLD = new Font(FONT_NAME, Font.BOLD, 20);
 
 }

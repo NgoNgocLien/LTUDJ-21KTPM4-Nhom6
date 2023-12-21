@@ -1,8 +1,6 @@
 package org.example.views;
 
 import org.example.models.DemoUser;
-import org.example.models.User;
-import org.example.utilities.Client_Socket;
 import org.example.utilities.ForgetPwd;
 import org.example.utilities.LoginWorker;
 import javax.swing.*;
@@ -10,7 +8,6 @@ import java.awt.*;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
-import java.io.PrintWriter;
 import java.net.Socket;
 import java.util.ArrayList;
 
