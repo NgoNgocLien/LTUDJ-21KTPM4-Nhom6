@@ -29,5 +29,6 @@ public class Constants {
     public static final Font FONT_SMALL_BOLD = new Font(FONT_NAME, Font.BOLD, 16);
     public static final Font FONT_LARGE = new Font(FONT_NAME, Font.PLAIN, 20);
     public static final Font FONT_LARGE_BOLD = new Font(FONT_NAME, Font.BOLD, 20);
+    public static final Font FONT_LARGER_BOLD = new Font(FONT_NAME, Font.BOLD, 30);
 
 }

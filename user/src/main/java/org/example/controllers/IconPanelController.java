@@ -60,6 +60,7 @@ public class IconPanelController {
                 try {
                     ArrayList<ChatInfo> chats = DB.getAllChats(myUsername);
                     MF.getChatListPanel().rebuildChatPanelsScrollPane(chats);
+                    MF.getChatListPanel().setTitleLabel("Chats");
                 }
                 catch (Exception ex) {
                     System.out.println("Error getting all chats: " + ex);
@@ -69,6 +70,7 @@ public class IconPanelController {
                 try {
                     ArrayList<ChatInfo> friends = DB.getAllFriends(myUsername);
                     MF.getChatListPanel().rebuildChatPanelsScrollPane(friends);
+                    MF.getChatListPanel().setTitleLabel("Friends");
                 }
                 catch (Exception ex) {
                     System.out.println("Error getting all friends: " + ex);
@@ -78,6 +80,7 @@ public class IconPanelController {
                 try {
                     ArrayList<ChatInfo> groups = DB.getAllGroups(myUsername);
                     MF.getChatListPanel().rebuildChatPanelsScrollPane(groups);
+                    MF.getChatListPanel().setTitleLabel("Groups");
                 }
                 catch (Exception ex) {
                     System.out.println("Error getting all groups: " + ex);
@@ -87,6 +90,7 @@ public class IconPanelController {
                 try {
                     ArrayList<ChatInfo> requests = DB.getAllRequests(myUsername);
                     MF.getChatListPanel().rebuildChatPanelsScrollPane(requests);
+                    MF.getChatListPanel().setTitleLabel("Friend Requests");
                 }
                 catch (Exception ex) {
                     System.out.println("Error getting all requests: " + ex);
@@ -96,6 +100,7 @@ public class IconPanelController {
                 try {
                     ArrayList<ChatInfo> blocks = DB.getAllBlocks(myUsername);
                     MF.getChatListPanel().rebuildChatPanelsScrollPane(blocks);
+                    MF.getChatListPanel().setTitleLabel("Blocked Users");
                 }
                 catch (Exception ex) {
                     System.out.println("Error getting all blocks: " + ex);

@@ -35,6 +35,7 @@ public class IconPanel extends JPanel {
 
         JPanel lowerPanel = new JPanel();
         lowerPanel.setBackground(Constants.COLOR_PRIMARY);
+//        lowerPanel.setLayout(new GridLayout(1, 1, 0, 0));
 
         // Register the IconFont
         IconFontSwing.register(FontAwesome.getIconFont());

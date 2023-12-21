@@ -12,6 +12,7 @@ import java.util.ArrayList;
 
 public class ChatListPanel extends JPanel {
     private ArrayList<ChatInfo> infos;
+    private JLabel titleLabel;
     private JTextField searchField;
     private JButton searchButton;
     private JScrollPane chatPanelsScrollPane;
@@ -27,6 +28,12 @@ public class ChatListPanel extends JPanel {
         searchPanel.setLayout(new BorderLayout());
         searchPanel.setBorder(new EmptyBorder(10, 10, 10, 10));
 
+        titleLabel = new JLabel();
+        titleLabel.setText("Chats");
+        titleLabel.setForeground(Constants.COLOR_TEXT_LIGHT);
+        titleLabel.setFont(Constants.FONT_LARGER_BOLD);
+        titleLabel.setBorder(new EmptyBorder(0, 0, 10, 0));
+
         searchField = new JTextField();
         searchField.setBackground(Constants.COLOR_BACKGROUND);
         searchField.setFont(Constants.FONT_NORMAL);
@@ -41,6 +48,7 @@ public class ChatListPanel extends JPanel {
         searchButton.setPreferredSize(new Dimension(40, 40));
         searchButton.setBorderPainted(false);
 
+        searchPanel.add(titleLabel, BorderLayout.NORTH);
         searchPanel.add(searchField, BorderLayout.CENTER);
         searchPanel.add(searchButton, BorderLayout.EAST);
 
@@ -195,6 +203,10 @@ public class ChatListPanel extends JPanel {
         public void setSubtitleLabel(String subtitle) {
             subtitleLabel.setText(subtitle);
         }
+    }
+
+    public void setTitleLabel(String title) {
+        titleLabel.setText(title);
     }
 
     public JScrollPane getChatPanelsScrollPane() {

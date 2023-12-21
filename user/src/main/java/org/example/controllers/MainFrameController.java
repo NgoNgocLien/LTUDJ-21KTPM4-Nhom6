@@ -5,9 +5,6 @@ import org.example.utilities.DatabaseHandler;
 import org.example.views.IconPanel;
 import org.example.views.MainFrame;
 
-
-import javax.xml.crypto.Data;
-
 public class MainFrameController {
     String myUsername;
     DatabaseHandler DB;
