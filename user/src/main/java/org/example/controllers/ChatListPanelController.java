@@ -42,11 +42,20 @@ public class ChatListPanelController {
         public void mouseClicked(MouseEvent e) {
             chatListPanel.setFocusChatPanel(chatPanel);
             ChatInfo chatInfo = chatPanel.getInfo();
-            boolean isGroup = chatInfo.isGroup();
-            if (isGroup) {
 
-            } else {
+            if (chatPanel.getMode()) {
+                String chatName = chatInfo.getChatName();
+                boolean isOnline = chatInfo.isOnline();
+                MF.getConversationPanel().setChatName(chatName, isOnline);
+                boolean isGroup = chatInfo.isGroup();
+                if (isGroup) {
 
+                } else {
+
+                }
+            }
+            else {
+                // open profile
             }
         }
     }

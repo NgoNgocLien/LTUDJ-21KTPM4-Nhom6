@@ -33,6 +33,7 @@ public class ChatInfo {
     }
 
     public String getChatName() { return chatName; }
+    public String getFriendUsername() { return username; }
     public String getSubTitle() { return subTitle; }
     public boolean isGroup() { return isGroup; }
     public int getGroupId() { return groupId; }

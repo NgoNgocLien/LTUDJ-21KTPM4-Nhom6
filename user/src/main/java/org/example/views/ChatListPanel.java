@@ -89,7 +89,7 @@ public class ChatListPanel extends JPanel {
         }
         else {
             for (ChatInfo info : infos) {
-                AChatPanel chatPanel = new AChatPanel(info);
+                AChatPanel chatPanel = new AChatPanel(info, true);
                 chatPanels.add(chatPanel);
                 chatPanelsPanel.add(chatPanel);
                 if (info.isUnread()) {
@@ -107,7 +107,7 @@ public class ChatListPanel extends JPanel {
         chatPanelsScrollPane.setViewportView(tmp);
     }
 
-    public void rebuildChatPanelsScrollPane(ArrayList<ChatInfo> infos) {
+    public void rebuildChatPanelsScrollPane(ArrayList<ChatInfo> infos, boolean mode) {
         chatPanelsPanel.removeAll();
         if (infos == null || infos.isEmpty()) {
             JPanel noChatPanel = new JPanel();
@@ -126,7 +126,7 @@ public class ChatListPanel extends JPanel {
         }
         else {
             for (ChatInfo info : infos) {
-                AChatPanel chatPanel = new AChatPanel(info);
+                AChatPanel chatPanel = new AChatPanel(info, mode);
                 chatPanels.add(chatPanel);
                 chatPanelsPanel.add(chatPanel);
                 if (info.isUnread()) {
@@ -145,13 +145,15 @@ public class ChatListPanel extends JPanel {
     }
 
     public class AChatPanel extends JPanel {
+        private boolean mode; // true: open chat, false: open profile
         private ChatInfo info;
         private JLabel titleLabel;
         private JLabel subtitleLabel;
         private JLabel onlineLabel;
         private Icon onlineIcon;
 
-        public AChatPanel(ChatInfo info) {
+        public AChatPanel(ChatInfo info, boolean mode) {
+            this.mode = mode;
             this.info = info;
             setBackground(Constants.COLOR_SECONDARY);
             setLayout(new GridLayout(2, 1, 0, 0));
@@ -203,6 +205,7 @@ public class ChatListPanel extends JPanel {
             subtitleLabel.setText(subtitle);
         }
         public ChatInfo getInfo() { return info; }
+        public boolean getMode() { return mode; }
     }
 
     public void setTitleLabel(String title) {

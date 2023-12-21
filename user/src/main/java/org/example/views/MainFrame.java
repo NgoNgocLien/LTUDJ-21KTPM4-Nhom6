@@ -78,4 +78,5 @@ public class MainFrame extends JFrame {
         return chatListPanel;
     }
 
+    public ConversationPanel getConversationPanel() { return conversationPanel; }
 }

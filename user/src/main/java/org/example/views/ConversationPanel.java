@@ -16,6 +16,7 @@ import java.util.ArrayList;
 
 public class ConversationPanel extends JPanel {
     private JPanel chatNamePanel;
+    private JLabel nameLabel;
     private JPanel messagesPanel;
     private JScrollPane messagesScrollPane;
     private JPanel inputPanel;
@@ -46,13 +47,13 @@ public class ConversationPanel extends JPanel {
         chatNamePanel.setBackground(Constants.COLOR_BACKGROUND);
         chatNamePanel.setLayout(new BorderLayout());
 
-        JLabel nameLabel = new JLabel("Chat Name");
+        nameLabel = new JLabel("");
         nameLabel.setFont(Constants.FONT_LARGE_BOLD);
         nameLabel.setForeground(Constants.COLOR_PRIMARY);
         nameLabel.setBorder(new EmptyBorder(10, 10, 10, 10));
         // Register the IconFont for online status
         IconFontSwing.register(FontAwesome.getIconFont());
-        Icon onlineIcon = IconFontSwing.buildIcon(FontAwesome.CIRCLE, 10, Constants.COLOR_ONLINE);
+        Icon onlineIcon = IconFontSwing.buildIcon(FontAwesome.CIRCLE, 10, Constants.COLOR_BACKGROUND);
         nameLabel.setIcon(onlineIcon);
         nameLabel.setHorizontalTextPosition(JLabel.LEFT);
 
@@ -110,7 +111,6 @@ public class ConversationPanel extends JPanel {
             }
         });
     }
-
 
     private void buildMessagesPanel() {
         messagesPanel = new JPanel();
@@ -265,26 +265,7 @@ public class ConversationPanel extends JPanel {
         inputPanel.add(sendButton, BorderLayout.EAST);
     }
 
-
-//    public static void main(String[] args)
-//    {
-//        JFrame frame = new JFrame();
-//        frame.setTitle(Constants.APP_NAME);
-//        frame.setSize(new Dimension(1000, 700));
-////        frame.setMinimumSize(new Dimension(1000, 700));
-////        frame.setExtendedState(JFrame.MAXIMIZED_BOTH);
-//        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-//        frame.setBackground(Constants.COLOR_BACKGROUND);
-//        frame.setLayout(new BorderLayout());
-//        frame.setVisible(true);
-//
-//        ConversationPanel conversationPanel = new ConversationPanel();
-//        frame.add(conversationPanel, BorderLayout.CENTER);
-//        frame.pack();
-//    }
-
-
-    class RoundedPanel extends JPanel {
+    private class RoundedPanel extends JPanel {
         private Color backgroundColor;
         private int cornerRadius = 15;
 
@@ -328,6 +309,19 @@ public class ConversationPanel extends JPanel {
             graphics.fillRoundRect(0, 0, width-1, height-1, arcs.width, arcs.height); //paint background
             graphics.setColor(getBackground());
             graphics.drawRoundRect(0, 0, width-1, height-1, arcs.width, arcs.height); //paint border
+        }
+    }
+
+    public void setChatName(String chatName, boolean isOnline) {
+        this.nameLabel.setText(chatName);
+        if (isOnline) {
+            IconFontSwing.register(FontAwesome.getIconFont());
+            Icon onlineIcon = IconFontSwing.buildIcon(FontAwesome.CIRCLE, 10, Constants.COLOR_ONLINE);
+            this.nameLabel.setIcon(onlineIcon);
+        } else {
+            IconFontSwing.register(FontAwesome.getIconFont());
+            Icon onlineIcon = IconFontSwing.buildIcon(FontAwesome.CIRCLE, 10, Constants.COLOR_BACKGROUND);
+            this.nameLabel.setIcon(onlineIcon);
         }
     }
 }
