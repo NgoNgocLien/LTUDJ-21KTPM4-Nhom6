@@ -3,43 +3,32 @@ package org.example.models;
 // interface
 public class ChatInfo {
     private String chatName;
-    private String subTitle; // last message or username
+    private String username;
+    private String subTitle; // last message or group members or username
     private boolean isGroup;
     private int groupId;
     private boolean isOnline;
     private boolean isUnread;
 
+    // friend
+    public ChatInfo(String chatName, String username, String subTitle, boolean isOnline, boolean isUnread) {
+        this.chatName = chatName;
+        this.isGroup = false;
+        this.groupId = -1;
+        this.username = username;
+        this.subTitle = subTitle;
+        this.isOnline = isOnline;
+        this.isUnread = isUnread;
+    }
 
-    public ChatInfo(String chatName, String subTitle) {
+    // group
+    public ChatInfo(String chatName, int groupId, String subTitle, boolean isUnread) {
         this.chatName = chatName;
-        this.subTitle = subTitle;
-        this.isGroup = false;
-        this.groupId = -1;
-        this.isOnline = false;
-        this.isUnread = false;
-    }
-    public ChatInfo(String chatName, String subTitle, boolean isOnline) {
-        this.chatName = chatName;
-        this.subTitle = subTitle;
-        this.isGroup = false;
-        this.groupId = -1;
-        this.isOnline = isOnline;
-        this.isUnread = false;
-    }
-    public ChatInfo(String chatName, String subTitle, boolean isGroup, int groupId) {
-        this.chatName = chatName;
-        this.subTitle = subTitle;
-        this.isGroup = isGroup;
+        this.isGroup = true;
         this.groupId = groupId;
-        this.isOnline = false;
-        this.isUnread = false;
-    }
-    public ChatInfo(String chatName, String subTitle, boolean isGroup, int groupId, boolean isOnline, boolean isUnread) {
-        this.chatName = chatName;
+        this.username = null;
         this.subTitle = subTitle;
-        this.isGroup = isGroup;
-        this.groupId = groupId;
-        this.isOnline = isOnline;
+        this.isOnline = false;
         this.isUnread = isUnread;
     }
 

@@ -6,10 +6,11 @@ import org.example.views.IconPanel;
 import org.example.views.MainFrame;
 
 public class MainFrameController {
-    String myUsername;
-    DatabaseHandler DB;
-    MainFrame mainFrame;
+    private String myUsername;
+    private DatabaseHandler DB;
+    private MainFrame mainFrame;
     IconPanelController iconPanelController;
+    ChatListPanelController chatListPanelController;
     public MainFrameController(MainFrame mainFrame, DatabaseHandler DB, String myUsername) {
         this.myUsername = myUsername;
         this.DB = DB;
@@ -27,6 +28,23 @@ public class MainFrameController {
             }
         });
 
-        iconPanelController = new IconPanelController(mainFrame, DB, myUsername);
+        iconPanelController = new IconPanelController(this);
+        chatListPanelController = new ChatListPanelController(this);
+    }
+
+    public String getMyUsername() {
+        return myUsername;
+    }
+    public DatabaseHandler getDB() {
+        return DB;
+    }
+    public MainFrame getMainFrame() {
+        return mainFrame;
+    }
+    public IconPanelController getIconPanelController() {
+        return iconPanelController;
+    }
+    public ChatListPanelController getChatListPanelController() {
+        return chatListPanelController;
     }
 }

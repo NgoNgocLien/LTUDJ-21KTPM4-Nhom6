@@ -144,14 +144,13 @@ public class ChatListPanel extends JPanel {
         chatPanelsScrollPane.setViewportView(tmp);
     }
 
-    private class AChatPanel extends JPanel {
+    public class AChatPanel extends JPanel {
         private ChatInfo info;
         private JLabel titleLabel;
         private JLabel subtitleLabel;
         private JLabel onlineLabel;
         private Icon onlineIcon;
 
-        // public AChatPanel(User info) {
         public AChatPanel(ChatInfo info) {
             this.info = info;
             setBackground(Constants.COLOR_SECONDARY);
@@ -203,10 +202,20 @@ public class ChatListPanel extends JPanel {
         public void setSubtitleLabel(String subtitle) {
             subtitleLabel.setText(subtitle);
         }
+        public ChatInfo getInfo() { return info; }
     }
 
     public void setTitleLabel(String title) {
         titleLabel.setText(title);
+    }
+
+    public ArrayList<AChatPanel> getChatPanels() {
+        return chatPanels;
+    }
+
+    public void setFocusChatPanel(AChatPanel chatPanel) {
+        chatPanels.forEach(panel -> panel.setBackground(Constants.COLOR_SECONDARY));
+        chatPanel.setHighlighted();
     }
 
     public JScrollPane getChatPanelsScrollPane() {

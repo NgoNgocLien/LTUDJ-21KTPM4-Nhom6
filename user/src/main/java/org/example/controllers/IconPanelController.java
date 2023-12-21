@@ -11,22 +11,24 @@ import java.awt.event.MouseEvent;
 import java.util.ArrayList;
 
 public class IconPanelController {
-    String myUsername;
-    DatabaseHandler DB;
-    MainFrame MF;
-    IconPanel iconPanel;
-    JLabel homeIconLabel;
-    JLabel chatIconLabel;
-    JLabel friendIconLabel;
-    JLabel groupIconLabel;
-    JLabel requestIconLabel;
-    JLabel blockIconLabel;
-    JLabel logoutIconLabel;
+    private MainFrameController MFC;
+    private String myUsername;
+    private DatabaseHandler DB;
+    private MainFrame MF;
+    private IconPanel iconPanel;
+    private JLabel homeIconLabel;
+    private JLabel chatIconLabel;
+    private JLabel friendIconLabel;
+    private JLabel groupIconLabel;
+    private JLabel requestIconLabel;
+    private JLabel blockIconLabel;
+    private JLabel logoutIconLabel;
 
-    public IconPanelController(MainFrame MF, DatabaseHandler DB, String myUsername) {
-        this.myUsername = myUsername;
-        this.DB = DB;
-        this.MF = MF;
+    public IconPanelController(MainFrameController mfc) {
+        this.MFC = mfc;
+        this.myUsername = mfc.getMyUsername();
+        this.DB = mfc.getDB();
+        this.MF = mfc.getMainFrame();
         this.iconPanel = MF.getIconPanel();
         this.homeIconLabel = iconPanel.getHomeIconLabel();
         this.chatIconLabel = iconPanel.getChatIconLabel();
@@ -61,6 +63,7 @@ public class IconPanelController {
                     ArrayList<ChatInfo> chats = DB.getAllChats(myUsername);
                     MF.getChatListPanel().rebuildChatPanelsScrollPane(chats);
                     MF.getChatListPanel().setTitleLabel("Chats");
+                    MFC.getChatListPanelController().renewListener();
                 }
                 catch (Exception ex) {
                     System.out.println("Error getting all chats: " + ex);
@@ -71,6 +74,7 @@ public class IconPanelController {
                     ArrayList<ChatInfo> friends = DB.getAllFriends(myUsername);
                     MF.getChatListPanel().rebuildChatPanelsScrollPane(friends);
                     MF.getChatListPanel().setTitleLabel("Friends");
+                    MFC.getChatListPanelController().renewListener();
                 }
                 catch (Exception ex) {
                     System.out.println("Error getting all friends: " + ex);
@@ -81,6 +85,7 @@ public class IconPanelController {
                     ArrayList<ChatInfo> groups = DB.getAllGroups(myUsername);
                     MF.getChatListPanel().rebuildChatPanelsScrollPane(groups);
                     MF.getChatListPanel().setTitleLabel("Groups");
+                    MFC.getChatListPanelController().renewListener();
                 }
                 catch (Exception ex) {
                     System.out.println("Error getting all groups: " + ex);
@@ -91,6 +96,7 @@ public class IconPanelController {
                     ArrayList<ChatInfo> requests = DB.getAllRequests(myUsername);
                     MF.getChatListPanel().rebuildChatPanelsScrollPane(requests);
                     MF.getChatListPanel().setTitleLabel("Friend Requests");
+                    MFC.getChatListPanelController().renewListener();
                 }
                 catch (Exception ex) {
                     System.out.println("Error getting all requests: " + ex);
@@ -101,6 +107,7 @@ public class IconPanelController {
                     ArrayList<ChatInfo> blocks = DB.getAllBlocks(myUsername);
                     MF.getChatListPanel().rebuildChatPanelsScrollPane(blocks);
                     MF.getChatListPanel().setTitleLabel("Blocked Users");
+                    MFC.getChatListPanelController().renewListener();
                 }
                 catch (Exception ex) {
                     System.out.println("Error getting all blocks: " + ex);

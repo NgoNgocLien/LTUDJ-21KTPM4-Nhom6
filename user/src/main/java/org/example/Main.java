@@ -30,8 +30,8 @@ public class Main {
             ArrayList<ChatInfo> allChats = null;
             try {
                 allChats= DB.getAllChats("hlong");
-            } catch (SQLException throwables) {
-                throwables.printStackTrace();
+            } catch (SQLException se) {
+                se.printStackTrace();
             }
             MainFrame mainFrame = new MainFrame(allChats);
             MainFrameController mainFrameController = new MainFrameController(mainFrame, DB, "hlong");

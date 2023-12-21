@@ -1,6 +1,7 @@
 package org.example.utilities;
 
 import org.example.models.ChatInfo;
+import org.example.models.Message;
 
 import java.sql.*;
 import java.util.ArrayList;
@@ -67,7 +68,7 @@ public class DatabaseHandler {
         stmt.setString(5, myUsername);
 
         ResultSet rs = stmt.executeQuery();
-        ArrayList<ChatInfo> friends = new ArrayList<>();
+        ArrayList<ChatInfo> chats = new ArrayList<>();
         while (rs.next()) {
             String chatName = rs.getString("chat_name");
             String message = rs.getString("content");
@@ -76,16 +77,18 @@ public class DatabaseHandler {
             if(sender.equals(myUsername)) msg = "You: " + message;
             else msg = sender + ": " + message;
             String toUser = rs.getString("to_user");
-            String toGroup = rs.getString("to_group");
+            int toGroup = rs.getObject("to_group") != null ? rs.getInt("to_group") : -1;
             boolean seen = rs.getTimestamp("seen_time") != null;
-            if (toGroup == null) {
-                friends.add(new ChatInfo(chatName, msg, false, -1, false, !seen));
+            if (toGroup != -1) {
+                chats.add(new ChatInfo(chatName, toGroup, msg, !seen));
             }
             else {
-                friends.add(new ChatInfo(chatName, msg, true, Integer.parseInt(toGroup), false, !seen));
+                chats.add(new ChatInfo(chatName, toUser, msg, false, !seen));///////////////////////////
             }
         }
-        return friends;
+        rs.close();
+        stmt.close();
+        return chats;
     }
     public ArrayList<ChatInfo> getAllFriends(String myUsername) throws SQLException {
         String sql = "WITH RankedLogin AS (" +
@@ -128,12 +131,14 @@ public class DatabaseHandler {
 //            Timestamp loginTime = rs.getTimestamp("login_time");
             Timestamp logoutTime = rs.getTimestamp("logout_time");
             if (logoutTime == null) {
-                friends.add(new ChatInfo(friendFullname, friendUsername, true));
+                friends.add(new ChatInfo(friendFullname, friendUsername, friendUsername, true, false));
             }
             else {
-                friends.add(new ChatInfo(friendFullname, friendUsername, false));
+                friends.add(new ChatInfo(friendFullname, friendUsername, friendUsername, false, false));
             }
         }
+        rs.close();
+        stmt.close();
         return friends;
     }
     public ArrayList<ChatInfo> getAllBlocks(String myUsername) throws SQLException {
@@ -148,8 +153,10 @@ public class DatabaseHandler {
         while (rs.next()) {
             String blockUsername = rs.getString("block");
             String blockFullname = rs.getString("fullname");
-            blocks.add(new ChatInfo(blockFullname, blockUsername));
+            blocks.add(new ChatInfo(blockFullname, blockUsername, blockUsername, false, false));
         }
+        rs.close();
+        stmt.close();
         return blocks;
     }
     public ArrayList<ChatInfo> getAllRequests(String myUsername) throws SQLException {
@@ -160,13 +167,15 @@ public class DatabaseHandler {
         PreparedStatement stmt = conn.prepareStatement(sql);
         stmt.setString(1, myUsername);
         ResultSet rs = stmt.executeQuery();
-        ArrayList<ChatInfo> blocks = new ArrayList<>();
+        ArrayList<ChatInfo> requests = new ArrayList<>();
         while (rs.next()) {
             String requestUsername = rs.getString("username");
             String requestFullname = rs.getString("fullname");
-            blocks.add(new ChatInfo(requestFullname, requestUsername));
+            requests.add(new ChatInfo(requestFullname, requestUsername, requestUsername, false, false));
         }
-        return blocks;
+        rs.close();
+        stmt.close();
+        return requests;
     }
     public ArrayList<ChatInfo> getAllGroups(String myUsername) throws SQLException {
         String sql = "SELECT G.group_name, G.id_group, COUNT(M.username) AS quantity " +
@@ -177,7 +186,7 @@ public class DatabaseHandler {
         PreparedStatement stmt = conn.prepareStatement(sql);
         stmt.setString(1, myUsername);
         ResultSet rs = stmt.executeQuery();
-        ArrayList<ChatInfo> blocks = new ArrayList<>();
+        ArrayList<ChatInfo> groups = new ArrayList<>();
         while (rs.next()) {
             int idGroup = rs.getInt("id_group");
             String groupName = rs.getString("group_name");
@@ -186,9 +195,46 @@ public class DatabaseHandler {
             if (numberOfMembers == 1) subTitle = numberOfMembers + " member";
             else subTitle = numberOfMembers + " members";
 
-            blocks.add(new ChatInfo(groupName, subTitle, true, idGroup, false, false));
+            groups.add(new ChatInfo(groupName, idGroup, subTitle, false));
         }
-        return blocks;
+        rs.close();
+        stmt.close();
+        return groups;
+    }
+    public ArrayList<Message> getFriendMessage(String myUsername, String friendUsername) {
+        String sql ="SELECT M.id_message, M.sender, M.to_user, M.content, M.sent_time " +
+                    "FROM MESSAGE M " +
+                    "WHERE ((M.sender = ? AND M.to_user = ?) OR (M.sender = ? AND M.to_user = ?)) AND M.to_group IS NULL " +
+                    "ORDER BY M.sent_time";
+        PreparedStatement stmt = null;
+        try {
+            stmt = conn.prepareStatement(sql);
+            stmt.setString(1, myUsername);
+            stmt.setString(2, friendUsername);
+            stmt.setString(3, friendUsername);
+            stmt.setString(4, myUsername);
+            ResultSet rs = stmt.executeQuery();
+            ArrayList<Message> messages = new ArrayList<>();
+            while (rs.next()) {
+                int id;
+                String sender, to_user, content;
+                Timestamp sent_time;
+
+                id = rs.getInt("id_message");
+                sender = rs.getString("sender");
+                to_user = rs.getString("to_user");
+                content = rs.getString("content");
+                sent_time = rs.getTimestamp("sent_time");
+
+                messages.add(new Message(id, sender, to_user, content, sent_time.toLocalDateTime()));
+            }
+            rs.close();
+            stmt.close();
+            return messages;
+        } catch (SQLException throwables) {
+            throwables.printStackTrace();
+        }
+        return null;
     }
 
 
