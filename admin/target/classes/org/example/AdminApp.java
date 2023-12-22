@@ -5,6 +5,8 @@ import java.awt.*;
 import javax.swing.*;
 import java.io.IOException;
 import java.net.Socket;
+import java.time.LocalDate;
+import java.time.ZoneId;
 import java.util.*;
 import java.text.*;
 
@@ -24,6 +26,7 @@ public class AdminApp extends javax.swing.JFrame {
         groupMainPanel.setVisible(false);
         reportMainPanel.setVisible(false);
         dataMainPanel.setVisible(false);
+        userMainPanel.setVisible(false);
 
         this.socket = socket;
     }
@@ -655,20 +658,20 @@ public class AdminApp extends javax.swing.JFrame {
         userTable.setFont(new java.awt.Font("Arial", 0, 12)); // NOI18N
         userTable.setModel(new javax.swing.table.DefaultTableModel(
                 new Object [][] {
-                        {null, null, null, null, null, null, null},
-                        {null, null, null, null, null, null, null},
-                        {null, null, null, null, null, null, null},
-                        {null, null, null, null, null, null, null}
+                        {null, null, null, null, null, null, null, null},
+                        {null, null, null, null, null, null, null, null},
+                        {null, null, null, null, null, null, null, null},
+                        {null, null, null, null, null, null, null, null}
                 },
                 new String [] {
-                        "No", "Username", "Full name", "Address", "Birth date", "Gender", "Email"
+                        "No", "Username", "Full name", "Address", "Birth date", "Gender", "Email", "Registration time"
                 }
         ) {
             Class[] types = new Class [] {
-                    java.lang.Integer.class, java.lang.Object.class, java.lang.Object.class, java.lang.Object.class, java.lang.Object.class, java.lang.Object.class, java.lang.Object.class
+                    java.lang.Integer.class, java.lang.Object.class, java.lang.Object.class, java.lang.Object.class, java.lang.Object.class, java.lang.Object.class, java.lang.Object.class, java.lang.Object.class
             };
             boolean[] canEdit = new boolean [] {
-                    false, false, false, false, false, false, false
+                    false, false, false, false, false, false, false, false
             };
 
             public Class getColumnClass(int columnIndex) {
@@ -709,6 +712,8 @@ public class AdminApp extends javax.swing.JFrame {
             userTable.getColumnModel().getColumn(5).setPreferredWidth(150);
             userTable.getColumnModel().getColumn(6).setResizable(false);
             userTable.getColumnModel().getColumn(6).setPreferredWidth(300);
+            userTable.getColumnModel().getColumn(7).setResizable(false);
+            userTable.getColumnModel().getColumn(7).setPreferredWidth(200);
         }
 
         viewAllUserButton.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
@@ -720,6 +725,21 @@ public class AdminApp extends javax.swing.JFrame {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 try {
                     viewAllUserButtonActionPerformed(evt);
+                } catch (IOException | ClassNotFoundException e) {
+                    throw new RuntimeException(e);
+                }
+            }
+        });
+
+        addNewUserButton.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
+        addNewUserButton.setText("Add new user");
+        addNewUserButton.setFocusable(false);
+        addNewUserButton.setMargin(new java.awt.Insets(2, 5, 3, 5));
+        addNewUserButton.setPreferredSize(new java.awt.Dimension(57, 35));
+        addNewUserButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                try {
+                    addNewUserButtonActionPerformed(evt);
                 } catch (IOException | ClassNotFoundException e) {
                     throw new RuntimeException(e);
                 }
@@ -749,7 +769,9 @@ public class AdminApp extends javax.swing.JFrame {
                                                                 .addGap(30, 30, 30)
                                                                 .addComponent(searchUserButton, javax.swing.GroupLayout.PREFERRED_SIZE, 75, javax.swing.GroupLayout.PREFERRED_SIZE)
                                                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                                                .addComponent(viewAllUserButton, javax.swing.GroupLayout.PREFERRED_SIZE, 123, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                                                .addComponent(viewAllUserButton, javax.swing.GroupLayout.PREFERRED_SIZE, 123, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                                                .addGap(30, 30, 30)
+                                                                .addComponent(addNewUserButton, javax.swing.GroupLayout.PREFERRED_SIZE, 123, javax.swing.GroupLayout.PREFERRED_SIZE))
                                                         .addGroup(userMainPanelLayout.createSequentialGroup()
                                                                 .addComponent(userTitle1)
                                                                 .addGap(120, 120, 120)
@@ -777,7 +799,8 @@ public class AdminApp extends javax.swing.JFrame {
                                                 .addComponent(searchUserNameInput, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                                                 .addComponent(searchActiveDropDown, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                                                 .addComponent(searchUserButton, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                                .addComponent(viewAllUserButton, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                                                .addComponent(viewAllUserButton, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                                .addComponent(addNewUserButton, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
                                 .addGap(18, 18, 18)
                                 .addGroup(userMainPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                         .addComponent(userScrollPane, javax.swing.GroupLayout.PREFERRED_SIZE, 320, javax.swing.GroupLayout.PREFERRED_SIZE))
@@ -1404,6 +1427,43 @@ public class AdminApp extends javax.swing.JFrame {
             model.addRow(row);
         }
 
+        // sort
+        TableRowSorter<DefaultTableModel> sorter = new TableRowSorter<>(model);
+        userTable.setRowSorter(sorter);
+
+        Comparator<Integer> integerComparator = Comparator.comparing(Integer::valueOf);
+        sorter.setComparator(0, integerComparator);
+
+        sorter.setSortKeys(
+                java.util.Collections.singletonList(
+                        new javax.swing.RowSorter.SortKey(0, SortOrder.ASCENDING)
+                )
+        );
+        sorter.setSortKeys(
+                java.util.Collections.singletonList(
+                        new javax.swing.RowSorter.SortKey(1, SortOrder.ASCENDING)
+                )
+        );
+        sorter.setSortKeys(
+                java.util.Collections.singletonList(
+                        new javax.swing.RowSorter.SortKey(2, SortOrder.ASCENDING)
+                )
+        );
+
+        sorter.setSortKeys(
+                java.util.Collections.singletonList(
+                        new javax.swing.RowSorter.SortKey(7, SortOrder.ASCENDING)
+                )
+        );
+
+        sorter = new TableRowSorter<DefaultTableModel>(model) {
+            @Override
+            public boolean isSortable(int column) {
+                return (column == 0) || (column == 1) || (column == 2) || (column == 7);
+            }
+        };
+        userTable.setRowSorter(sorter);
+
         // chỉnh center
         ((DefaultTableCellRenderer)userTable.getDefaultRenderer(String.class)).setHorizontalAlignment(SwingConstants.CENTER);
         ((DefaultTableCellRenderer)userTable.getDefaultRenderer(Integer.class)).setHorizontalAlignment(SwingConstants.CENTER);
@@ -1641,6 +1701,49 @@ public class AdminApp extends javax.swing.JFrame {
         searchActiveDropDown.setSelectedItem("All");
     }
 
+    private void addNewUserButtonActionPerformed(java.awt.event.ActionEvent evt) throws IOException, ClassNotFoundException {
+        JTextField usernameField = new JTextField();
+        JTextField fullnameField = new JTextField();
+        JTextField passwordField = new JTextField();
+        JTextField birthdateField = new JTextField();
+        JTextField genderField = new JTextField();
+        JTextField addressField = new JTextField();
+        JTextField emailField = new JTextField();
+
+        Object[] fields = {
+                "Username:", usernameField,
+                "Fullname:", fullnameField,
+                "Password:", passwordField,
+                "Birthdate (DD-MM-YYYY):", birthdateField,
+                "Gender:", genderField,
+                "Address:", addressField,
+                "Email:", emailField
+        };
+
+        int result = JOptionPane.showConfirmDialog(null, fields, "Add New User", JOptionPane.OK_CANCEL_OPTION);
+        if (result == JOptionPane.OK_OPTION) {
+            String username = usernameField.getText();
+            String fullname = fullnameField.getText();
+            String password = passwordField.getText();
+            String birthdate = birthdateField.getText();
+            String gender = genderField.getText();
+            String address = addressField.getText();
+            String email = emailField.getText();
+            Boolean success = AddNewUser.request(username, password, fullname, address, birthdate, gender, email, socket);
+            if (success) {
+                JOptionPane.showMessageDialog(null, "User added successfully.");
+            } else {
+                JOptionPane.showMessageDialog(null, "Failed to add user.");
+            }
+            DefaultTableModel model = (DefaultTableModel) userTable.getModel();
+            model.setRowCount(0);
+
+            Object[][] data = GetAllUser.request(socket);
+            for (Object[] row : data) {
+                model.addRow(row);
+            }
+        }
+    }
     private void reportTableMouseClicked(java.awt.event.MouseEvent evt) {
         int index = reportTable.getSelectedRow();
         TableModel model = reportTable.getModel();

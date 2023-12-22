@@ -1,6 +1,7 @@
 package org.example;
 
 import java.sql.*;
+import java.text.SimpleDateFormat;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
@@ -540,7 +541,7 @@ public class AdminDatabase {
         try{
             Statement stmt = connection.createStatement();
             String sql;
-            sql = "SELECT username, fullname, address, birthdate, gender, email FROM USER";
+            sql = "SELECT username, fullname, address, birthdate, gender, email, creation_time FROM USER";
             ResultSet rs = stmt.executeQuery(sql);
             List<Object[]> rows = new ArrayList<>();
             int serialNum = 1;
@@ -553,15 +554,21 @@ public class AdminDatabase {
                 Date birthdate = rs.getDate("birthdate");
                 Boolean gender = rs.getBoolean("gender");
                 String email = rs.getString("email");
+                Date creation_time = rs.getDate("creation_time");
                 Timestamp timestamp = new Timestamp(birthdate.getTime());
+                Timestamp timestamp1 = new Timestamp(creation_time.getTime());
 
                 LocalDateTime localDateTime = timestamp.toLocalDateTime();
                 DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-MM-yyyy");
                 String format_time = localDateTime.format(formatter);
 
+                LocalDateTime localDateTime1 = timestamp1.toLocalDateTime();
+                DateTimeFormatter formatter1 = DateTimeFormatter.ofPattern("dd-MM-yyyy H:m:s");
+                String format_time1 = localDateTime1.format(formatter1);
+
                 String genderString = gender ? "Female" : "Male";
 
-                Object[] row = { serialNum, username, fullname, address, format_time, genderString, email };
+                Object[] row = { serialNum, username, fullname, address, format_time, genderString, email, format_time1 };
                 serialNum++;
                 // Add the row to the list
                 rows.add(row);
@@ -586,7 +593,7 @@ public class AdminDatabase {
     Object[][] searchUser(String text1, String text2, String text3){
         try{
             PreparedStatement stmt = null;
-            String sql = "SELECT DISTINCT s.username, s.fullname, s.address, s.birthdate, s.gender, s.email FROM USER s " + "INNER JOIN HISTORY_LOGIN h ON s.username = h.username ";
+            String sql = "SELECT DISTINCT s.username, s.fullname, s.address, s.birthdate, s.gender, s.email, s.creation_time FROM USER s " + "INNER JOIN HISTORY_LOGIN h ON s.username = h.username ";
 
             if (text1.isEmpty()){
                 if (text2.isEmpty()){
@@ -683,23 +690,29 @@ public class AdminDatabase {
             List<Object[]> rows = new ArrayList<>();
             int i = 1;
             while(rs.next()){
-                //Retrieve by column name
+
                 String username = rs.getString("username");
                 String fullname = rs.getString("fullname");
                 String address = rs.getString("address");
                 Date birthdate = rs.getDate("birthdate");
                 Boolean gender = rs.getBoolean("gender");
                 String email = rs.getString("email");
+                Date creation_time = rs.getDate("creation_time");
                 Timestamp timestamp = new Timestamp(birthdate.getTime());
+                Timestamp timestamp1 = new Timestamp(creation_time.getTime());
 
                 LocalDateTime localDateTime = timestamp.toLocalDateTime();
                 DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-MM-yyyy");
                 String format_time = localDateTime.format(formatter);
 
+                LocalDateTime localDateTime1 = timestamp1.toLocalDateTime();
+                DateTimeFormatter formatter1 = DateTimeFormatter.ofPattern("dd-MM-yyyy H:m:s");
+                String format_time1 = localDateTime1.format(formatter1);
+
                 String genderString = gender ? "Female" : "Male";
 
-                Object[] row = {i, username, fullname, address, format_time, genderString, email};
-                // Add the row to the list
+                Object[] row = {i, username, fullname, address, format_time, genderString, email, format_time1};
+
                 rows.add(row);
                 i++;
             }
@@ -711,11 +724,48 @@ public class AdminDatabase {
 
             return data;
         }catch(SQLException se){
-            //Handle errors for JDBC
             se.printStackTrace();
-        }catch(Exception e){ //Handle errors for Class.forName
+        }catch(Exception e){
             e.printStackTrace();
         }
         return null;
+    }
+
+    Boolean addNewUser(String username, String password, String fullname , String address, String birthdate, String gender, String email){
+        try{
+            String sql = "INSERT INTO USER (username, password, fullname, address, birthdate, gender, email, creation_time, is_locked) VALUES (?, ?, ?, ?, ?, ?, ?, NOW(), false)";
+            PreparedStatement pstmt = connection.prepareStatement(sql);
+
+            Boolean genderBoolean = "Female".equals(gender);
+            SimpleDateFormat inputDateFormat = new SimpleDateFormat("dd-MM-yyyy");
+            SimpleDateFormat outputDateFormat = new SimpleDateFormat("yyyy-MM-dd");
+
+            java.util.Date parsedDate = inputDateFormat.parse(birthdate);
+            Date sqlDate = new Date(parsedDate.getTime());
+
+            pstmt.setString(1, username);
+            pstmt.setString(2, password);
+            pstmt.setString(3, fullname);
+            pstmt.setString(4, address);
+            pstmt.setDate(5, java.sql.Date.valueOf(outputDateFormat.format(sqlDate)));
+            pstmt.setBoolean(6, genderBoolean);
+            pstmt.setString(7, email);
+
+            int affectedRows = pstmt.executeUpdate();
+
+            if (affectedRows > 0) {
+                pstmt.close();
+                return true;
+            } else {
+                pstmt.close();
+                return false;
+            }
+        } catch (SQLException se) {
+            se.printStackTrace();
+            return false;
+        } catch (Exception e) {
+            e.printStackTrace();
+            return false;
+        }
     }
 }

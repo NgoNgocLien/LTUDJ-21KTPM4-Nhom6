@@ -5,7 +5,46 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="48e1da1f-38cc-43bb-b652-c57853a6024d" name="Changes" comment="">
+      <change afterPath="$PROJECT_DIR$/admin/src/main/java/org/example/utilities/AddNewUser.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Server/src/main/java/org/example/AdminDatabase.java" beforeDir="false" afterPath="$PROJECT_DIR$/Server/src/main/java/org/example/AdminDatabase.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Server/src/main/java/org/example/AdminHandler.java" beforeDir="false" afterPath="$PROJECT_DIR$/Server/src/main/java/org/example/AdminHandler.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Server/target/classes/org/example/AdminDatabase.class" beforeDir="false" afterPath="$PROJECT_DIR$/Server/target/classes/org/example/AdminDatabase.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Server/target/classes/org/example/AdminHandler.class" beforeDir="false" afterPath="$PROJECT_DIR$/Server/target/classes/org/example/AdminHandler.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/admin/src/main/java/org/example/AdminApp.java" beforeDir="false" afterPath="$PROJECT_DIR$/admin/src/main/java/org/example/AdminApp.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/admin/src/main/java/org/example/AdminController.java" beforeDir="false" afterPath="$PROJECT_DIR$/admin/src/main/java/org/example/AdminController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/admin/target/classes/org/example/AdminApp$1.class" beforeDir="false" afterPath="$PROJECT_DIR$/admin/target/classes/org/example/AdminApp$1.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/admin/target/classes/org/example/AdminApp$10.class" beforeDir="false" afterPath="$PROJECT_DIR$/admin/target/classes/org/example/AdminApp$10.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/admin/target/classes/org/example/AdminApp$11.class" beforeDir="false" afterPath="$PROJECT_DIR$/admin/target/classes/org/example/AdminApp$11.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/admin/target/classes/org/example/AdminApp$12.class" beforeDir="false" afterPath="$PROJECT_DIR$/admin/target/classes/org/example/AdminApp$12.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/admin/target/classes/org/example/AdminApp$13.class" beforeDir="false" afterPath="$PROJECT_DIR$/admin/target/classes/org/example/AdminApp$13.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/admin/target/classes/org/example/AdminApp$14.class" beforeDir="false" afterPath="$PROJECT_DIR$/admin/target/classes/org/example/AdminApp$14.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/admin/target/classes/org/example/AdminApp$15.class" beforeDir="false" afterPath="$PROJECT_DIR$/admin/target/classes/org/example/AdminApp$15.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/admin/target/classes/org/example/AdminApp$16.class" beforeDir="false" afterPath="$PROJECT_DIR$/admin/target/classes/org/example/AdminApp$16.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/admin/target/classes/org/example/AdminApp$17.class" beforeDir="false" afterPath="$PROJECT_DIR$/admin/target/classes/org/example/AdminApp$17.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/admin/target/classes/org/example/AdminApp$18.class" beforeDir="false" afterPath="$PROJECT_DIR$/admin/target/classes/org/example/AdminApp$18.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/admin/target/classes/org/example/AdminApp$19.class" beforeDir="false" afterPath="$PROJECT_DIR$/admin/target/classes/org/example/AdminApp$19.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/admin/target/classes/org/example/AdminApp$2.class" beforeDir="false" afterPath="$PROJECT_DIR$/admin/target/classes/org/example/AdminApp$2.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/admin/target/classes/org/example/AdminApp$20.class" beforeDir="false" afterPath="$PROJECT_DIR$/admin/target/classes/org/example/AdminApp$20.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/admin/target/classes/org/example/AdminApp$21.class" beforeDir="false" afterPath="$PROJECT_DIR$/admin/target/classes/org/example/AdminApp$21.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/admin/target/classes/org/example/AdminApp$22.class" beforeDir="false" afterPath="$PROJECT_DIR$/admin/target/classes/org/example/AdminApp$22.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/admin/target/classes/org/example/AdminApp$23.class" beforeDir="false" afterPath="$PROJECT_DIR$/admin/target/classes/org/example/AdminApp$23.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/admin/target/classes/org/example/AdminApp$24.class" beforeDir="false" afterPath="$PROJECT_DIR$/admin/target/classes/org/example/AdminApp$24.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/admin/target/classes/org/example/AdminApp$25.class" beforeDir="false" afterPath="$PROJECT_DIR$/admin/target/classes/org/example/AdminApp$25.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/admin/target/classes/org/example/AdminApp$26.class" beforeDir="false" afterPath="$PROJECT_DIR$/admin/target/classes/org/example/AdminApp$26.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/admin/target/classes/org/example/AdminApp$27.class" beforeDir="false" afterPath="$PROJECT_DIR$/admin/target/classes/org/example/AdminApp$27.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/admin/target/classes/org/example/AdminApp$28.class" beforeDir="false" afterPath="$PROJECT_DIR$/admin/target/classes/org/example/AdminApp$28.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/admin/target/classes/org/example/AdminApp$3.class" beforeDir="false" afterPath="$PROJECT_DIR$/admin/target/classes/org/example/AdminApp$3.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/admin/target/classes/org/example/AdminApp$4.class" beforeDir="false" afterPath="$PROJECT_DIR$/admin/target/classes/org/example/AdminApp$4.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/admin/target/classes/org/example/AdminApp$5.class" beforeDir="false" afterPath="$PROJECT_DIR$/admin/target/classes/org/example/AdminApp$5.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/admin/target/classes/org/example/AdminApp$6.class" beforeDir="false" afterPath="$PROJECT_DIR$/admin/target/classes/org/example/AdminApp$6.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/admin/target/classes/org/example/AdminApp$7.class" beforeDir="false" afterPath="$PROJECT_DIR$/admin/target/classes/org/example/AdminApp$7.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/admin/target/classes/org/example/AdminApp$8.class" beforeDir="false" afterPath="$PROJECT_DIR$/admin/target/classes/org/example/AdminApp$8.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/admin/target/classes/org/example/AdminApp$9.class" beforeDir="false" afterPath="$PROJECT_DIR$/admin/target/classes/org/example/AdminApp$9.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/admin/target/classes/org/example/AdminApp.class" beforeDir="false" afterPath="$PROJECT_DIR$/admin/target/classes/org/example/AdminApp.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/admin/target/classes/org/example/AdminApp.java" beforeDir="false" afterPath="$PROJECT_DIR$/admin/target/classes/org/example/AdminApp.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/admin/target/classes/org/example/AdminController.class" beforeDir="false" afterPath="$PROJECT_DIR$/admin/target/classes/org/example/AdminController.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/admin/target/classes/org/example/AdminController.java" beforeDir="false" afterPath="$PROJECT_DIR$/admin/target/classes/org/example/AdminController.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
