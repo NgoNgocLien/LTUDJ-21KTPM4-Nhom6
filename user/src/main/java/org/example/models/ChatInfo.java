@@ -7,6 +7,7 @@ public class ChatInfo {
     private String subTitle; // last message or group members or username
     private boolean isGroup;
     private int groupId;
+    private int quantity;
     private boolean isOnline;
     private boolean isUnread;
 
@@ -15,6 +16,7 @@ public class ChatInfo {
         this.chatName = chatName;
         this.isGroup = false;
         this.groupId = -1;
+        this.quantity = -1;
         this.username = username;
         this.subTitle = subTitle;
         this.isOnline = isOnline;
@@ -22,21 +24,23 @@ public class ChatInfo {
     }
 
     // group
-    public ChatInfo(String chatName, int groupId, String subTitle, boolean isUnread) {
+    public ChatInfo(String chatName, int groupId, int quantity, String subTitle, boolean isUnread) {
         this.chatName = chatName;
         this.isGroup = true;
         this.groupId = groupId;
-        this.username = null;
+        this.quantity = quantity;
+        this.username = "";
         this.subTitle = subTitle;
         this.isOnline = false;
         this.isUnread = isUnread;
     }
 
     public String getChatName() { return chatName; }
-    public String getFriendUsername() { return username; }
+    public String getUsername() { return username; }
     public String getSubTitle() { return subTitle; }
     public boolean isGroup() { return isGroup; }
     public int getGroupId() { return groupId; }
+    public int getQuantity() { return quantity; }
     public boolean isOnline() { return isOnline; }
     public boolean isUnread() { return isUnread; }
 }

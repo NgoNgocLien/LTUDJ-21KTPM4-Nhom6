@@ -4,47 +4,56 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="48e1da1f-38cc-43bb-b652-c57853a6024d" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/admin/src/main/java/org/example/utilities/AddNewUser.java" afterDir="false" />
+    <list default="true" id="ffaf42bc-6bfe-4d2e-bcc5-9de6824c0e6b" name="Changes" comment="">
+      <change afterPath="$PROJECT_DIR$/user/src/main/java/org/example/controllers/ConversationPanelController.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/user/target/classes/org/example/controllers/ConversationPanelController$InputFieldListener.class" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/user/target/classes/org/example/controllers/ConversationPanelController.class" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/user/target/classes/org/example/views/ConversationPanel$StartConversationPanel.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Server/src/main/java/org/example/AdminDatabase.java" beforeDir="false" afterPath="$PROJECT_DIR$/Server/src/main/java/org/example/AdminDatabase.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Server/src/main/java/org/example/AdminHandler.java" beforeDir="false" afterPath="$PROJECT_DIR$/Server/src/main/java/org/example/AdminHandler.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Server/target/classes/org/example/AdminDatabase.class" beforeDir="false" afterPath="$PROJECT_DIR$/Server/target/classes/org/example/AdminDatabase.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Server/target/classes/org/example/AdminHandler.class" beforeDir="false" afterPath="$PROJECT_DIR$/Server/target/classes/org/example/AdminHandler.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/admin/src/main/java/org/example/AdminApp.java" beforeDir="false" afterPath="$PROJECT_DIR$/admin/src/main/java/org/example/AdminApp.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/admin/src/main/java/org/example/AdminController.java" beforeDir="false" afterPath="$PROJECT_DIR$/admin/src/main/java/org/example/AdminController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/admin/target/classes/org/example/AdminApp$1.class" beforeDir="false" afterPath="$PROJECT_DIR$/admin/target/classes/org/example/AdminApp$1.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/admin/target/classes/org/example/AdminApp$10.class" beforeDir="false" afterPath="$PROJECT_DIR$/admin/target/classes/org/example/AdminApp$10.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/admin/target/classes/org/example/AdminApp$11.class" beforeDir="false" afterPath="$PROJECT_DIR$/admin/target/classes/org/example/AdminApp$11.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/admin/target/classes/org/example/AdminApp$12.class" beforeDir="false" afterPath="$PROJECT_DIR$/admin/target/classes/org/example/AdminApp$12.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/admin/target/classes/org/example/AdminApp$13.class" beforeDir="false" afterPath="$PROJECT_DIR$/admin/target/classes/org/example/AdminApp$13.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/admin/target/classes/org/example/AdminApp$14.class" beforeDir="false" afterPath="$PROJECT_DIR$/admin/target/classes/org/example/AdminApp$14.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/admin/target/classes/org/example/AdminApp$15.class" beforeDir="false" afterPath="$PROJECT_DIR$/admin/target/classes/org/example/AdminApp$15.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/admin/target/classes/org/example/AdminApp$16.class" beforeDir="false" afterPath="$PROJECT_DIR$/admin/target/classes/org/example/AdminApp$16.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/admin/target/classes/org/example/AdminApp$17.class" beforeDir="false" afterPath="$PROJECT_DIR$/admin/target/classes/org/example/AdminApp$17.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/admin/target/classes/org/example/AdminApp$18.class" beforeDir="false" afterPath="$PROJECT_DIR$/admin/target/classes/org/example/AdminApp$18.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/admin/target/classes/org/example/AdminApp$19.class" beforeDir="false" afterPath="$PROJECT_DIR$/admin/target/classes/org/example/AdminApp$19.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/admin/target/classes/org/example/AdminApp$2.class" beforeDir="false" afterPath="$PROJECT_DIR$/admin/target/classes/org/example/AdminApp$2.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/admin/target/classes/org/example/AdminApp$20.class" beforeDir="false" afterPath="$PROJECT_DIR$/admin/target/classes/org/example/AdminApp$20.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/admin/target/classes/org/example/AdminApp$21.class" beforeDir="false" afterPath="$PROJECT_DIR$/admin/target/classes/org/example/AdminApp$21.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/admin/target/classes/org/example/AdminApp$22.class" beforeDir="false" afterPath="$PROJECT_DIR$/admin/target/classes/org/example/AdminApp$22.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/admin/target/classes/org/example/AdminApp$23.class" beforeDir="false" afterPath="$PROJECT_DIR$/admin/target/classes/org/example/AdminApp$23.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/admin/target/classes/org/example/AdminApp$24.class" beforeDir="false" afterPath="$PROJECT_DIR$/admin/target/classes/org/example/AdminApp$24.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/admin/target/classes/org/example/AdminApp$25.class" beforeDir="false" afterPath="$PROJECT_DIR$/admin/target/classes/org/example/AdminApp$25.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/admin/target/classes/org/example/AdminApp$26.class" beforeDir="false" afterPath="$PROJECT_DIR$/admin/target/classes/org/example/AdminApp$26.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/admin/target/classes/org/example/AdminApp$27.class" beforeDir="false" afterPath="$PROJECT_DIR$/admin/target/classes/org/example/AdminApp$27.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/admin/target/classes/org/example/AdminApp$28.class" beforeDir="false" afterPath="$PROJECT_DIR$/admin/target/classes/org/example/AdminApp$28.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/admin/target/classes/org/example/AdminApp$3.class" beforeDir="false" afterPath="$PROJECT_DIR$/admin/target/classes/org/example/AdminApp$3.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/admin/target/classes/org/example/AdminApp$4.class" beforeDir="false" afterPath="$PROJECT_DIR$/admin/target/classes/org/example/AdminApp$4.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/admin/target/classes/org/example/AdminApp$5.class" beforeDir="false" afterPath="$PROJECT_DIR$/admin/target/classes/org/example/AdminApp$5.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/admin/target/classes/org/example/AdminApp$6.class" beforeDir="false" afterPath="$PROJECT_DIR$/admin/target/classes/org/example/AdminApp$6.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/admin/target/classes/org/example/AdminApp$7.class" beforeDir="false" afterPath="$PROJECT_DIR$/admin/target/classes/org/example/AdminApp$7.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/admin/target/classes/org/example/AdminApp$8.class" beforeDir="false" afterPath="$PROJECT_DIR$/admin/target/classes/org/example/AdminApp$8.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/admin/target/classes/org/example/AdminApp$9.class" beforeDir="false" afterPath="$PROJECT_DIR$/admin/target/classes/org/example/AdminApp$9.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/admin/target/classes/org/example/AdminApp.class" beforeDir="false" afterPath="$PROJECT_DIR$/admin/target/classes/org/example/AdminApp.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/admin/target/classes/org/example/AdminApp.java" beforeDir="false" afterPath="$PROJECT_DIR$/admin/target/classes/org/example/AdminApp.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/admin/target/classes/org/example/AdminController.class" beforeDir="false" afterPath="$PROJECT_DIR$/admin/target/classes/org/example/AdminController.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/admin/target/classes/org/example/AdminController.java" beforeDir="false" afterPath="$PROJECT_DIR$/admin/target/classes/org/example/AdminController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/user/src/main/java/org/example/controllers/ChatListPanelController.java" beforeDir="false" afterPath="$PROJECT_DIR$/user/src/main/java/org/example/controllers/ChatListPanelController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/user/src/main/java/org/example/controllers/MainFrameController.java" beforeDir="false" afterPath="$PROJECT_DIR$/user/src/main/java/org/example/controllers/MainFrameController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/user/src/main/java/org/example/models/ChatInfo.java" beforeDir="false" afterPath="$PROJECT_DIR$/user/src/main/java/org/example/models/ChatInfo.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/user/src/main/java/org/example/models/Message.java" beforeDir="false" afterPath="$PROJECT_DIR$/user/src/main/java/org/example/models/Message.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/user/src/main/java/org/example/utilities/DatabaseHandler.java" beforeDir="false" afterPath="$PROJECT_DIR$/user/src/main/java/org/example/utilities/DatabaseHandler.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/user/src/main/java/org/example/views/ConversationPanel.java" beforeDir="false" afterPath="$PROJECT_DIR$/user/src/main/java/org/example/views/ConversationPanel.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/user/src/main/java/org/example/views/IconPanel.java" beforeDir="false" afterPath="$PROJECT_DIR$/user/src/main/java/org/example/views/IconPanel.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/user/target/classes/org/example/Main.class" beforeDir="false" afterPath="$PROJECT_DIR$/user/target/classes/org/example/Main.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/user/target/classes/org/example/controllers/ChatListPanelController$ChatPanelMouseListener.class" beforeDir="false" afterPath="$PROJECT_DIR$/user/target/classes/org/example/controllers/ChatListPanelController$ChatPanelMouseListener.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/user/target/classes/org/example/controllers/ChatListPanelController.class" beforeDir="false" afterPath="$PROJECT_DIR$/user/target/classes/org/example/controllers/ChatListPanelController.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/user/target/classes/org/example/controllers/IconButtonController.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/user/target/classes/org/example/controllers/MainControllers$1$1.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/user/target/classes/org/example/controllers/MainControllers$1.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/user/target/classes/org/example/controllers/MainControllers.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/user/target/classes/org/example/controllers/MainFrameController$1.class" beforeDir="false" afterPath="$PROJECT_DIR$/user/target/classes/org/example/controllers/MainFrameController$1.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/user/target/classes/org/example/controllers/MainFrameController.class" beforeDir="false" afterPath="$PROJECT_DIR$/user/target/classes/org/example/controllers/MainFrameController.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/user/target/classes/org/example/controllers/UserPanelController.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/user/target/classes/org/example/models/ChatInfo.class" beforeDir="false" afterPath="$PROJECT_DIR$/user/target/classes/org/example/models/ChatInfo.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/user/target/classes/org/example/models/Friends.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/user/target/classes/org/example/models/Message.class" beforeDir="false" afterPath="$PROJECT_DIR$/user/target/classes/org/example/models/Message.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/user/target/classes/org/example/models/RecentChat.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/user/target/classes/org/example/models/SideChatInfo.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/user/target/classes/org/example/models/User.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/user/target/classes/org/example/utilities/DatabaseHandler.class" beforeDir="false" afterPath="$PROJECT_DIR$/user/target/classes/org/example/utilities/DatabaseHandler.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/user/target/classes/org/example/views/ChatPanel.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/user/target/classes/org/example/views/ChatnamePanel.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/user/target/classes/org/example/views/ConversationPanel$1.class" beforeDir="false" afterPath="$PROJECT_DIR$/user/target/classes/org/example/views/ConversationPanel$1.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/user/target/classes/org/example/views/ConversationPanel$AMessagePanel.class" beforeDir="false" afterPath="$PROJECT_DIR$/user/target/classes/org/example/views/ConversationPanel$AMessagePanel.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/user/target/classes/org/example/views/ConversationPanel$MemberNamePanel.class" beforeDir="false" afterPath="$PROJECT_DIR$/user/target/classes/org/example/views/ConversationPanel$MemberNamePanel.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/user/target/classes/org/example/views/ConversationPanel$MessageTimePanel.class" beforeDir="false" afterPath="$PROJECT_DIR$/user/target/classes/org/example/views/ConversationPanel$MessageTimePanel.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/user/target/classes/org/example/views/ConversationPanel$RoundedPanel.class" beforeDir="false" afterPath="$PROJECT_DIR$/user/target/classes/org/example/views/ConversationPanel$RoundedPanel.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/user/target/classes/org/example/views/ConversationPanel.class" beforeDir="false" afterPath="$PROJECT_DIR$/user/target/classes/org/example/views/ConversationPanel.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/user/target/classes/org/example/views/IconPanel.class" beforeDir="false" afterPath="$PROJECT_DIR$/user/target/classes/org/example/views/IconPanel.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/user/target/classes/org/example/views/InputPanel.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/user/target/classes/org/example/views/LoginSignUpScreen.class" beforeDir="false" afterPath="$PROJECT_DIR$/user/target/classes/org/example/views/LoginSignUpScreen.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/user/target/classes/org/example/views/MainChatView.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/user/target/classes/org/example/views/MemberNamePanel.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/user/target/classes/org/example/views/MessagePanel.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/user/target/classes/org/example/views/MessageTimePanel.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/user/target/classes/org/example/views/OneMessagePanel.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/user/target/classes/org/example/views/SearchPanel.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/user/target/classes/org/example/views/SeenPanel.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/user/target/classes/org/example/views/StartChatPanel.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/user/target/classes/org/example/views/UserPanel.class" beforeDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -102,7 +111,7 @@
   </component>
   <component name="PropertiesComponent"><![CDATA[{
   "keyToString": {
-    "git-widget-placeholder": "main",
+    "git-widget-placeholder": "Merging main",
     "node.js.selected.package.tslint": "(autodetect)"
   }
 }]]></component>
@@ -300,6 +309,8 @@
       <workItem from="1702794664284" duration="3916000" />
       <workItem from="1702798622350" duration="744000" />
       <workItem from="1702799413615" duration="2517000" />
+      <workItem from="1703243599659" duration="220000" />
+      <workItem from="1703245745496" duration="108000" />
     </task>
     <servers />
   </component>
