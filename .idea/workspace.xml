@@ -4,25 +4,56 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="306fe892-f6be-4249-9327-1572c1ca91dd" name="Changes" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
+    <list default="true" id="ffaf42bc-6bfe-4d2e-bcc5-9de6824c0e6b" name="Changes" comment="">
+      <change afterPath="$PROJECT_DIR$/user/src/main/java/org/example/controllers/ConversationPanelController.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/user/target/classes/org/example/controllers/ConversationPanelController$InputFieldListener.class" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/user/target/classes/org/example/controllers/ConversationPanelController.class" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/user/target/classes/org/example/views/ConversationPanel$StartConversationPanel.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/user/src/main/java/org/example/controllers/ChatListPanelController.java" beforeDir="false" afterPath="$PROJECT_DIR$/user/src/main/java/org/example/controllers/ChatListPanelController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/user/src/main/java/org/example/controllers/MainFrameController.java" beforeDir="false" afterPath="$PROJECT_DIR$/user/src/main/java/org/example/controllers/MainFrameController.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/user/src/main/java/org/example/models/ChatInfo.java" beforeDir="false" afterPath="$PROJECT_DIR$/user/src/main/java/org/example/models/ChatInfo.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/user/src/main/java/org/example/models/Message.java" beforeDir="false" afterPath="$PROJECT_DIR$/user/src/main/java/org/example/models/Message.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/user/src/main/java/org/example/utilities/DatabaseHandler.java" beforeDir="false" afterPath="$PROJECT_DIR$/user/src/main/java/org/example/utilities/DatabaseHandler.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/user/src/main/java/org/example/views/ConversationPanel.java" beforeDir="false" afterPath="$PROJECT_DIR$/user/src/main/java/org/example/views/ConversationPanel.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/user/src/main/java/org/example/views/IconPanel.java" beforeDir="false" afterPath="$PROJECT_DIR$/user/src/main/java/org/example/views/IconPanel.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/user/target/classes/org/example/Main.class" beforeDir="false" afterPath="$PROJECT_DIR$/user/target/classes/org/example/Main.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/user/target/classes/org/example/controllers/ChatListPanelController$ChatPanelMouseListener.class" beforeDir="false" afterPath="$PROJECT_DIR$/user/target/classes/org/example/controllers/ChatListPanelController$ChatPanelMouseListener.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/user/target/classes/org/example/controllers/ChatListPanelController.class" beforeDir="false" afterPath="$PROJECT_DIR$/user/target/classes/org/example/controllers/ChatListPanelController.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/user/target/classes/org/example/controllers/IconButtonController.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/user/target/classes/org/example/controllers/MainControllers$1$1.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/user/target/classes/org/example/controllers/MainControllers$1.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/user/target/classes/org/example/controllers/MainControllers.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/user/target/classes/org/example/controllers/MainFrameController$1.class" beforeDir="false" afterPath="$PROJECT_DIR$/user/target/classes/org/example/controllers/MainFrameController$1.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/user/target/classes/org/example/controllers/MainFrameController.class" beforeDir="false" afterPath="$PROJECT_DIR$/user/target/classes/org/example/controllers/MainFrameController.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/user/target/classes/org/example/controllers/UserPanelController.class" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/user/target/classes/org/example/models/ChatInfo.class" beforeDir="false" afterPath="$PROJECT_DIR$/user/target/classes/org/example/models/ChatInfo.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/user/target/classes/org/example/models/Friends.class" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/user/target/classes/org/example/models/Message.class" beforeDir="false" afterPath="$PROJECT_DIR$/user/target/classes/org/example/models/Message.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/user/target/classes/org/example/models/RecentChat.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/user/target/classes/org/example/models/SideChatInfo.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/user/target/classes/org/example/models/User.class" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/user/target/classes/org/example/utilities/DatabaseHandler.class" beforeDir="false" afterPath="$PROJECT_DIR$/user/target/classes/org/example/utilities/DatabaseHandler.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/user/target/classes/org/example/views/ChatPanel.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/user/target/classes/org/example/views/ChatnamePanel.class" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/user/target/classes/org/example/views/ConversationPanel$1.class" beforeDir="false" afterPath="$PROJECT_DIR$/user/target/classes/org/example/views/ConversationPanel$1.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/user/target/classes/org/example/views/ConversationPanel$AMessagePanel.class" beforeDir="false" afterPath="$PROJECT_DIR$/user/target/classes/org/example/views/ConversationPanel$AMessagePanel.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/user/target/classes/org/example/views/ConversationPanel$MemberNamePanel.class" beforeDir="false" afterPath="$PROJECT_DIR$/user/target/classes/org/example/views/ConversationPanel$MemberNamePanel.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/user/target/classes/org/example/views/ConversationPanel$MessageTimePanel.class" beforeDir="false" afterPath="$PROJECT_DIR$/user/target/classes/org/example/views/ConversationPanel$MessageTimePanel.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/user/target/classes/org/example/views/ConversationPanel$RoundedPanel.class" beforeDir="false" afterPath="$PROJECT_DIR$/user/target/classes/org/example/views/ConversationPanel$RoundedPanel.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/user/target/classes/org/example/views/ConversationPanel.class" beforeDir="false" afterPath="$PROJECT_DIR$/user/target/classes/org/example/views/ConversationPanel.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/user/target/classes/org/example/views/IconPanel.class" beforeDir="false" afterPath="$PROJECT_DIR$/user/target/classes/org/example/views/IconPanel.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/user/target/classes/org/example/views/InputPanel.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/user/target/classes/org/example/views/LoginSignUpScreen.class" beforeDir="false" afterPath="$PROJECT_DIR$/user/target/classes/org/example/views/LoginSignUpScreen.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/user/target/classes/org/example/views/MainChatView.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/user/target/classes/org/example/views/MemberNamePanel.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/user/target/classes/org/example/views/MessagePanel.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/user/target/classes/org/example/views/MessageTimePanel.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/user/target/classes/org/example/views/OneMessagePanel.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/user/target/classes/org/example/views/SearchPanel.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/user/target/classes/org/example/views/SeenPanel.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/user/target/classes/org/example/views/StartChatPanel.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/user/target/classes/org/example/views/UserPanel.class" beforeDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -78,38 +109,12 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent">{
-  &quot;keyToString&quot;: {
-    &quot;ASKED_ADD_EXTERNAL_FILES&quot;: &quot;true&quot;,
-    &quot;ASKED_SHARE_PROJECT_CONFIGURATION_FILES&quot;: &quot;true&quot;,
-    &quot;Downloaded.Files.Path.Enabled&quot;: &quot;false&quot;,
-    &quot;Repository.Attach.Annotations&quot;: &quot;false&quot;,
-    &quot;Repository.Attach.JavaDocs&quot;: &quot;false&quot;,
-    &quot;Repository.Attach.Sources&quot;: &quot;false&quot;,
-    &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
-    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
-    &quot;SHARE_PROJECT_CONFIGURATION_FILES&quot;: &quot;true&quot;,
-    &quot;WebServerToolWindowFactoryState&quot;: &quot;false&quot;,
-    &quot;git-widget-placeholder&quot;: &quot;main&quot;,
-    &quot;ignore.virus.scanning.warn.message&quot;: &quot;true&quot;,
-    &quot;jdk.selected.JAVA_MODULE&quot;: &quot;21&quot;,
-    &quot;last_opened_file_path&quot;: &quot;F:/LTUDJ-Project/LTUDJ-21KTPM4-Nhom6&quot;,
-    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
-    &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
-    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
-    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
-    &quot;project.structure.last.edited&quot;: &quot;Modules&quot;,
-    &quot;project.structure.proportion&quot;: &quot;0.15&quot;,
-    &quot;project.structure.side.proportion&quot;: &quot;0.46896553&quot;,
-    &quot;settings.editor.selected.configurable&quot;: &quot;settings.qodana&quot;,
-    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
-    <![CDATA[{
-        "keyToString": {
-        "git-widget-placeholder": "main",
-        "node.js.selected.package.tslint": "(autodetect)"
-    }
-    }]]>
-</component>
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "git-widget-placeholder": "Merging main",
+    "node.js.selected.package.tslint": "(autodetect)"
+  }
+}]]></component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
       <recent name="D:\THIRD-SEM1\JAVA\LTUDJ-21KTPM4-Nhom6\Client\src" />

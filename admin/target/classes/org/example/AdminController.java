@@ -515,7 +515,7 @@ public class AdminController {
         try{
             Statement stmt = conn.createStatement();
             String sql;
-            sql = "SELECT username, fullname, address, birthdate, gender, email FROM USER";
+            sql = "SELECT username, fullname, address, birthdate, gender, email, creation_time FROM USER";
             ResultSet rs = stmt.executeQuery(sql);
             List<Object[]> rows = new ArrayList<>();
             int serialNum = 1;
@@ -529,15 +529,21 @@ public class AdminController {
                 Date birthdate = rs.getDate("birthdate");
                 Boolean gender = rs.getBoolean("gender");
                 String email = rs.getString("email");
+                Date creation_time = rs.getDate("creation_time");
                 Timestamp timestamp = new Timestamp(birthdate.getTime());
+                Timestamp timestamp1 = new Timestamp(creation_time.getTime());
 
                 LocalDateTime localDateTime = timestamp.toLocalDateTime();
                 DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-MM-yyyy H:m:s");
                 String format_time = localDateTime.format(formatter);
 
+                LocalDateTime localDateTime1 = timestamp1.toLocalDateTime();
+                DateTimeFormatter formatter1 = DateTimeFormatter.ofPattern("dd-MM-yyyy H:m:s");
+                String format_time1 = localDateTime1.format(formatter1);
+
                 String genderString = gender ? "Female" : "Male";
 
-                Object[] row = {serialNum, username, fullname, address, format_time, genderString, email};
+                Object[] row = {serialNum, username, fullname, address, format_time, genderString, email, format_time1};
                 serialNum++;
                 // Add the row to the list
                 rows.add(row);

@@ -311,8 +311,7 @@ public class AdminHandler implements Runnable {
                             fullname = messageSplit[1];
                             selectedString = messageSplit[2];
                         }
-                        System.out.println("Handler fullname: " + fullname);
-                        System.out.println("Handler selectedString: " + selectedString);
+
                         Object[][] data1 = dbcon.searchUser(username, fullname, selectedString);
                         objectOutputStream.reset();
                         objectOutputStream.writeObject(data1);
@@ -324,6 +323,42 @@ public class AdminHandler implements Runnable {
                             }
                             System.out.println();
                         }
+
+                        System.out.println("Data sent to client.");
+
+                        break;
+                    }
+
+                    case "addNewUser":{
+                        System.out.println("Admin add new user");
+
+                        buffer = new byte[1024];
+                        bytesRead = inputStream.read(buffer);
+                        String message = new String(buffer, 0, bytesRead);
+
+                        String[] messageSplit = message.split("\n");
+
+                        String username = messageSplit[0];
+
+                        String fullname = "";
+                        String password = "";
+                        String birthdate = "";
+                        String gender = "";
+                        String address = "";
+                        String email = "";
+                        if (messageSplit.length > 6) {
+                            password = messageSplit[1];
+                            fullname = messageSplit[2];
+                            address = messageSplit[3];
+                            birthdate = messageSplit[4];
+                            gender = messageSplit[5];
+                            email = messageSplit[6];
+                        }
+
+                        Boolean success = dbcon.addNewUser(username, password, fullname, address, birthdate, gender, email);
+                        objectOutputStream.reset();
+                        objectOutputStream.writeObject(success);
+                        objectOutputStream.flush();
 
                         System.out.println("Data sent to client.");
 
