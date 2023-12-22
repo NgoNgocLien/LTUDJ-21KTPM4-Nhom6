@@ -24,19 +24,16 @@ public class ConversationPanel extends JPanel {
     private JPanel messagesPanel;
     private JScrollPane messagesScrollPane;
     private JPanel inputPanel;
-//    private User info;
-//    private ArrayList<Message> messages;
-
-    //    private ArrayList<MessagePanel> messagePanels;
     private JButton sendButton;
     private JTextField inputField;
     private JPopupMenu moreMenu;
     private JButton moreButton;
-    private ArrayList<ChatListPanel.AChatPanel> chatPanels;
+    private ArrayList<AMessagePanel> messagePanelList;
     private ChatInfo currentChat;
 
     public ConversationPanel() {
         this.currentChat = null;
+        this.messagePanelList = null;
         setBackground(Constants.COLOR_BACKGROUND);
         setLayout(new BorderLayout());
 
@@ -126,31 +123,11 @@ public class ConversationPanel extends JPanel {
         messagesPanel.setBorder(new EmptyBorder(10, 10, 10, 10));
         messagesPanel.add(new StartConversationPanel("Welcome back!", "", "Please select a user to start chatting."));
 
-//        boolean isMyMessage;
-//        for (int i = 0; i < 5; i++) {
-//            if (i % 5 == 0) {
-//                MessageTimePanel mtp = new MessageTimePanel(LocalDateTime.now());
-//                this.messagesPanel.add(mtp);
-//            }
-//            if (i % 2 == 0) {
-//                isMyMessage = true;
-//            } else {
-//                isMyMessage = false;
-//
-//                MemberNamePanel mnp = new MemberNamePanel("lien_");
-//                this.messagesPanel.add(mnp);
-//            }
-//            AMessagePanel amp = new AMessagePanel("Hello, my name is Lien. Lorem ipsum dolor sit. Ame to siesta. Boenure. Nice.", isMyMessage);
-//            this.messagesPanel.add(amp);
-//        }
-
         JPanel tmp = new JPanel();
         tmp.setLayout(new BorderLayout());
-//        tmp.setBackground(Constants.COLOR_BACKGROUND);
         tmp.add(messagesPanel, BorderLayout.SOUTH);
 
         messagesScrollPane = new JScrollPane(tmp);
-//        messagesScrollPane.setBackground(Constants.COLOR_BACKGROUND);
         messagesScrollPane.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
         messagesScrollPane.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED);
         messagesScrollPane.setBorder(null);
@@ -168,6 +145,7 @@ public class ConversationPanel extends JPanel {
         this.messagesPanel.add(amp);
         this.messagesPanel.revalidate();
         this.messagesPanel.repaint();
+        this.messagePanelList.add(amp);
     }
     public void addTime(LocalDateTime timestamp) {
         MessageTimePanel mtp = new MessageTimePanel(timestamp);
@@ -405,6 +383,10 @@ public class ConversationPanel extends JPanel {
 
     public void rebuildConversationPanel(ChatInfo info, ArrayList<Message> messages) {
         this.currentChat = info;
+        if (this.messagePanelList != null)
+            this.messagePanelList.clear();
+        this.messagePanelList = new ArrayList<AMessagePanel>();
+
         setChatName(info.getChatName(), info.isOnline());
 
         this.messagesPanel.removeAll();
@@ -447,5 +429,12 @@ public class ConversationPanel extends JPanel {
                 addMessage(message);
             }
         }
+    }
+
+    public JTextField getInputField() {
+        return inputField;
+    }
+    public JButton getSendButton() {
+        return sendButton;
     }
 }

@@ -2,6 +2,7 @@ package org.example.controllers;
 
 import org.example.models.ChatInfo;
 import org.example.utilities.DatabaseHandler;
+import org.example.views.ConversationPanel;
 import org.example.views.IconPanel;
 import org.example.views.MainFrame;
 
@@ -11,6 +12,7 @@ public class MainFrameController {
     private MainFrame mainFrame;
     IconPanelController iconPanelController;
     ChatListPanelController chatListPanelController;
+    ConversationPanelController conversationPanelController;
     public MainFrameController(MainFrame mainFrame, DatabaseHandler DB, String myUsername) {
         this.myUsername = myUsername;
         this.DB = DB;
@@ -30,6 +32,7 @@ public class MainFrameController {
 
         iconPanelController = new IconPanelController(this);
         chatListPanelController = new ChatListPanelController(this);
+        conversationPanelController = new ConversationPanelController(this);
     }
 
     public String getMyUsername() {
