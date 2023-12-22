@@ -1,6 +1,7 @@
 package org.example.controllers;
 
 import org.example.models.ChatInfo;
+import org.example.models.Message;
 import org.example.utilities.DatabaseHandler;
 import org.example.views.ChatListPanel;
 import org.example.views.MainFrame;
@@ -49,13 +50,28 @@ public class ChatListPanelController {
                 MF.getConversationPanel().setChatName(chatName, isOnline);
                 boolean isGroup = chatInfo.isGroup();
                 if (isGroup) {
-
+                    int groupId = chatInfo.getGroupId();
+                    ArrayList<Message> messages = null;
+                    try {
+                        messages = DB.getGroupMessages(myUsername, groupId);
+                    } catch (Exception exception) {
+                        exception.printStackTrace();
+                    }
+                    MF.getConversationPanel().rebuildConversationPanel(chatInfo, messages);
                 } else {
-
+                    String username = chatInfo.getUsername();
+                    ArrayList<Message> messages = null;
+                    try {
+                        messages = DB.getFriendMessages(myUsername, username);
+                    } catch (Exception exception) {
+                        exception.printStackTrace();
+                    }
+                    MF.getConversationPanel().rebuildConversationPanel(chatInfo, messages);
                 }
             }
             else {
                 // open profile
+
             }
         }
     }

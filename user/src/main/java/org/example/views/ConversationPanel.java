@@ -1,5 +1,7 @@
 package org.example.views;
 
+import org.example.models.ChatInfo;
+import org.example.models.Message;
 import org.example.utilities.Constants;
 
 import jiconfont.icons.font_awesome.FontAwesome;
@@ -10,9 +12,11 @@ import javax.swing.border.EmptyBorder;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
+import java.util.Locale;
 
 public class ConversationPanel extends JPanel {
     private JPanel chatNamePanel;
@@ -28,8 +32,11 @@ public class ConversationPanel extends JPanel {
     private JTextField inputField;
     private JPopupMenu moreMenu;
     private JButton moreButton;
+    private ArrayList<ChatListPanel.AChatPanel> chatPanels;
+    private ChatInfo currentChat;
 
     public ConversationPanel() {
+        this.currentChat = null;
         setBackground(Constants.COLOR_BACKGROUND);
         setLayout(new BorderLayout());
 
@@ -117,26 +124,32 @@ public class ConversationPanel extends JPanel {
 //        messagePanel.setBackground(Constants.COLOR_BACKGROUND);
         messagesPanel.setLayout(new BoxLayout(messagesPanel, BoxLayout.Y_AXIS));
         messagesPanel.setBorder(new EmptyBorder(10, 10, 10, 10));
+        messagesPanel.add(new StartConversationPanel("Welcome back!", "", "Please select a user to start chatting."));
 
-        boolean isMyMessage;
-        for (int i = 0; i < 20; i++) {
-            if (i % 5 == 0) {
-                MessageTimePanel mtp = new MessageTimePanel(LocalDateTime.now());
-                this.messagesPanel.add(mtp);
-            }
-            if (i % 2 == 0) {
-                isMyMessage = true;
-            } else {
-                isMyMessage = false;
+//        boolean isMyMessage;
+//        for (int i = 0; i < 5; i++) {
+//            if (i % 5 == 0) {
+//                MessageTimePanel mtp = new MessageTimePanel(LocalDateTime.now());
+//                this.messagesPanel.add(mtp);
+//            }
+//            if (i % 2 == 0) {
+//                isMyMessage = true;
+//            } else {
+//                isMyMessage = false;
+//
+//                MemberNamePanel mnp = new MemberNamePanel("lien_");
+//                this.messagesPanel.add(mnp);
+//            }
+//            AMessagePanel amp = new AMessagePanel("Hello, my name is Lien. Lorem ipsum dolor sit. Ame to siesta. Boenure. Nice.", isMyMessage);
+//            this.messagesPanel.add(amp);
+//        }
 
-                MemberNamePanel mnp = new MemberNamePanel("lien_");
-                this.messagesPanel.add(mnp);
-            }
-            AMessagePanel amp = new AMessagePanel("Hello, my name is Lien. Lorem ipsum dolor sit. Ame to siesta. Boenure. Nice.", isMyMessage);
-            this.messagesPanel.add(amp);
-        }
+        JPanel tmp = new JPanel();
+        tmp.setLayout(new BorderLayout());
+//        tmp.setBackground(Constants.COLOR_BACKGROUND);
+        tmp.add(messagesPanel, BorderLayout.SOUTH);
 
-        messagesScrollPane = new JScrollPane(messagesPanel);
+        messagesScrollPane = new JScrollPane(tmp);
 //        messagesScrollPane.setBackground(Constants.COLOR_BACKGROUND);
         messagesScrollPane.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
         messagesScrollPane.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED);
@@ -145,12 +158,77 @@ public class ConversationPanel extends JPanel {
         messagesScrollPane.getVerticalScrollBar().setUnitIncrement(8);
     }
 
+    public void addStartConversationPanel(String fullname, String username, String statement) {
+        StartConversationPanel scp = new StartConversationPanel(fullname, username, statement);
+        this.messagesPanel.add(scp);
+    }
+
+    public void addMessage(Message message) {
+        AMessagePanel amp = new AMessagePanel(message);
+        this.messagesPanel.add(amp);
+        this.messagesPanel.revalidate();
+        this.messagesPanel.repaint();
+    }
+    public void addTime(LocalDateTime timestamp) {
+        MessageTimePanel mtp = new MessageTimePanel(timestamp);
+        this.messagesPanel.add(mtp);
+    }
+    public void addMemberName(String username) {
+        MemberNamePanel mnp = new MemberNamePanel(username);
+        this.messagesPanel.add(mnp);
+    }
+
+    private class StartConversationPanel extends JPanel {
+        public StartConversationPanel(String fullname, String username, String statement) {
+            setLayout(new GridLayout(5, 1));
+            setBackground(null);
+
+            JLabel fullnameLabel = new JLabel(fullname);
+            fullnameLabel.setFont(Constants.FONT_LARGE_BOLD);
+            fullnameLabel.setForeground(Constants.COLOR_TEXT_SECONDARY);
+
+            JLabel usernameLabel = new JLabel(username);
+            usernameLabel.setFont(Constants.FONT_NORMAL);
+            usernameLabel.setForeground(Constants.COLOR_TEXT_SECONDARY);
+
+            JLabel statementLabel = new JLabel(statement);
+            statementLabel.setFont(Constants.FONT_NORMAL);
+            statementLabel.setForeground(Constants.COLOR_TEXT_SECONDARY);
+
+            JPanel fullnamePanel = new JPanel();
+            fullnamePanel.setBackground(null);
+            fullnamePanel.setLayout(new FlowLayout(FlowLayout.CENTER, 0, 0));
+            fullnamePanel.add(fullnameLabel);
+
+            JPanel usernamePanel = new JPanel();
+            usernamePanel.setBackground(null);
+            usernamePanel.setLayout(new FlowLayout(FlowLayout.CENTER, 0, 0));
+            usernamePanel.add(usernameLabel);
+
+            JPanel statementPanel = new JPanel();
+            statementPanel.setBackground(null);
+            statementPanel.setLayout(new FlowLayout(FlowLayout.CENTER, 0, 0));
+            statementPanel.add(statementLabel);
+
+            add(fullnamePanel);
+            add(usernamePanel);
+            add(new JPanel());
+            add(statementPanel);
+            add(new JPanel());
+        }
+
+    }
+
     private class AMessagePanel extends JPanel {
-        private String message;
         private JLabel mLabel;
         private JPanel mPanel;
+        private Message msg;
+        private String message;
 
-        public AMessagePanel(String message, boolean isMyMessage) {
+        public AMessagePanel(Message msg) {
+            this.msg = msg;
+            this.message = msg.getContent();
+
             setLayout(new GridLayout(1, 1));
             setBackground(null);
 
@@ -162,7 +240,7 @@ public class ConversationPanel extends JPanel {
 
             mPanel = new JPanel();
 
-            if (isMyMessage) {
+            if (msg.isMyMessage()) {
                 mLabel.setForeground(Color.WHITE);
 
                 JPanel backgroundPanel = new RoundedPanel(45, Constants.COLOR_PRIMARY);
@@ -322,6 +400,52 @@ public class ConversationPanel extends JPanel {
             IconFontSwing.register(FontAwesome.getIconFont());
             Icon onlineIcon = IconFontSwing.buildIcon(FontAwesome.CIRCLE, 10, Constants.COLOR_BACKGROUND);
             this.nameLabel.setIcon(onlineIcon);
+        }
+    }
+
+    public void rebuildConversationPanel(ChatInfo info, ArrayList<Message> messages) {
+        this.currentChat = info;
+        setChatName(info.getChatName(), info.isOnline());
+
+        this.messagesPanel.removeAll();
+        if (info.isGroup()) {
+            addStartConversationPanel(info.getChatName(), info.getQuantity() + " members", "You are a member of this group. Let start chatting!");
+
+            if (messages == null || messages.isEmpty()) {
+                return;
+            }
+
+            LocalDateTime lastTime = messages.get(0).getSentTime();
+            addTime(lastTime);
+
+            for (Message message : messages) {
+                if (message.getSentTime().getDayOfYear() != lastTime.getDayOfYear() || message.getSentTime().getHour() != lastTime.getHour()) {
+                    addTime(message.getSentTime());
+                    lastTime = message.getSentTime();
+                }
+                if (!message.isMyMessage()) {
+                    addMemberName(message.getSender());
+                }
+                addMessage(message);
+            }
+        }
+        else {
+            addStartConversationPanel(info.getChatName(), info.getUsername(), "You are friend with this user. You can now chat with your friend.");
+
+            if (messages == null || messages.isEmpty()) {
+                return;
+            }
+
+            LocalDateTime lastTime = messages.get(0).getSentTime();
+            addTime(lastTime);
+
+            for (Message message : messages) {
+                if (message.getSentTime().getDayOfYear() != lastTime.getDayOfYear() || message.getSentTime().getHour() != lastTime.getHour()) {
+                    addTime(message.getSentTime());
+                    lastTime = message.getSentTime();
+                }
+                addMessage(message);
+            }
         }
     }
 }
