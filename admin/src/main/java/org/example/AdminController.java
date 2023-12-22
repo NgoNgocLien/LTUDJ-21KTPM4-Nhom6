@@ -510,4 +510,53 @@ public class AdminController {
         }
         return null;
     }
+
+    Object[][] getAllUser(){
+        try{
+            Statement stmt = conn.createStatement();
+            String sql;
+            sql = "SELECT username, fullname, address, birthdate, gender, email FROM USER";
+            ResultSet rs = stmt.executeQuery(sql);
+            List<Object[]> rows = new ArrayList<>();
+            int serialNum = 1;
+
+            while(rs.next()){
+                //Retrieve by column name
+                //int id_group = rs.getInt("id_group");
+                String username = rs.getString("username");
+                String fullname = rs.getString("fullname");
+                String address = rs.getString("address");
+                Date birthdate = rs.getDate("birthdate");
+                Boolean gender = rs.getBoolean("gender");
+                String email = rs.getString("email");
+                Timestamp timestamp = new Timestamp(birthdate.getTime());
+
+                LocalDateTime localDateTime = timestamp.toLocalDateTime();
+                DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-MM-yyyy H:m:s");
+                String format_time = localDateTime.format(formatter);
+
+                String genderString = gender ? "Female" : "Male";
+
+                Object[] row = {serialNum, username, fullname, address, format_time, genderString, email};
+                serialNum++;
+                // Add the row to the list
+                rows.add(row);
+            }
+
+            rs.close();
+            stmt.close();
+
+            Object[][] data = new Object[rows.size()][];
+            rows.toArray(data);
+
+            return data;
+        }catch(SQLException se){
+            //Handle errors for JDBC
+            se.printStackTrace();
+        }catch(Exception e){ //Handle errors for Class.forName
+            e.printStackTrace();
+        }
+        return null;
+    }
+
 }

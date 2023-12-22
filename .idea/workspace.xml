@@ -71,7 +71,7 @@
     &quot;associatedIndex&quot;: 4
     }</component>
   <component name="ProjectId" id="2Yl4BhcRXXxVlazNBHS3o0n3GYY" />
-  <component name="ProjectLevelVcsManager">
+  <component name="ProjectLevelVcsManager" settingsEditedManually="true">
     <ConfirmationsSetting value="2" id="Add" />
   </component>
   <component name="ProjectViewState">
@@ -103,8 +103,13 @@
     &quot;project.structure.side.proportion&quot;: &quot;0.46896553&quot;,
     &quot;settings.editor.selected.configurable&quot;: &quot;settings.qodana&quot;,
     &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
-  }
-}</component>
+    <![CDATA[{
+        "keyToString": {
+        "git-widget-placeholder": "main",
+        "node.js.selected.package.tslint": "(autodetect)"
+    }
+    }]]>
+</component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
       <recent name="D:\THIRD-SEM1\JAVA\LTUDJ-21KTPM4-Nhom6\Client\src" />
@@ -119,7 +124,7 @@
       <recent name="org.example" />
     </key>
   </component>
-  <component name="RunManager" selected="Application.Main Server">
+  <component name="RunManager" selected="Application.Main Admin">
     <configuration name="Main Admin" type="Application" factoryName="Application" temporary="true">
       <option name="MAIN_CLASS_NAME" value="org.example.Main" />
       <module name="admin" />
@@ -238,11 +243,11 @@
     </list>
     <recent_temporary>
       <list>
+        <item itemvalue="Application.Main Admin" />
+        <item itemvalue="Application.Main Server" />
+        <item itemvalue="Application.Main User" />
         <item itemvalue="Application.Main User" />
         <item itemvalue="Application.Main Server" />
-        <item itemvalue="Application.Main Admin" />
-        <item itemvalue="Application.Main" />
-        <item itemvalue="Application.MainChatView" />
       </list>
     </recent_temporary>
   </component>
@@ -279,6 +284,13 @@
       <workItem from="1701792682009" duration="978000" />
       <workItem from="1701794365013" duration="8794000" />
       <workItem from="1701839696676" duration="3700000" />
+      <workItem from="1701864304905" duration="446000" />
+      <workItem from="1701864806078" duration="2047000" />
+      <workItem from="1701912261380" duration="1663000" />
+      <workItem from="1702000907580" duration="630000" />
+      <workItem from="1702132810929" duration="23018000" />
+      <workItem from="1702602029367" duration="858000" />
+      <workItem from="1703066363343" duration="15274000" />
       <workItem from="1701861430260" duration="1110000" />
       <workItem from="1701911062073" duration="260000" />
       <workItem from="1701911761662" duration="79000" />
@@ -315,6 +327,14 @@
     <option name="ADD_EXTERNAL_FILES_SILENTLY" value="true" />
   </component>
   <component name="XDebuggerManager">
+    <breakpoint-manager>
+      <breakpoints>
+        <breakpoint enabled="true" type="java-exception">
+          <properties class="java.sql.SQLSyntaxErrorException" package="java.sql" />
+          <option name="timeStamp" value="5" />
+        </breakpoint>
+      </breakpoints>
+    </breakpoint-manager>
     <watches-manager>
       <configuration name="Application">
         <watch expression="se" />

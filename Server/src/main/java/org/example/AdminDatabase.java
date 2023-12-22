@@ -535,4 +535,187 @@ public class AdminDatabase {
         }
         return null;
     }
+
+    Object[][] getAllUser(){
+        try{
+            Statement stmt = connection.createStatement();
+            String sql;
+            sql = "SELECT username, fullname, address, birthdate, gender, email FROM USER";
+            ResultSet rs = stmt.executeQuery(sql);
+            List<Object[]> rows = new ArrayList<>();
+            int serialNum = 1;
+
+            while(rs.next()){
+                //Retrieve by column name
+                String username = rs.getString("username");
+                String fullname = rs.getString("fullname");
+                String address = rs.getString("address");
+                Date birthdate = rs.getDate("birthdate");
+                Boolean gender = rs.getBoolean("gender");
+                String email = rs.getString("email");
+                Timestamp timestamp = new Timestamp(birthdate.getTime());
+
+                LocalDateTime localDateTime = timestamp.toLocalDateTime();
+                DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-MM-yyyy");
+                String format_time = localDateTime.format(formatter);
+
+                String genderString = gender ? "Female" : "Male";
+
+                Object[] row = { serialNum, username, fullname, address, format_time, genderString, email };
+                serialNum++;
+                // Add the row to the list
+                rows.add(row);
+            }
+
+            rs.close();
+            stmt.close();
+
+            Object[][] data = new Object[rows.size()][];
+            rows.toArray(data);
+
+            return data;
+        }catch(SQLException se){
+            //Handle errors for JDBC
+            se.printStackTrace();
+        }catch(Exception e){ //Handle errors for Class.forName
+            e.printStackTrace();
+        }
+        return null;
+    }
+
+    Object[][] searchUser(String text1, String text2, String text3){
+        try{
+            PreparedStatement stmt = null;
+            String sql = "SELECT DISTINCT s.username, s.fullname, s.address, s.birthdate, s.gender, s.email FROM USER s " + "INNER JOIN HISTORY_LOGIN h ON s.username = h.username ";
+
+            if (text1.isEmpty()){
+                if (text2.isEmpty()){
+                    System.out.println("search by active status");
+                    // search by active status
+                    if(Objects.equals(text3, "All")){
+                        stmt = connection.prepareStatement(sql);
+                    }
+                    else if(Objects.equals(text3, "Active")){
+                        sql += "WHERE h.login_time IS NOT NULL AND h.logout_time IS NULL ";
+                        stmt = connection.prepareStatement(sql);
+                    }
+                    else{
+                        sql += "WHERE h.login_time IS NOT NULL AND h.logout_time IS NOT NULL ";
+                        stmt = connection.prepareStatement(sql);
+                    }
+                }
+                // search by fullname + active status
+                else{
+                    System.out.println("search by fullname + active status");
+                    if(Objects.equals(text3, "All")){
+                        sql += "WHERE s.fullname LIKE ?";
+                        stmt = connection.prepareStatement(sql);
+                        stmt.setString(1, "%" + text2 + "%");
+                    }
+                    else if(Objects.equals(text3, "Active")){
+                        sql += "WHERE s.fullname LIKE ? ";
+                        sql += "AND h.login_time IS NOT NULL AND h.logout_time IS NULL ";
+
+                        stmt = connection.prepareStatement(sql);
+                        stmt.setString(1, "%" + text2 + "%");
+                    }
+                    else{
+                        sql += "WHERE s.fullname LIKE ? ";
+                        sql += "AND h.login_time IS NOT NULL AND h.logout_time IS NOT NULL ";
+
+                        stmt = connection.prepareStatement(sql);
+                        stmt.setString(1, "%" + text2 + "%");
+                    }
+                }
+            }
+            else{
+                if (text2.isEmpty()){
+                    // search by username + active status
+                    System.out.println("search by username + active status");
+                    if(Objects.equals(text3, "All")){
+                        sql += "WHERE s.username LIKE ?";
+                        stmt = connection.prepareStatement(sql);
+                        stmt.setString(1, "%" + text1 + "%");
+                    }
+                    else if(Objects.equals(text3, "Active")){
+                        sql += "WHERE s.username LIKE ? ";
+                        sql += "AND h.login_time IS NOT NULL AND h.logout_time IS NULL ";
+
+                        stmt = connection.prepareStatement(sql);
+                        stmt.setString(1, "%" + text1 + "%");
+                    }
+                    else{
+                        sql += "WHERE s.username LIKE ? ";
+                        sql += "AND h.login_time IS NOT NULL AND h.logout_time IS NOT NULL ";
+
+                        stmt = connection.prepareStatement(sql);
+                        stmt.setString(1, "%" + text1 + "%");
+                    }
+                }
+                else {
+                    System.out.println("search by username + fullname + active status");
+                    // search by username + fullname + active status
+                    sql += "WHERE s.fullname LIKE ? " + "AND s.username LIKE ? ;";
+                    if(Objects.equals(text3, "All")){
+                        stmt = connection.prepareStatement(sql);
+                        stmt.setString(1, "%" + text2 + "%");
+                        stmt.setString(2, "%" + text1 + "%");
+                    }
+                    else if(Objects.equals(text3, "Active")){
+                        sql += "WHERE h.login_time IS NOT NULL AND h.logout_time IS NULL ";
+
+                        stmt = connection.prepareStatement(sql);
+                        stmt.setString(1, "%" + text2 + "%");
+                        stmt.setString(2, "%" + text1 + "%");
+                    }
+                    else{
+                        sql += "WHERE h.login_time IS NOT NULL AND h.logout_time IS NOT NULL ";
+
+                        stmt = connection.prepareStatement(sql);
+                        stmt.setString(1, "%" + text2 + "%");
+                        stmt.setString(2, "%" + text1 + "%");
+                    }
+                }
+            }
+
+            ResultSet rs = stmt.executeQuery();
+
+            List<Object[]> rows = new ArrayList<>();
+            int i = 1;
+            while(rs.next()){
+                //Retrieve by column name
+                String username = rs.getString("username");
+                String fullname = rs.getString("fullname");
+                String address = rs.getString("address");
+                Date birthdate = rs.getDate("birthdate");
+                Boolean gender = rs.getBoolean("gender");
+                String email = rs.getString("email");
+                Timestamp timestamp = new Timestamp(birthdate.getTime());
+
+                LocalDateTime localDateTime = timestamp.toLocalDateTime();
+                DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-MM-yyyy");
+                String format_time = localDateTime.format(formatter);
+
+                String genderString = gender ? "Female" : "Male";
+
+                Object[] row = {i, username, fullname, address, format_time, genderString, email};
+                // Add the row to the list
+                rows.add(row);
+                i++;
+            }
+            rs.close();
+            stmt.close();
+
+            Object[][] data = new Object[rows.size()][];
+            rows.toArray(data);
+
+            return data;
+        }catch(SQLException se){
+            //Handle errors for JDBC
+            se.printStackTrace();
+        }catch(Exception e){ //Handle errors for Class.forName
+            e.printStackTrace();
+        }
+        return null;
+    }
 }
