@@ -1,6 +1,7 @@
 package org.example.controllers;
 
 import org.example.Main;
+import org.example.models.Message;
 import org.example.utilities.Constants;
 import org.example.utilities.DatabaseHandler;
 import org.example.views.ConversationPanel;
@@ -8,10 +9,8 @@ import org.example.views.MainFrame;
 
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.FocusEvent;
-import java.awt.event.FocusListener;
-import java.awt.event.KeyEvent;
-import java.awt.event.KeyListener;
+import java.awt.event.*;
+import java.time.LocalDateTime;
 
 public class ConversationPanelController {
     private MainFrameController MFC;
@@ -21,6 +20,7 @@ public class ConversationPanelController {
     private ConversationPanel conversationPanel;
     private JTextField inputField;
     private JButton sendButton;
+    private JButton moreButton;
 
     public ConversationPanelController(MainFrameController mfc) {
         this.MFC = mfc;
@@ -31,10 +31,11 @@ public class ConversationPanelController {
 
         this.inputField = conversationPanel.getInputField();
         this.sendButton = conversationPanel.getSendButton();
+        this.moreButton = conversationPanel.getMoreButton();
 
         inputField.addFocusListener(new InputFieldListener());
         inputField.addKeyListener(new InputFieldListener());
-//        sendButton.addActionListener(new SendButtonActionListener());
+        sendButton.addActionListener(new SendButtonActionListener());
     }
 
     private class InputFieldListener implements FocusListener, KeyListener {
@@ -69,6 +70,20 @@ public class ConversationPanelController {
         @Override
         public void keyReleased(KeyEvent e) {
 
+        }
+    }
+
+    private class SendButtonActionListener implements ActionListener {
+        @Override
+        public void actionPerformed(ActionEvent e) {
+            String message = inputField.getText();
+            Message msg = new Message(-1, myUsername, conversationPanel.getChatInfo().getUsername(), message, LocalDateTime.now(), true);
+            if (!message.isEmpty()) {
+//                String receiver = conversationPanel.getReceiver();
+//                DB.sendMessage(myUsername, receiver, message);
+                conversationPanel.addMessage(msg);
+                inputField.setText("");
+            }
         }
     }
 }

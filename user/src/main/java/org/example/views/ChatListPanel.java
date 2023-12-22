@@ -17,7 +17,10 @@ public class ChatListPanel extends JPanel {
     private JButton searchButton;
     private JScrollPane chatPanelsScrollPane;
     private ArrayList<AChatPanel> chatPanels;
+    private String inputFieldPlaceholder;
     public ChatListPanel(ArrayList<ChatInfo> infos) {
+        this.infos = infos;
+        this.inputFieldPlaceholder = "Search for a message";
         chatPanels = new ArrayList<>();
 
         setBackground(Constants.COLOR_SECONDARY);
@@ -37,8 +40,8 @@ public class ChatListPanel extends JPanel {
         searchField = new JTextField();
         searchField.setBackground(Constants.COLOR_BACKGROUND);
         searchField.setFont(Constants.FONT_NORMAL);
-//        searchField.setForeground(Constants.COLOR_TEXT_SECONDARY);
-//        searchField.setText("Search for a message here...");
+        searchField.setForeground(Constants.COLOR_TEXT_SECONDARY);
+        searchField.setText(inputFieldPlaceholder);
 
         IconFontSwing.register(FontAwesome.getIconFont());
         Icon searchIcon = IconFontSwing.buildIcon(FontAwesome.SEARCH, 20, Constants.COLOR_ICON_PRIMARY);
@@ -224,4 +227,16 @@ public class ChatListPanel extends JPanel {
     public JScrollPane getChatPanelsScrollPane() {
         return chatPanelsScrollPane;
     }
+    public JTextField getInputField() { return searchField; }
+    public JButton getSearchButton() { return searchButton; }
+    public void setInputFieldPlaceholder(String placeholder) {
+        this.inputFieldPlaceholder = placeholder;
+        if (this.searchField.hasFocus()) {
+            return;
+        } else {
+            searchField.setText(placeholder);
+            searchField.setForeground(Constants.COLOR_TEXT_SECONDARY);
+        }
+    }
+    public String getInputFieldPlaceholder() { return inputFieldPlaceholder; }
 }
