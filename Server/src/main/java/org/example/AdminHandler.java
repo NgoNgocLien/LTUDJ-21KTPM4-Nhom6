@@ -273,6 +273,63 @@ public class AdminHandler implements Runnable {
 
                         break;
                     }
+
+                    case "getAllUser":{
+                        System.out.println("Admin get all user");
+
+                        Object[][] data1 = dbcon.getAllUser();
+                        objectOutputStream.reset();
+                        objectOutputStream.writeObject(data1);
+                        objectOutputStream.flush();
+
+                        for (Object[] row : data1) {
+                            for (Object element : row) {
+                                System.out.print(element + " ");
+                            }
+                            System.out.println();
+                        }
+
+                        System.out.println("Data sent to client.");
+
+                        break;
+                    }
+
+                    case "searchUser":{
+                        System.out.println("Admin search user");
+
+                        buffer = new byte[1024];
+                        bytesRead = inputStream.read(buffer);
+                        String message = new String(buffer, 0, bytesRead);
+
+                        String[] messageSplit = message.split("\n");
+
+                        String username = messageSplit[0];
+
+                        String fullname = "";
+                        String selectedString = "";
+                        if (messageSplit.length > 2) {
+                            fullname = messageSplit[1];
+                            selectedString = messageSplit[2];
+                        }
+                        System.out.println("Handler fullname: " + fullname);
+                        System.out.println("Handler selectedString: " + selectedString);
+                        Object[][] data1 = dbcon.searchUser(username, fullname, selectedString);
+                        objectOutputStream.reset();
+                        objectOutputStream.writeObject(data1);
+                        objectOutputStream.flush();
+
+                        for (Object[] row : data1) {
+                            for (Object element : row) {
+                                System.out.print(element + " ");
+                            }
+                            System.out.println();
+                        }
+
+                        System.out.println("Data sent to client.");
+
+                        break;
+                    }
+
                 }
             }
         } catch (IOException | ClassNotFoundException e) {
