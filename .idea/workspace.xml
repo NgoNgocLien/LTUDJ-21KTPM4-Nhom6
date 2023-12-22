@@ -5,6 +5,7 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="306fe892-f6be-4249-9327-1572c1ca91dd" name="Changes" comment="">
+<<<<<<< HEAD
 <<<<<<< Updated upstream
       <change afterPath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Update_at_07_12_2023_08_27_[Changes]/AdminApp$1.class" afterDir="false" />
       <change afterPath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Update_at_07_12_2023_08_27_[Changes]/AdminApp$10.class" afterDir="false" />
@@ -106,6 +107,17 @@
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Server/src/main/java/org/example/AdminDatabase.java" beforeDir="false" afterPath="$PROJECT_DIR$/Server/src/main/java/org/example/AdminDatabase.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Server/src/main/java/org/example/AdminHandler.java" beforeDir="false" afterPath="$PROJECT_DIR$/Server/src/main/java/org/example/AdminHandler.java" afterDir="false" />
+=======
+      <change afterPath="$PROJECT_DIR$/Server/Server.iml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/user/src/main/java/org/example/utilities/ForgetPwd.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/libraries/mysql_connector_j_8_0_33.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/modules.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/modules.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Server/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/Server/pom.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Server/src/main/java/org/example/AdminDatabase.java" beforeDir="false" afterPath="$PROJECT_DIR$/Server/src/main/java/org/example/AdminDatabase.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Server/src/main/java/org/example/ClientHandler.java" beforeDir="false" afterPath="$PROJECT_DIR$/Server/src/main/java/org/example/ClientHandler.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Server/src/main/java/org/example/DBconnection.java" beforeDir="false" afterPath="$PROJECT_DIR$/Server/src/main/java/org/example/DBconnection.java" afterDir="false" />
+>>>>>>> 7600a8c38d8a5331f37a810c982352a721f68602
       <change beforePath="$PROJECT_DIR$/Server/target/classes/org/example/AdminDatabase.class" beforeDir="false" afterPath="$PROJECT_DIR$/Server/target/classes/org/example/AdminDatabase.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Server/target/classes/org/example/AdminHandler.class" beforeDir="false" afterPath="$PROJECT_DIR$/Server/target/classes/org/example/AdminHandler.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Server/target/classes/org/example/AdminServer.class" beforeDir="false" afterPath="$PROJECT_DIR$/Server/target/classes/org/example/AdminServer.class" afterDir="false" />
@@ -113,8 +125,11 @@
       <change beforePath="$PROJECT_DIR$/Server/target/classes/org/example/DBconnection.class" beforeDir="false" afterPath="$PROJECT_DIR$/Server/target/classes/org/example/DBconnection.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Server/target/classes/org/example/Main.class" beforeDir="false" afterPath="$PROJECT_DIR$/Server/target/classes/org/example/Main.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Server/target/classes/org/example/chatServer.class" beforeDir="false" afterPath="$PROJECT_DIR$/Server/target/classes/org/example/chatServer.class" afterDir="false" />
+<<<<<<< HEAD
       <change beforePath="$PROJECT_DIR$/admin/src/main/java/org/example/AdminApp.java" beforeDir="false" afterPath="$PROJECT_DIR$/admin/src/main/java/org/example/AdminApp.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/admin/src/main/java/org/example/AdminController.java" beforeDir="false" afterPath="$PROJECT_DIR$/admin/src/main/java/org/example/AdminController.java" afterDir="false" />
+=======
+>>>>>>> 7600a8c38d8a5331f37a810c982352a721f68602
       <change beforePath="$PROJECT_DIR$/admin/target/classes/org/example/AdminApp$1.class" beforeDir="false" afterPath="$PROJECT_DIR$/admin/target/classes/org/example/AdminApp$1.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/admin/target/classes/org/example/AdminApp$10.class" beforeDir="false" afterPath="$PROJECT_DIR$/admin/target/classes/org/example/AdminApp$10.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/admin/target/classes/org/example/AdminApp$11.class" beforeDir="false" afterPath="$PROJECT_DIR$/admin/target/classes/org/example/AdminApp$11.class" afterDir="false" />
@@ -141,7 +156,6 @@
       <change beforePath="$PROJECT_DIR$/admin/target/classes/org/example/AdminApp$8.class" beforeDir="false" afterPath="$PROJECT_DIR$/admin/target/classes/org/example/AdminApp$8.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/admin/target/classes/org/example/AdminApp$9.class" beforeDir="false" afterPath="$PROJECT_DIR$/admin/target/classes/org/example/AdminApp$9.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/admin/target/classes/org/example/AdminApp.class" beforeDir="false" afterPath="$PROJECT_DIR$/admin/target/classes/org/example/AdminApp.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/admin/target/classes/org/example/AdminApp.java" beforeDir="false" afterPath="$PROJECT_DIR$/admin/target/classes/org/example/AdminApp.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/admin/target/classes/org/example/AdminController.class" beforeDir="false" afterPath="$PROJECT_DIR$/admin/target/classes/org/example/AdminController.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/admin/target/classes/org/example/AdminController.java" beforeDir="false" afterPath="$PROJECT_DIR$/admin/target/classes/org/example/AdminController.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/admin/target/classes/org/example/Main$1.class" beforeDir="false" afterPath="$PROJECT_DIR$/admin/target/classes/org/example/Main$1.class" afterDir="false" />
@@ -157,6 +171,7 @@
       <change beforePath="$PROJECT_DIR$/admin/target/classes/org/example/utilities/SearchActiveUser.class" beforeDir="false" afterPath="$PROJECT_DIR$/admin/target/classes/org/example/utilities/SearchActiveUser.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/admin/target/classes/org/example/utilities/SearchGroupName.class" beforeDir="false" afterPath="$PROJECT_DIR$/admin/target/classes/org/example/utilities/SearchGroupName.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/admin/target/classes/org/example/utilities/SearchReport.class" beforeDir="false" afterPath="$PROJECT_DIR$/admin/target/classes/org/example/utilities/SearchReport.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/user/src/main/java/org/example/views/LoginSignUpScreen.java" beforeDir="false" afterPath="$PROJECT_DIR$/user/src/main/java/org/example/views/LoginSignUpScreen.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/user/target/classes/org/example/Main.class" beforeDir="false" afterPath="$PROJECT_DIR$/user/target/classes/org/example/Main.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/user/target/classes/org/example/controllers/IconButtonController.class" beforeDir="false" afterPath="$PROJECT_DIR$/user/target/classes/org/example/controllers/IconButtonController.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/user/target/classes/org/example/controllers/MainControllers$1$1.class" beforeDir="false" afterPath="$PROJECT_DIR$/user/target/classes/org/example/controllers/MainControllers$1$1.class" afterDir="false" />
@@ -248,6 +263,13 @@
   "keyToString": {
     "ASKED_ADD_EXTERNAL_FILES": "true",
     "ASKED_SHARE_PROJECT_CONFIGURATION_FILES": "true",
+<<<<<<< HEAD
+=======
+    "Downloaded.Files.Path.Enabled": "false",
+    "Repository.Attach.Annotations": "false",
+    "Repository.Attach.JavaDocs": "false",
+    "Repository.Attach.Sources": "false",
+>>>>>>> 7600a8c38d8a5331f37a810c982352a721f68602
     "RunOnceActivity.OpenProjectViewOnStart": "true",
     "RunOnceActivity.ShowReadmeOnStart": "true",
     "SHARE_PROJECT_CONFIGURATION_FILES": "true",
@@ -255,15 +277,25 @@
     "git-widget-placeholder": "main",
     "ignore.virus.scanning.warn.message": "true",
     "jdk.selected.JAVA_MODULE": "21",
+<<<<<<< HEAD
     "last_opened_file_path": "C:/Users/admin/IdeaProjects/WriteServer",
+=======
+    "last_opened_file_path": "D:/LTUDJ-21KTPM4-Nhom6/Server/src/main/resources/activation-1.1.jar",
+>>>>>>> 7600a8c38d8a5331f37a810c982352a721f68602
     "node.js.detected.package.eslint": "true",
     "node.js.detected.package.tslint": "true",
     "node.js.selected.package.eslint": "(autodetect)",
     "node.js.selected.package.tslint": "(autodetect)",
+<<<<<<< HEAD
     "nodejs_package_manager_path": "npm",
     "project.structure.last.edited": "Modules",
     "project.structure.proportion": "0.15",
     "project.structure.side.proportion": "0.2",
+=======
+    "project.structure.last.edited": "Modules",
+    "project.structure.proportion": "0.15",
+    "project.structure.side.proportion": "0.46896553",
+>>>>>>> 7600a8c38d8a5331f37a810c982352a721f68602
     "settings.editor.selected.configurable": "settings.qodana",
     "vue.rearranger.settings.migration": "true"
   }
@@ -282,11 +314,15 @@
       <recent name="org.example" />
     </key>
   </component>
+<<<<<<< HEAD
 <<<<<<< Updated upstream
   <component name="RunManager" selected="Application.Main">
 =======
   <component name="RunManager" selected="Application.Main Admin">
 >>>>>>> Stashed changes
+=======
+  <component name="RunManager" selected="Application.Main Server">
+>>>>>>> 7600a8c38d8a5331f37a810c982352a721f68602
     <configuration name="Main Admin" type="Application" factoryName="Application" temporary="true">
       <option name="MAIN_CLASS_NAME" value="org.example.Main" />
       <module name="admin" />
@@ -405,9 +441,15 @@
     </list>
     <recent_temporary>
       <list>
+<<<<<<< HEAD
         <item itemvalue="Application.Main Admin" />
         <item itemvalue="Application.Main Server" />
         <item itemvalue="Application.Main User" />
+=======
+        <item itemvalue="Application.Main User" />
+        <item itemvalue="Application.Main Server" />
+        <item itemvalue="Application.Main Admin" />
+>>>>>>> 7600a8c38d8a5331f37a810c982352a721f68602
         <item itemvalue="Application.Main" />
         <item itemvalue="Application.MainChatView" />
       </list>
@@ -446,6 +488,7 @@
       <workItem from="1701792682009" duration="978000" />
       <workItem from="1701794365013" duration="8794000" />
       <workItem from="1701839696676" duration="3700000" />
+<<<<<<< HEAD
       <workItem from="1701864304905" duration="446000" />
       <workItem from="1701864806078" duration="2047000" />
       <workItem from="1701912261380" duration="1663000" />
@@ -453,6 +496,21 @@
       <workItem from="1702132810929" duration="23018000" />
       <workItem from="1702602029367" duration="858000" />
       <workItem from="1703066363343" duration="15274000" />
+=======
+      <workItem from="1701861430260" duration="1110000" />
+      <workItem from="1701911062073" duration="260000" />
+      <workItem from="1701911761662" duration="79000" />
+      <workItem from="1701996843259" duration="47000" />
+      <workItem from="1701997842034" duration="260000" />
+      <workItem from="1701998866988" duration="108000" />
+      <workItem from="1702005967417" duration="453000" />
+      <workItem from="1702302108168" duration="4406000" />
+      <workItem from="1702601625825" duration="21000" />
+      <workItem from="1702602860224" duration="4068000" />
+      <workItem from="1702794664284" duration="3916000" />
+      <workItem from="1702798622350" duration="744000" />
+      <workItem from="1702799413615" duration="2517000" />
+>>>>>>> 7600a8c38d8a5331f37a810c982352a721f68602
     </task>
     <servers />
   </component>

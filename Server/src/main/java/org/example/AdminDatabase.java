@@ -321,8 +321,6 @@ public class AdminDatabase {
             stmt.executeUpdate();
             stmt.close();
 
-            Statement stmt1 = connection.createStatement();
-            String sql1;
             sql = "SELECT u.username, s.report_time, u.is_locked "
                     + "FROM SPAM s "
                     + "INNER JOIN MESSAGE m ON m.id_message = s.id_message "
