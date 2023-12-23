@@ -121,8 +121,8 @@ public class ConversationPanel extends JPanel {
             deleteChat.setFont(Constants.FONT_NORMAL);
 
             // Add JMenuItems to JPopupMenu
-            moreMenu.add(deleteChat);
             moreMenu.add(viewProfile);
+            moreMenu.add(deleteChat);
         }
 
 //         Create an ActionListener
@@ -329,20 +329,20 @@ public class ConversationPanel extends JPanel {
         inputPanel.setBorder(new EmptyBorder(10, 10, 10, 10));
 
         inputField = new JTextField();
-        inputField.setBackground(Constants.COLOR_BACKGROUND);
-        // border background color
-//        inputField.setBorder(BorderFactory.createMatteBorder(1, 1, 1, 1, Constants.COLOR_BACKGROUND));
-        inputField.setBorder(BorderFactory.createLineBorder(Constants.COLOR_PRIMARY, 1));
+//        inputField.setBackground(Constants.COLOR_BACKGROUND);
+//        inputField.setBorder(BorderFactory.createLineBorder(Constants.COLOR_PRIMARY, 1));
         inputField.setFont(Constants.FONT_NORMAL);
-        inputField.setForeground(Constants.COLOR_TEXT_SECONDARY);
-        inputField.setText("Type your message here...");
+//        inputField.setForeground(Constants.COLOR_TEXT_SECONDARY);
+//        inputField.setText("Type your message here...");
 
         sendButton = new JButton("Send");
-        sendButton.setBackground(Constants.COLOR_PRIMARY);
+//        sendButton.setBackground(Constants.COLOR_PRIMARY);
         sendButton.setFont(Constants.FONT_BOLD);
         sendButton.setForeground(Constants.COLOR_TEXT_LIGHT);
         sendButton.setBorderPainted(false);
         sendButton.setPreferredSize(new Dimension(100, 40));
+
+        disableInput();
 
         inputPanel.add(inputField, BorderLayout.CENTER);
         inputPanel.add(sendButton, BorderLayout.EAST);
@@ -506,7 +506,7 @@ public class ConversationPanel extends JPanel {
         inputField.setEnabled(false);
         inputField.setBorder(BorderFactory.createLineBorder(Constants.COLOR_TEXT_LIGHT_SECONDARY, 1));
         inputField.setForeground(Constants.COLOR_TEXT_LIGHT_SECONDARY);
-        inputField.setText("You cannot send message to this user.");
+        inputField.setText("You cannot chat here.");
         sendButton.setEnabled(false);
         sendButton.setBackground(Constants.COLOR_TEXT_LIGHT_SECONDARY);
     }

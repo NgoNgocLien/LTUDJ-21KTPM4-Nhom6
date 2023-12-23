@@ -77,10 +77,14 @@ public class ConversationPanelController {
         @Override
         public void actionPerformed(ActionEvent e) {
             String message = inputField.getText();
-            Message msg = new Message(-1, myUsername, conversationPanel.getChatInfo().getUsername(), message, LocalDateTime.now(), true);
+            if (message.equals("Type your message here...")) {
+                message = "";
+            }
             if (!message.isEmpty()) {
+                Message msg = new Message(-1, myUsername, conversationPanel.getChatInfo().getUsername(), conversationPanel.getChatInfo().getGroupId(), message, LocalDateTime.now(), true);
 //                String receiver = conversationPanel.getReceiver();
 //                DB.sendMessage(myUsername, receiver, message);
+                DB.addMyMessage(msg);
                 conversationPanel.addMessage(msg);
                 inputField.setText("");
             }

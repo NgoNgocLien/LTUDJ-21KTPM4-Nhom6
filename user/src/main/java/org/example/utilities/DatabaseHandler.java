@@ -112,7 +112,9 @@ public class DatabaseHandler {
             else msg = sender + ": " + message;
             String toUser = rs.getString("to_user");
             int toGroup = rs.getObject("to_group") != null ? rs.getInt("to_group") : -1;
-            boolean seen = rs.getTimestamp("seen_time") != null;
+            boolean seen;
+            if (isMyMessage) seen = true;
+            else seen = rs.getObject("seen_time") != null;
             if (toGroup != -1) {
                 // get group quantity
                 int quantity = getGroupMemberQuantity(toGroup);
@@ -130,7 +132,6 @@ public class DatabaseHandler {
         stmt.close();
         return chats;
     }
-
     public int getGroupMemberQuantity(int idGroup) throws SQLException {
         String sql = "SELECT COUNT(M.username) AS quantity " +
                 "FROM GROUP_MEMBER M  " +
@@ -151,7 +152,6 @@ public class DatabaseHandler {
         }
 
     }
-
     public boolean getIsOnline(String username) throws SQLException {
         String sql = "SELECT H.logout_time " +
                     "FROM HISTORY_LOGIN H " +
@@ -361,6 +361,7 @@ public class DatabaseHandler {
         }
         return null;
     }
+
     public ArrayList<Message> getFriendMessages(String myUsername, String friendUsername) {
         String sql ="SELECT M.id_message, M.sender, M.to_user, M.content, M.sent_time " +
                     "FROM MESSAGE M " +
@@ -386,7 +387,7 @@ public class DatabaseHandler {
                 content = rs.getString("content");
                 sent_time = rs.getTimestamp("sent_time");
 
-                messages.add(new Message(id, sender, to_user, content, sent_time.toLocalDateTime(), sender.equals(myUsername)));
+                messages.add(new Message(id, sender, to_user, -1, content, sent_time.toLocalDateTime(), sender.equals(myUsername)));
             }
             rs.close();
             stmt.close();
@@ -396,7 +397,6 @@ public class DatabaseHandler {
         }
         return null;
     }
-
     public ArrayList<Message> getGroupMessages(String myUsername, int idGroup) {
         String sql = "WITH GroupMessage AS ( " +
                     "SELECT M.sender, M.sent_time, M.content, M.id_message, " +
@@ -422,7 +422,7 @@ public class DatabaseHandler {
                 content = rs.getString("content");
                 sent_time = rs.getTimestamp("sent_time");
 
-                messages.add(new Message(id, sender, "", content, sent_time.toLocalDateTime(), sender.equals(myUsername)));
+                messages.add(new Message(id, sender, "", idGroup, content, sent_time.toLocalDateTime(), sender.equals(myUsername)));
             }
             rs.close();
             stmt.close();
@@ -431,6 +431,65 @@ public class DatabaseHandler {
             throwables.printStackTrace();
         }
         return null;
+    }
+
+    public ArrayList<String> getAllMembers(int idGroup) {
+        String sql = "SELECT M.username " +
+                    "FROM GROUP_MEMBER M " +
+                    "WHERE M.id_group = ?";
+        PreparedStatement stmt = null;
+        try {
+            stmt = conn.prepareStatement(sql);
+            stmt.setInt(1, idGroup);
+            ResultSet rs = stmt.executeQuery();
+            ArrayList<String> members = new ArrayList<>();
+            while (rs.next()) {
+                String member = rs.getString("username");
+                members.add(member);
+            }
+            rs.close();
+            stmt.close();
+            return members;
+        } catch (SQLException throwables) {
+            throwables.printStackTrace();
+        }
+        return null;
+    }
+    public void addMyMessage(Message message) {
+        String sql = "INSERT INTO MESSAGE (sender, to_user, to_group, content, sent_time, seen_time) " +
+                    "VALUES (?, ?, ?, ?, ?, ?)";
+        PreparedStatement stmt = null;
+        try {
+            if (message.getToGroup() == -1) {
+                // add message to friend
+                stmt = conn.prepareStatement(sql);
+                stmt.setString(1, message.getSender());
+                stmt.setString(2, message.getToUser());
+                stmt.setNull(3, Types.INTEGER);
+                stmt.setString(4, message.getContent());
+                stmt.setTimestamp(5, Timestamp.valueOf(message.getSentTime()));
+                stmt.setTimestamp(6, null);
+                stmt.executeUpdate();
+                stmt.close();
+            } else {
+                // get all member
+                // for each member, add message to database
+                ArrayList<String> members = getAllMembers(message.getToGroup());
+                for (String member : members) {
+                    stmt = conn.prepareStatement(sql);
+                    stmt.setString(1, message.getSender());
+                    stmt.setString(2, member);
+                    stmt.setInt(3, message.getToGroup());
+                    stmt.setString(4, message.getContent());
+                    stmt.setTimestamp(5, Timestamp.valueOf(message.getSentTime()));
+                    stmt.setTimestamp(6, null);
+                    stmt.executeUpdate();
+                    stmt.close();
+                }
+            }
+        } catch (SQLException throwables) {
+            throwables.printStackTrace();
+        }
     }
 
 
