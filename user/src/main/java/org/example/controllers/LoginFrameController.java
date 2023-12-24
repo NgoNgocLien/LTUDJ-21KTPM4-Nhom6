@@ -2,9 +2,10 @@ package org.example.controllers;
 
 import org.example.utilities.Constants;
 import org.example.utilities.DatabaseHandler;
+import org.example.views.ErrorMessage;
 import org.example.views.LoginFrame;
+import org.example.views.RegisterFrame;
 
-import javax.sound.sampled.LineListener;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.*;
@@ -36,6 +37,17 @@ public class LoginFrameController {
         this.forgotPasswordLine.addMouseListener(new LineListener(this.forgotPasswordLine));
     }
 
+    private boolean checkUsername(String username) {
+        String regex = "^[a-z0-9._-]{1,}$";
+        return username.matches(regex);
+    }
+
+    private boolean checkPassword(String password) {
+        // password can contain any special character
+        String regex = "^[a-zA-Z0-9!@#$%^&*()_+\\-=\\[\\]{};':\"\\\\|,.<>/?]{8,}$";
+        return password.matches(regex);
+    }
+
     private class InputFieldListener implements KeyListener {
         private JTextField inputField;
 
@@ -44,22 +56,23 @@ public class LoginFrameController {
         }
 
         @Override
-        public void keyTyped(KeyEvent e) {
-
-        }
-
-        @Override
         public void keyPressed(KeyEvent e) {
             if (e.getKeyCode() == KeyEvent.VK_ENTER) {
-                if (inputField == usernameField) {
+                String username = usernameField.getText();
+                String password = new String(passwordField.getPassword());
+                if (inputField == usernameField && !username.isEmpty()) {
                     passwordField.requestFocus();
-                } else if (inputField == passwordField) {
+                }
+                else if (inputField == passwordField && !password.isEmpty()) {
                     loginButton.doClick();
                 }
             }
         }
 
         // Không để làm gì nhưng không xóa vì KeyListener bắt buộc phải override
+        @Override
+        public void keyTyped(KeyEvent e) {}
+
         @Override
         public void keyReleased(KeyEvent e) {}
     }
@@ -70,6 +83,22 @@ public class LoginFrameController {
             // TODO: login
             String username = usernameField.getText();
             String password = new String(passwordField.getPassword());
+
+            // check input fields
+            if (username.isEmpty()) {
+                usernameField.requestFocus();
+                new ErrorMessage(LF, "Please enter your username");
+                return;
+            }
+            else if (password.isEmpty()) {
+                passwordField.requestFocus();
+                new ErrorMessage(LF, "Please enter your password");
+                return;
+            }
+            else if (!checkUsername(username) || !checkPassword(password)) {
+                new ErrorMessage(LF, "Invalid username or password");
+                return;
+            }
 
             // open jdialog to show data
             JOptionPane.showMessageDialog(LF, "Username: " + username + "\nPassword: " + password);
@@ -86,9 +115,15 @@ public class LoginFrameController {
         @Override
         public void mouseClicked(MouseEvent e) {
             if (e.getSource() == registerLine) {
-                // TODO: open register frame
+                // close login frame
+                LF.dispose();
+                // open register frame
+                RegisterFrame RF = new RegisterFrame();
+                RegisterFrameController RFC = new RegisterFrameController(RF, DB);
             } else if (e.getSource() == forgotPasswordLine) {
                 // TODO: open forgot password frame
+
+
             }
         }
 

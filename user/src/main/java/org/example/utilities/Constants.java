@@ -20,6 +20,7 @@ public class Constants {
     public static final Color COLOR_ICON_PRIMARY = Color.WHITE;
     public static final Color COLOR_ICON_SECONDARY = new Color(218, 218, 218);
     public static final Color COLOR_ONLINE = new Color(99, 212, 113);
+    public static final Color COLOR_ERROR = new Color(224, 25, 25);
 
     // FONT
     private static final String FONT_NAME = "Segoe UI";

@@ -3,6 +3,7 @@ package org.example.views;
 import jiconfont.icons.font_awesome.FontAwesome;
 import jiconfont.swing.IconFontSwing;
 import org.example.controllers.LoginFrameController;
+import org.example.controllers.RegisterFrameController;
 import org.example.utilities.Constants;
 
 import javax.swing.*;
@@ -24,6 +25,7 @@ public class RegisterFrame extends JFrame {
     private JComboBox<String> yearComboBox;
     private JCheckBox termCheckBox;
     private JButton registerButton;
+    private JLabel loginLine;
 
     public RegisterFrame() {
         try {
@@ -34,7 +36,7 @@ public class RegisterFrame extends JFrame {
 
         setBackground(Constants.COLOR_BACKGROUND);
         setLayout(new BoxLayout(getContentPane(), BoxLayout.Y_AXIS));
-        setPreferredSize(new Dimension(820, 640));
+        setPreferredSize(new Dimension(820, 720));
         setResizable(false);
         setLocationRelativeTo(null);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -168,7 +170,7 @@ public class RegisterFrame extends JFrame {
         genderComboBox = new JComboBox<>(genders);
         genderComboBox.setFont(Constants.FONT_NORMAL);
         genderComboBox.setAlignmentX(Component.CENTER_ALIGNMENT);
-        genderComboBox.setMaximumSize(new Dimension(298, 39));
+        genderComboBox.setMaximumSize(new Dimension(298, 38));
 
         JPanel genderPanel = new JPanel();
         genderPanel.setLayout(new BoxLayout(genderPanel, BoxLayout.X_AXIS));
@@ -180,13 +182,13 @@ public class RegisterFrame extends JFrame {
         String[] days = new String[32];
         days[0] = "Day";
         for (int i = 1; i < 31; i++) {
-            days[i] = Integer.toString(i + 1);
+            days[i] = Integer.toString(i);
         }
 
         String[] months = new String[13];
         months[0] = "Month";
         for (int i = 1; i < 13; i++) {
-            months[i] = Integer.toString(i + 1);
+            months[i] = Integer.toString(i);
         }
 
         String[] years = new String[100];
@@ -205,18 +207,17 @@ public class RegisterFrame extends JFrame {
         monthComboBox = new JComboBox<>(months);
         yearComboBox = new JComboBox<>(years);
 
-        dayComboBox.setPreferredSize(new Dimension(99, 39));
+        dayComboBox.setMaximumSize(new Dimension(98, 38));
         dayComboBox.setFont(Constants.FONT_NORMAL);
-        monthComboBox.setPreferredSize(new Dimension(99, 39));
+        monthComboBox.setMaximumSize(new Dimension(98, 38));
         monthComboBox.setFont(Constants.FONT_NORMAL);
-        yearComboBox.setPreferredSize(new Dimension(99, 39));
+        yearComboBox.setMaximumSize(new Dimension(98, 38));
         yearComboBox.setFont(Constants.FONT_NORMAL);
 
         JPanel birthdayPanel = new JPanel();
         birthdayPanel.setLayout(new BoxLayout(birthdayPanel, BoxLayout.X_AXIS));
         birthdayPanel.setAlignmentX(Component.CENTER_ALIGNMENT);
-//        birthdayPanel.setBorder(BorderFactory.createEmptyBorder(0, 0, 0, 0));
-        birthdayPanel.setMaximumSize(new Dimension(300, 40));
+        birthdayPanel.setPreferredSize(new Dimension(300, 40));
         birthdayPanel.add(dayComboBox);
         birthdayPanel.add(monthComboBox);
         birthdayPanel.add(yearComboBox);
@@ -248,39 +249,11 @@ public class RegisterFrame extends JFrame {
         registerButton.setMaximumSize(new Dimension(100, 40));
         registerButton.setBorder(BorderFactory.createEmptyBorder(10, 0, 10, 0));
 
-//        add(titleLabel);
-
-//        add(fullnameLabel);
-//        add(fullnameField);
-//        add(Box.createRigidArea(new Dimension(0, 10)));
-//
-//        add(usernameLabel);
-//        add(usernameField);
-//        add(Box.createRigidArea(new Dimension(0, 10)));
-//
-//        add(passwordLabel);
-//        add(passwordField);
-//        add(Box.createRigidArea(new Dimension(0, 10)));
-//
-//        add(confirmPasswordLabel);
-//        add(confirmPasswordField);
-//        add(Box.createRigidArea(new Dimension(0, 10)));
-//
-//        add(emailLabel);
-//        add(emailField);
-//        add(Box.createRigidArea(new Dimension(0, 10)));
-//
-//        add(addressLabel);
-//        add(addressField);
-//        add(Box.createRigidArea(new Dimension(0, 10)));
-//
-//        add(genderLabel);
-//        add(genderComboBox);
-//        add(Box.createRigidArea(new Dimension(0, 10)));
-//
-//        add(birthdayLabel);
-//        add(birthdayPanel);
-//        add(Box.createRigidArea(new Dimension(0, 10)));
+        // login line
+        loginLine = new JLabel("Already have an account? Log in");
+        loginLine.setFont(Constants.FONT_SMALL);
+        loginLine.setAlignmentX(Component.CENTER_ALIGNMENT);
+        loginLine.setBorder(BorderFactory.createEmptyBorder(0, 0, 0, 0));
 
         container.add(leftPanel);
         container.add(rightPanel);
@@ -295,6 +268,9 @@ public class RegisterFrame extends JFrame {
         add(Box.createRigidArea(new Dimension(0, 10)));
 
         add(registerButton);
+        add(Box.createRigidArea(new Dimension(0, 40)));
+
+        add(loginLine);
         add(Box.createRigidArea(new Dimension(0, 40)));
 
         pack();
@@ -313,9 +289,10 @@ public class RegisterFrame extends JFrame {
     public JComboBox<String> getYearComboBox() { return yearComboBox; }
     public JCheckBox getTermCheckBox() { return termCheckBox; }
     public JButton getRegisterButton() { return registerButton; }
+    public JLabel getLoginLine() { return loginLine; }
 
     public static void main(String[] args) {
-        RegisterFrame lf = new RegisterFrame();
-//        LoginFrameController lfc = new LoginFrameController(lf, null);
+        RegisterFrame rf = new RegisterFrame();
+        RegisterFrameController rfc = new RegisterFrameController(rf, null);
     }
 }
