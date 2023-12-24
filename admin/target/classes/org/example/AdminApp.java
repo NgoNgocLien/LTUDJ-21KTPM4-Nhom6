@@ -5,8 +5,6 @@ import java.awt.*;
 import javax.swing.*;
 import java.io.IOException;
 import java.net.Socket;
-import java.time.LocalDate;
-import java.time.ZoneId;
 import java.util.*;
 import java.text.*;
 
@@ -104,7 +102,10 @@ public class AdminApp extends javax.swing.JFrame {
         resetButton3 = new javax.swing.JButton();
         //user manage
         userMainPanel = new javax.swing.JPanel();
-        userScrollPane = new javax.swing.JScrollPane();
+        userTableMainPanel = new javax.swing.JPanel();
+        userTableScrollPanel = new javax.swing.JScrollPane();
+        userDetailTableScrollPanel = new javax.swing.JScrollPane();
+        userScrollPanel = new javax.swing.JScrollPane();
         userTitle = new javax.swing.JLabel();
         userTitle1 = new javax.swing.JLabel();
         userTitle2 = new javax.swing.JLabel();
@@ -116,7 +117,36 @@ public class AdminApp extends javax.swing.JFrame {
         viewAllUserButton = new javax.swing.JButton();
         addNewUserButton = new javax.swing.JButton();
         userTable = new javax.swing.JTable();
-
+        userDetailTable = new javax.swing.JTable();
+        userTitle4 = new javax.swing.JLabel();
+        userTitle5 = new javax.swing.JLabel();
+        userTitle6 = new javax.swing.JLabel();
+        userTitle7 = new javax.swing.JLabel();
+        userTitle8 = new javax.swing.JLabel();
+        userTitle9 = new javax.swing.JLabel();
+        userTitle10 = new javax.swing.JLabel();
+        userTitle11 = new javax.swing.JLabel();
+        userTitle12 = new javax.swing.JLabel();
+        userTitle13 = new javax.swing.JLabel();
+        userNameInput = new javax.swing.JTextField();
+        fullNameInput = new javax.swing.JTextField();
+        pwdInput = new javax.swing.JTextField();
+        addressInput = new javax.swing.JTextField();
+        birthDateInput = new javax.swing.JTextField();
+        genderInput = new javax.swing.JTextField();
+        emailInput = new javax.swing.JTextField();
+        registrationTimeInput = new javax.swing.JTextField();
+        accountStatusInput = new javax.swing.JTextField();
+        updateUserButton = new javax.swing.JButton();
+        deleteUserButton = new javax.swing.JButton();
+        disableEnableUserButton = new javax.swing.JButton();
+        updatePasswordButton = new javax.swing.JButton();
+        userDetailPanel = new javax.swing.JPanel();
+        userPanel = new javax.swing.JPanel();
+        historyLoginTable = new javax.swing.JTable();
+        listFriendTable = new javax.swing.JTable();
+        historyLoginTableScrollPane = new javax.swing.JScrollPane();
+        listFriendTableScrollPane = new javax.swing.JScrollPane();
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
         navbar.setBackground(new java.awt.Color(23, 70, 162));
@@ -616,6 +646,11 @@ public class AdminApp extends javax.swing.JFrame {
         getContentPane().add(groupMainPanel, java.awt.BorderLayout.CENTER);
 
         // MANAGE USER
+
+        userMainPanel.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
+        userMainPanel.setPreferredSize(new java.awt.Dimension(1440, 2079));
+        userMainPanel.setLayout(new java.awt.BorderLayout());
+
         userTitle1.setFont(new java.awt.Font("Arial", 1, 14)); // NOI18N
         userTitle1.setText("Full name");
 
@@ -687,33 +722,33 @@ public class AdminApp extends javax.swing.JFrame {
         userTable.setSelectionMode(javax.swing.ListSelectionModel.SINGLE_SELECTION);
         userTable.getTableHeader().setResizingAllowed(false);
         userTable.getTableHeader().setReorderingAllowed(false);
-//        userTable.addMouseListener(new java.awt.event.MouseAdapter() {
-//            public void mouseClicked(java.awt.event.MouseEvent evt) {
-//                try {
-//                    groupTableMouseClicked(evt);
-//                } catch (IOException | ClassNotFoundException e) {
-//                    throw new RuntimeException(e);
-//                }
-//            }
-//        });
-        userScrollPane.setViewportView(userTable);
+        userTable.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                try {
+                    userTableMouseClicked(evt);
+                } catch (IOException | ClassNotFoundException e) {
+                    throw new RuntimeException(e);
+                }
+            }
+        });
+        userTableScrollPanel.setViewportView(userTable);
         if (userTable.getColumnModel().getColumnCount() > 0) {
             userTable.getColumnModel().getColumn(0).setResizable(false);
             userTable.getColumnModel().getColumn(0).setPreferredWidth(100);
             userTable.getColumnModel().getColumn(1).setResizable(false);
             userTable.getColumnModel().getColumn(1).setPreferredWidth(200);
             userTable.getColumnModel().getColumn(2).setResizable(false);
-            userTable.getColumnModel().getColumn(2).setPreferredWidth(200);
+            userTable.getColumnModel().getColumn(2).setPreferredWidth(250);
             userTable.getColumnModel().getColumn(3).setResizable(false);
-            userTable.getColumnModel().getColumn(3).setPreferredWidth(500);
+            userTable.getColumnModel().getColumn(3).setPreferredWidth(600);
             userTable.getColumnModel().getColumn(4).setResizable(false);
             userTable.getColumnModel().getColumn(4).setPreferredWidth(150);
             userTable.getColumnModel().getColumn(5).setResizable(false);
-            userTable.getColumnModel().getColumn(5).setPreferredWidth(150);
+            userTable.getColumnModel().getColumn(5).setPreferredWidth(100);
             userTable.getColumnModel().getColumn(6).setResizable(false);
             userTable.getColumnModel().getColumn(6).setPreferredWidth(300);
             userTable.getColumnModel().getColumn(7).setResizable(false);
-            userTable.getColumnModel().getColumn(7).setPreferredWidth(200);
+            userTable.getColumnModel().getColumn(7).setPreferredWidth(180);
         }
 
         viewAllUserButton.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
@@ -750,17 +785,266 @@ public class AdminApp extends javax.swing.JFrame {
         userTitle.setForeground(new java.awt.Color(23, 70, 162));
         userTitle.setText("MANAGE USER");
 
-        javax.swing.GroupLayout userMainPanelLayout = new javax.swing.GroupLayout(userMainPanel);
-        userMainPanel.setLayout(userMainPanelLayout);
-        userMainPanelLayout.setHorizontalGroup(
-                userMainPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                        .addGroup(userMainPanelLayout.createSequentialGroup()
+        userTitle4.setFont(new java.awt.Font("Arial", 1, 18)); // NOI18N
+        userTitle4.setForeground(new java.awt.Color(23, 70, 162));
+        userTitle4.setText("USER DETAILS");
+
+        userDetailTable.setFont(new java.awt.Font("Arial", 0, 12)); // NOI18N
+        userDetailTable.setModel(new javax.swing.table.DefaultTableModel(
+                new Object [][] {
+                        {null, null, null, null, null, null, null, null, null}
+                },
+                new String [] {
+                        "Username", "Password", "Full name", "Address", "Birth date", "Gender", "Email", "Registration time", "Account status"
+                }
+        ) {
+            Class[] types = new Class [] {
+                    java.lang.Object.class, java.lang.Object.class, java.lang.Object.class, java.lang.Object.class, java.lang.Object.class, java.lang.Object.class, java.lang.Object.class, java.lang.Object.class, java.lang.Object.class
+            };
+            boolean[] canEdit = new boolean [] {
+                    false, false, true, true, true, true, true, false, false
+            };
+
+            @Override
+            public boolean isCellEditable(int rowIndex, int columnIndex) {
+                return canEdit[columnIndex];
+            }
+
+            @Override
+            public Class getColumnClass(int columnIndex) {
+                return types[columnIndex];
+            }
+        });
+        userDetailTable.setRowHeight(30);
+        userDetailTable.setSelectionMode(javax.swing.ListSelectionModel.SINGLE_SELECTION);
+        userDetailTable.getTableHeader().setResizingAllowed(false);
+        userDetailTable.getTableHeader().setReorderingAllowed(false);
+        userDetailTableScrollPanel.setViewportView(userDetailTable);
+        if (userDetailTable.getColumnModel().getColumnCount() > 0) {
+            userDetailTable.getColumnModel().getColumn(0).setResizable(false);
+            userDetailTable.getColumnModel().getColumn(0).setPreferredWidth(200);
+            userDetailTable.getColumnModel().getColumn(1).setResizable(false);
+            userDetailTable.getColumnModel().getColumn(1).setPreferredWidth(200);
+            userDetailTable.getColumnModel().getColumn(2).setResizable(false);
+            userDetailTable.getColumnModel().getColumn(2).setPreferredWidth(250);
+            userDetailTable.getColumnModel().getColumn(3).setResizable(false);
+            userDetailTable.getColumnModel().getColumn(3).setPreferredWidth(700);
+            userDetailTable.getColumnModel().getColumn(4).setResizable(false);
+            userDetailTable.getColumnModel().getColumn(4).setPreferredWidth(150);
+            userDetailTable.getColumnModel().getColumn(5).setResizable(false);
+            userDetailTable.getColumnModel().getColumn(5).setPreferredWidth(100);
+            userDetailTable.getColumnModel().getColumn(6).setResizable(false);
+            userDetailTable.getColumnModel().getColumn(6).setPreferredWidth(400);
+            userDetailTable.getColumnModel().getColumn(7).setResizable(false);
+            userDetailTable.getColumnModel().getColumn(7).setPreferredWidth(210);
+            userDetailTable.getColumnModel().getColumn(8).setResizable(false);
+            userDetailTable.getColumnModel().getColumn(8).setPreferredWidth(180);
+        }
+
+        updateUserButton.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
+        updateUserButton.setText("Update user");
+        updateUserButton.setFocusable(false);
+        updateUserButton.setMargin(new java.awt.Insets(2, 5, 3, 5));
+        updateUserButton.setPreferredSize(new java.awt.Dimension(57, 35));
+        updateUserButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                try {
+                    updateUserButtonActionPerformed(evt);
+                } catch (IOException | ClassNotFoundException e) {
+                    throw new RuntimeException(e);
+                }
+            }
+        });
+
+        deleteUserButton.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
+        deleteUserButton.setText("Delete user");
+        deleteUserButton.setFocusable(false);
+        deleteUserButton.setMargin(new java.awt.Insets(2, 5, 3, 5));
+        deleteUserButton.setPreferredSize(new java.awt.Dimension(57, 35));
+        deleteUserButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                try {
+                    deleteUserButtonActionPerformed(evt);
+                } catch (IOException | ClassNotFoundException e) {
+                    throw new RuntimeException(e);
+                }
+            }
+        });
+
+        disableEnableUserButton.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
+        disableEnableUserButton.setText("Disable / Enable user");
+        disableEnableUserButton.setFocusable(false);
+        disableEnableUserButton.setMargin(new java.awt.Insets(2, 5, 3, 5));
+        disableEnableUserButton.setPreferredSize(new java.awt.Dimension(57, 35));
+        disableEnableUserButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                try {
+                    disableEnableUserButtonActionPerformed(evt);
+                } catch (IOException | ClassNotFoundException e) {
+                    throw new RuntimeException(e);
+                }
+            }
+        });
+
+        updatePasswordButton.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
+        updatePasswordButton.setText("Update password");
+        updatePasswordButton.setFocusable(false);
+        updatePasswordButton.setMargin(new java.awt.Insets(2, 5, 3, 5));
+        updatePasswordButton.setPreferredSize(new java.awt.Dimension(57, 35));
+
+        historyLoginTable.setFont(new java.awt.Font("Arial", 0, 12)); // NOI18N
+        historyLoginTable.setModel(new javax.swing.table.DefaultTableModel(
+                new Object [][] {
+                        {null, null, null},
+                        {null, null, null},
+                        {null, null, null},
+                        {null, null, null},
+                        {null, null, null},
+                        {null, null, null}
+                },
+                new String [] {
+                        "No", "Login time", "Logout time"
+                }
+        ) {
+            Class[] types = new Class [] {
+                    java.lang.Integer.class, java.lang.Object.class, java.lang.Object.class
+            };
+            boolean[] canEdit = new boolean [] {
+                    false, false, false
+            };
+
+            public Class getColumnClass(int columnIndex) {
+                return types [columnIndex];
+            }
+
+            public boolean isCellEditable(int rowIndex, int columnIndex) {
+                return canEdit [columnIndex];
+            }
+        });
+
+        historyLoginTable.setRowHeight(30);
+        historyLoginTable.setSelectionMode(javax.swing.ListSelectionModel.SINGLE_SELECTION);
+        historyLoginTable.setSelectionMode(javax.swing.ListSelectionModel.SINGLE_SELECTION);
+        historyLoginTable.getTableHeader().setResizingAllowed(false);
+        historyLoginTable.getTableHeader().setReorderingAllowed(false);
+
+        historyLoginTableScrollPane.setViewportView(historyLoginTable);
+        if (historyLoginTable.getColumnModel().getColumnCount() > 0) {
+            historyLoginTable.getColumnModel().getColumn(0).setResizable(false);
+            historyLoginTable.getColumnModel().getColumn(0).setPreferredWidth(100);
+            historyLoginTable.getColumnModel().getColumn(1).setResizable(false);
+            historyLoginTable.getColumnModel().getColumn(1).setPreferredWidth(200);
+            historyLoginTable.getColumnModel().getColumn(2).setResizable(false);
+            historyLoginTable.getColumnModel().getColumn(2).setPreferredWidth(200);
+        }
+
+        listFriendTable.setFont(new java.awt.Font("Arial", 0, 12)); // NOI18N
+        listFriendTable.setModel(new javax.swing.table.DefaultTableModel(
+                new Object [][] {
+                        {null, null, null},
+                        {null, null, null},
+                        {null, null, null},
+                        {null, null, null},
+                        {null, null, null},
+                        {null, null, null}
+                },
+                new String [] {
+                        "No", "Username", "Full name"
+                }
+        ) {
+            Class[] types = new Class [] {
+                    java.lang.Integer.class, java.lang.Object.class, java.lang.Object.class
+            };
+            boolean[] canEdit = new boolean [] {
+                    false, false, false
+            };
+
+            public Class getColumnClass(int columnIndex) {
+                return types [columnIndex];
+            }
+
+            public boolean isCellEditable(int rowIndex, int columnIndex) {
+                return canEdit [columnIndex];
+            }
+        });
+        listFriendTable.setRowHeight(30);
+        listFriendTable.setSelectionMode(javax.swing.ListSelectionModel.SINGLE_SELECTION);
+        listFriendTable.setSelectionMode(javax.swing.ListSelectionModel.SINGLE_SELECTION);
+        listFriendTable.getTableHeader().setResizingAllowed(false);
+        listFriendTable.getTableHeader().setReorderingAllowed(false);
+        listFriendTableScrollPane.setViewportView(listFriendTable);
+
+        if (listFriendTable.getColumnModel().getColumnCount() > 0) {
+            listFriendTable.getColumnModel().getColumn(0).setResizable(false);
+            listFriendTable.getColumnModel().getColumn(0).setPreferredWidth(100);
+            listFriendTable.getColumnModel().getColumn(1).setResizable(false);
+            listFriendTable.getColumnModel().getColumn(1).setPreferredWidth(200);
+            listFriendTable.getColumnModel().getColumn(2).setResizable(false);
+            listFriendTable.getColumnModel().getColumn(2).setPreferredWidth(300);
+        }
+
+        userTableMainPanel.setMaximumSize(new java.awt.Dimension(32767, 600));
+        userTableMainPanel.setPreferredSize(new java.awt.Dimension(2276, 600));
+        userTableMainPanel.setRequestFocusEnabled(false);
+
+        userDetailPanel.setPreferredSize(new java.awt.Dimension(2276, 800));
+
+        javax.swing.JPanel buttonContainer = new javax.swing.JPanel();
+        buttonContainer.setLayout(new javax.swing.BoxLayout(buttonContainer, javax.swing.BoxLayout.X_AXIS));
+        buttonContainer.add(updateUserButton);
+        buttonContainer.add(javax.swing.Box.createHorizontalStrut(20));
+        buttonContainer.add(deleteUserButton);
+        buttonContainer.add(javax.swing.Box.createHorizontalStrut(20));
+        buttonContainer.add(disableEnableUserButton);
+        buttonContainer.add(javax.swing.Box.createHorizontalStrut(20));
+        buttonContainer.add(updatePasswordButton);
+
+        javax.swing.GroupLayout userDetailPanelLayout = new javax.swing.GroupLayout(userDetailPanel);
+        userDetailPanel.setLayout(userDetailPanelLayout);
+        userDetailPanelLayout.setHorizontalGroup(
+                userDetailPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGroup(userDetailPanelLayout.createSequentialGroup()
                                 .addGap(70, 70, 70)
-                                .addGroup(userMainPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                .addComponent(userTitle4)
+                                .addGroup(userDetailPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                        .addComponent(userDetailTableScrollPanel, javax.swing.GroupLayout.PREFERRED_SIZE, 1100, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addComponent(buttonContainer)
+                                        .addGroup(userDetailPanelLayout.createSequentialGroup()
+                                                .addComponent(historyLoginTableScrollPane, javax.swing.GroupLayout.PREFERRED_SIZE, 300, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                                .addGap(70, 70, 70)
+                                                .addComponent(listFriendTableScrollPane, javax.swing.GroupLayout.PREFERRED_SIZE, 300, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        )
+                                )
+                                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        )
+        );
+
+        userDetailPanelLayout.setVerticalGroup(
+                userDetailPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGroup(userDetailPanelLayout.createSequentialGroup()
+                                .addGap(20, 20, 20)
+                                .addComponent(userTitle4)
+                                .addGap(18, 18, 18)
+                                .addComponent(userDetailTableScrollPanel, javax.swing.GroupLayout.PREFERRED_SIZE, 48, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(buttonContainer)
+                                .addGroup(userDetailPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                        .addComponent(historyLoginTableScrollPane, javax.swing.GroupLayout.PREFERRED_SIZE, 203, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addComponent(listFriendTableScrollPane, javax.swing.GroupLayout.PREFERRED_SIZE, 203, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        )
+        );
+
+        javax.swing.GroupLayout userTableMainPanelLayout = new javax.swing.GroupLayout(userTableMainPanel);
+        userTableMainPanel.setLayout(userTableMainPanelLayout);
+        userTableMainPanelLayout.setHorizontalGroup(
+                userTableMainPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGroup(userTableMainPanelLayout.createSequentialGroup()
+                                .addGap(70, 70, 70)
+                                .addGroup(userTableMainPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                         .addComponent(userTitle)
-                                        .addGroup(userMainPanelLayout.createSequentialGroup()
-                                                .addGroup(userMainPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                                        .addGroup(userMainPanelLayout.createSequentialGroup()
+                                        .addGroup(userTableMainPanelLayout.createSequentialGroup()
+                                                .addGroup(userTableMainPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                                        .addGroup(userTableMainPanelLayout.createSequentialGroup()
                                                                 .addComponent(searchFullNameInput, javax.swing.GroupLayout.PREFERRED_SIZE, 160, javax.swing.GroupLayout.PREFERRED_SIZE)
                                                                 .addGap(30, 30, 30)
                                                                 .addComponent(searchUserNameInput, javax.swing.GroupLayout.PREFERRED_SIZE, 160, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -772,29 +1056,30 @@ public class AdminApp extends javax.swing.JFrame {
                                                                 .addComponent(viewAllUserButton, javax.swing.GroupLayout.PREFERRED_SIZE, 123, javax.swing.GroupLayout.PREFERRED_SIZE)
                                                                 .addGap(30, 30, 30)
                                                                 .addComponent(addNewUserButton, javax.swing.GroupLayout.PREFERRED_SIZE, 123, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                                        .addGroup(userMainPanelLayout.createSequentialGroup()
+                                                        .addGroup(userTableMainPanelLayout.createSequentialGroup()
                                                                 .addComponent(userTitle1)
                                                                 .addGap(120, 120, 120)
                                                                 .addComponent(userTitle2)
                                                                 .addGap(120, 120, 120)
                                                                 .addComponent(userTitle3))
-                                                        .addComponent(userScrollPane, javax.swing.GroupLayout.PREFERRED_SIZE, 1100, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                                        .addComponent(userTableScrollPanel, javax.swing.GroupLayout.PREFERRED_SIZE, 1100, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                                        )
                                                 .addGap(0, 0, Short.MAX_VALUE)))
                                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
-        userMainPanelLayout.setVerticalGroup(
-                userMainPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                        .addGroup(userMainPanelLayout.createSequentialGroup()
+        userTableMainPanelLayout.setVerticalGroup(
+                userTableMainPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGroup(userTableMainPanelLayout.createSequentialGroup()
                                 .addGap(40, 40, 40)
                                 .addComponent(userTitle)
                                 .addGap(30, 30, 30)
-                                .addGroup(userMainPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                .addGroup(userTableMainPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                                         .addComponent(userTitle1)
                                         .addComponent(userTitle2)
                                         .addComponent(userTitle3))
                                 .addGap(5, 5, 5)
-                                .addGroup(userMainPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                        .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, userMainPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                .addGroup(userTableMainPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                        .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, userTableMainPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                                                 .addComponent(searchFullNameInput, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                                                 .addComponent(searchUserNameInput, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                                                 .addComponent(searchActiveDropDown, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -802,13 +1087,30 @@ public class AdminApp extends javax.swing.JFrame {
                                                 .addComponent(viewAllUserButton, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                                                 .addComponent(addNewUserButton, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
                                 .addGap(18, 18, 18)
-                                .addGroup(userMainPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                        .addComponent(userScrollPane, javax.swing.GroupLayout.PREFERRED_SIZE, 320, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addGroup(userTableMainPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                        .addComponent(userTableScrollPanel, javax.swing.GroupLayout.PREFERRED_SIZE, 320, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        )
                                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
+        userScrollPanel.setBorder(null);
+        userScrollPanel.setHorizontalScrollBarPolicy(javax.swing.ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
+        userScrollPanel.setMaximumSize(new java.awt.Dimension(1440, 32767));
+        userScrollPanel.setPreferredSize(new java.awt.Dimension(1440, 4000));
+
+        userPanel.setFocusable(false);
+        userPanel.setMaximumSize(new java.awt.Dimension(1440, 3000));
+        userPanel.setPreferredSize(new java.awt.Dimension(1440, 1180));
+        userPanel.setRequestFocusEnabled(false);
+        userPanel.setLayout(new javax.swing.BoxLayout(userPanel, javax.swing.BoxLayout.Y_AXIS));
+
+        userPanel.add(userTableMainPanel);
+
+        userScrollPanel.setViewportView(userPanel);
+        userMainPanel.add(userScrollPanel, java.awt.BorderLayout.CENTER);
         getContentPane().add(userMainPanel, java.awt.BorderLayout.CENTER);
 
+        // DATA MANAGEMENT
         dataMainPanel.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
         dataMainPanel.setPreferredSize(new java.awt.Dimension(1440, 2079));
         dataMainPanel.setLayout(new java.awt.BorderLayout());
@@ -1744,6 +2046,191 @@ public class AdminApp extends javax.swing.JFrame {
             }
         }
     }
+
+    private void userTableMouseClicked(java.awt.event.MouseEvent evt) throws IOException, ClassNotFoundException {
+        userPanel.add(userDetailPanel);
+        DefaultTableModel userDetailModel = (DefaultTableModel) userDetailTable.getModel();
+        userDetailModel.setRowCount(0);
+        int index = userTable.getSelectedRow();
+        TableModel model = userTable.getModel();
+        String username = model.getValueAt(index, 1).toString();
+        Object[][] user = GetUserByUsername.request(username, socket);
+
+        for (Object[] row : user) {
+            userDetailModel.addRow(row);
+        }
+
+        JTableHeader headerDetail = userDetailTable.getTableHeader();
+        headerDetail.setBackground(blue);
+        headerDetail.setForeground(Color.WHITE);
+
+        ((DefaultTableCellRenderer)userDetailTable.getDefaultRenderer(String.class)).setHorizontalAlignment(SwingConstants.CENTER);
+        userDetailTable.setPreferredScrollableViewportSize(userDetailTable.getPreferredSize());
+
+        originalEmail = model.getValueAt(0, 6).toString();
+
+        DefaultTableModel historyModel = (DefaultTableModel) historyLoginTable.getModel();
+        historyModel.setRowCount(0);
+
+        Object[][] history = GetUserHistoryLogin.request(username, socket);
+        for (Object[] row : history) {
+            historyModel.addRow(row);
+        }
+
+        JTableHeader headerHistory = historyLoginTable.getTableHeader();
+        headerHistory.setBackground(blue);
+        headerHistory.setForeground(Color.WHITE);
+
+        ((DefaultTableCellRenderer)historyLoginTable.getDefaultRenderer(String.class)).setHorizontalAlignment(SwingConstants.CENTER);
+        ((DefaultTableCellRenderer)historyLoginTable.getDefaultRenderer(Integer.class)).setHorizontalAlignment(SwingConstants.CENTER);
+        historyLoginTable.setPreferredScrollableViewportSize(historyLoginTable.getPreferredSize());
+
+        DefaultTableModel friendModel = (DefaultTableModel) listFriendTable.getModel();
+        friendModel.setRowCount(0);
+
+        Object[][] friend = GetUserFriends.request(username, socket);
+        if (friend.length == 0 && friend[0][2].equals("No friends found")) {
+            friendModel.addRow(new Object[]{"", "", "No friends found"});
+        } else {
+            for (Object[] row : friend) {
+                friendModel.addRow(row);
+            }
+        }
+
+        JTableHeader headerFriend = listFriendTable.getTableHeader();
+        headerFriend.setBackground(blue);
+        headerFriend.setForeground(Color.WHITE);
+
+        ((DefaultTableCellRenderer)listFriendTable.getDefaultRenderer(String.class)).setHorizontalAlignment(SwingConstants.CENTER);
+        ((DefaultTableCellRenderer)listFriendTable.getDefaultRenderer(Integer.class)).setHorizontalAlignment(SwingConstants.CENTER);
+        listFriendTable.setPreferredScrollableViewportSize(listFriendTable.getPreferredSize());
+    }
+
+    private void updateUserButtonActionPerformed(java.awt.event.ActionEvent evt) throws IOException, ClassNotFoundException {
+        DefaultTableModel model = (DefaultTableModel) userDetailTable.getModel();
+        String username = model.getValueAt(0, 0).toString();
+        String fullname = model.getValueAt(0, 2).toString();
+        String address = model.getValueAt(0, 3).toString();
+        String birthdate = model.getValueAt(0, 4).toString();
+        String gender = model.getValueAt(0, 5).toString();
+        String email = model.getValueAt(0, 6).toString();
+
+        if(email.equals(originalEmail)){
+            Boolean success = UpdateUser.request(username, fullname, address, birthdate, gender, email, socket);
+            if (success) {
+                JOptionPane.showMessageDialog(null, "Update successfully.");
+            } else {
+                JOptionPane.showMessageDialog(null, "Failed to update user.");
+            }
+
+            model.setRowCount(0);
+            Object[][] user = GetUserByUsername.request(username, socket);
+
+            for (Object[] row : user) {
+                model.addRow(row);
+            }
+        }
+        else{
+            Boolean check = false;
+            Object[][] emails = GetAllEmail.request(username, socket);
+            for (Object[] row : emails) {
+                System.out.println(row[0].toString());
+                if(email.equals(row[0])){
+                    check = true;
+                    break;
+                }
+            }
+            if(check){
+                JOptionPane.showMessageDialog(null, "Failed to update user. Email already exists.");
+            }
+            else{
+                Boolean success = UpdateUser.request(username, fullname, address, birthdate, gender, email, socket);
+                if (success) {
+                    JOptionPane.showMessageDialog(null, "Update successfully.");
+                } else {
+                    JOptionPane.showMessageDialog(null, "Failed to update user.");
+                }
+
+            }
+            model.setRowCount(0);
+            Object[][] user = GetUserByUsername.request(username, socket);
+
+            for (Object[] row : user) {
+                model.addRow(row);
+            }
+        }
+    }
+
+    private void deleteUserButtonActionPerformed(java.awt.event.ActionEvent evt) throws IOException, ClassNotFoundException {
+        int dialogResult = JOptionPane.showConfirmDialog(null, "Are you sure to delete this user?", "Confirmation", JOptionPane.YES_NO_OPTION);
+        if (dialogResult == JOptionPane.YES_OPTION){
+            DefaultTableModel model = (DefaultTableModel) userDetailTable.getModel();
+            String username = model.getValueAt(0, 0).toString();
+            Boolean success = DeleteUser.request(username, socket);
+            if (success) {
+                JOptionPane.showMessageDialog(null, "Delete successfully.");
+                DefaultTableModel userModel = (DefaultTableModel) userTable.getModel();
+                userModel.setRowCount(0);
+
+                Object[][] data = GetAllUser.request(socket);
+                for (Object[] row : data) {
+                    userModel.addRow(row);
+                }
+                userPanel.remove(userDetailPanel);
+                userPanel.revalidate();
+                userPanel.repaint();
+            } else {
+                JOptionPane.showMessageDialog(null, "Failed to delete user.");
+            }
+
+        }
+    }
+
+    private void disableEnableUserButtonActionPerformed(java.awt.event.ActionEvent evt) throws IOException, ClassNotFoundException {
+        DefaultTableModel model = (DefaultTableModel) userDetailTable.getModel();
+        String is_locked = model.getValueAt(0, 8).toString();
+        int dialogResult;
+        if(is_locked.equals("Disabled")){
+            dialogResult = JOptionPane.showConfirmDialog(null, "Are you sure to enable this user?", "Confirmation", JOptionPane.YES_NO_OPTION);
+            if (dialogResult == JOptionPane.YES_OPTION){
+                String username = model.getValueAt(0, 0).toString();
+                Boolean success = EnableUser.request(username, socket);
+                if (success) {
+                    JOptionPane.showMessageDialog(null, "Enable successfully.");
+                    DefaultTableModel userModel = (DefaultTableModel) userDetailTable.getModel();
+                    userModel.setRowCount(0);
+                    Object[][] user = GetUserByUsername.request(username, socket);
+
+                    for (Object[] row : user) {
+                        userModel.addRow(row);
+                    }
+                } else {
+                    JOptionPane.showMessageDialog(null, "Failed to enable user.");
+                }
+            }
+        }
+        else{
+            dialogResult = JOptionPane.showConfirmDialog(null, "Are you sure to disable this user?", "Confirmation", JOptionPane.YES_NO_OPTION);
+            if (dialogResult == JOptionPane.YES_OPTION){
+                String username = model.getValueAt(0, 0).toString();
+                Boolean success = DisableUserManage.request(username, socket);
+                if (success) {
+                    JOptionPane.showMessageDialog(null, "Disable successfully.");
+                    DefaultTableModel userModel = (DefaultTableModel) userDetailTable.getModel();
+                    userModel.setRowCount(0);
+                    Object[][] user = GetUserByUsername.request(username, socket);
+
+                    for (Object[] row : user) {
+                        userModel.addRow(row);
+                    }
+                } else {
+                    JOptionPane.showMessageDialog(null, "Failed to disable user.");
+                }
+            }
+        }
+
+    }
+
     private void reportTableMouseClicked(java.awt.event.MouseEvent evt) {
         int index = reportTable.getSelectedRow();
         TableModel model = reportTable.getModel();
@@ -2120,6 +2607,7 @@ public class AdminApp extends javax.swing.JFrame {
     private Object[][] currentActiveUserList;
     AdminController adminController = new AdminController();
     Color blue = new Color (23,70,162);
+    private String originalEmail;
     // Variables declaration - do not modify
     private javax.swing.JScrollPane ScrollPanel;
     private javax.swing.JLabel activeTitle;
@@ -2191,17 +2679,50 @@ public class AdminApp extends javax.swing.JFrame {
     private javax.swing.JButton viewAllReportButton;
     private javax.swing.JLabel yearTitle;
     private javax.swing.JPanel userMainPanel;
+    private javax.swing.JPanel userTableMainPanel;
     private javax.swing.JTextField searchFullNameInput;
     private javax.swing.JComboBox<String> searchActiveDropDown;
     private javax.swing.JTextField searchUserNameInput;
     private javax.swing.JTable userTable;
+    private javax.swing.JTable userDetailTable;
     private javax.swing.JLabel userTitle;
     private javax.swing.JLabel userTitle1;
     private javax.swing.JLabel userTitle2;
     private javax.swing.JLabel userTitle3;
-    private javax.swing.JScrollPane userScrollPane;
+    private javax.swing.JLabel userTitle4;
+    private javax.swing.JLabel userTitle5;
+    private javax.swing.JLabel userTitle6;
+    private javax.swing.JLabel userTitle7;
+    private javax.swing.JLabel userTitle8;
+    private javax.swing.JLabel userTitle9;
+    private javax.swing.JLabel userTitle10;
+    private javax.swing.JLabel userTitle11;
+    private javax.swing.JLabel userTitle12;
+    private javax.swing.JLabel userTitle13;
+    private javax.swing.JTextField userNameInput;
+    private javax.swing.JTextField fullNameInput;
+    private javax.swing.JTextField pwdInput;
+    private javax.swing.JTextField addressInput;
+    private javax.swing.JTextField birthDateInput;
+    private javax.swing.JTextField genderInput;
+    private javax.swing.JTextField emailInput;
+    private javax.swing.JTextField registrationTimeInput;
+    private javax.swing.JTextField accountStatusInput;
+    private javax.swing.JScrollPane userTableScrollPanel;
+    private javax.swing.JScrollPane userDetailTableScrollPanel;
+    private javax.swing.JScrollPane userScrollPanel;
+    private javax.swing.JScrollPane historyLoginTableScrollPane;
+    private javax.swing.JScrollPane listFriendTableScrollPane;
     private javax.swing.JButton searchUserButton;
     private javax.swing.JButton viewAllUserButton;
     private javax.swing.JButton addNewUserButton;
+    private javax.swing.JButton updateUserButton;
+    private javax.swing.JButton deleteUserButton;
+    private javax.swing.JButton disableEnableUserButton;
+    private javax.swing.JButton updatePasswordButton;
+    private javax.swing.JPanel userDetailPanel;
+    private javax.swing.JPanel userPanel;
+    private javax.swing.JTable historyLoginTable;
+    private javax.swing.JTable listFriendTable;
     // End of variables declaration
 }
