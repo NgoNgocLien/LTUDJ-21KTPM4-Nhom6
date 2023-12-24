@@ -10,6 +10,20 @@ public class ChatInfo {
     private int quantity;
     private boolean isOnline;
     private boolean isUnread;
+    private boolean isFriend;
+
+    // user
+    public ChatInfo(String chatName, String username, String subTitle, boolean isFriend) {
+        this.chatName = chatName;
+        this.isGroup = false;
+        this.groupId = -1;
+        this.quantity = -1;
+        this.username = username;
+        this.subTitle = subTitle;
+        this.isOnline = false;
+        this.isUnread = false;
+        this.isFriend = isFriend;
+    }
 
     // friend
     public ChatInfo(String chatName, String username, String subTitle, boolean isOnline, boolean isUnread) {
@@ -21,6 +35,7 @@ public class ChatInfo {
         this.subTitle = subTitle;
         this.isOnline = isOnline;
         this.isUnread = isUnread;
+        this.isFriend = true;
     }
 
     // group
@@ -33,6 +48,7 @@ public class ChatInfo {
         this.subTitle = subTitle;
         this.isOnline = false;
         this.isUnread = isUnread;
+        this.isFriend = false;
     }
 
     public String getChatName() { return chatName; }
@@ -43,4 +59,5 @@ public class ChatInfo {
     public int getQuantity() { return quantity; }
     public boolean isOnline() { return isOnline; }
     public boolean isUnread() { return isUnread; }
+    public boolean isFriend() { return isFriend; }
 }

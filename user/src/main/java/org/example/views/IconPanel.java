@@ -12,6 +12,7 @@ public class IconPanel extends JPanel {
     private Icon chatIcon;
     private Icon friendIcon;
     private Icon groupIcon;
+    private Icon addIcon;
     private Icon requestIcon;
     private Icon blockIcon;
     private Icon logoutIcon;
@@ -20,6 +21,7 @@ public class IconPanel extends JPanel {
     private JLabel chatIconLabel;
     private JLabel friendIconLabel;
     private JLabel groupIconLabel;
+    private JLabel addIconLabel;
     private JLabel requestIconLabel;
     private JLabel blockIconLabel;
     private JLabel logoutIconLabel;
@@ -30,7 +32,7 @@ public class IconPanel extends JPanel {
 
         JPanel upperPanel = new JPanel();
         upperPanel.setBackground(Constants.COLOR_PRIMARY);
-        upperPanel.setLayout(new GridLayout(6, 1, 0, 0));
+        upperPanel.setLayout(new GridLayout(7, 1, 0, 0));
 
         JPanel lowerPanel = new JPanel();
         lowerPanel.setBackground(Constants.COLOR_PRIMARY);
@@ -44,6 +46,7 @@ public class IconPanel extends JPanel {
         chatIcon = IconFontSwing.buildIcon(FontAwesome.COMMENT, 40, Constants.COLOR_ICON_PRIMARY);
         friendIcon = IconFontSwing.buildIcon(FontAwesome.USER, 40, Constants.COLOR_ICON_PRIMARY);
         groupIcon = IconFontSwing.buildIcon(FontAwesome.USERS, 40, Constants.COLOR_ICON_PRIMARY);
+        addIcon = IconFontSwing.buildIcon(FontAwesome.USER_PLUS, 40, Constants.COLOR_ICON_PRIMARY);
         requestIcon = IconFontSwing.buildIcon(FontAwesome.BELL, 40, Constants.COLOR_ICON_PRIMARY);
         blockIcon = IconFontSwing.buildIcon(FontAwesome.BAN, 40, Constants.COLOR_ICON_PRIMARY);
         logoutIcon = IconFontSwing.buildIcon(FontAwesome.SIGN_OUT, 40, Constants.COLOR_ICON_PRIMARY);
@@ -69,6 +72,11 @@ public class IconPanel extends JPanel {
         groupIconLabel.setOpaque(true);
         groupIconLabel.setBackground(Constants.COLOR_PRIMARY);
 
+        addIconLabel = new JLabel(addIcon);
+        addIconLabel.setPreferredSize(new Dimension(60, 70));
+        addIconLabel.setOpaque(true);
+        addIconLabel.setBackground(Constants.COLOR_PRIMARY);
+
         requestIconLabel = new JLabel(requestIcon);
         requestIconLabel.setPreferredSize(new Dimension(60, 70));
         requestIconLabel.setOpaque(true);
@@ -89,6 +97,7 @@ public class IconPanel extends JPanel {
         upperPanel.add(chatIconLabel);
         upperPanel.add(friendIconLabel);
         upperPanel.add(groupIconLabel);
+        upperPanel.add(addIconLabel);
         upperPanel.add(requestIconLabel);
         upperPanel.add(blockIconLabel);
 
@@ -103,6 +112,7 @@ public class IconPanel extends JPanel {
     public JLabel getChatIconLabel() { return chatIconLabel; }
     public JLabel getFriendIconLabel() { return friendIconLabel; }
     public JLabel getGroupIconLabel() { return groupIconLabel; }
+    public JLabel getAddIconLabel() { return addIconLabel; }
     public JLabel getRequestIconLabel() { return requestIconLabel; }
     public JLabel getBlockIconLabel() { return blockIconLabel; }
     public JLabel getLogoutIconLabel() { return logoutIconLabel; }
@@ -112,6 +122,7 @@ public class IconPanel extends JPanel {
         chatIconLabel.setBackground(Constants.COLOR_PRIMARY);
         friendIconLabel.setBackground(Constants.COLOR_PRIMARY);
         groupIconLabel.setBackground(Constants.COLOR_PRIMARY);
+        addIconLabel.setBackground(Constants.COLOR_PRIMARY);
         requestIconLabel.setBackground(Constants.COLOR_PRIMARY);
         blockIconLabel.setBackground(Constants.COLOR_PRIMARY);
         logoutIconLabel.setBackground(Constants.COLOR_PRIMARY);

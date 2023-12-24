@@ -17,7 +17,10 @@ public class ChatListPanel extends JPanel {
     private JButton searchButton;
     private JScrollPane chatPanelsScrollPane;
     private ArrayList<AChatPanel> chatPanels;
+    private String inputFieldPlaceholder;
     public ChatListPanel(ArrayList<ChatInfo> infos) {
+        this.infos = infos;
+        this.inputFieldPlaceholder = "Search for a message";
         chatPanels = new ArrayList<>();
 
         setBackground(Constants.COLOR_SECONDARY);
@@ -37,8 +40,8 @@ public class ChatListPanel extends JPanel {
         searchField = new JTextField();
         searchField.setBackground(Constants.COLOR_BACKGROUND);
         searchField.setFont(Constants.FONT_NORMAL);
-//        searchField.setForeground(Constants.COLOR_TEXT_SECONDARY);
-//        searchField.setText("Search for a message here...");
+        searchField.setForeground(Constants.COLOR_TEXT_SECONDARY);
+        searchField.setText(inputFieldPlaceholder);
 
         IconFontSwing.register(FontAwesome.getIconFont());
         Icon searchIcon = IconFontSwing.buildIcon(FontAwesome.SEARCH, 20, Constants.COLOR_ICON_PRIMARY);
@@ -73,18 +76,7 @@ public class ChatListPanel extends JPanel {
         chatPanelsPanel.setLayout(new BoxLayout(chatPanelsPanel, BoxLayout.Y_AXIS));
 
         if (infos == null || infos.isEmpty()) {
-            JPanel noChatPanel = new JPanel();
-            noChatPanel.setBackground(Constants.COLOR_SECONDARY);
-            noChatPanel.setLayout(new GridLayout(1, 1, 0, 0));
-            noChatPanel.setBorder(new EmptyBorder(10, 10, 10, 10));
-            noChatPanel.setPreferredSize(new Dimension(300, 70));
-
-            JLabel noChatLabel = new JLabel();
-            noChatLabel.setText("Nothing to show here...");
-            noChatLabel.setForeground(Constants.COLOR_TEXT_LIGHT);
-            noChatLabel.setFont(Constants.FONT_NORMAL);
-
-            noChatPanel.add(noChatLabel);
+            SentencePanel noChatPanel = new SentencePanel("Empty");
             chatPanelsPanel.add(noChatPanel);
         }
         else {
@@ -107,24 +99,38 @@ public class ChatListPanel extends JPanel {
         chatPanelsScrollPane.setViewportView(tmp);
     }
 
-    public void rebuildChatPanelsScrollPane(ArrayList<ChatInfo> infos, boolean mode) {
+    private class SentencePanel extends JPanel {
+        String sentence;
+        public SentencePanel(String sentence) {
+            setBackground(Constants.COLOR_SECONDARY);
+            setLayout(new GridLayout(1, 1, 0, 0));
+            setBorder(new EmptyBorder(10, 10, 0, 10));
+            setPreferredSize(new Dimension(300, 45));
+
+            JLabel sentenceLabel = new JLabel();
+            sentenceLabel.setText(sentence);
+            sentenceLabel.setForeground(Constants.COLOR_TEXT_LIGHT);
+            sentenceLabel.setFont(Constants.FONT_ITALIC);
+
+            add(sentenceLabel);
+        }
+    }
+
+    public void addSentenceToChatList(String sentence) {
+        SentencePanel sentencePanel = new SentencePanel(sentence);
+        chatPanelsPanel.add(sentencePanel);
+    }
+
+    public void rebuildChatPanelsScrollPane(ArrayList<ChatInfo> infos, boolean mode, boolean suggestedSentence) {
         chatPanelsPanel.removeAll();
         if (infos == null || infos.isEmpty()) {
-            JPanel noChatPanel = new JPanel();
-            noChatPanel.setBackground(Constants.COLOR_SECONDARY);
-            noChatPanel.setLayout(new GridLayout(1, 1, 0, 0));
-            noChatPanel.setBorder(new EmptyBorder(10, 10, 10, 10));
-            noChatPanel.setPreferredSize(new Dimension(300, 70));
-
-            JLabel noChatLabel = new JLabel();
-            noChatLabel.setText("Nothing to show here...");
-            noChatLabel.setForeground(Constants.COLOR_TEXT_LIGHT);
-            noChatLabel.setFont(Constants.FONT_NORMAL);
-
-            noChatPanel.add(noChatLabel);
+            SentencePanel noChatPanel = new SentencePanel("Empty");
             chatPanelsPanel.add(noChatPanel);
         }
         else {
+            if (suggestedSentence) {
+                addSentenceToChatList("Users you may know");
+            }
             for (ChatInfo info : infos) {
                 AChatPanel chatPanel = new AChatPanel(info, mode);
                 chatPanels.add(chatPanel);
@@ -224,4 +230,16 @@ public class ChatListPanel extends JPanel {
     public JScrollPane getChatPanelsScrollPane() {
         return chatPanelsScrollPane;
     }
+    public JTextField getInputField() { return searchField; }
+    public JButton getSearchButton() { return searchButton; }
+    public void setInputFieldPlaceholder(String placeholder) {
+        this.inputFieldPlaceholder = placeholder;
+        if (this.searchField.hasFocus()) {
+            return;
+        } else {
+            searchField.setText(placeholder);
+            searchField.setForeground(Constants.COLOR_TEXT_SECONDARY);
+        }
+    }
+    public String getInputFieldPlaceholder() { return inputFieldPlaceholder; }
 }

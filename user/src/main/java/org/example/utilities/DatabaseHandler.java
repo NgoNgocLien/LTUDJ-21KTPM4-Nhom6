@@ -30,35 +30,68 @@ public class DatabaseHandler {
     }
 
     public ArrayList<ChatInfo> getAllChats(String myUsername) throws SQLException {
-        String sql =
+        String sql = "WITH Messages AS ( " +
                 "(WITH RankedMessages AS (   " +
-                        "    SELECT M.sender, M.to_user, M.to_group, M.content, M.sent_time, M.seen_time, " +
-                        "        ROW_NUMBER() OVER (PARTITION BY CASE WHEN M.sender = ? THEN M.to_user ELSE M.sender END " +
-                        "                           ORDER BY M.sent_time DESC) AS row_num " +
-                        "    FROM MESSAGE M " +
-                        "    INNER JOIN FRIEND F ON ((M.sender = F.username1 AND M.to_user = F.username2) OR (M.sender = F.username2 AND M.to_user = F.username1)) " +
-                        "    WHERE M.to_group IS NULL AND ((F.username1 = ? AND M.sent_time > F.user1_deleteChat) " +
-                        "    OR (F.username2 = ? AND M.sent_time > F.user2_deleteChat)) " +
-                        ") " +
-                        "SELECT R.sender, R.to_user, R.to_group, R.content, R.seen_time, U.fullname AS chat_name " +
-                        "FROM RankedMessages R " +
-                        "JOIN USER U ON (U.username != ? AND (R.to_user = U.username OR R.sender = U.username)) " +
-                        "WHERE R.row_num = 1 " +
-                        "ORDER BY R.sent_time DESC) " +
-                        "UNION " +
-                        "(WITH RankedMessages AS (   " +
-                        "    SELECT M.sender, M.to_user, M.to_group, M.content, M.sent_time, M.seen_time, " +
-                        "        ROW_NUMBER() OVER (PARTITION BY M.to_group " +
-                        "                          ORDER BY M.sent_time DESC) AS row_num " +
-                        "    FROM MESSAGE M " +
-                        "    INNER JOIN GROUP_MEMBER GM ON (GM.username = ? AND GM.id_group = M.to_group) " +
-                        "    WHERE M.sent_time > GM.delete_history " +
-                        ") " +
-                        "SELECT R.sender, R.to_user, R.to_group, R.content, R.seen_time, G.group_name AS chat_name " +
-                        "FROM RankedMessages R " +
-                        "JOIN GROUP_CHAT G ON (G.id_group = R.to_group)  " +
-                        "WHERE R.row_num = 1 " +
-                        "ORDER BY R.sent_time DESC)";
+                "    SELECT " +
+                "        M.sender, " +
+                "        M.to_user, " +
+                "        M.to_group, " +
+                "        M.content, " +
+                "        M.sent_time, " +
+                "        M.seen_time, " +
+                "        ROW_NUMBER() OVER (PARTITION BY CASE WHEN M.sender = ? THEN M.to_user ELSE M.sender END " +
+                "                          ORDER BY M.sent_time DESC) AS row_num " +
+                "    FROM MESSAGE M " +
+                "    INNER JOIN FRIEND F ON ((M.sender = F.username1 AND M.to_user = F.username2) OR (M.sender = F.username2 AND M.to_user = F.username1)) " +
+                "    WHERE M.to_group IS NULL AND ((F.username1 = ? AND M.sent_time > F.user1_deleteChat) " +
+                "       \t\t\t\t\t\t   OR (F.username2 = ? AND M.sent_time > F.user2_deleteChat)) " +
+                ") " +
+                " " +
+                "SELECT " +
+                "    R.sender, " +
+                "    R.to_user, " +
+                "    R.to_group, " +
+                "    R.content, " +
+                "    R.seen_time, " +
+                "    R.sent_time, " +
+                "    U.fullname AS chat_name " +
+                "FROM RankedMessages R " +
+                "JOIN USER U ON (U.username != ? AND (R.to_user = U.username OR R.sender = U.username)) " +
+                "WHERE R.row_num = 1) " +
+                " " +
+                "UNION " +
+                " " +
+                "(WITH RankedMessages AS (   " +
+                "    SELECT " +
+                "        M.sender, " +
+                "        M.to_user, " +
+                "        M.to_group, " +
+                "        M.content, " +
+                "        M.sent_time, " +
+                "        M.seen_time, " +
+                "        ROW_NUMBER() OVER (PARTITION BY M.to_group " +
+                "                          ORDER BY M.sent_time DESC) AS row_num " +
+                "    FROM MESSAGE M " +
+                "    INNER JOIN GROUP_MEMBER GM ON (GM.username = ? AND GM.id_group = M.to_group) " +
+                "    WHERE M.sent_time > GM.delete_history " +
+                ") " +
+                " " +
+                "SELECT " +
+                "    R.sender, " +
+                "    R.to_user, " +
+                "    R.to_group, " +
+                "    R.content, " +
+                "    R.seen_time, " +
+                "    R.sent_time, " +
+                "    G.group_name AS chat_name " +
+                "FROM RankedMessages R " +
+                "JOIN GROUP_CHAT G ON (G.id_group = R.to_group)  " +
+                "WHERE R.row_num = 1) " +
+                ") " +
+                " " +
+                "SELECT *  " +
+                "FROM Messages " +
+                "ORDER BY sent_time DESC";
 
         PreparedStatement stmt = conn.prepareStatement(sql);
         stmt.setString(1, myUsername);
@@ -79,7 +112,9 @@ public class DatabaseHandler {
             else msg = sender + ": " + message;
             String toUser = rs.getString("to_user");
             int toGroup = rs.getObject("to_group") != null ? rs.getInt("to_group") : -1;
-            boolean seen = rs.getTimestamp("seen_time") != null;
+            boolean seen;
+            if (isMyMessage) seen = true;
+            else seen = rs.getObject("seen_time") != null;
             if (toGroup != -1) {
                 // get group quantity
                 int quantity = getGroupMemberQuantity(toGroup);
@@ -97,7 +132,6 @@ public class DatabaseHandler {
         stmt.close();
         return chats;
     }
-
     public int getGroupMemberQuantity(int idGroup) throws SQLException {
         String sql = "SELECT COUNT(M.username) AS quantity " +
                 "FROM GROUP_MEMBER M  " +
@@ -118,7 +152,6 @@ public class DatabaseHandler {
         }
 
     }
-
     public boolean getIsOnline(String username) throws SQLException {
         String sql = "SELECT H.logout_time " +
                     "FROM HISTORY_LOGIN H " +
@@ -200,7 +233,7 @@ public class DatabaseHandler {
         while (rs.next()) {
             String blockUsername = rs.getString("block");
             String blockFullname = rs.getString("fullname");
-            blocks.add(new ChatInfo(blockFullname, blockUsername, blockUsername, false, false));
+            blocks.add(new ChatInfo(blockFullname, blockUsername, blockUsername, false));
         }
         rs.close();
         stmt.close();
@@ -218,7 +251,7 @@ public class DatabaseHandler {
         while (rs.next()) {
             String requestUsername = rs.getString("username");
             String requestFullname = rs.getString("fullname");
-            requests.add(new ChatInfo(requestFullname, requestUsername, requestUsername, false, false));
+            requests.add(new ChatInfo(requestFullname, requestUsername, requestUsername, false));
         }
         rs.close();
         stmt.close();
@@ -248,6 +281,87 @@ public class DatabaseHandler {
         stmt.close();
         return groups;
     }
+    public ArrayList<ChatInfo> getAllSuggests(String myUsername) {
+        String sql = "WITH Suggested AS ( " +
+                "SELECT U.username, U.fullname " +
+                "FROM USER U " +
+                "INNER JOIN FRIEND F ON F.username1 = U.username " +
+                "WHERE F.username1 != ? AND F.username2 IN  (SELECT U1.username " +
+                                                            "FROM USER U1 " +
+                                                            "INNER JOIN FRIEND F1 ON F1.username1 = U1.username " +
+                                                            "WHERE F1.username2 = ?  " +
+                                                            "UNION " +
+                                                            "SELECT U2.username " +
+                                                            "FROM USER U2 " +
+                                                            "INNER JOIN FRIEND F2 ON F2.username2 = U2.username " +
+                                                            "WHERE F2.username1 = ?) " +
+                "UNION ALL " +
+                "SELECT U.username, U.fullname " +
+                "FROM USER U " +
+                "INNER JOIN FRIEND F ON F.username2 = U.username " +
+                "WHERE F.username2 != ? AND F.username1 IN  (SELECT U1.username " +
+                                                            "FROM USER U1 " +
+                                                            "INNER JOIN FRIEND F1 ON F1.username1 = U1.username " +
+                                                            "WHERE F1.username2 = ?  " +
+                                                            "UNION " +
+                                                            "SELECT U2.username " +
+                                                            "FROM USER U2 " +
+                                                            "INNER JOIN FRIEND F2 ON F2.username2 = U2.username " +
+                                                            "WHERE F2.username1 = ?) " +
+                "UNION ALL " +
+                "SELECT U.username, U.fullname " +
+                "FROM USER U " +
+                "INNER JOIN GROUP_MEMBER M ON M.username = U.username " +
+                "WHERE U.username != ? AND M.id_group IN (SELECT M1.id_group FROM GROUP_MEMBER M1 WHERE M1.username = ?) " +
+                "AND U.username NOT IN  (SELECT U.username " +
+                                        "FROM USER U " +
+                                        "INNER JOIN FRIEND F ON F.username1 = U.username " +
+                                        "WHERE F.username2 = ? " +
+                                        "UNION " +
+                                        "SELECT U.username " +
+                                        "FROM USER U " +
+                                        "INNER JOIN FRIEND F ON F.username2 = U.username " +
+                                        "WHERE F.username1 = ?) " +
+                ") " +
+                "SELECT S.username, S.fullname, COUNT(*) AS priority " +
+                "FROM Suggested S " +
+                "WHERE S.username NOT IN (SELECT B.block FROM BLOCK B WHERE B.username = ? " +
+                                        "UNION  " +
+                                        "SELECT B.username FROM BLOCK B WHERE B.block = ?) " +
+                "GROUP BY username, fullname " +
+                "ORDER BY priority DESC ";
+        PreparedStatement stmt = null;
+        try {
+            stmt = conn.prepareStatement(sql);
+            stmt.setString(1, myUsername);
+            stmt.setString(2, myUsername);
+            stmt.setString(3, myUsername);
+            stmt.setString(4, myUsername);
+            stmt.setString(5, myUsername);
+            stmt.setString(6, myUsername);
+            stmt.setString(7, myUsername);
+            stmt.setString(8, myUsername);
+            stmt.setString(9, myUsername);
+            stmt.setString(10, myUsername);
+            stmt.setString(11, myUsername);
+            stmt.setString(12, myUsername);
+
+            ResultSet rs = stmt.executeQuery();
+            ArrayList<ChatInfo> suggests = new ArrayList<>();
+            while (rs.next()) {
+                String suggestUsername = rs.getString("username");
+                String suggestFullname = rs.getString("fullname");
+                suggests.add(new ChatInfo(suggestFullname, suggestUsername, suggestUsername, false));
+            }
+            rs.close();
+            stmt.close();
+            return suggests;
+        } catch (SQLException throwables) {
+            throwables.printStackTrace();
+        }
+        return null;
+    }
+
     public ArrayList<Message> getFriendMessages(String myUsername, String friendUsername) {
         String sql ="SELECT M.id_message, M.sender, M.to_user, M.content, M.sent_time " +
                     "FROM MESSAGE M " +
@@ -273,7 +387,7 @@ public class DatabaseHandler {
                 content = rs.getString("content");
                 sent_time = rs.getTimestamp("sent_time");
 
-                messages.add(new Message(id, sender, to_user, content, sent_time.toLocalDateTime(), sender.equals(myUsername)));
+                messages.add(new Message(id, sender, to_user, -1, content, sent_time.toLocalDateTime(), sender.equals(myUsername)));
             }
             rs.close();
             stmt.close();
@@ -283,7 +397,6 @@ public class DatabaseHandler {
         }
         return null;
     }
-
     public ArrayList<Message> getGroupMessages(String myUsername, int idGroup) {
         String sql = "WITH GroupMessage AS ( " +
                     "SELECT M.sender, M.sent_time, M.content, M.id_message, " +
@@ -309,7 +422,7 @@ public class DatabaseHandler {
                 content = rs.getString("content");
                 sent_time = rs.getTimestamp("sent_time");
 
-                messages.add(new Message(id, sender, "", content, sent_time.toLocalDateTime(), sender.equals(myUsername)));
+                messages.add(new Message(id, sender, "", idGroup, content, sent_time.toLocalDateTime(), sender.equals(myUsername)));
             }
             rs.close();
             stmt.close();
@@ -318,6 +431,65 @@ public class DatabaseHandler {
             throwables.printStackTrace();
         }
         return null;
+    }
+
+    public ArrayList<String> getAllMembers(int idGroup) {
+        String sql = "SELECT M.username " +
+                    "FROM GROUP_MEMBER M " +
+                    "WHERE M.id_group = ?";
+        PreparedStatement stmt = null;
+        try {
+            stmt = conn.prepareStatement(sql);
+            stmt.setInt(1, idGroup);
+            ResultSet rs = stmt.executeQuery();
+            ArrayList<String> members = new ArrayList<>();
+            while (rs.next()) {
+                String member = rs.getString("username");
+                members.add(member);
+            }
+            rs.close();
+            stmt.close();
+            return members;
+        } catch (SQLException throwables) {
+            throwables.printStackTrace();
+        }
+        return null;
+    }
+    public void addMyMessage(Message message) {
+        String sql = "INSERT INTO MESSAGE (sender, to_user, to_group, content, sent_time, seen_time) " +
+                    "VALUES (?, ?, ?, ?, ?, ?)";
+        PreparedStatement stmt = null;
+        try {
+            if (message.getToGroup() == -1) {
+                // add message to friend
+                stmt = conn.prepareStatement(sql);
+                stmt.setString(1, message.getSender());
+                stmt.setString(2, message.getToUser());
+                stmt.setNull(3, Types.INTEGER);
+                stmt.setString(4, message.getContent());
+                stmt.setTimestamp(5, Timestamp.valueOf(message.getSentTime()));
+                stmt.setTimestamp(6, null);
+                stmt.executeUpdate();
+                stmt.close();
+            } else {
+                // get all member
+                // for each member, add message to database
+                ArrayList<String> members = getAllMembers(message.getToGroup());
+                for (String member : members) {
+                    stmt = conn.prepareStatement(sql);
+                    stmt.setString(1, message.getSender());
+                    stmt.setString(2, member);
+                    stmt.setInt(3, message.getToGroup());
+                    stmt.setString(4, message.getContent());
+                    stmt.setTimestamp(5, Timestamp.valueOf(message.getSentTime()));
+                    stmt.setTimestamp(6, null);
+                    stmt.executeUpdate();
+                    stmt.close();
+                }
+            }
+        } catch (SQLException throwables) {
+            throwables.printStackTrace();
+        }
     }
 
 
