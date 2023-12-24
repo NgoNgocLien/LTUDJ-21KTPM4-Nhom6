@@ -6,6 +6,7 @@ import org.example.views.LoginFrame;
 
 import javax.sound.sampled.LineListener;
 import javax.swing.*;
+import java.awt.*;
 import java.awt.event.*;
 
 public class LoginFrameController {
@@ -96,10 +97,11 @@ public class LoginFrameController {
             if (e.getSource() == registerLine) {
                 registerLine.setForeground(Constants.COLOR_PRIMARY);
                 registerLine.setFont(Constants.FONT_SMALL_BOLD);
+                registerLine.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
             } else if (e.getSource() == forgotPasswordLine) {
                 forgotPasswordLine.setForeground(Constants.COLOR_PRIMARY);
                 forgotPasswordLine.setFont(Constants.FONT_SMALL_BOLD);
-
+                forgotPasswordLine.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
             }
         }
 
@@ -108,9 +110,11 @@ public class LoginFrameController {
             if (e.getSource() == registerLine) {
                 registerLine.setForeground(Constants.COLOR_TEXT_PRIMARY);
                 registerLine.setFont(Constants.FONT_SMALL);
+                registerLine.setCursor(Cursor.getPredefinedCursor(Cursor.DEFAULT_CURSOR));
             } else if (e.getSource() == forgotPasswordLine) {
                 forgotPasswordLine.setForeground(Constants.COLOR_TEXT_PRIMARY);
                 forgotPasswordLine.setFont(Constants.FONT_SMALL);
+                forgotPasswordLine.setCursor(Cursor.getPredefinedCursor(Cursor.DEFAULT_CURSOR));
             }
         }
 

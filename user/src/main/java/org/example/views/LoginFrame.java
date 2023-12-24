@@ -11,9 +11,6 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 public class LoginFrame extends JFrame {
-    private JLabel titleLabel;
-    private JLabel usernameLabel;
-    private JLabel passwordLabel;
     private JTextField usernameField;
     private JPasswordField passwordField;
     private JButton loginButton;
@@ -29,22 +26,23 @@ public class LoginFrame extends JFrame {
 
         setBackground(Constants.COLOR_BACKGROUND);
         setLayout(new BoxLayout(getContentPane(), BoxLayout.Y_AXIS));
-        setPreferredSize(new Dimension(480, 560));
+        setPreferredSize(new Dimension(480, 530));
         setResizable(false);
         setLocationRelativeTo(null);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
         // register jiconfont
         IconFontSwing.register(FontAwesome.getIconFont());
-        Icon icon = IconFontSwing.buildIcon(FontAwesome.FACEBOOK_SQUARE, 100, Constants.COLOR_PRIMARY);
+        Icon icon = IconFontSwing.buildIcon(FontAwesome.FACEBOOK_SQUARE, 80, Constants.COLOR_PRIMARY);
+        RotatedIcon rotatedIcon = new RotatedIcon(icon, RotatedIcon.Rotate.UPSIDE_DOWN);
 
-        titleLabel = new JLabel();
-        titleLabel.setIcon(icon);
+        JLabel titleLabel = new JLabel();
+        titleLabel.setIcon(rotatedIcon);
         titleLabel.setAlignmentX(Component.CENTER_ALIGNMENT);
         titleLabel.setBorder(BorderFactory.createEmptyBorder(20, 0, 20, 0));
 
         // username
-        usernameLabel = new JLabel("Username");
+        JLabel usernameLabel = new JLabel("Username");
         usernameLabel.setFont(Constants.FONT_NORMAL);
         usernameLabel.setAlignmentX(Component.CENTER_ALIGNMENT);
         usernameLabel.setBorder(BorderFactory.createEmptyBorder(0, 0, 10, 0));
@@ -54,10 +52,10 @@ public class LoginFrame extends JFrame {
         usernameField.setFont(Constants.FONT_NORMAL);
         usernameField.setAlignmentX(Component.CENTER_ALIGNMENT);
         usernameField.setMaximumSize(new Dimension(300, 40));
-        usernameField.setBorder(BorderFactory.createEmptyBorder(10, 0, 10, 0));
+        usernameField.setBorder(BorderFactory.createEmptyBorder(5, 0, 5, 0));
 
         // password
-        passwordLabel = new JLabel("Password");
+        JLabel passwordLabel = new JLabel("Password");
         passwordLabel.setFont(Constants.FONT_NORMAL);
         passwordLabel.setAlignmentX(Component.CENTER_ALIGNMENT);
         passwordLabel.setBorder(BorderFactory.createEmptyBorder(0, 0, 10, 0));
@@ -67,13 +65,13 @@ public class LoginFrame extends JFrame {
         passwordField.setFont(Constants.FONT_NORMAL);
         passwordField.setAlignmentX(Component.CENTER_ALIGNMENT);
         passwordField.setMaximumSize(new Dimension(300, 40));
-        passwordField.setBorder(BorderFactory.createEmptyBorder(10, 0, 10, 0));
+        passwordField.setBorder(BorderFactory.createEmptyBorder(5, 0, 5, 0));
 
         // login button
         loginButton = new JButton("Log in");
         loginButton.setFont(Constants.FONT_NORMAL);
         loginButton.setAlignmentX(Component.CENTER_ALIGNMENT);
-        loginButton.setMaximumSize(new Dimension(100, 50));
+        loginButton.setMaximumSize(new Dimension(100, 40));
         loginButton.setBorder(BorderFactory.createEmptyBorder(10, 0, 10, 0));
 
         // register line
@@ -110,9 +108,6 @@ public class LoginFrame extends JFrame {
         pack();
         setVisible(true);
     }
-
-    public JLabel getUsernameLabel() { return usernameLabel; }
-    public JLabel getPasswordLabel() { return passwordLabel; }
     public JTextField getUsernameField() { return usernameField; }
     public JPasswordField getPasswordField() { return passwordField; }
     public JButton getLoginButton() { return loginButton; }
