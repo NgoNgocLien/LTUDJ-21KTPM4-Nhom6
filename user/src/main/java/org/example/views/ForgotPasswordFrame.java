@@ -11,7 +11,7 @@ import java.awt.event.ActionListener;
 
 public class ForgotPasswordFrame extends JFrame {
     private JTextField usernameField;
-    private JPasswordField emailField;
+    private JTextField emailField;
     private JButton forgotPasswordButton;
     private JLabel rememberLine;
 
@@ -25,11 +25,11 @@ public class ForgotPasswordFrame extends JFrame {
         setTitle(Constants.APP_NAME);
         setBackground(Constants.COLOR_BACKGROUND);
         setLayout(new BoxLayout(getContentPane(), BoxLayout.Y_AXIS));
-        setPreferredSize(new Dimension(480, 460));
+        setPreferredSize(new Dimension(480, 470));
         setResizable(true);
         // center the frame on screen
         Dimension dim = Toolkit.getDefaultToolkit().getScreenSize();
-        setLocation(dim.width/2 - 240, dim.height/2 - 230);
+        setLocation(dim.width/2 - 240, dim.height/2 - 235);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
         // register jiconfont
@@ -69,7 +69,7 @@ public class ForgotPasswordFrame extends JFrame {
         emailLabel.setBorder(BorderFactory.createEmptyBorder(0, 0, 10, 0));
         emailLabel.setMaximumSize(new Dimension(300, 40));
 
-        emailField = new JPasswordField();
+        emailField = new JTextField();
         emailField.setFont(Constants.FONT_NORMAL);
         emailField.setAlignmentX(Component.CENTER_ALIGNMENT);
         emailField.setMaximumSize(new Dimension(300, 40));
@@ -120,7 +120,7 @@ public class ForgotPasswordFrame extends JFrame {
         setVisible(true);
     }
     public JTextField getUsernameField() { return usernameField; }
-    public JPasswordField getEmailField() { return emailField; }
+    public JTextField getEmailField() { return emailField; }
     public JButton getForgotPasswordButton() { return forgotPasswordButton; }
     public JLabel getRememberLine() { return rememberLine; }
 }

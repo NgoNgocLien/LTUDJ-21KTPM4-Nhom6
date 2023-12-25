@@ -154,7 +154,8 @@ public class LoginFrameController {
                 // close login frame
                 LF.dispose();
                 // open forgot password frame
-                ForgotPasswordFrame FP = new ForgotPasswordFrame();
+                ForgotPasswordFrame FPF = new ForgotPasswordFrame();
+                ForgotPasswordFrameController FPFC = new ForgotPasswordFrameController(FPF, DB);
             }
         }
 

@@ -180,13 +180,13 @@ public class RegisterFrame extends JFrame {
         genderComboBox.setFont(Constants.FONT_NORMAL);
         genderComboBox.setAlignmentX(Component.CENTER_ALIGNMENT);
 //        genderComboBox.setPreferredSize(new Dimension(298, 38));
-        genderComboBox.setMaximumSize(new Dimension(300, 40));
+        genderComboBox.setMaximumSize(new Dimension(298, 38));
 
         JPanel genderPanel = new JPanel();
         genderPanel.setLayout(new BoxLayout(genderPanel, BoxLayout.X_AXIS));
         genderPanel.setAlignmentX(Component.CENTER_ALIGNMENT);
         genderPanel.setBorder(BorderFactory.createEmptyBorder(0, 0, 0, 0));
-//        genderPanel.setPreferredSize(new Dimension(300, 40));
+        genderPanel.setPreferredSize(new Dimension(300, 40));
         genderPanel.setMaximumSize(new Dimension(300, 40));
         genderPanel.add(genderComboBox);
 
@@ -219,13 +219,13 @@ public class RegisterFrame extends JFrame {
         yearComboBox = new JComboBox<>(years);
 
 //        dayComboBox.setPreferredSize(new Dimension(98, 38));
-        dayComboBox.setMaximumSize(new Dimension(100, 40));
+        dayComboBox.setMaximumSize(new Dimension(98, 38));
         dayComboBox.setFont(Constants.FONT_NORMAL);
 //        monthComboBox.setPreferredSize(new Dimension(98, 38));
-        monthComboBox.setMaximumSize(new Dimension(100, 40));
+        monthComboBox.setMaximumSize(new Dimension(98, 38));
         monthComboBox.setFont(Constants.FONT_NORMAL);
 //        yearComboBox.setPreferredSize(new Dimension(98, 38));
-        yearComboBox.setMaximumSize(new Dimension(100, 40));
+        yearComboBox.setMaximumSize(new Dimension(98, 38));
         yearComboBox.setFont(Constants.FONT_NORMAL);
 
         JPanel birthdayPanel = new JPanel();
