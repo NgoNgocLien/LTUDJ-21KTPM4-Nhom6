@@ -541,7 +541,7 @@ public class AdminDatabase {
         try{
             Statement stmt = connection.createStatement();
             String sql;
-            sql = "SELECT username, fullname, address, birthdate, gender, email, creation_time FROM USER";
+            sql = "SELECT username, fullname, address, birthdate, gender, email, creation_time FROM USER WHERE is_locked != 2";
             ResultSet rs = stmt.executeQuery(sql);
             List<Object[]> rows = new ArrayList<>();
             int serialNum = 1;
@@ -600,14 +600,15 @@ public class AdminDatabase {
                     System.out.println("search by active status");
                     // search by active status
                     if(Objects.equals(text3, "All")){
+                        sql += "WHERE s.is_locked != 2 ";
                         stmt = connection.prepareStatement(sql);
                     }
                     else if(Objects.equals(text3, "Active")){
-                        sql += "WHERE h.login_time IS NOT NULL AND h.logout_time IS NULL ";
+                        sql += "WHERE s.is_locked != 2 AND h.login_time IS NOT NULL AND h.logout_time IS NULL ";
                         stmt = connection.prepareStatement(sql);
                     }
                     else{
-                        sql += "WHERE h.login_time IS NOT NULL AND h.logout_time IS NOT NULL ";
+                        sql += "WHERE s.is_locked != 2 AND h.login_time IS NOT NULL AND h.logout_time IS NOT NULL ";
                         stmt = connection.prepareStatement(sql);
                     }
                 }
@@ -615,20 +616,20 @@ public class AdminDatabase {
                 else{
                     System.out.println("search by fullname + active status");
                     if(Objects.equals(text3, "All")){
-                        sql += "WHERE s.fullname LIKE ?";
+                        sql += "WHERE s.fullname LIKE ? AND s.is_locked != 2 ";
                         stmt = connection.prepareStatement(sql);
                         stmt.setString(1, "%" + text2 + "%");
                     }
                     else if(Objects.equals(text3, "Active")){
                         sql += "WHERE s.fullname LIKE ? ";
-                        sql += "AND h.login_time IS NOT NULL AND h.logout_time IS NULL ";
+                        sql += "AND s.is_locked != 2 AND h.login_time IS NOT NULL AND h.logout_time IS NULL ";
 
                         stmt = connection.prepareStatement(sql);
                         stmt.setString(1, "%" + text2 + "%");
                     }
                     else{
                         sql += "WHERE s.fullname LIKE ? ";
-                        sql += "AND h.login_time IS NOT NULL AND h.logout_time IS NOT NULL ";
+                        sql += "AND s.is_locked != 2 AND h.login_time IS NOT NULL AND h.logout_time IS NOT NULL ";
 
                         stmt = connection.prepareStatement(sql);
                         stmt.setString(1, "%" + text2 + "%");
@@ -640,20 +641,20 @@ public class AdminDatabase {
                     // search by username + active status
                     System.out.println("search by username + active status");
                     if(Objects.equals(text3, "All")){
-                        sql += "WHERE s.username LIKE ?";
+                        sql += "WHERE s.username LIKE ? AND s.is_locked != 2 ";
                         stmt = connection.prepareStatement(sql);
                         stmt.setString(1, "%" + text1 + "%");
                     }
                     else if(Objects.equals(text3, "Active")){
                         sql += "WHERE s.username LIKE ? ";
-                        sql += "AND h.login_time IS NOT NULL AND h.logout_time IS NULL ";
+                        sql += "AND s.is_locked != 2 AND h.login_time IS NOT NULL AND h.logout_time IS NULL ";
 
                         stmt = connection.prepareStatement(sql);
                         stmt.setString(1, "%" + text1 + "%");
                     }
                     else{
                         sql += "WHERE s.username LIKE ? ";
-                        sql += "AND h.login_time IS NOT NULL AND h.logout_time IS NOT NULL ";
+                        sql += "AND s.is_locked != 2 AND h.login_time IS NOT NULL AND h.logout_time IS NOT NULL ";
 
                         stmt = connection.prepareStatement(sql);
                         stmt.setString(1, "%" + text1 + "%");
@@ -664,19 +665,20 @@ public class AdminDatabase {
                     // search by username + fullname + active status
                     sql += "WHERE s.fullname LIKE ? " + "AND s.username LIKE ? ;";
                     if(Objects.equals(text3, "All")){
+                        sql += "WHERE s.is_locked != 2 ";
                         stmt = connection.prepareStatement(sql);
                         stmt.setString(1, "%" + text2 + "%");
                         stmt.setString(2, "%" + text1 + "%");
                     }
                     else if(Objects.equals(text3, "Active")){
-                        sql += "WHERE h.login_time IS NOT NULL AND h.logout_time IS NULL ";
+                        sql += "WHERE s.is_locked != 2 AND h.login_time IS NOT NULL AND h.logout_time IS NULL ";
 
                         stmt = connection.prepareStatement(sql);
                         stmt.setString(1, "%" + text2 + "%");
                         stmt.setString(2, "%" + text1 + "%");
                     }
                     else{
-                        sql += "WHERE h.login_time IS NOT NULL AND h.logout_time IS NOT NULL ";
+                        sql += "WHERE s.is_locked != 2 AND h.login_time IS NOT NULL AND h.logout_time IS NOT NULL ";
 
                         stmt = connection.prepareStatement(sql);
                         stmt.setString(1, "%" + text2 + "%");
@@ -758,6 +760,287 @@ public class AdminDatabase {
                 return true;
             } else {
                 pstmt.close();
+                return false;
+            }
+        } catch (SQLException se) {
+            se.printStackTrace();
+            return false;
+        } catch (Exception e) {
+            e.printStackTrace();
+            return false;
+        }
+    }
+
+    Object[][] getUserByUsername(String userName){
+        try{
+            String sql = "SELECT * FROM USER " + "WHERE username LIKE ?";
+            PreparedStatement stmt;
+            stmt = connection.prepareStatement(sql);
+            stmt.setString(1, "%" + userName + "%");
+            ResultSet rs = stmt.executeQuery();
+            List<Object[]> rows = new ArrayList<>();
+
+            while(rs.next()){
+                String username = rs.getString("username");
+                String password = rs.getString("password");
+                String fullname = rs.getString("fullname");
+                String address = rs.getString("address");
+                Date birthdate = rs.getDate("birthdate");
+                Boolean gender = rs.getBoolean("gender");
+                String email = rs.getString("email");
+                Date creation_time = rs.getDate("creation_time");
+                int is_locked = rs.getInt("is_locked");
+                Timestamp timestamp = new Timestamp(birthdate.getTime());
+                Timestamp timestamp1 = new Timestamp(creation_time.getTime());
+
+                LocalDateTime localDateTime = timestamp.toLocalDateTime();
+                DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-MM-yyyy");
+                String format_time = localDateTime.format(formatter);
+
+                LocalDateTime localDateTime1 = timestamp1.toLocalDateTime();
+                DateTimeFormatter formatter1 = DateTimeFormatter.ofPattern("dd-MM-yyyy H:m:s");
+                String format_time1 = localDateTime1.format(formatter1);
+
+                String genderString = gender ? "Female" : "Male";
+                String statusString = (is_locked == 1) ? "Disabled" : "Enabled";
+                Object[] row = {username, password, fullname, address, format_time, genderString, email, format_time1, statusString};
+
+                rows.add(row);
+            }
+            rs.close();
+            stmt.close();
+
+            Object[][] data = new Object[rows.size()][];
+            rows.toArray(data);
+
+            return data;
+        }catch(SQLException se){
+            //Handle errors for JDBC
+            se.printStackTrace();
+        }catch(Exception e){ //Handle errors for Class.forName
+            e.printStackTrace();
+        }
+        return null;
+    }
+
+    Object[][] getUserHistoryLogin(String userName){
+        try{
+            String sql = "SELECT * FROM HISTORY_LOGIN " + "WHERE username LIKE ?";
+            PreparedStatement stmt;
+            stmt = connection.prepareStatement(sql);
+            stmt.setString(1, "%" + userName + "%");
+            ResultSet rs = stmt.executeQuery();
+            List<Object[]> rows = new ArrayList<>();
+
+            int i = 1;
+            while(rs.next()){
+                Date login_time = rs.getDate("login_time");
+                Date logout_time = rs.getDate("logout_time");
+
+                Timestamp timestamp = new Timestamp(login_time.getTime());
+                LocalDateTime localDateTime = timestamp.toLocalDateTime();
+                DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-MM-yyyy H:m:s");
+                String format_time = localDateTime.format(formatter);
+
+                String format_time1;
+                if (logout_time != null) {
+                    Timestamp timestamp1 = new Timestamp(logout_time.getTime());
+                    LocalDateTime localDateTime1 = timestamp1.toLocalDateTime();
+                    DateTimeFormatter formatter1 = DateTimeFormatter.ofPattern("dd-MM-yyyy H:m:s");
+                    format_time1 = localDateTime1.format(formatter1);
+                } else {
+                    format_time1 = "N/A";
+                }
+
+                Object[] row = {i, format_time,  format_time1};
+
+                rows.add(row);
+                i++;
+            }
+            rs.close();
+            stmt.close();
+
+            Object[][] data = new Object[rows.size()][];
+            rows.toArray(data);
+
+            return data;
+        }catch(SQLException se){
+            //Handle errors for JDBC
+            se.printStackTrace();
+        }catch(Exception e){ //Handle errors for Class.forName
+            e.printStackTrace();
+        }
+        return null;
+    }
+
+    Object[][] getUserFriends(String userName){
+        try{
+            String sql = "SELECT u.username AS username, u.fullname AS fullname " + "FROM FRIEND f " + "JOIN USER u ON f.username1 = u.username " + "WHERE f.username2 LIKE ? AND f.accepted = 1 AND u.is_locked != 2 "
+                    + "UNION " + "SELECT u.username AS username, u.fullname AS fullname " + "FROM FRIEND f " + "JOIN USER u ON f.username2 = u.username " + "WHERE f.username1 LIKE ? AND f.accepted = 1 AND u.is_locked != 2";
+            PreparedStatement stmt;
+            stmt = connection.prepareStatement(sql);
+            stmt.setString(1, "%" + userName + "%");
+            stmt.setString(2, "%" + userName + "%");
+            ResultSet rs = stmt.executeQuery();
+            List<Object[]> rows = new ArrayList<>();
+            int i = 1;
+            while(rs.next()){
+                String username = rs.getString("username");
+                String fullname = rs.getString("fullname");
+
+                Object[] row = {i, username,  fullname};
+                rows.add(row);
+                i++;
+            }
+
+            rs.close();
+            stmt.close();
+            if (rows.isEmpty()) {
+                rows.add(new Object[]{"", "", "No friends found"});
+            }
+            Object[][] data = new Object[rows.size()][];
+            rows.toArray(data);
+
+            return data;
+        }catch(SQLException se){
+            se.printStackTrace();
+        }catch(Exception e){
+            e.printStackTrace();
+        }
+        return null;
+    }
+
+    Boolean updateUser(String username, String fullname , String address, String birthdate, String gender, String email){
+        try{
+            System.out.println("birthdate: " + birthdate);
+            String sql = "UPDATE USER SET fullname = ?, address = ?, birthdate = ?, gender = ?, email = ? WHERE username LIKE ?";
+            PreparedStatement pstmt = connection.prepareStatement(sql);
+
+            Boolean genderBoolean = "Female".equals(gender);
+            SimpleDateFormat inputDateFormat = new SimpleDateFormat("dd-MM-yyyy");
+            SimpleDateFormat outputDateFormat = new SimpleDateFormat("yyyy-MM-dd");
+
+            java.util.Date parsedDate = inputDateFormat.parse(birthdate);
+
+            pstmt.setString(1, fullname);
+            pstmt.setString(2, address);
+            pstmt.setDate(3, new java.sql.Date(parsedDate.getTime()));
+            pstmt.setBoolean(4, genderBoolean);
+            pstmt.setString(5, email);
+            pstmt.setString(6, "%" + username + "%");
+
+            int affectedRows = pstmt.executeUpdate();
+
+            if (affectedRows > 0) {
+                pstmt.close();
+                return true;
+            } else {
+                pstmt.close();
+                return false;
+            }
+        } catch (SQLException se) {
+            se.printStackTrace();
+            return false;
+        } catch (Exception e) {
+            e.printStackTrace();
+            return false;
+        }
+    }
+
+    Object[][] getAllEmail(String username){
+        try{
+            String sql = "SELECT email FROM USER WHERE username NOT LIKE ? AND is_locked != 2";
+            PreparedStatement stmt = connection.prepareStatement(sql);
+            stmt.setString(1, "%" + username + "%");
+            ResultSet rs = stmt.executeQuery();
+            List<Object[]> rows = new ArrayList<>();
+
+            while(rs.next()){
+                String email = rs.getString("email");
+                Object[] row = { email };
+
+                rows.add(row);
+            }
+
+            rs.close();
+            stmt.close();
+
+            Object[][] data = new Object[rows.size()][];
+            rows.toArray(data);
+
+            return data;
+        }catch(SQLException se){
+            //Handle errors for JDBC
+            se.printStackTrace();
+        }catch(Exception e){ //Handle errors for Class.forName
+            e.printStackTrace();
+        }
+        return null;
+    }
+
+    Boolean deleteUser(String username){
+        try{
+            String sql = "UPDATE USER SET is_locked = 2 WHERE username LIKE ?";
+            PreparedStatement pstmt = connection.prepareStatement(sql);
+            pstmt.setString(1, "%" + username + "%");
+
+            int affectedRows = pstmt.executeUpdate();
+
+            if (affectedRows > 0) {
+                pstmt.close();
+                return true;
+            } else {
+                pstmt.close();
+                return false;
+            }
+        } catch (SQLException se) {
+            se.printStackTrace();
+            return false;
+        } catch (Exception e) {
+            e.printStackTrace();
+            return false;
+        }
+    }
+
+    Boolean enableUser(String username){
+        try{
+            String sql;
+            sql = "UPDATE USER SET is_locked = 0 WHERE username = ?";
+
+            PreparedStatement stmt = connection.prepareStatement(sql);
+            stmt.setString(1, username);
+            int affectedRows = stmt.executeUpdate();
+
+            if (affectedRows > 0) {
+                stmt.close();
+                return true;
+            } else {
+                stmt.close();
+                return false;
+            }
+        } catch (SQLException se) {
+            se.printStackTrace();
+            return false;
+        } catch (Exception e) {
+            e.printStackTrace();
+            return false;
+        }
+    }
+
+    Boolean disableUserManage(String username){
+        try{
+            String sql;
+            sql = "UPDATE USER SET is_locked = 1 WHERE username = ?";
+
+            PreparedStatement stmt = connection.prepareStatement(sql);
+            stmt.setString(1, username);
+            int affectedRows = stmt.executeUpdate();
+
+            if (affectedRows > 0) {
+                stmt.close();
+                return true;
+            } else {
+                stmt.close();
                 return false;
             }
         } catch (SQLException se) {

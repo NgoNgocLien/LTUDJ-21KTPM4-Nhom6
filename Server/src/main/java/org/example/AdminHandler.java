@@ -34,7 +34,7 @@ public class AdminHandler implements Runnable {
                 int bytesRead = inputStream.read(buffer);
                 String method = new String(buffer, 0, bytesRead);
                 System.out.println("check2");
-                System.out.println(method);
+                System.out.println("method: " + method);
 
                 switch (method){
                     case "getAllGroup":{
@@ -356,6 +356,186 @@ public class AdminHandler implements Runnable {
                         }
 
                         Boolean success = dbcon.addNewUser(username, password, fullname, address, birthdate, gender, email);
+                        objectOutputStream.reset();
+                        objectOutputStream.writeObject(success);
+                        objectOutputStream.flush();
+
+                        System.out.println("Data sent to client.");
+
+                        break;
+                    }
+
+                    case "getUserByUsername":{
+                        System.out.println("Admin get user by username");
+
+                        buffer = new byte[1024];
+                        bytesRead = inputStream.read(buffer);
+                        String username = new String(buffer, 0, bytesRead);
+
+                        Object[][] data1 = dbcon.getUserByUsername(username);
+                        objectOutputStream.reset();
+                        objectOutputStream.writeObject(data1);
+                        objectOutputStream.flush();
+
+                        for (Object[] row : data1) {
+                            for (Object element : row) {
+                                System.out.print(element + " ");
+                            }
+                            System.out.println();
+                        }
+
+                        System.out.println("Data sent to client.");
+
+                        break;
+                    }
+
+                    case "getUserHistoryLogin":{
+                        System.out.println("Admin get user history login");
+
+                        buffer = new byte[1024];
+                        bytesRead = inputStream.read(buffer);
+                        String username = new String(buffer, 0, bytesRead);
+
+                        Object[][] data1 = dbcon.getUserHistoryLogin(username);
+                        objectOutputStream.reset();
+                        objectOutputStream.writeObject(data1);
+                        objectOutputStream.flush();
+
+                        for (Object[] row : data1) {
+                            for (Object element : row) {
+                                System.out.print(element + " ");
+                            }
+                            System.out.println();
+                        }
+
+                        System.out.println("Data sent to client.");
+
+                        break;
+                    }
+
+                    case "getUserFriends":{
+                        System.out.println("Admin get user friends");
+
+                        buffer = new byte[1024];
+                        bytesRead = inputStream.read(buffer);
+                        String username = new String(buffer, 0, bytesRead);
+                        System.out.println("username: " + username);
+                        Object[][] data1 = dbcon.getUserFriends(username);
+                        objectOutputStream.reset();
+                        objectOutputStream.writeObject(data1);
+                        objectOutputStream.flush();
+
+                        for (Object[] row : data1) {
+                            for (Object element : row) {
+                                System.out.print(element + " ");
+                            }
+                            System.out.println();
+                        }
+
+                        System.out.println("Data sent to client.");
+
+                        break;
+                    }
+
+                    case "updateUser":{
+                        System.out.println("Admin update user");
+
+                        buffer = new byte[1024];
+                        bytesRead = inputStream.read(buffer);
+                        String message = new String(buffer, 0, bytesRead);
+
+                        String[] messageSplit = message.split("\n");
+
+                        String username = messageSplit[0];
+
+                        String fullname = "";
+                        String birthdate = "";
+                        String gender = "";
+                        String address = "";
+                        String email = "";
+                        if (messageSplit.length > 5) {
+                            fullname = messageSplit[1];
+                            address = messageSplit[2];
+                            birthdate = messageSplit[3];
+                            gender = messageSplit[4];
+                            email = messageSplit[5];
+                        }
+                        System.out.println("birthdate handler: " + birthdate);
+                        Boolean success = dbcon.updateUser(username, fullname, address, birthdate, gender, email);
+                        objectOutputStream.reset();
+                        objectOutputStream.writeObject(success);
+                        objectOutputStream.flush();
+
+                        System.out.println("Data sent to client.");
+
+                        break;
+                    }
+
+                    case "getAllEmail":{
+                        System.out.println("Admin get all email");
+                        buffer = new byte[1024];
+                        bytesRead = inputStream.read(buffer);
+                        String username = new String(buffer, 0, bytesRead);
+
+                        Object[][] data1 = dbcon.getAllEmail(username);
+                        objectOutputStream.reset();
+                        objectOutputStream.writeObject(data1);
+                        objectOutputStream.flush();
+
+                        for (Object[] row : data1) {
+                            for (Object element : row) {
+                                System.out.print(element + " ");
+                            }
+                            System.out.println();
+                        }
+
+                        System.out.println("Data sent to client.");
+
+                        break;
+                    }
+
+                    case "deleteUser":{
+                        System.out.println("Admin delete user");
+
+                        buffer = new byte[1024];
+                        bytesRead = inputStream.read(buffer);
+                        String username = new String(buffer, 0, bytesRead);
+
+                        Boolean success = dbcon.deleteUser(username);
+                        objectOutputStream.reset();
+                        objectOutputStream.writeObject(success);
+                        objectOutputStream.flush();
+
+                        System.out.println("Data sent to client.");
+
+                        break;
+                    }
+
+                    case "enableUser":{
+                        System.out.println("Admin enable user");
+
+                        buffer = new byte[1024];
+                        bytesRead = inputStream.read(buffer);
+                        String username = new String(buffer, 0, bytesRead);
+
+                        Boolean success = dbcon.enableUser(username);
+                        objectOutputStream.reset();
+                        objectOutputStream.writeObject(success);
+                        objectOutputStream.flush();
+
+                        System.out.println("Data sent to client.");
+
+                        break;
+                    }
+
+                    case "disableUserManage":{
+                        System.out.println("Admin disable user manage");
+
+                        buffer = new byte[1024];
+                        bytesRead = inputStream.read(buffer);
+                        String username = new String(buffer, 0, bytesRead);
+
+                        Boolean success = dbcon.disableUserManage(username);
                         objectOutputStream.reset();
                         objectOutputStream.writeObject(success);
                         objectOutputStream.flush();
