@@ -2,7 +2,7 @@ package org.example.utilities;
 
 import java.awt.*;
 public class Constants {
-    public static final String APP_NAME = "Chat App";
+    public static final String APP_NAME = "Facebook";
 
     // COLOR
     public static final Color DARK_BLUE = new Color(23, 70, 162);
@@ -24,6 +24,7 @@ public class Constants {
 
     // FONT
     private static final String FONT_NAME = "Segoe UI";
+    public static final Font FONT_TITLE = new Font(FONT_NAME, Font.BOLD, 30);
     public static final Font FONT_NORMAL = new Font(FONT_NAME, Font.PLAIN, 18);
     public static final Font FONT_BOLD = new Font(FONT_NAME, Font.BOLD, 18);
     public static final Font FONT_SMALL= new Font(FONT_NAME, Font.PLAIN, 16);

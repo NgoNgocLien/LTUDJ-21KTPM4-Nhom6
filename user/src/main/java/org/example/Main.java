@@ -13,7 +13,9 @@
 
 package org.example;
 
+import org.example.controllers.LoginFrameController;
 import org.example.utilities.DatabaseHandler;
+import org.example.views.LoginFrame;
 import org.example.views.MainFrame;
 import org.example.controllers.MainFrameController;
 import org.example.models.ChatInfo;
@@ -27,14 +29,9 @@ public class Main {
     public static void main(String[] args) {
         SwingUtilities.invokeLater(() -> {
             DatabaseHandler DB = new DatabaseHandler();
-            ArrayList<ChatInfo> allChats = null;
-            try {
-                allChats= DB.getAllChats("hlong");
-            } catch (SQLException se) {
-                se.printStackTrace();
-            }
-            MainFrame mainFrame = new MainFrame(allChats);
-            MainFrameController mainFrameController = new MainFrameController(mainFrame, DB, "hlong");
+
+            LoginFrame loginFrame = new LoginFrame();
+            LoginFrameController loginFrameController = new LoginFrameController(loginFrame, DB);
         });
     }
 }

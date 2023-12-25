@@ -34,11 +34,14 @@ public class RegisterFrame extends JFrame {
             System.out.println("Error setting Windows look and feel: " + e);
         }
 
+        setTitle(Constants.APP_NAME);
         setBackground(Constants.COLOR_BACKGROUND);
         setLayout(new BoxLayout(getContentPane(), BoxLayout.Y_AXIS));
         setPreferredSize(new Dimension(820, 720));
-        setResizable(false);
-        setLocationRelativeTo(null);
+        setResizable(true);
+        // center the frame on screen
+        Dimension dim = Toolkit.getDefaultToolkit().getScreenSize();
+        setLocation(dim.width/2 - 410, dim.height/2 - 360);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
         // register jiconfont
@@ -46,16 +49,22 @@ public class RegisterFrame extends JFrame {
         Icon icon = IconFontSwing.buildIcon(FontAwesome.FACEBOOK_SQUARE, 80, Constants.COLOR_PRIMARY);
         RotatedIcon rotatedIcon = new RotatedIcon(icon, RotatedIcon.Rotate.UPSIDE_DOWN);
 
-        JLabel titleLabel = new JLabel();
-        titleLabel.setIcon(rotatedIcon);
+        JLabel iconLabel = new JLabel();
+        iconLabel.setIcon(rotatedIcon);
+        iconLabel.setAlignmentX(Component.CENTER_ALIGNMENT);
+        iconLabel.setBorder(BorderFactory.createEmptyBorder(20, 0, 20, 0));
+
+        JLabel titleLabel = new JLabel("Sign Up");
+        titleLabel.setFont(Constants.FONT_TITLE);
+        titleLabel.setForeground(Constants.COLOR_PRIMARY);
         titleLabel.setAlignmentX(Component.CENTER_ALIGNMENT);
-        titleLabel.setBorder(BorderFactory.createEmptyBorder(20, 0, 20, 0));
+        titleLabel.setBorder(BorderFactory.createEmptyBorder(0, 0, 20, 0));
 
         JPanel container = new JPanel();
         container.setLayout(new GridLayout(1, 2, 40, 0));
         container.setAlignmentX(Component.CENTER_ALIGNMENT);
         container.setBorder(BorderFactory.createEmptyBorder(0, 0, 0, 0));
-        container.setMaximumSize(new Dimension(640, 500));
+        container.setMaximumSize(new Dimension(640, 540));
 
         JPanel leftPanel = new JPanel();
         leftPanel.setLayout(new BoxLayout(leftPanel, BoxLayout.Y_AXIS));
@@ -170,13 +179,15 @@ public class RegisterFrame extends JFrame {
         genderComboBox = new JComboBox<>(genders);
         genderComboBox.setFont(Constants.FONT_NORMAL);
         genderComboBox.setAlignmentX(Component.CENTER_ALIGNMENT);
-        genderComboBox.setMaximumSize(new Dimension(298, 38));
+//        genderComboBox.setPreferredSize(new Dimension(298, 38));
+        genderComboBox.setMaximumSize(new Dimension(300, 40));
 
         JPanel genderPanel = new JPanel();
         genderPanel.setLayout(new BoxLayout(genderPanel, BoxLayout.X_AXIS));
         genderPanel.setAlignmentX(Component.CENTER_ALIGNMENT);
         genderPanel.setBorder(BorderFactory.createEmptyBorder(0, 0, 0, 0));
-        genderPanel.setPreferredSize(new Dimension(300, 40));
+//        genderPanel.setPreferredSize(new Dimension(300, 40));
+        genderPanel.setMaximumSize(new Dimension(300, 40));
         genderPanel.add(genderComboBox);
 
         String[] days = new String[32];
@@ -200,24 +211,28 @@ public class RegisterFrame extends JFrame {
         JLabel birthdayLabel = new JLabel("Date of Birth");
         birthdayLabel.setFont(Constants.FONT_NORMAL);
         birthdayLabel.setAlignmentX(Component.CENTER_ALIGNMENT);
-        birthdayLabel.setBorder(BorderFactory.createEmptyBorder(0, 0, 0, 0));
+        birthdayLabel.setBorder(BorderFactory.createEmptyBorder(0, 0, 10, 0));
         birthdayLabel.setMaximumSize(new Dimension(300, 40));
 
         dayComboBox = new JComboBox<>(days);
         monthComboBox = new JComboBox<>(months);
         yearComboBox = new JComboBox<>(years);
 
-        dayComboBox.setMaximumSize(new Dimension(98, 38));
+//        dayComboBox.setPreferredSize(new Dimension(98, 38));
+        dayComboBox.setMaximumSize(new Dimension(100, 40));
         dayComboBox.setFont(Constants.FONT_NORMAL);
-        monthComboBox.setMaximumSize(new Dimension(98, 38));
+//        monthComboBox.setPreferredSize(new Dimension(98, 38));
+        monthComboBox.setMaximumSize(new Dimension(100, 40));
         monthComboBox.setFont(Constants.FONT_NORMAL);
-        yearComboBox.setMaximumSize(new Dimension(98, 38));
+//        yearComboBox.setPreferredSize(new Dimension(98, 38));
+        yearComboBox.setMaximumSize(new Dimension(100, 40));
         yearComboBox.setFont(Constants.FONT_NORMAL);
 
         JPanel birthdayPanel = new JPanel();
         birthdayPanel.setLayout(new BoxLayout(birthdayPanel, BoxLayout.X_AXIS));
         birthdayPanel.setAlignmentX(Component.CENTER_ALIGNMENT);
         birthdayPanel.setPreferredSize(new Dimension(300, 40));
+        birthdayPanel.setMaximumSize(new Dimension(300, 40));
         birthdayPanel.add(dayComboBox);
         birthdayPanel.add(monthComboBox);
         birthdayPanel.add(yearComboBox);
@@ -243,7 +258,7 @@ public class RegisterFrame extends JFrame {
         termCheckBox.setBorder(BorderFactory.createEmptyBorder(0, 0, 10, 0));
 
         // register button
-        registerButton = new JButton("Register");
+        registerButton = new JButton("Sign up");
         registerButton.setFont(Constants.FONT_NORMAL);
         registerButton.setAlignmentX(Component.CENTER_ALIGNMENT);
         registerButton.setMaximumSize(new Dimension(100, 40));
@@ -258,8 +273,8 @@ public class RegisterFrame extends JFrame {
         container.add(leftPanel);
         container.add(rightPanel);
 
+        add(iconLabel);
         add(titleLabel);
-        add(Box.createRigidArea(new Dimension(0, 10)));
 
         add(container);
         add(Box.createRigidArea(new Dimension(0, 0)));
@@ -290,9 +305,4 @@ public class RegisterFrame extends JFrame {
     public JCheckBox getTermCheckBox() { return termCheckBox; }
     public JButton getRegisterButton() { return registerButton; }
     public JLabel getLoginLine() { return loginLine; }
-
-    public static void main(String[] args) {
-        RegisterFrame rf = new RegisterFrame();
-        RegisterFrameController rfc = new RegisterFrameController(rf, null);
-    }
 }

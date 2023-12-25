@@ -1,14 +1,15 @@
 package org.example.controllers;
 
+import org.example.models.ChatInfo;
 import org.example.utilities.Constants;
 import org.example.utilities.DatabaseHandler;
-import org.example.views.ErrorMessage;
-import org.example.views.LoginFrame;
-import org.example.views.RegisterFrame;
+import org.example.views.*;
 
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.*;
+import java.sql.SQLException;
+import java.util.ArrayList;
 
 public class LoginFrameController {
     private LoginFrame LF;
@@ -22,6 +23,17 @@ public class LoginFrameController {
     public LoginFrameController(LoginFrame LF, DatabaseHandler DB) {
         this.LF = LF;
         this.DB = DB;
+
+        this.LF.addWindowListener(new WindowAdapter() {
+            @Override
+            public void windowClosing(WindowEvent windowEvent) {
+                try {
+                    DB.closeConnection();
+                } catch (Exception e) {
+                    System.out.println("Error closing window: " + e);
+                }
+            }
+        });
 
         this.usernameField = LF.getUsernameField();
         this.passwordField = LF.getPasswordField();
@@ -80,7 +92,6 @@ public class LoginFrameController {
     private class LoginButtonListener implements ActionListener {
         @Override
         public void actionPerformed(ActionEvent e) {
-            // TODO: login
             String username = usernameField.getText();
             String password = new String(passwordField.getPassword());
 
@@ -95,13 +106,32 @@ public class LoginFrameController {
                 new ErrorMessage(LF, "Please enter your password");
                 return;
             }
-            else if (!checkUsername(username) || !checkPassword(password)) {
+            else if (!checkUsername(username) || !checkPassword(password)) { // Kiểm tra format trước khi kiểm tra qua database
                 new ErrorMessage(LF, "Invalid username or password");
                 return;
             }
 
-            // open jdialog to show data
+            // TEST & DELETE AFTER: show username and password
             JOptionPane.showMessageDialog(LF, "Username: " + username + "\nPassword: " + password);
+
+            // TODO: verify login info with database
+
+            // TODO: if fail: show error message
+            // new ErrorMessage(LF, "Wrong username or password");
+
+            // TODO: if success: close login frame, open main frame
+
+            // success: close login frame, open main frame
+            LF.dispose();
+
+            ArrayList<ChatInfo> allChats = null;
+            try {
+                allChats= DB.getAllChats("hlong");
+            } catch (SQLException se) {
+                se.printStackTrace();
+            }
+            MainFrame mainFrame = new MainFrame(allChats);
+            MainFrameController mainFrameController = new MainFrameController(mainFrame, DB, "hlong");
         }
     }
 
@@ -121,9 +151,10 @@ public class LoginFrameController {
                 RegisterFrame RF = new RegisterFrame();
                 RegisterFrameController RFC = new RegisterFrameController(RF, DB);
             } else if (e.getSource() == forgotPasswordLine) {
-                // TODO: open forgot password frame
-
-
+                // close login frame
+                LF.dispose();
+                // open forgot password frame
+                ForgotPasswordFrame FP = new ForgotPasswordFrame();
             }
         }
 
