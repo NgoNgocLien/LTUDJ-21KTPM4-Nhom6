@@ -1,5 +1,7 @@
 package org.example;
 
+import javax.swing.border.EmptyBorder;
+import javax.swing.border.LineBorder;
 import javax.swing.table.*;
 import java.awt.*;
 import javax.swing.*;
@@ -845,7 +847,7 @@ public class AdminApp extends javax.swing.JFrame {
         updateUserButton.setText("Update user");
         updateUserButton.setFocusable(false);
         updateUserButton.setMargin(new java.awt.Insets(2, 5, 3, 5));
-        updateUserButton.setPreferredSize(new java.awt.Dimension(57, 35));
+        updateUserButton.setPreferredSize(new java.awt.Dimension(100, 35));
         updateUserButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 try {
@@ -860,7 +862,7 @@ public class AdminApp extends javax.swing.JFrame {
         deleteUserButton.setText("Delete user");
         deleteUserButton.setFocusable(false);
         deleteUserButton.setMargin(new java.awt.Insets(2, 5, 3, 5));
-        deleteUserButton.setPreferredSize(new java.awt.Dimension(57, 35));
+        deleteUserButton.setPreferredSize(new java.awt.Dimension(100, 35));
         deleteUserButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 try {
@@ -875,7 +877,7 @@ public class AdminApp extends javax.swing.JFrame {
         disableEnableUserButton.setText("Disable / Enable user");
         disableEnableUserButton.setFocusable(false);
         disableEnableUserButton.setMargin(new java.awt.Insets(2, 5, 3, 5));
-        disableEnableUserButton.setPreferredSize(new java.awt.Dimension(57, 35));
+        disableEnableUserButton.setPreferredSize(new java.awt.Dimension(170, 35));
         disableEnableUserButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 try {
@@ -890,7 +892,7 @@ public class AdminApp extends javax.swing.JFrame {
         updatePasswordButton.setText("Update password");
         updatePasswordButton.setFocusable(false);
         updatePasswordButton.setMargin(new java.awt.Insets(2, 5, 3, 5));
-        updatePasswordButton.setPreferredSize(new java.awt.Dimension(57, 35));
+        updatePasswordButton.setPreferredSize(new java.awt.Dimension(150, 35));
 
         historyLoginTable.setFont(new java.awt.Font("Arial", 0, 12)); // NOI18N
         historyLoginTable.setModel(new javax.swing.table.DefaultTableModel(
@@ -984,19 +986,19 @@ public class AdminApp extends javax.swing.JFrame {
         }
 
         userTableMainPanel.setMaximumSize(new java.awt.Dimension(32767, 600));
-        userTableMainPanel.setPreferredSize(new java.awt.Dimension(2276, 600));
+        userTableMainPanel.setPreferredSize(new java.awt.Dimension(2276, 400));
         userTableMainPanel.setRequestFocusEnabled(false);
 
-        userDetailPanel.setPreferredSize(new java.awt.Dimension(2276, 800));
+        userDetailPanel.setPreferredSize(new java.awt.Dimension(2276, 500));
 
         javax.swing.JPanel buttonContainer = new javax.swing.JPanel();
         buttonContainer.setLayout(new javax.swing.BoxLayout(buttonContainer, javax.swing.BoxLayout.X_AXIS));
         buttonContainer.add(updateUserButton);
-        buttonContainer.add(javax.swing.Box.createHorizontalStrut(20));
+        buttonContainer.add(Box.createHorizontalGlue());
         buttonContainer.add(deleteUserButton);
-        buttonContainer.add(javax.swing.Box.createHorizontalStrut(20));
+        buttonContainer.add(Box.createHorizontalGlue());
         buttonContainer.add(disableEnableUserButton);
-        buttonContainer.add(javax.swing.Box.createHorizontalStrut(20));
+        buttonContainer.add(Box.createHorizontalGlue());
         buttonContainer.add(updatePasswordButton);
 
         javax.swing.GroupLayout userDetailPanelLayout = new javax.swing.GroupLayout(userDetailPanel);
@@ -1005,31 +1007,40 @@ public class AdminApp extends javax.swing.JFrame {
                 userDetailPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                         .addGroup(userDetailPanelLayout.createSequentialGroup()
                                 .addGap(70, 70, 70)
-                                .addComponent(userTitle4)
                                 .addGroup(userDetailPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                        .addComponent(userDetailTableScrollPanel, javax.swing.GroupLayout.PREFERRED_SIZE, 1100, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                        .addComponent(buttonContainer)
+                                        .addComponent(userTitle4)
+                                        .addGroup(userDetailPanelLayout.createSequentialGroup()
+                                                .addComponent(userDetailTableScrollPanel, javax.swing.GroupLayout.PREFERRED_SIZE, 1100, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                        )
+                                        .addGroup(userDetailPanelLayout.createSequentialGroup()
+                                                .addComponent(buttonContainer)
+                                                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                        )
                                         .addGroup(userDetailPanelLayout.createSequentialGroup()
                                                 .addComponent(historyLoginTableScrollPane, javax.swing.GroupLayout.PREFERRED_SIZE, 300, javax.swing.GroupLayout.PREFERRED_SIZE)
                                                 .addGap(70, 70, 70)
                                                 .addComponent(listFriendTableScrollPane, javax.swing.GroupLayout.PREFERRED_SIZE, 300, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                                         )
                                 )
-                                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         )
         );
 
         userDetailPanelLayout.setVerticalGroup(
                 userDetailPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                         .addGroup(userDetailPanelLayout.createSequentialGroup()
-                                .addGap(20, 20, 20)
+                                .addGap(40, 40, 40)
                                 .addComponent(userTitle4)
-                                .addGap(18, 18, 18)
+                                .addGap(30, 30, 30)
                                 .addComponent(userDetailTableScrollPanel, javax.swing.GroupLayout.PREFERRED_SIZE, 48, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(18, 18, 18)
                                 .addComponent(buttonContainer)
-                                .addGroup(userDetailPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                .addGap(18, 18, 18)
+                                .addGroup(userDetailPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                                         .addComponent(historyLoginTableScrollPane, javax.swing.GroupLayout.PREFERRED_SIZE, 203, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                        .addComponent(listFriendTableScrollPane, javax.swing.GroupLayout.PREFERRED_SIZE, 203, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                        .addComponent(listFriendTableScrollPane, javax.swing.GroupLayout.PREFERRED_SIZE, 203, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                )
                                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         )
         );
@@ -1103,6 +1114,12 @@ public class AdminApp extends javax.swing.JFrame {
         userPanel.setPreferredSize(new java.awt.Dimension(1440, 1180));
         userPanel.setRequestFocusEnabled(false);
         userPanel.setLayout(new javax.swing.BoxLayout(userPanel, javax.swing.BoxLayout.Y_AXIS));
+
+        LineBorder lineBorderUserTable = new LineBorder(Color.BLACK); // Màu đen, bạn có thể thay đổi màu theo ý muốn
+        userTableMainPanel.setBorder(BorderFactory.createCompoundBorder(lineBorderUserTable, userTableMainPanel.getBorder()));
+
+        LineBorder lineBorderUserDetail = new LineBorder(Color.RED); // Màu đen, bạn có thể thay đổi màu theo ý muốn
+        userDetailPanel.setBorder(BorderFactory.createCompoundBorder(lineBorderUserDetail, userDetailPanel.getBorder()));
 
         userPanel.add(userTableMainPanel);
 
@@ -2049,6 +2066,8 @@ public class AdminApp extends javax.swing.JFrame {
 
     private void userTableMouseClicked(java.awt.event.MouseEvent evt) throws IOException, ClassNotFoundException {
         userPanel.add(userDetailPanel);
+        userPanel.revalidate();
+        userPanel.repaint();
         DefaultTableModel userDetailModel = (DefaultTableModel) userDetailTable.getModel();
         userDetailModel.setRowCount(0);
         int index = userTable.getSelectedRow();
