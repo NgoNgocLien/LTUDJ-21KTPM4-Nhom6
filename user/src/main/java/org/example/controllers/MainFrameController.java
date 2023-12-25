@@ -21,12 +21,15 @@ public class MainFrameController {
         mainFrame.addWindowListener(new java.awt.event.WindowAdapter() {
             @Override
             public void windowClosing(java.awt.event.WindowEvent windowEvent) {
-                try {
-                    // user status
-                    DB.closeConnection();
-                } catch (Exception e) {
-                    System.out.println("Error closing window: " + e);
-                }
+            try {
+                // TODO: update status to offline
+
+
+
+                DB.closeConnection();
+            } catch (Exception e) {
+                System.out.println("Error closing window: " + e);
+            }
             }
         });
 

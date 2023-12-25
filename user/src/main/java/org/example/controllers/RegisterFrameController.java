@@ -33,6 +33,17 @@ public class RegisterFrameController {
         this.RF = RF;
         this.DB = DB;
 
+        this.RF.addWindowListener(new WindowAdapter() {
+            @Override
+            public void windowClosing(WindowEvent windowEvent) {
+                try {
+                    DB.closeConnection();
+                } catch (Exception e) {
+                    System.out.println("Error closing window: " + e);
+                }
+            }
+        });
+
         this.fullnameField = RF.getFullnameField();
         this.usernameField = RF.getUsernameField();
         this.passwordField = RF.getPasswordField();
@@ -186,15 +197,21 @@ public class RegisterFrameController {
             }
 
             // TODO: check username and email exist
+            // TODO: if exist, show error message
+            // new ErrorMessage(RF, "Username or email already exists"); return;
 
-            // TODO: insert into database
+            // TODO: if not exist, insert into database
 
             // TODO: show success message
-            new SuccessMessage(RF, "Register successfully");
+            new SuccessMessage(RF, "Register successfully! Please login to continue");
 
-            // open jdialog to show data
-            JOptionPane.showMessageDialog(RF, "Fullname: " + fullname + "\nUsername: " + username + "\nPassword: " + password + "\nEmail: " + email);
+            // TEST & DELETE AFTER: show all info
+            JOptionPane.showMessageDialog(RF, "Fullname: " + fullname + "\nUsername: " + username + "\nPassword: " + password + "\nEmail: " + email + "\nAddress: " + address + "\nGender: " + gender + "\nDate of birth: " + day + "/" + month + "/" + year);
 
+            // close register frame, open login frame
+            RF.dispose();
+            LoginFrame LF = new LoginFrame();
+            LoginFrameController LFC = new LoginFrameController(LF, DB);
         }
     }
 

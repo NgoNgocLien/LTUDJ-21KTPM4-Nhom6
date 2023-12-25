@@ -129,4 +129,10 @@ public class IconPanel extends JPanel {
 
         label.setBackground(Constants.COLOR_SECONDARY);
     }
+    public void setUnfocusLabel(JLabel label) {
+        label.setBackground(Constants.COLOR_PRIMARY);
+    }
+    public void setFocusTemporaryLabel(JLabel label) {
+        label.setBackground(Constants.COLOR_SECONDARY);
+    }
 }

@@ -3,6 +3,7 @@ package org.example.controllers;
 import org.example.models.ChatInfo;
 import org.example.utilities.DatabaseHandler;
 import org.example.views.IconPanel;
+import org.example.views.LoginFrame;
 import org.example.views.MainFrame;
 
 import javax.swing.*;
@@ -59,7 +60,9 @@ public class IconPanelController {
         @Override
         public void mouseClicked(MouseEvent e) {
             if (e.getSource() == homeIconLabel) {
-                iconPanel.setFocusLabel(homeIconLabel);
+//                iconPanel.setFocusLabel(homeIconLabel);
+                // TODO: open my profile
+
             } else if (e.getSource() == chatIconLabel) {
                 iconPanel.setFocusLabel(chatIconLabel);
                 try {
@@ -133,7 +136,31 @@ public class IconPanelController {
                     System.out.println("Error getting all blocks: " + ex);
                 }
             } else if (e.getSource() == logoutIconLabel) {
-                iconPanel.setFocusLabel(logoutIconLabel);
+                int confirm = JOptionPane.showConfirmDialog(MF, "Are you sure you want to log out?", "Log out", JOptionPane.YES_NO_OPTION);
+                if (confirm == JOptionPane.YES_OPTION) {
+                    try {
+                        // TODO: set user status to offline
+                    } catch (Exception ex) {
+                        System.out.println("Error closing window: " + ex);
+                    }
+                    MF.dispose();
+                    LoginFrame LF = new LoginFrame();
+                    LoginFrameController LFC = new LoginFrameController(LF, DB);
+                }
+            }
+        }
+
+        @Override
+        public void mouseEntered(MouseEvent e) {
+            if (e.getSource() == logoutIconLabel) {
+                iconPanel.setFocusTemporaryLabel(logoutIconLabel);
+            }
+        }
+
+        @Override
+        public void mouseExited(MouseEvent e) {
+            if (e.getSource() == logoutIconLabel) {
+                iconPanel.setUnfocusLabel(logoutIconLabel);
             }
         }
     }

@@ -24,11 +24,14 @@ public class LoginFrame extends JFrame {
             System.out.println("Error setting Windows look and feel: " + e);
         }
 
+        setTitle(Constants.APP_NAME);
         setBackground(Constants.COLOR_BACKGROUND);
         setLayout(new BoxLayout(getContentPane(), BoxLayout.Y_AXIS));
-        setPreferredSize(new Dimension(480, 530));
-        setResizable(false);
-        setLocationRelativeTo(null);
+        setPreferredSize(new Dimension(480, 580));
+        setResizable(true);
+        // center the frame on screen
+        Dimension dim = Toolkit.getDefaultToolkit().getScreenSize();
+        setLocation(dim.width/2 - 240, dim.height/2 - 265);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
         // register jiconfont
@@ -36,10 +39,17 @@ public class LoginFrame extends JFrame {
         Icon icon = IconFontSwing.buildIcon(FontAwesome.FACEBOOK_SQUARE, 80, Constants.COLOR_PRIMARY);
         RotatedIcon rotatedIcon = new RotatedIcon(icon, RotatedIcon.Rotate.UPSIDE_DOWN);
 
-        JLabel titleLabel = new JLabel();
-        titleLabel.setIcon(rotatedIcon);
+        JLabel iconLabel = new JLabel();
+        iconLabel.setIcon(rotatedIcon);
+        iconLabel.setAlignmentX(Component.CENTER_ALIGNMENT);
+        iconLabel.setBorder(BorderFactory.createEmptyBorder(20, 0, 20, 0));
+
+        // title
+        JLabel titleLabel = new JLabel(Constants.APP_NAME);
+        titleLabel.setFont(Constants.FONT_TITLE);
+        titleLabel.setForeground(Constants.COLOR_PRIMARY);
         titleLabel.setAlignmentX(Component.CENTER_ALIGNMENT);
-        titleLabel.setBorder(BorderFactory.createEmptyBorder(20, 0, 20, 0));
+        titleLabel.setBorder(BorderFactory.createEmptyBorder(0, 0, 20, 0));
 
         // username
         JLabel usernameLabel = new JLabel("Username");
@@ -86,7 +96,7 @@ public class LoginFrame extends JFrame {
         forgotPasswordLine.setAlignmentX(Component.CENTER_ALIGNMENT);
         forgotPasswordLine.setBorder(BorderFactory.createEmptyBorder(0, 0, 0, 0));
 
-
+        add(iconLabel);
         add(titleLabel);
 
         add(usernameLabel);
@@ -113,9 +123,4 @@ public class LoginFrame extends JFrame {
     public JButton getLoginButton() { return loginButton; }
     public JLabel getRegisterLine() { return registerLine; }
     public JLabel getForgotPasswordLine() { return forgotPasswordLine; }
-
-    public static void main(String[] args) {
-        LoginFrame lf = new LoginFrame();
-        LoginFrameController lfc = new LoginFrameController(lf, null);
-    }
 }
