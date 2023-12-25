@@ -1051,4 +1051,73 @@ public class AdminDatabase {
             return false;
         }
     }
+
+    Object[][] getAllPassRequest(){
+        try{
+            Statement stmt = connection.createStatement();
+            String sql;
+            sql = "SELECT up.username, up.new_pwd FROM UPDATE_PWD up INNER JOIN USER u ON up.username = u.username WHERE u.is_locked != 2";
+            ResultSet rs = stmt.executeQuery(sql);
+            List<Object[]> rows = new ArrayList<>();
+            int serialNum = 1;
+
+            while(rs.next()){
+                String username = rs.getString("up.username");
+                String new_pwd = rs.getString("up.new_pwd");
+
+
+                Object[] row = { serialNum, username, new_pwd };
+                serialNum++;
+                // Add the row to the list
+                rows.add(row);
+            }
+
+            rs.close();
+            stmt.close();
+
+            Object[][] data = new Object[rows.size()][];
+            rows.toArray(data);
+
+            return data;
+        }catch(SQLException se){
+            //Handle errors for JDBC
+            se.printStackTrace();
+        }catch(Exception e){ //Handle errors for Class.forName
+            e.printStackTrace();
+        }
+        return null;
+    }
+
+    Boolean updatePassUser(String username, String new_pwd){
+        try{
+            String sql = "UPDATE USER SET password = ? WHERE username LIKE ? ";
+            PreparedStatement pstmt = connection.prepareStatement(sql);
+
+            pstmt.setString(1, new_pwd);
+            pstmt.setString(2, "%" + username + "%");
+
+            int affectedRows = pstmt.executeUpdate();
+
+            if (affectedRows > 0) {
+                sql = "DELETE FROM UPDATE_PWD WHERE username LIKE ? ";
+                PreparedStatement deleteStmt = connection.prepareStatement(sql);
+                deleteStmt.setString(1, "%" + username + "%");
+
+                int deleteAffectedRows = deleteStmt.executeUpdate();
+
+                deleteStmt.close();
+                pstmt.close();
+                return deleteAffectedRows > 0;
+            } else {
+                pstmt.close();
+                return false;
+            }
+        } catch (SQLException se) {
+            se.printStackTrace();
+            return false;
+        } catch (Exception e) {
+            e.printStackTrace();
+            return false;
+        }
+    }
 }

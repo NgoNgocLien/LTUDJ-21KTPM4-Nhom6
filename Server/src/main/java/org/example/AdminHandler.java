@@ -545,6 +545,52 @@ public class AdminHandler implements Runnable {
                         break;
                     }
 
+                    case "getAllPassRequest":{
+                        System.out.println("Admin get all pass request");
+
+                        Object[][] data1 = dbcon.getAllPassRequest();
+                        objectOutputStream.reset();
+                        objectOutputStream.writeObject(data1);
+                        objectOutputStream.flush();
+
+                        for (Object[] row : data1) {
+                            for (Object element : row) {
+                                System.out.print(element + " ");
+                            }
+                            System.out.println();
+                        }
+
+                        System.out.println("Data sent to client.");
+
+                        break;
+                    }
+
+                    case "updatePassUser":{
+                        System.out.println("Admin update user pass");
+
+                        buffer = new byte[1024];
+                        bytesRead = inputStream.read(buffer);
+                        String message = new String(buffer, 0, bytesRead);
+
+                        String[] messageSplit = message.split("\n");
+
+                        String username = messageSplit[0];
+
+                        String new_pwd = "";
+                        if (messageSplit.length > 1) {
+                            new_pwd = messageSplit[1];
+                        }
+
+                        Boolean success = dbcon.updatePassUser(username, new_pwd);
+                        objectOutputStream.reset();
+                        objectOutputStream.writeObject(success);
+                        objectOutputStream.flush();
+
+                        System.out.println("Data sent to client.");
+
+                        break;
+                    }
+
                 }
             }
         } catch (IOException | ClassNotFoundException e) {
