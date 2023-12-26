@@ -26,6 +26,4 @@ public class Client_Socket {
     void closeSocket() throws IOException {
         socket.close();
     }
-
-
 }

@@ -2,8 +2,10 @@ package org.example.utilities;
 
 import org.example.models.ChatInfo;
 import org.example.models.Message;
+import org.example.models.Profile;
 
 import java.sql.*;
+import java.time.LocalDate;
 import java.util.ArrayList;
 
 public class DatabaseHandler {
@@ -27,6 +29,24 @@ public class DatabaseHandler {
     public void closeConnection() throws SQLException {
         System.out.println("Database closed.");
         if (conn != null) conn.close();
+    }
+
+    public Profile getProfile(String username) throws SQLException {
+        String sql = "SELECT username, fullname, address, birthdate, gender, email, creation_time FROM USER WHERE username = ?";
+        PreparedStatement stmt = conn.prepareStatement(sql);
+        stmt.setString(1, username);
+        ResultSet rs = stmt.executeQuery();
+        Profile profile = null;
+        if (rs.next()) {
+            String fullname = rs.getString("fullname");
+            String address = rs.getString("address");
+            LocalDate birthdate = rs.getDate("birthdate").toLocalDate();
+            int gender = rs.getInt("gender");
+            String email = rs.getString("email");
+            LocalDate dateJoined = rs.getDate("creation_time").toLocalDate();
+            profile = new Profile(dateJoined, fullname, username, gender, birthdate, email, address);
+        }
+        return profile;
     }
 
     public ArrayList<ChatInfo> getAllChats(String myUsername) throws SQLException {
