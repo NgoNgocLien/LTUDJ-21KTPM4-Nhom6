@@ -67,6 +67,7 @@ public class IconPanelController {
                 try {
                     Profile myProfile = DB.getProfile(myUsername);
                     MyProfileFrame MPF = new MyProfileFrame(myProfile);
+                    MyProfileFrameController MPFC = new MyProfileFrameController(MPF, DB);
                 } catch (Exception ex) {
                     System.out.println("Error getting my profile: " + ex);
                 }
