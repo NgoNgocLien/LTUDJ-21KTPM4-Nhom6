@@ -1120,4 +1120,43 @@ public class AdminDatabase {
             return false;
         }
     }
+
+    Object[][] getAllLoginHistory(){
+        try{
+            Statement stmt = connection.createStatement();
+            String sql;
+            sql = "SELECT h.id, h.username, u.fullname, h.login_time FROM HISTORY_LOGIN h INNER JOIN USER u ON h.username = u.username WHERE u.is_locked != 2 ORDER BY h.login_time DESC";
+            ResultSet rs = stmt.executeQuery(sql);
+            List<Object[]> rows = new ArrayList<>();
+
+            while(rs.next()){
+                int id = rs.getInt("h.id");
+                String username = rs.getString("h.username");
+                String fullname = rs.getString("u.fullname");
+                Date login_time = rs.getDate("h.login_time");
+                Timestamp timestamp = new Timestamp(login_time.getTime());
+
+                LocalDateTime localDateTime = timestamp.toLocalDateTime();
+                DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-MM-yyyy H:m:s");
+                String format_time = localDateTime.format(formatter);
+
+                Object[] row = { id, username, fullname, format_time };
+                rows.add(row);
+            }
+
+            rs.close();
+            stmt.close();
+
+            Object[][] data = new Object[rows.size()][];
+            rows.toArray(data);
+
+            return data;
+        }catch(SQLException se){
+            //Handle errors for JDBC
+            se.printStackTrace();
+        }catch(Exception e){ //Handle errors for Class.forName
+            e.printStackTrace();
+        }
+        return null;
+    }
 }

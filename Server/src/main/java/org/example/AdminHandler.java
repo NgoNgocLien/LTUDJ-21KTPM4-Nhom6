@@ -591,6 +591,26 @@ public class AdminHandler implements Runnable {
                         break;
                     }
 
+                    case "getAllLoginHistory":{
+                        System.out.println("Admin get all login history");
+
+                        Object[][] data1 = dbcon.getAllLoginHistory();
+                        objectOutputStream.reset();
+                        objectOutputStream.writeObject(data1);
+                        objectOutputStream.flush();
+
+                        for (Object[] row : data1) {
+                            for (Object element : row) {
+                                System.out.print(element + " ");
+                            }
+                            System.out.println();
+                        }
+
+                        System.out.println("Data sent to client.");
+
+                        break;
+                    }
+
                 }
             }
         } catch (IOException | ClassNotFoundException e) {

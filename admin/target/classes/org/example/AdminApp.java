@@ -27,7 +27,7 @@ public class AdminApp extends javax.swing.JFrame {
         reportMainPanel.setVisible(false);
         dataMainPanel.setVisible(false);
         userMainPanel.setVisible(false);
-
+        loginHistoryMainPanel.setVisible(false);
         this.socket = socket;
     }
 
@@ -155,6 +155,11 @@ public class AdminApp extends javax.swing.JFrame {
         passRequestTable = new javax.swing.JTable();
         passRequestTableScrollPane = new javax.swing.JScrollPane();
         passRequestPanel = new javax.swing.JPanel();
+        loginHistoryMainPanel = new javax.swing.JPanel();
+        loginHistoryNavButton = new javax.swing.JButton();
+        loginHistoryTitle = new javax.swing.JLabel();
+        loginHistoryTable = new javax.swing.JTable();
+        loginHistoryTableScrollPane = new javax.swing.JScrollPane();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -230,6 +235,24 @@ public class AdminApp extends javax.swing.JFrame {
             }
         });
 
+        loginHistoryNavButton.setBackground(new java.awt.Color(23, 70, 162));
+        loginHistoryNavButton.setForeground(new java.awt.Color(255, 255, 255));
+        loginHistoryNavButton.setIcon(new javax.swing.ImageIcon(getClass().getResource("/org.example//history.png"))); // NOI18N
+        loginHistoryNavButton.setBorderPainted(false);
+        loginHistoryNavButton.setFocusable(false);
+        loginHistoryNavButton.setPreferredSize(new java.awt.Dimension(50, 50));
+        loginHistoryNavButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                try {
+                    loginHistoryNavButtonActionPerformed(evt);
+                } catch (IOException e) {
+                    throw new RuntimeException(e);
+                } catch (ClassNotFoundException e) {
+                    throw new RuntimeException(e);
+                }
+            }
+        });
+
         javax.swing.GroupLayout navbarLayout = new javax.swing.GroupLayout(navbar);
         navbar.setLayout(navbarLayout);
         navbarLayout.setHorizontalGroup(
@@ -237,6 +260,8 @@ public class AdminApp extends javax.swing.JFrame {
                         .addGroup(navbarLayout.createSequentialGroup()
                                 .addGap(55, 55, 55)
                                 .addComponent(userNavButton, javax.swing.GroupLayout.PREFERRED_SIZE, 48, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(18, 18, 18)
+                                .addComponent(loginHistoryNavButton, javax.swing.GroupLayout.PREFERRED_SIZE, 48, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addGap(18, 18, 18)
                                 .addComponent(groupNavButton, javax.swing.GroupLayout.PREFERRED_SIZE, 48, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addGap(18, 18, 18)
@@ -250,6 +275,7 @@ public class AdminApp extends javax.swing.JFrame {
                         .addComponent(dataNavButton, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addComponent(reportNavButton, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addComponent(groupNavButton, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(loginHistoryNavButton, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addComponent(userNavButton, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
 
@@ -655,7 +681,6 @@ public class AdminApp extends javax.swing.JFrame {
         getContentPane().add(groupMainPanel, java.awt.BorderLayout.CENTER);
 
         // MANAGE USER
-
         userMainPanel.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
         userMainPanel.setPreferredSize(new java.awt.Dimension(1440, 2079));
         userMainPanel.setLayout(new java.awt.BorderLayout());
@@ -1136,8 +1161,8 @@ public class AdminApp extends javax.swing.JFrame {
         );
 
 
-        LineBorder lineBorderPassTable = new LineBorder(Color.GREEN);
-        //userDetailTableScrollPanel.setBorder(BorderFactory.createCompoundBorder(lineBorderPassTable, userDetailTableScrollPanel.getBorder()));
+        LineBorder lineBorderPassTable = new LineBorder(Color.BLUE);
+        userDetailTableScrollPanel.setBorder(BorderFactory.createCompoundBorder(lineBorderPassTable, userDetailTableScrollPanel.getBorder()));
 
         javax.swing.GroupLayout userTableMainPanelLayout = new javax.swing.GroupLayout(userTableMainPanel);
         userTableMainPanel.setLayout(userTableMainPanelLayout);
@@ -1209,11 +1234,11 @@ public class AdminApp extends javax.swing.JFrame {
         userPanel.setRequestFocusEnabled(false);
         userPanel.setLayout(new javax.swing.BoxLayout(userPanel, javax.swing.BoxLayout.Y_AXIS));
 
-        LineBorder lineBorderUserTable = new LineBorder(Color.BLACK);
-        //userTableMainPanel.setBorder(BorderFactory.createCompoundBorder(lineBorderUserTable, userTableMainPanel.getBorder()));
+        LineBorder lineBorderUserTable = new LineBorder(Color.RED);
+        userScrollPanel.setBorder(BorderFactory.createCompoundBorder(lineBorderUserTable, userScrollPanel.getBorder()));
 
-        LineBorder lineBorderBtnTable = new LineBorder(Color.BLACK);
-        //buttonContainer.setBorder(BorderFactory.createCompoundBorder(lineBorderBtnTable, buttonContainer.getBorder()));
+        LineBorder lineBorderBtnTable = new LineBorder(Color.GREEN);
+        //userTableMainPanel.setBorder(BorderFactory.createCompoundBorder(lineBorderBtnTable, userTableMainPanel.getBorder()));
 
         userPanel.add(userTableMainPanel);
         userPanel.add(userDetailPanel);
@@ -1221,6 +1246,90 @@ public class AdminApp extends javax.swing.JFrame {
         userScrollPanel.setViewportView(userPanel);
         userMainPanel.add(userScrollPanel, java.awt.BorderLayout.CENTER);
         getContentPane().add(userMainPanel, java.awt.BorderLayout.CENTER);
+
+        // MANAGE LOGIN HISTORY
+        loginHistoryMainPanel.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
+        loginHistoryMainPanel.setPreferredSize(new java.awt.Dimension(1440, 2079));
+        loginHistoryMainPanel.setLayout(new java.awt.BorderLayout());
+
+        loginHistoryTitle.setFont(new java.awt.Font("Arial", 1, 18)); // NOI18N
+        loginHistoryTitle.setForeground(new java.awt.Color(23, 70, 162));
+        loginHistoryTitle.setText("MANAGE LOGIN HISTORY");
+
+        loginHistoryTable.setFont(new java.awt.Font("Arial", 0, 12)); // NOI18N
+        loginHistoryTable.setModel(new javax.swing.table.DefaultTableModel(
+                new Object [][] {
+                        {null, null, null, null},
+                        {null, null, null, null},
+                        {null, null, null, null},
+                        {null, null, null, null},
+                        {null, null, null, null},
+                        {null, null, null, null},
+                        {null, null, null, null},
+                        {null, null, null, null},
+                        {null, null, null, null},
+                        {null, null, null, null}
+                },
+                new String [] {
+                        "No", "Username", "Full name", "Login time"
+                }
+        ) {
+            Class[] types = new Class [] {
+                    java.lang.Integer.class, java.lang.Object.class, java.lang.Object.class, java.lang.Object.class
+            };
+            boolean[] canEdit = new boolean [] {
+                    false, false, false, false
+            };
+
+            public Class getColumnClass(int columnIndex) {
+                return types [columnIndex];
+            }
+
+            public boolean isCellEditable(int rowIndex, int columnIndex) {
+                return canEdit [columnIndex];
+            }
+        });
+
+        loginHistoryTable.setRowHeight(30);
+        loginHistoryTable.setSelectionMode(javax.swing.ListSelectionModel.SINGLE_SELECTION);
+        loginHistoryTable.setSelectionMode(javax.swing.ListSelectionModel.SINGLE_SELECTION);
+        loginHistoryTable.getTableHeader().setResizingAllowed(false);
+        loginHistoryTable.getTableHeader().setReorderingAllowed(false);
+
+        loginHistoryTableScrollPane.setViewportView(loginHistoryTable);
+        if (loginHistoryTable.getColumnModel().getColumnCount() > 0) {
+            loginHistoryTable.getColumnModel().getColumn(0).setResizable(false);
+            loginHistoryTable.getColumnModel().getColumn(0).setPreferredWidth(100);
+            loginHistoryTable.getColumnModel().getColumn(1).setResizable(false);
+            loginHistoryTable.getColumnModel().getColumn(1).setPreferredWidth(200);
+            loginHistoryTable.getColumnModel().getColumn(2).setResizable(false);
+            loginHistoryTable.getColumnModel().getColumn(2).setPreferredWidth(250);
+            loginHistoryTable.getColumnModel().getColumn(3).setResizable(false);
+            loginHistoryTable.getColumnModel().getColumn(3).setPreferredWidth(200);
+        }
+
+        javax.swing.GroupLayout loginHistoryTableMainPanelLayout = new javax.swing.GroupLayout(loginHistoryMainPanel);
+        loginHistoryMainPanel.setLayout(loginHistoryTableMainPanelLayout);
+        loginHistoryTableMainPanelLayout.setHorizontalGroup(
+                loginHistoryTableMainPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGroup(loginHistoryTableMainPanelLayout.createSequentialGroup()
+                                .addGap(70, 70, 70)
+                                .addGroup(loginHistoryTableMainPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                        .addComponent(loginHistoryTitle)
+                                        .addComponent(loginHistoryTableScrollPane, javax.swing.GroupLayout.PREFERRED_SIZE, 800, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+        );
+        loginHistoryTableMainPanelLayout.setVerticalGroup(
+                loginHistoryTableMainPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGroup(loginHistoryTableMainPanelLayout.createSequentialGroup()
+                                .addGap(40, 40, 40)
+                                .addComponent(loginHistoryTitle)
+                                .addGap(30, 30, 30)
+                                .addGroup(loginHistoryTableMainPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                        .addComponent(loginHistoryTableScrollPane, javax.swing.GroupLayout.PREFERRED_SIZE, 320, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+        );
+        getContentPane().add(loginHistoryMainPanel, java.awt.BorderLayout.CENTER);
 
         // DATA MANAGEMENT
         dataMainPanel.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
@@ -1816,10 +1925,10 @@ public class AdminApp extends javax.swing.JFrame {
         getContentPane().remove(dataMainPanel);
         userMainPanel.setVisible(false);
         getContentPane().remove(userMainPanel);
+        loginHistoryMainPanel.setVisible(false);
+        getContentPane().remove(loginHistoryMainPanel);
         getContentPane().add(groupMainPanel);
         groupMainPanel.setVisible(true);
-
-
     }
 
     private void userNavButtonActionPerformed(java.awt.event.ActionEvent evt) throws IOException, ClassNotFoundException {
@@ -1907,8 +2016,36 @@ public class AdminApp extends javax.swing.JFrame {
         getContentPane().remove(reportMainPanel);
         dataMainPanel.setVisible(false);
         getContentPane().remove(dataMainPanel);
+        loginHistoryMainPanel.setVisible(false);
+        getContentPane().remove(loginHistoryMainPanel);
         getContentPane().add(userMainPanel);
         userMainPanel.setVisible(true);
+    }
+
+    private void loginHistoryNavButtonActionPerformed(java.awt.event.ActionEvent evt) throws IOException, ClassNotFoundException {
+        DefaultTableModel model = (DefaultTableModel) loginHistoryTable.getModel();
+        model.setRowCount(0);
+
+        Object[][] data = GetAllLoginHistory.request(socket);
+
+        for (Object[] row : data) {
+            model.addRow(row);
+        }
+
+        ((DefaultTableCellRenderer)loginHistoryTable.getDefaultRenderer(String.class)).setHorizontalAlignment(SwingConstants.CENTER);
+        ((DefaultTableCellRenderer)loginHistoryTable.getDefaultRenderer(Integer.class)).setHorizontalAlignment(SwingConstants.CENTER);
+        loginHistoryTable.setPreferredScrollableViewportSize(loginHistoryTable.getPreferredSize());
+
+        reportMainPanel.setVisible(false);
+        getContentPane().remove(reportMainPanel);
+        dataMainPanel.setVisible(false);
+        getContentPane().remove(dataMainPanel);
+        userMainPanel.setVisible(false);
+        getContentPane().remove(userMainPanel);
+        groupMainPanel.setVisible(false);
+        getContentPane().remove(groupMainPanel);
+        getContentPane().add(loginHistoryMainPanel);
+        loginHistoryMainPanel.setVisible(true);
     }
 
     private void searchUserButtonActionPerformed(java.awt.event.ActionEvent evt) throws IOException, ClassNotFoundException {
@@ -2005,6 +2142,8 @@ public class AdminApp extends javax.swing.JFrame {
         getContentPane().remove(reportMainPanel);
         userMainPanel.setVisible(false);
         getContentPane().remove(userMainPanel);
+        loginHistoryMainPanel.setVisible(false);
+        getContentPane().remove(loginHistoryMainPanel);
         getContentPane().add(dataMainPanel);
         dataMainPanel.setVisible(true);
 
@@ -2066,6 +2205,8 @@ public class AdminApp extends javax.swing.JFrame {
         getContentPane().remove(dataMainPanel);
         userMainPanel.setVisible(false);
         getContentPane().remove(userMainPanel);
+        loginHistoryMainPanel.setVisible(false);
+        getContentPane().remove(loginHistoryMainPanel);
         getContentPane().add(reportMainPanel);
         reportMainPanel.setVisible(true);
     }
@@ -2904,5 +3045,10 @@ public class AdminApp extends javax.swing.JFrame {
     private javax.swing.JTable listFriendTable;
     private javax.swing.JTable passRequestTable;
     private javax.swing.JPanel passRequestPanel;
+    private javax.swing.JPanel loginHistoryMainPanel;
+    private javax.swing.JButton loginHistoryNavButton;
+    private javax.swing.JLabel loginHistoryTitle;
+    private javax.swing.JTable loginHistoryTable;
+    private javax.swing.JScrollPane loginHistoryTableScrollPane;
     // End of variables declaration
 }
