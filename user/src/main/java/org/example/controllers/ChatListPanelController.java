@@ -36,7 +36,7 @@ public class ChatListPanelController {
         inputField.addFocusListener(new InputFieldListener());
 
         searchButton = chatListPanel.getSearchButton();
-        searchButton.addActionListener(new SearchButtonActionListener());
+        searchButton.addActionListener(new SearchButtonListener());
     }
 
     private class InputFieldListener implements FocusListener, KeyListener {
@@ -66,7 +66,7 @@ public class ChatListPanelController {
         public void keyReleased(KeyEvent e) {}
     }
 
-    private class  SearchButtonActionListener implements ActionListener {
+    private class  SearchButtonListener implements ActionListener {
         @Override
         public void actionPerformed(ActionEvent e) {
             String input = inputField.getText();

@@ -1,10 +1,12 @@
 package org.example.controllers;
 
 import org.example.models.ChatInfo;
+import org.example.models.Profile;
 import org.example.utilities.DatabaseHandler;
 import org.example.views.IconPanel;
 import org.example.views.LoginFrame;
 import org.example.views.MainFrame;
+import org.example.views.MyProfileFrame;
 
 import javax.swing.*;
 import java.awt.event.MouseAdapter;
@@ -62,7 +64,12 @@ public class IconPanelController {
             if (e.getSource() == homeIconLabel) {
 //                iconPanel.setFocusLabel(homeIconLabel);
                 // TODO: open my profile
-
+                try {
+                    Profile myProfile = DB.getProfile(myUsername);
+                    MyProfileFrame MPF = new MyProfileFrame(myProfile);
+                } catch (Exception ex) {
+                    System.out.println("Error getting my profile: " + ex);
+                }
             } else if (e.getSource() == chatIconLabel) {
                 iconPanel.setFocusLabel(chatIconLabel);
                 try {

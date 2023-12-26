@@ -192,7 +192,7 @@ public class RegisterFrame extends JFrame {
 
         String[] days = new String[32];
         days[0] = "Day";
-        for (int i = 1; i < 31; i++) {
+        for (int i = 1; i < 32; i++) {
             days[i] = Integer.toString(i);
         }
 

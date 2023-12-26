@@ -1,6 +1,5 @@
 package org.example.controllers;
 
-import org.example.models.ChatInfo;
 import org.example.utilities.Constants;
 import org.example.utilities.DatabaseHandler;
 import org.example.views.*;
@@ -9,7 +8,6 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.*;
 import java.sql.SQLException;
-import java.util.ArrayList;
 
 public class ForgotPasswordFrameController {
     private ForgotPasswordFrame FPF;
