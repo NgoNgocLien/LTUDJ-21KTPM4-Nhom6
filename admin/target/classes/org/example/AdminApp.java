@@ -1038,7 +1038,7 @@ public class AdminApp extends javax.swing.JFrame {
         userTableMainPanel.setPreferredSize(new java.awt.Dimension(2276, 500));
         userTableMainPanel.setRequestFocusEnabled(false);
 
-        userDetailPanel.setPreferredSize(new java.awt.Dimension(2276, 300));
+        userDetailPanel.setPreferredSize(new java.awt.Dimension(2276, 800));
 
         javax.swing.JPanel buttonContainer = new javax.swing.JPanel();
         buttonContainer.setLayout(new javax.swing.BoxLayout(buttonContainer, javax.swing.BoxLayout.X_AXIS));
@@ -1162,7 +1162,7 @@ public class AdminApp extends javax.swing.JFrame {
 
 
         LineBorder lineBorderPassTable = new LineBorder(Color.BLUE);
-        userDetailTableScrollPanel.setBorder(BorderFactory.createCompoundBorder(lineBorderPassTable, userDetailTableScrollPanel.getBorder()));
+        userDetailPanel.setBorder(BorderFactory.createCompoundBorder(lineBorderPassTable, userDetailPanel.getBorder()));
 
         javax.swing.GroupLayout userTableMainPanelLayout = new javax.swing.GroupLayout(userTableMainPanel);
         userTableMainPanel.setLayout(userTableMainPanelLayout);
@@ -1230,12 +1230,12 @@ public class AdminApp extends javax.swing.JFrame {
 
         userPanel.setFocusable(false);
         userPanel.setMaximumSize(new java.awt.Dimension(1440, 4000));
-        userPanel.setPreferredSize(new java.awt.Dimension(1440, 3000));
+        userPanel.setPreferredSize(new java.awt.Dimension(1440, 1400));
         userPanel.setRequestFocusEnabled(false);
         userPanel.setLayout(new javax.swing.BoxLayout(userPanel, javax.swing.BoxLayout.Y_AXIS));
 
         LineBorder lineBorderUserTable = new LineBorder(Color.RED);
-        userScrollPanel.setBorder(BorderFactory.createCompoundBorder(lineBorderUserTable, userScrollPanel.getBorder()));
+        //userScrollPanel.setBorder(BorderFactory.createCompoundBorder(lineBorderUserTable, userScrollPanel.getBorder()));
 
         LineBorder lineBorderBtnTable = new LineBorder(Color.GREEN);
         //userTableMainPanel.setBorder(BorderFactory.createCompoundBorder(lineBorderBtnTable, userTableMainPanel.getBorder()));
@@ -1254,7 +1254,7 @@ public class AdminApp extends javax.swing.JFrame {
 
         loginHistoryTitle.setFont(new java.awt.Font("Arial", 1, 18)); // NOI18N
         loginHistoryTitle.setForeground(new java.awt.Color(23, 70, 162));
-        loginHistoryTitle.setText("MANAGE LOGIN HISTORY");
+        loginHistoryTitle.setText("LIST OF LOGIN HISTORIES");
 
         loginHistoryTable.setFont(new java.awt.Font("Arial", 0, 12)); // NOI18N
         loginHistoryTable.setModel(new javax.swing.table.DefaultTableModel(
