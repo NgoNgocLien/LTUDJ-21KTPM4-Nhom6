@@ -695,10 +695,10 @@ public class AdminApp extends javax.swing.JFrame {
         userTitle3.setText("Active Status");
 
         searchFullNameInput.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
-        searchFullNameInput.setPreferredSize(new java.awt.Dimension(124, 35));
+        searchFullNameInput.setPreferredSize(new java.awt.Dimension(135, 35));
 
         searchUserNameInput.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
-        searchUserNameInput.setPreferredSize(new java.awt.Dimension(124, 35));
+        searchUserNameInput.setPreferredSize(new java.awt.Dimension(125, 35));
 
         searchActiveDropDown.setBackground(new java.awt.Color(255, 255, 254));
         searchActiveDropDown.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
@@ -711,7 +711,7 @@ public class AdminApp extends javax.swing.JFrame {
         searchUserButton.setText("Search");
         searchUserButton.setFocusable(false);
         searchUserButton.setMargin(new java.awt.Insets(2, 5, 3, 5));
-        searchUserButton.setPreferredSize(new java.awt.Dimension(57, 35));
+        searchUserButton.setPreferredSize(new java.awt.Dimension(60, 35));
         searchUserButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 try {
@@ -768,28 +768,28 @@ public class AdminApp extends javax.swing.JFrame {
         userTableScrollPanel.setViewportView(userTable);
         if (userTable.getColumnModel().getColumnCount() > 0) {
             userTable.getColumnModel().getColumn(0).setResizable(false);
-            userTable.getColumnModel().getColumn(0).setPreferredWidth(100);
+            userTable.getColumnModel().getColumn(0).setPreferredWidth(70);
             userTable.getColumnModel().getColumn(1).setResizable(false);
-            userTable.getColumnModel().getColumn(1).setPreferredWidth(200);
+            userTable.getColumnModel().getColumn(1).setPreferredWidth(140);
             userTable.getColumnModel().getColumn(2).setResizable(false);
-            userTable.getColumnModel().getColumn(2).setPreferredWidth(250);
+            userTable.getColumnModel().getColumn(2).setPreferredWidth(150);
             userTable.getColumnModel().getColumn(3).setResizable(false);
-            userTable.getColumnModel().getColumn(3).setPreferredWidth(600);
+            userTable.getColumnModel().getColumn(3).setPreferredWidth(420);
             userTable.getColumnModel().getColumn(4).setResizable(false);
-            userTable.getColumnModel().getColumn(4).setPreferredWidth(150);
+            userTable.getColumnModel().getColumn(4).setPreferredWidth(105);
             userTable.getColumnModel().getColumn(5).setResizable(false);
-            userTable.getColumnModel().getColumn(5).setPreferredWidth(100);
+            userTable.getColumnModel().getColumn(5).setPreferredWidth(105);
             userTable.getColumnModel().getColumn(6).setResizable(false);
-            userTable.getColumnModel().getColumn(6).setPreferredWidth(300);
+            userTable.getColumnModel().getColumn(6).setPreferredWidth(210);
             userTable.getColumnModel().getColumn(7).setResizable(false);
-            userTable.getColumnModel().getColumn(7).setPreferredWidth(180);
+            userTable.getColumnModel().getColumn(7).setPreferredWidth(140);
         }
 
         viewAllUserButton.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
         viewAllUserButton.setText("View all user");
         viewAllUserButton.setFocusable(false);
         viewAllUserButton.setMargin(new java.awt.Insets(2, 5, 3, 5));
-        viewAllUserButton.setPreferredSize(new java.awt.Dimension(57, 35));
+        viewAllUserButton.setPreferredSize(new java.awt.Dimension(60, 35));
         viewAllUserButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 try {
@@ -804,7 +804,7 @@ public class AdminApp extends javax.swing.JFrame {
         addNewUserButton.setText("Add new user");
         addNewUserButton.setFocusable(false);
         addNewUserButton.setMargin(new java.awt.Insets(2, 5, 3, 5));
-        addNewUserButton.setPreferredSize(new java.awt.Dimension(57, 35));
+        addNewUserButton.setPreferredSize(new java.awt.Dimension(60, 35));
         addNewUserButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 try {
@@ -849,30 +849,32 @@ public class AdminApp extends javax.swing.JFrame {
                 return types[columnIndex];
             }
         });
+
         userDetailTable.setRowHeight(30);
         userDetailTable.setSelectionMode(javax.swing.ListSelectionModel.SINGLE_SELECTION);
         userDetailTable.getTableHeader().setResizingAllowed(false);
         userDetailTable.getTableHeader().setReorderingAllowed(false);
         userDetailTableScrollPanel.setViewportView(userDetailTable);
+
         if (userDetailTable.getColumnModel().getColumnCount() > 0) {
             userDetailTable.getColumnModel().getColumn(0).setResizable(false);
-            userDetailTable.getColumnModel().getColumn(0).setPreferredWidth(200);
+            userDetailTable.getColumnModel().getColumn(0).setPreferredWidth(120);
             userDetailTable.getColumnModel().getColumn(1).setResizable(false);
-            userDetailTable.getColumnModel().getColumn(1).setPreferredWidth(200);
+            userDetailTable.getColumnModel().getColumn(1).setPreferredWidth(120);
             userDetailTable.getColumnModel().getColumn(2).setResizable(false);
-            userDetailTable.getColumnModel().getColumn(2).setPreferredWidth(250);
+            userDetailTable.getColumnModel().getColumn(2).setPreferredWidth(175);
             userDetailTable.getColumnModel().getColumn(3).setResizable(false);
-            userDetailTable.getColumnModel().getColumn(3).setPreferredWidth(700);
+            userDetailTable.getColumnModel().getColumn(3).setPreferredWidth(350);
             userDetailTable.getColumnModel().getColumn(4).setResizable(false);
-            userDetailTable.getColumnModel().getColumn(4).setPreferredWidth(150);
+            userDetailTable.getColumnModel().getColumn(4).setPreferredWidth(95);
             userDetailTable.getColumnModel().getColumn(5).setResizable(false);
-            userDetailTable.getColumnModel().getColumn(5).setPreferredWidth(100);
+            userDetailTable.getColumnModel().getColumn(5).setPreferredWidth(80);
             userDetailTable.getColumnModel().getColumn(6).setResizable(false);
-            userDetailTable.getColumnModel().getColumn(6).setPreferredWidth(400);
+            userDetailTable.getColumnModel().getColumn(6).setPreferredWidth(190);
             userDetailTable.getColumnModel().getColumn(7).setResizable(false);
-            userDetailTable.getColumnModel().getColumn(7).setPreferredWidth(210);
+            userDetailTable.getColumnModel().getColumn(7).setPreferredWidth(120);
             userDetailTable.getColumnModel().getColumn(8).setResizable(false);
-            userDetailTable.getColumnModel().getColumn(8).setPreferredWidth(180);
+            userDetailTable.getColumnModel().getColumn(8).setPreferredWidth(95);
         }
 
         updateUserButton.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
@@ -920,21 +922,6 @@ public class AdminApp extends javax.swing.JFrame {
             }
         });
 
-        updatePasswordButton.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
-        updatePasswordButton.setText("Update password");
-        updatePasswordButton.setFocusable(false);
-        updatePasswordButton.setMargin(new java.awt.Insets(2, 5, 3, 5));
-        updatePasswordButton.setPreferredSize(new java.awt.Dimension(150, 35));
-//        updatePasswordButton.addActionListener(new java.awt.event.ActionListener() {
-//            public void actionPerformed(java.awt.event.ActionEvent evt) {
-//                try {
-//                    updatePasswordButtonActionPerformed(evt);
-//                } catch (IOException | ClassNotFoundException e) {
-//                    throw new RuntimeException(e);
-//                }
-//            }
-//        });
-
         historyLoginTable.setFont(new java.awt.Font("Arial", 0, 12)); // NOI18N
         historyLoginTable.setModel(new javax.swing.table.DefaultTableModel(
                 new Object [][] {
@@ -943,7 +930,6 @@ public class AdminApp extends javax.swing.JFrame {
                         {null, null, null},
                         {null, null, null},
                         {null, null, null},
-                        {null, null, null}
                 },
                 new String [] {
                         "No", "Login time", "Logout time"
@@ -974,11 +960,11 @@ public class AdminApp extends javax.swing.JFrame {
         historyLoginTableScrollPane.setViewportView(historyLoginTable);
         if (historyLoginTable.getColumnModel().getColumnCount() > 0) {
             historyLoginTable.getColumnModel().getColumn(0).setResizable(false);
-            historyLoginTable.getColumnModel().getColumn(0).setPreferredWidth(100);
+            historyLoginTable.getColumnModel().getColumn(0).setPreferredWidth(70);
             historyLoginTable.getColumnModel().getColumn(1).setResizable(false);
-            historyLoginTable.getColumnModel().getColumn(1).setPreferredWidth(200);
+            historyLoginTable.getColumnModel().getColumn(1).setPreferredWidth(140);
             historyLoginTable.getColumnModel().getColumn(2).setResizable(false);
-            historyLoginTable.getColumnModel().getColumn(2).setPreferredWidth(200);
+            historyLoginTable.getColumnModel().getColumn(2).setPreferredWidth(140);
         }
 
         listFriendTable.setFont(new java.awt.Font("Arial", 0, 12)); // NOI18N
@@ -989,7 +975,6 @@ public class AdminApp extends javax.swing.JFrame {
                         {null, null, null},
                         {null, null, null},
                         {null, null, null},
-                        {null, null, null}
                 },
                 new String [] {
                         "No", "Username", "Full name"
@@ -1019,11 +1004,11 @@ public class AdminApp extends javax.swing.JFrame {
 
         if (listFriendTable.getColumnModel().getColumnCount() > 0) {
             listFriendTable.getColumnModel().getColumn(0).setResizable(false);
-            listFriendTable.getColumnModel().getColumn(0).setPreferredWidth(100);
+            listFriendTable.getColumnModel().getColumn(0).setPreferredWidth(70);
             listFriendTable.getColumnModel().getColumn(1).setResizable(false);
-            listFriendTable.getColumnModel().getColumn(1).setPreferredWidth(200);
+            listFriendTable.getColumnModel().getColumn(1).setPreferredWidth(120);
             listFriendTable.getColumnModel().getColumn(2).setResizable(false);
-            listFriendTable.getColumnModel().getColumn(2).setPreferredWidth(300);
+            listFriendTable.getColumnModel().getColumn(2).setPreferredWidth(175);
         }
 
         userTitle15.setFont(new java.awt.Font("Arial", 1, 18)); // NOI18N
@@ -1042,25 +1027,22 @@ public class AdminApp extends javax.swing.JFrame {
 
         javax.swing.JPanel buttonContainer = new javax.swing.JPanel();
         buttonContainer.setLayout(new javax.swing.BoxLayout(buttonContainer, javax.swing.BoxLayout.X_AXIS));
-        //buttonContainer.add(Box.createHorizontalGlue());
+        buttonContainer.add(Box.createHorizontalGlue());
+        buttonContainer.add(Box.createHorizontalGlue());
+        buttonContainer.add(Box.createHorizontalGlue());
         buttonContainer.add(updateUserButton);
         buttonContainer.add(Box.createHorizontalGlue());
-        //buttonContainer.add(Box.createHorizontalGlue());
         buttonContainer.add(deleteUserButton);
         buttonContainer.add(Box.createHorizontalGlue());
-        //buttonContainer.add(Box.createHorizontalGlue());
         buttonContainer.add(disableEnableUserButton);
-        buttonContainer.add(Box.createHorizontalGlue());
-        //buttonContainer.add(updatePasswordButton);
 
         userTitle14.setFont(new java.awt.Font("Arial", 1, 18)); // NOI18N
         userTitle14.setForeground(new java.awt.Color(23, 70, 162));
-        userTitle14.setText("USER UPDATE PASSWORD REQUEST");
+        userTitle14.setText("UPDATE PASSWORD REQUEST");
 
         passRequestTable.setFont(new java.awt.Font("Arial", 0, 12)); // NOI18N
         passRequestTable.setModel(new javax.swing.table.DefaultTableModel(
                 new Object [][] {
-                        {null, null, null},
                         {null, null, null},
                         {null, null, null},
                         {null, null, null},
@@ -1095,11 +1077,11 @@ public class AdminApp extends javax.swing.JFrame {
         passRequestTableScrollPane.setViewportView(passRequestTable);
         if (passRequestTable.getColumnModel().getColumnCount() > 0) {
             passRequestTable.getColumnModel().getColumn(0).setResizable(false);
-            passRequestTable.getColumnModel().getColumn(0).setPreferredWidth(100);
+            passRequestTable.getColumnModel().getColumn(0).setPreferredWidth(70);
             passRequestTable.getColumnModel().getColumn(1).setResizable(false);
-            passRequestTable.getColumnModel().getColumn(1).setPreferredWidth(200);
+            passRequestTable.getColumnModel().getColumn(1).setPreferredWidth(140);
             passRequestTable.getColumnModel().getColumn(2).setResizable(false);
-            passRequestTable.getColumnModel().getColumn(2).setPreferredWidth(200);
+            passRequestTable.getColumnModel().getColumn(2).setPreferredWidth(140);
         }
 
         passRequestTable.addMouseListener(new java.awt.event.MouseAdapter() {
@@ -1114,24 +1096,26 @@ public class AdminApp extends javax.swing.JFrame {
 
         javax.swing.GroupLayout userDetailPanelLayout = new javax.swing.GroupLayout(userDetailPanel);
         userDetailPanel.setLayout(userDetailPanelLayout);
+
         userDetailPanelLayout.setHorizontalGroup(
                 userDetailPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                         .addGroup(userDetailPanelLayout.createSequentialGroup()
                                 .addGap(70, 70, 70)
                                 .addGroup(userDetailPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                         .addComponent(userTitle4)
-                                        .addComponent(userDetailTableScrollPanel, javax.swing.GroupLayout.PREFERRED_SIZE, 1100, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                        .addComponent(buttonContainer)
-                                        .addGroup(userDetailPanelLayout.createSequentialGroup()
-                                                .addComponent(userTitle15)
-                                                .addGap(250)
-                                                .addComponent(userTitle16))
-                                        .addGroup(userDetailPanelLayout.createSequentialGroup()
-                                                .addComponent(historyLoginTableScrollPane, javax.swing.GroupLayout.PREFERRED_SIZE, 300, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                                .addGap(183, 183, 183)
-                                                .addComponent(listFriendTableScrollPane, javax.swing.GroupLayout.PREFERRED_SIZE, 300, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                        .addComponent(userTitle14)
-                                        .addComponent(passRequestTableScrollPane, javax.swing.GroupLayout.PREFERRED_SIZE, 400, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                        .addComponent(userDetailTableScrollPanel, javax.swing.GroupLayout.PREFERRED_SIZE, 1370, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addGroup(userDetailPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                                                .addComponent(buttonContainer, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                                .addGroup(javax.swing.GroupLayout.Alignment.LEADING, userDetailPanelLayout.createSequentialGroup()
+                                                        .addComponent(userTitle15)
+                                                        .addGap(365)
+                                                        .addComponent(userTitle16))
+                                                .addGroup(javax.swing.GroupLayout.Alignment.LEADING, userDetailPanelLayout.createSequentialGroup()
+                                                        .addComponent(historyLoginTableScrollPane, javax.swing.GroupLayout.PREFERRED_SIZE, 350, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                                        .addGap(250, 250, 250)
+                                                        .addComponent(listFriendTableScrollPane, javax.swing.GroupLayout.PREFERRED_SIZE, 365, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                                .addComponent(userTitle14, javax.swing.GroupLayout.Alignment.LEADING)
+                                                .addComponent(passRequestTableScrollPane, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.PREFERRED_SIZE, 350, javax.swing.GroupLayout.PREFERRED_SIZE)))
                                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
@@ -1141,28 +1125,29 @@ public class AdminApp extends javax.swing.JFrame {
                                 .addGap(40, 40, 40)
                                 .addComponent(userTitle4)
                                 .addGap(30, 30, 30)
-                                .addComponent(userDetailTableScrollPanel, javax.swing.GroupLayout.PREFERRED_SIZE, 48, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(userDetailTableScrollPanel, javax.swing.GroupLayout.PREFERRED_SIZE, 52, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addGap(18, 18, 18)
-                                .addComponent(buttonContainer)
+                                .addComponent(buttonContainer)  // buttonContainer nằm dưới userDetailTableScrollPanel
                                 .addGap(40, 40, 40)
                                 .addGroup(userDetailPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                                         .addComponent(userTitle15)
                                         .addComponent(userTitle16))
                                 .addGap(30, 30, 30)
                                 .addGroup(userDetailPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                                        .addComponent(historyLoginTableScrollPane, javax.swing.GroupLayout.PREFERRED_SIZE, 203, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                        .addComponent(listFriendTableScrollPane, javax.swing.GroupLayout.PREFERRED_SIZE, 203, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                        .addComponent(historyLoginTableScrollPane, javax.swing.GroupLayout.PREFERRED_SIZE, 173, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addComponent(listFriendTableScrollPane, javax.swing.GroupLayout.PREFERRED_SIZE, 173, javax.swing.GroupLayout.PREFERRED_SIZE))
                                 .addGap(40, 40, 40)
                                 .addComponent(userTitle14)
                                 .addGap(30, 30, 30)
-                                .addComponent(passRequestTableScrollPane, javax.swing.GroupLayout.PREFERRED_SIZE, 203, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(passRequestTableScrollPane, javax.swing.GroupLayout.PREFERRED_SIZE, 172, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         )
         );
 
 
+
         LineBorder lineBorderPassTable = new LineBorder(Color.BLUE);
-        userDetailPanel.setBorder(BorderFactory.createCompoundBorder(lineBorderPassTable, userDetailPanel.getBorder()));
+        //userDetailPanel.setBorder(BorderFactory.createCompoundBorder(lineBorderPassTable, userDetailPanel.getBorder()));
 
         javax.swing.GroupLayout userTableMainPanelLayout = new javax.swing.GroupLayout(userTableMainPanel);
         userTableMainPanel.setLayout(userTableMainPanelLayout);
@@ -1192,7 +1177,7 @@ public class AdminApp extends javax.swing.JFrame {
                                                                 .addComponent(userTitle2)
                                                                 .addGap(120, 120, 120)
                                                                 .addComponent(userTitle3))
-                                                        .addComponent(userTableScrollPanel, javax.swing.GroupLayout.PREFERRED_SIZE, 1100, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                                        .addComponent(userTableScrollPanel, javax.swing.GroupLayout.PREFERRED_SIZE, 1370, javax.swing.GroupLayout.PREFERRED_SIZE)
                                                         )
                                                 .addGap(0, 0, Short.MAX_VALUE)))
                                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
@@ -1238,7 +1223,7 @@ public class AdminApp extends javax.swing.JFrame {
         //userScrollPanel.setBorder(BorderFactory.createCompoundBorder(lineBorderUserTable, userScrollPanel.getBorder()));
 
         LineBorder lineBorderBtnTable = new LineBorder(Color.GREEN);
-        //userTableMainPanel.setBorder(BorderFactory.createCompoundBorder(lineBorderBtnTable, userTableMainPanel.getBorder()));
+        //buttonContainer.setBorder(BorderFactory.createCompoundBorder(lineBorderBtnTable, buttonContainer.getBorder()));
 
         userPanel.add(userTableMainPanel);
         userPanel.add(userDetailPanel);
