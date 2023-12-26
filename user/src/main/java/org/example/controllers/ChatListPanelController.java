@@ -2,10 +2,13 @@ package org.example.controllers;
 
 import org.example.models.ChatInfo;
 import org.example.models.Message;
+import org.example.models.Profile;
 import org.example.utilities.Constants;
 import org.example.utilities.DatabaseHandler;
 import org.example.views.ChatListPanel;
 import org.example.views.MainFrame;
+import org.example.views.MyProfileFrame;
+import org.example.views.ProfileFrame;
 
 import javax.swing.*;
 import java.awt.event.*;
@@ -144,7 +147,13 @@ public class ChatListPanelController {
             }
             if (!chatPanel.getMode()) {
                 // open profile
-
+                Profile profile = null;
+                try {
+                    profile = DB.getProfile(chatInfo.getUsername());
+                } catch (Exception exception) {
+                    exception.printStackTrace();
+                }
+                ProfileFrame PF = new ProfileFrame(profile);
             }
         }
     }
