@@ -6,9 +6,8 @@ import java.net.Socket;
 import java.util.ArrayList;
 import java.util.List;
 
-public class chatServer {
+public class UserServer {
     private final List<ClientHandler> clients = new ArrayList<>();
-//    private final List<AdminHandler> admins = new ArrayList<>();
 
     public void startServer() {
         try {

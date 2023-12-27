@@ -1,7 +1,5 @@
 package org.example;
 
-import com.mysql.cj.Session;
-
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
@@ -11,21 +9,19 @@ import java.sql.SQLException;
 import java.util.*;
 import javax.mail.*;
 import javax.mail.internet.*;
-import javax.activation.*;
 
 public class ClientHandler implements Runnable {
-    private final chatServer server;
+    private final UserServer server;
     private final Socket clientSocket;
     private final Scanner input;
     private final PrintWriter output;
 
-    public ClientHandler(chatServer server, Socket clientSocket) throws IOException {
+    public ClientHandler(UserServer server, Socket clientSocket) throws IOException {
         this.server = server;
         this.clientSocket = clientSocket;
         this.input = new Scanner(clientSocket.getInputStream());
         this.output = new PrintWriter(clientSocket.getOutputStream(), true);
     }
-
     @Override
     public void run() {
         try {
