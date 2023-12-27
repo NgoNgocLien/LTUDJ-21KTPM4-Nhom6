@@ -14,12 +14,12 @@ import javax.mail.internet.*;
 import javax.activation.*;
 
 public class ClientHandler implements Runnable {
-    private final chatServer server;
+    private final UserServer server;
     private final Socket clientSocket;
     private final Scanner input;
     private final PrintWriter output;
 
-    public ClientHandler(chatServer server, Socket clientSocket) throws IOException {
+    public ClientHandler(UserServer server, Socket clientSocket) throws IOException {
         this.server = server;
         this.clientSocket = clientSocket;
         this.input = new Scanner(clientSocket.getInputStream());

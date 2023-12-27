@@ -1127,7 +1127,7 @@ public class AdminApp extends javax.swing.JFrame {
                                 .addGap(30, 30, 30)
                                 .addComponent(userDetailTableScrollPanel, javax.swing.GroupLayout.PREFERRED_SIZE, 52, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addGap(18, 18, 18)
-                                .addComponent(buttonContainer)  // buttonContainer nằm dưới userDetailTableScrollPanel
+                                .addComponent(buttonContainer)
                                 .addGap(40, 40, 40)
                                 .addGroup(userDetailPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                                         .addComponent(userTitle15)

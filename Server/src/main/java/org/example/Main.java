@@ -3,7 +3,7 @@ package org.example;
 public class Main {
     public static void main(String[] args) throws ClassNotFoundException {
         System.out.println("Server is running");
-        chatServer userServer = new chatServer();
+        UserServer userServer = new UserServer();
         AdminServer adminServer = new AdminServer();
 
         Thread userServerThread = new Thread(userServer::startServer);
