@@ -21,6 +21,7 @@ public class ConversationPanelController {
     private JTextField inputField;
     private JButton sendButton;
     private JButton moreButton;
+    private JScrollBar messagesScrollBar;
 
     public ConversationPanelController(MainFrameController mfc) {
         this.MFC = mfc;
@@ -32,6 +33,7 @@ public class ConversationPanelController {
         this.inputField = conversationPanel.getInputField();
         this.sendButton = conversationPanel.getSendButton();
         this.moreButton = conversationPanel.getMoreButton();
+        this.messagesScrollBar = conversationPanel.getMessagesScrollBar();
 
         inputField.addFocusListener(new InputFieldListener());
         inputField.addKeyListener(new InputFieldListener());
@@ -87,6 +89,7 @@ public class ConversationPanelController {
                 DB.addMyMessage(msg);
                 conversationPanel.addMessage(msg);
                 inputField.setText("");
+                conversationPanel.srollToBottom();
             }
         }
     }

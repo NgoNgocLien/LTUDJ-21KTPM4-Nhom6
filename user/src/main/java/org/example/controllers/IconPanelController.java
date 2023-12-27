@@ -76,7 +76,7 @@ public class IconPanelController {
                 try {
                     ArrayList<ChatInfo> chats = DB.getAllChats(myUsername);
                     MF.getChatListPanel().rebuildChatPanelsScrollPane(chats, true, false);
-                    MF.getChatListPanel().setTitleLabel("Chats");
+                    MF.getChatListPanel().setTitleLabel("Chats", false);
                     MF.getChatListPanel().setInputFieldPlaceholder("Search for a message");
                     MFC.getChatListPanelController().renewListener();
                 }
@@ -88,7 +88,7 @@ public class IconPanelController {
                 try {
                     ArrayList<ChatInfo> friends = DB.getAllFriends(myUsername);
                     MF.getChatListPanel().rebuildChatPanelsScrollPane(friends, true, false);
-                    MF.getChatListPanel().setTitleLabel("Friends");
+                    MF.getChatListPanel().setTitleLabel("Friends", false);
                     MF.getChatListPanel().setInputFieldPlaceholder("Search for a user");
                     MFC.getChatListPanelController().renewListener();
                 }
@@ -100,9 +100,10 @@ public class IconPanelController {
                 try {
                     ArrayList<ChatInfo> groups = DB.getAllGroups(myUsername);
                     MF.getChatListPanel().rebuildChatPanelsScrollPane(groups, true, false);
-                    MF.getChatListPanel().setTitleLabel("Groups");
+                    MF.getChatListPanel().setTitleLabel("Groups                 ", true);
                     MF.getChatListPanel().setInputFieldPlaceholder("Search for a group");
                     MFC.getChatListPanelController().renewListener();
+                    MFC.getChatListPanelController().setPlusIconListener();
                 }
                 catch (Exception ex) {
                     System.out.println("Error getting all groups: " + ex);
@@ -112,7 +113,7 @@ public class IconPanelController {
                 try {
                     ArrayList<ChatInfo> groups = DB.getAllSuggests(myUsername);
                     MF.getChatListPanel().rebuildChatPanelsScrollPane(groups, false, true);
-                    MF.getChatListPanel().setTitleLabel("Add a Friend");
+                    MF.getChatListPanel().setTitleLabel("Add a Friend", false);
                     MF.getChatListPanel().setInputFieldPlaceholder("Search for a user");
                     MFC.getChatListPanelController().renewListener();
                 }
@@ -124,7 +125,7 @@ public class IconPanelController {
                 try {
                     ArrayList<ChatInfo> requests = DB.getAllRequests(myUsername);
                     MF.getChatListPanel().rebuildChatPanelsScrollPane(requests, false, false);
-                    MF.getChatListPanel().setTitleLabel("Friend Requests");
+                    MF.getChatListPanel().setTitleLabel("Friend Requests", false);
                     MF.getChatListPanel().setInputFieldPlaceholder("Search for a friend request");
                     MFC.getChatListPanelController().renewListener();
                 }
@@ -136,7 +137,7 @@ public class IconPanelController {
                 try {
                     ArrayList<ChatInfo> blocks = DB.getAllBlocks(myUsername);
                     MF.getChatListPanel().rebuildChatPanelsScrollPane(blocks, false, false);
-                    MF.getChatListPanel().setTitleLabel("Blocked Users");
+                    MF.getChatListPanel().setTitleLabel("Blocked Users", false);
                     MF.getChatListPanel().setInputFieldPlaceholder("Search for a blocked user");
                     MFC.getChatListPanelController().renewListener();
                 }

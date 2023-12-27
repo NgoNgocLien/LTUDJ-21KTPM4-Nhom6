@@ -1,5 +1,7 @@
 package org.example.controllers;
 
+import jiconfont.icons.font_awesome.FontAwesome;
+import jiconfont.swing.IconFontSwing;
 import org.example.models.ChatInfo;
 import org.example.models.Message;
 import org.example.models.Profile;
@@ -23,6 +25,7 @@ public class ChatListPanelController {
     private ArrayList<ChatListPanel.AChatPanel> chatPanels;
     private JTextField inputField;
     private JButton searchButton;
+    private JLabel titleLabel;
 
     public ChatListPanelController(MainFrameController mfc) {
         this.MFC = mfc;
@@ -40,6 +43,35 @@ public class ChatListPanelController {
 
         searchButton = chatListPanel.getSearchButton();
         searchButton.addActionListener(new SearchButtonListener());
+
+        titleLabel = chatListPanel.getTitleLabel();
+    }
+
+    public void setPlusIconListener() {
+        titleLabel.addMouseListener(new PlusIconMouseListener());
+    }
+
+    private class PlusIconMouseListener extends MouseAdapter {
+        @Override
+        public void mouseClicked(MouseEvent e) {
+            // open add group frame
+        }
+
+        @Override
+        public void mouseEntered(MouseEvent e) {
+            // replace plus icon with plus icon with background
+            IconFontSwing.register(FontAwesome.getIconFont());
+            Icon plusIcon = IconFontSwing.buildIcon(FontAwesome.PLUS_CIRCLE, 35, Constants.COLOR_TEXT_LIGHT_SECONDARY);
+            titleLabel.setIcon(plusIcon);
+        }
+
+        @Override
+        public void mouseExited(MouseEvent e) {
+            // replace plus icon with normal plus icon
+            IconFontSwing.register(FontAwesome.getIconFont());
+            Icon plusIcon = IconFontSwing.buildIcon(FontAwesome.PLUS_CIRCLE, 35, Constants.COLOR_ICON_PRIMARY);
+            titleLabel.setIcon(plusIcon);
+        }
     }
 
     private class InputFieldListener implements FocusListener, KeyListener {
@@ -135,6 +167,7 @@ public class ChatListPanelController {
                     exception.printStackTrace();
                 }
                 MF.getConversationPanel().rebuildConversationPanel(chatInfo, messages);
+                MF.getConversationPanel().srollToBottom();
             } else {
                 String username = chatInfo.getUsername();
                 ArrayList<Message> messages = null;
@@ -144,6 +177,7 @@ public class ChatListPanelController {
                     exception.printStackTrace();
                 }
                 MF.getConversationPanel().rebuildConversationPanel(chatInfo, messages);
+                MF.getConversationPanel().srollToBottom();
             }
             if (!chatPanel.getMode()) {
                 // open profile

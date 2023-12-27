@@ -8,6 +8,7 @@ import org.example.utilities.Constants;
 import javax.swing.*;
 import javax.swing.border.EmptyBorder;
 import java.awt.*;
+import java.lang.reflect.InvocationTargetException;
 import java.util.ArrayList;
 
 public class ChatListPanel extends JPanel {
@@ -18,6 +19,7 @@ public class ChatListPanel extends JPanel {
     private JScrollPane chatPanelsScrollPane;
     private ArrayList<AChatPanel> chatPanels;
     private String inputFieldPlaceholder;
+    private Icon plusIcon;
     public ChatListPanel(ArrayList<ChatInfo> infos) {
         this.infos = infos;
         this.inputFieldPlaceholder = "Search for a message";
@@ -36,6 +38,10 @@ public class ChatListPanel extends JPanel {
         titleLabel.setForeground(Constants.COLOR_TEXT_LIGHT);
         titleLabel.setFont(Constants.FONT_LARGER_BOLD);
         titleLabel.setBorder(new EmptyBorder(0, 0, 10, 0));
+        titleLabel.setIcon(null);
+
+        // plus icon
+        plusIcon = null;
 
         searchField = new JTextField();
         searchField.setBackground(Constants.COLOR_BACKGROUND);
@@ -214,8 +220,22 @@ public class ChatListPanel extends JPanel {
         public boolean getMode() { return mode; }
     }
 
-    public void setTitleLabel(String title) {
+    public void setTitleLabel(String title, boolean hasPlusIcon) {
         titleLabel.setText(title);
+        titleLabel.setIcon(null);
+
+        if (hasPlusIcon) {
+            IconFontSwing.register(FontAwesome.getIconFont());
+            this.plusIcon = IconFontSwing.buildIcon(FontAwesome.PLUS_CIRCLE, 35, Constants.COLOR_ICON_PRIMARY);
+            titleLabel.setIcon(this.plusIcon);
+            titleLabel.setHorizontalTextPosition(JLabel.LEFT);
+            titleLabel.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
+            titleLabel.setToolTipText("Create a new group");
+            ToolTipManager.sharedInstance().setInitialDelay(100);
+        } else {
+            titleLabel.setCursor(Cursor.getPredefinedCursor(Cursor.DEFAULT_CURSOR));
+            titleLabel.setToolTipText(null);
+        }
     }
 
     public ArrayList<AChatPanel> getChatPanels() {
@@ -232,6 +252,10 @@ public class ChatListPanel extends JPanel {
     }
     public JTextField getInputField() { return searchField; }
     public JButton getSearchButton() { return searchButton; }
+    public Icon getPlusIcon() {
+        return this.plusIcon;
+    }
+    public JLabel getTitleLabel() { return titleLabel; }
     public void setInputFieldPlaceholder(String placeholder) {
         this.inputFieldPlaceholder = placeholder;
         if (this.searchField.hasFocus()) {
