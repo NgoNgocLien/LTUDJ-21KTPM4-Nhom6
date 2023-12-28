@@ -563,7 +563,7 @@ public class AdminDatabase {
                 String format_time = localDateTime.format(formatter);
 
                 LocalDateTime localDateTime1 = timestamp1.toLocalDateTime();
-                DateTimeFormatter formatter1 = DateTimeFormatter.ofPattern("dd-MM-yyyy H:m:s");
+                DateTimeFormatter formatter1 = DateTimeFormatter.ofPattern("dd-MM-yyyy HH:mm:ss");
                 String format_time1 = localDateTime1.format(formatter1);
 
                 String genderString = gender ? "Female" : "Male";
@@ -708,7 +708,7 @@ public class AdminDatabase {
                 String format_time = localDateTime.format(formatter);
 
                 LocalDateTime localDateTime1 = timestamp1.toLocalDateTime();
-                DateTimeFormatter formatter1 = DateTimeFormatter.ofPattern("dd-MM-yyyy H:m:s");
+                DateTimeFormatter formatter1 = DateTimeFormatter.ofPattern("dd-MM-yyyy HH:mm:ss");
                 String format_time1 = localDateTime1.format(formatter1);
 
                 String genderString = gender ? "Female" : "Male";
@@ -798,7 +798,7 @@ public class AdminDatabase {
                 String format_time = localDateTime.format(formatter);
 
                 LocalDateTime localDateTime1 = timestamp1.toLocalDateTime();
-                DateTimeFormatter formatter1 = DateTimeFormatter.ofPattern("dd-MM-yyyy H:m:s");
+                DateTimeFormatter formatter1 = DateTimeFormatter.ofPattern("dd-MM-yyyy HH:mm:ss");
                 String format_time1 = localDateTime1.format(formatter1);
 
                 String genderString = gender ? "Female" : "Male";
@@ -839,17 +839,17 @@ public class AdminDatabase {
 
                 Timestamp timestamp = new Timestamp(login_time.getTime());
                 LocalDateTime localDateTime = timestamp.toLocalDateTime();
-                DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-MM-yyyy H:m:s");
+                DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-MM-yyyy HH:mm:ss");
                 String format_time = localDateTime.format(formatter);
 
                 String format_time1;
                 if (logout_time != null) {
                     Timestamp timestamp1 = new Timestamp(logout_time.getTime());
                     LocalDateTime localDateTime1 = timestamp1.toLocalDateTime();
-                    DateTimeFormatter formatter1 = DateTimeFormatter.ofPattern("dd-MM-yyyy H:m:s");
+                    DateTimeFormatter formatter1 = DateTimeFormatter.ofPattern("dd-MM-yyyy HH:mm:ss");
                     format_time1 = localDateTime1.format(formatter1);
                 } else {
-                    format_time1 = "N/A";
+                    format_time1 = "Active";
                 }
 
                 Object[] row = {i, format_time,  format_time1};
@@ -1137,7 +1137,7 @@ public class AdminDatabase {
                 Timestamp timestamp = new Timestamp(login_time.getTime());
 
                 LocalDateTime localDateTime = timestamp.toLocalDateTime();
-                DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-MM-yyyy H:m:s");
+                DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-MM-yyyy HH:mm:ss");
                 String format_time = localDateTime.format(formatter);
 
                 Object[] row = { id, username, fullname, format_time };
