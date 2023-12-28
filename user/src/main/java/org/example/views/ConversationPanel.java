@@ -161,7 +161,7 @@ public class ConversationPanel extends JPanel {
         messagesScrollPane.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED);
         messagesScrollPane.setBorder(null);
         // speed up the scroll speed
-        messagesScrollPane.getVerticalScrollBar().setUnitIncrement(8);
+        messagesScrollPane.getVerticalScrollBar().setUnitIncrement(2);
     }
 
     public void addStartConversationPanel(String fullname, String username, String statement) {

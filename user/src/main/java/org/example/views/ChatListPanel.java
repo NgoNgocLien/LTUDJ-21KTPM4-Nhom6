@@ -75,7 +75,7 @@ public class ChatListPanel extends JPanel {
         chatPanelsScrollPane.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED);
         chatPanelsScrollPane.setBorder(null);
         // speed up the scroll speed
-        chatPanelsScrollPane.getVerticalScrollBar().setUnitIncrement(8);
+        chatPanelsScrollPane.getVerticalScrollBar().setUnitIncrement(4);
 
         chatPanelsPanel = new JPanel();
         chatPanelsPanel.setBackground(Constants.COLOR_SECONDARY);
