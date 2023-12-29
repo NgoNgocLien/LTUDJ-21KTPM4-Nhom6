@@ -1,0 +1,10 @@
+<component name="libraryTable">
+  <library name="jiconfont-swing-1.0.1-javadoc">
+    <CLASSES />
+    <JAVADOC>
+      <root url="jar://$PROJECT_DIR$/user/jiconfont-swing-1.0.1-javadoc.jar!/" />
+      <root url="jar://$PROJECT_DIR$/user/jiconfont-font_awesome-4.7.0.1-javadoc.jar!/" />
+    </JAVADOC>
+    <SOURCES />
+  </library>
+</component>

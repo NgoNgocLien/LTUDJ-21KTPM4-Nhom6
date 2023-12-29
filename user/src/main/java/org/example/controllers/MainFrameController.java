@@ -6,6 +6,8 @@ import org.example.views.ConversationPanel;
 import org.example.views.IconPanel;
 import org.example.views.MainFrame;
 
+import java.net.Socket;
+
 public class MainFrameController {
     private String myUsername;
     private DatabaseHandler DB;
@@ -13,11 +15,12 @@ public class MainFrameController {
     IconPanelController iconPanelController;
     ChatListPanelController chatListPanelController;
     ConversationPanelController conversationPanelController;
-    public MainFrameController(MainFrame mainFrame, DatabaseHandler DB, String myUsername) {
+    private Socket socket;
+    public MainFrameController(Socket socket, MainFrame mainFrame, DatabaseHandler DB, String myUsername) {
         this.myUsername = myUsername;
         this.DB = DB;
         this.mainFrame = mainFrame;
-
+        this.socket = socket;
         mainFrame.addWindowListener(new java.awt.event.WindowAdapter() {
             @Override
             public void windowClosing(java.awt.event.WindowEvent windowEvent) {
@@ -33,7 +36,7 @@ public class MainFrameController {
             }
         });
 
-        iconPanelController = new IconPanelController(this);
+        iconPanelController = new IconPanelController(socket, this);
         chatListPanelController = new ChatListPanelController(this);
         conversationPanelController = new ConversationPanelController(this);
     }

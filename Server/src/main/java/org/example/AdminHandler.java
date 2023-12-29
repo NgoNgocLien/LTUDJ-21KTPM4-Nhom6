@@ -29,14 +29,17 @@ public class AdminHandler implements Runnable {
                 ObjectOutputStream objectOutputStream = new ObjectOutputStream(clientSocket.getOutputStream());
 
                 System.out.println("check1");
-                // Read data from the client
+
                 byte[] buffer = new byte[1024];
                 int bytesRead = inputStream.read(buffer);
-                String method = new String(buffer, 0, bytesRead);
-                System.out.println("check2");
-                System.out.println("method: " + method);
+                String msg = new String(buffer, 0, bytesRead);
 
-                switch (method){
+                System.out.println("msg: " + msg);
+
+                String msgArr[] = msg.split("\n");
+                System.out.println("check2");
+
+                switch (msgArr[0]){
                     case "getAllGroup":{
                         System.out.println("Admin get all group");
 
@@ -60,12 +63,8 @@ public class AdminHandler implements Runnable {
 
                     case "getAllAdmin":{
                         System.out.println("Admin get all admin");
-                        buffer = new byte[1024];
-                        bytesRead = inputStream.read(buffer);
-                        String selected_id = new String(buffer, 0, bytesRead);
 
-//                        String selected_id = "1";
-                        Object[][] data2 = dbcon.getAllAdmin(selected_id);
+                        Object[][] data2 = dbcon.getAllAdmin(msgArr[1]);
 //                        ObjectOutputStream objectOutputStream2 = new ObjectOutputStream(clientSocket.getOutputStream());
                         objectOutputStream.reset();
                         objectOutputStream.writeObject(data2);
@@ -85,12 +84,8 @@ public class AdminHandler implements Runnable {
 
                     case "getAllMember":{
                         System.out.println("Admin get all member");
-                        buffer = new byte[1024];
-                        bytesRead = inputStream.read(buffer);
-                        String selected_id = new String(buffer, 0, bytesRead);
 
-//                        String selected_id = "1";
-                        Object[][] data2 = dbcon.getAllMember(selected_id);
+                        Object[][] data2 = dbcon.getAllMember(msgArr[1]);
                         objectOutputStream.reset();
                         objectOutputStream.writeObject(data2);
                         objectOutputStream.flush();
@@ -109,11 +104,8 @@ public class AdminHandler implements Runnable {
 
                     case "searchGroupName":{
                         System.out.println("Admin search group name");
-                        buffer = new byte[1024];
-                        bytesRead = inputStream.read(buffer);
-                        String name = new String(buffer, 0, bytesRead);
 
-                        Object[][] data2 = dbcon.searchGroupName(name);
+                        Object[][] data2 = dbcon.searchGroupName(msgArr[1]);
 
                         objectOutputStream.reset();
                         objectOutputStream.writeObject(data2);
@@ -155,16 +147,12 @@ public class AdminHandler implements Runnable {
                     case "searchReport":{
                         System.out.println("Admin search report");
 
-                        buffer = new byte[1024];
-                        bytesRead = inputStream.read(buffer);
-                        String message = new String(buffer, 0, bytesRead);
-
-                        String[] messageSplit = message.split("\n");
-                        String username = messageSplit[0];
+                        String username = msgArr[1];
                         System.out.println(username);
-                        String date = messageSplit[1];
+                        String date = msgArr[2];
                         if (date.equals("(dd-mm-yyyy)"))
                             date = "";
+                        System.out.println(date);
 
                         Object[][] data1 = dbcon.searchReport(username, date.split("-"));
 //                        ObjectOutputStream objectOutputStream1 = new ObjectOutputStream(clientSocket.getOutputStream());
@@ -187,11 +175,7 @@ public class AdminHandler implements Runnable {
                     case "disableUser":{
                         System.out.println("Admin disable user");
 
-                        buffer = new byte[1024];
-                        bytesRead = inputStream.read(buffer);
-                        String username = new String(buffer, 0, bytesRead);
-
-                        dbcon.disableUser(username);
+                        dbcon.disableUser(msgArr[1]);
                         Object[][] data = dbcon.getAllReport();
                         objectOutputStream.reset();
                         objectOutputStream.writeObject(data);
@@ -226,14 +210,10 @@ public class AdminHandler implements Runnable {
                     case "searchActiveUser":{
                         System.out.println("Admin search active user");
 
-                        buffer = new byte[1024];
-                        bytesRead = inputStream.read(buffer);
-                        String message = new String(buffer, 0, bytesRead);
+                        String start_date = msgArr[1];
+                        String end_date = msgArr[2];
 
-                        String[] messageSplit = message.split("\n");
-                        String start_date = messageSplit[0];
-                        String end_date = messageSplit[1];
-
+                        System.out.println(start_date + " & " + end_date);
                         Object[][] data1 = dbcon.searchActiveUser(start_date, end_date);
 //                        ObjectOutputStream objectOutputStream1 = new ObjectOutputStream(clientSocket.getOutputStream());
                         objectOutputStream.reset();
@@ -255,11 +235,7 @@ public class AdminHandler implements Runnable {
                     case "getMonthlyActiveUser":{
                         System.out.println("Admin get monthly active user");
 
-                        buffer = new byte[1024];
-                        bytesRead = inputStream.read(buffer);
-                        String year = new String(buffer, 0, bytesRead);
-
-                        int[] data1 = dbcon.getMonthlyActiveUser(year);
+                        int[] data1 = dbcon.getMonthlyActiveUser(msgArr[1]);
 //                        ObjectOutputStream objectOutputStream1 = new ObjectOutputStream(clientSocket.getOutputStream());
                         objectOutputStream.reset();
                         objectOutputStream.writeObject(data1);

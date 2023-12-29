@@ -2,11 +2,16 @@ package org.example.controllers;
 
 import org.example.utilities.Constants;
 import org.example.utilities.DatabaseHandler;
+import org.example.utilities.ForgetPwd;
 import org.example.views.*;
 
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.*;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.OutputStream;
+import java.net.Socket;
 import java.sql.SQLException;
 
 public class ForgotPasswordFrameController {
@@ -16,10 +21,12 @@ public class ForgotPasswordFrameController {
     private JTextField emailField;
     private JButton forgotPasswordButton;
     private JLabel rememberLine;
+    private Socket socket;
 
-    public ForgotPasswordFrameController(ForgotPasswordFrame FPF, DatabaseHandler DB) {
+    public ForgotPasswordFrameController(Socket socket, ForgotPasswordFrame FPF, DatabaseHandler DB) {
         this.FPF = FPF;
         this.DB = DB;
+        this.socket = socket;
 
         this.FPF.addWindowListener(new WindowAdapter() {
             @Override
@@ -107,20 +114,27 @@ public class ForgotPasswordFrameController {
             }
 
             // TEST & DELETE AFTER: show username and email
-            JOptionPane.showMessageDialog(FPF, "Username: " + username + "\nEmail: " + email);
+//            JOptionPane.showMessageDialog(FPF, "Username: " + username + "\nEmail: " + email);
 
             // TODO: verify user info with database
+            try {
+                if (ForgetPwd.request(username, email, socket)){
+                    new SuccessMessage(FPF, "Please check your email to get new password");
 
-            // TODO: if fail: show error message
-            // new ErrorMessage(FPF, "Wrong username or email");
+                    // success: close forgot password frame, open login frame
+                    FPF.dispose();
+                    LoginFrame LF = new LoginFrame();
+                    LoginFrameController LFC = new LoginFrameController(socket, LF, DB);
+                }
+                else{
+                    new ErrorMessage(FPF, "Wrong username or email");
+                }
 
-            // TODO: if success: create new password and send to user's email
-            new SuccessMessage(FPF, "Please check your email to get new password");
+            } catch (IOException | ClassNotFoundException ex) {
+                throw new RuntimeException(ex);
+            }
 
-            // success: close forgot password frame, open login frame
-            FPF.dispose();
-            LoginFrame LF = new LoginFrame();
-            LoginFrameController LFC = new LoginFrameController(LF, DB);
+
         }
     }
 
@@ -138,7 +152,7 @@ public class ForgotPasswordFrameController {
                 FPF.dispose();
                 // open login frame
                 LoginFrame LF = new LoginFrame();
-                LoginFrameController LFC = new LoginFrameController(LF, DB);
+                LoginFrameController LFC = new LoginFrameController(socket, LF, DB);
             }
         }
 

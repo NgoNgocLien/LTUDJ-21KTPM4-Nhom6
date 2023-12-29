@@ -9,6 +9,7 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.net.Socket;
 
 public class LoginFrame extends JFrame {
     private JTextField usernameField;
@@ -23,7 +24,6 @@ public class LoginFrame extends JFrame {
         } catch (Exception e) {
             System.out.println("Error setting Windows look and feel: " + e);
         }
-
         setTitle(Constants.APP_NAME);
         setBackground(Constants.COLOR_BACKGROUND);
         setLayout(new BoxLayout(getContentPane(), BoxLayout.Y_AXIS));

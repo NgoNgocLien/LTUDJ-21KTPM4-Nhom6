@@ -10,6 +10,7 @@ import org.example.views.SuccessMessage;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.*;
+import java.net.Socket;
 import java.time.DateTimeException;
 import java.time.LocalDate;
 
@@ -29,9 +30,11 @@ public class RegisterFrameController {
     private JCheckBox termCheckBox;
     private JButton registerButton;
     private JLabel loginLine;
-    public RegisterFrameController(RegisterFrame RF, DatabaseHandler DB) {
+    private Socket socket;
+    public RegisterFrameController(Socket socket, RegisterFrame RF, DatabaseHandler DB) {
         this.RF = RF;
         this.DB = DB;
+        this.socket = socket;
 
         this.RF.addWindowListener(new WindowAdapter() {
             @Override
@@ -211,7 +214,7 @@ public class RegisterFrameController {
             // close register frame, open login frame
             RF.dispose();
             LoginFrame LF = new LoginFrame();
-            LoginFrameController LFC = new LoginFrameController(LF, DB);
+            LoginFrameController LFC = new LoginFrameController(socket, LF, DB);
         }
     }
 
@@ -265,7 +268,7 @@ public class RegisterFrameController {
                 RF.dispose();
                 // open login frame
                 LoginFrame LF = new LoginFrame();
-                LoginFrameController LFC = new LoginFrameController(LF, DB);
+                LoginFrameController LFC = new LoginFrameController(socket, LF, DB);
             }
         }
 

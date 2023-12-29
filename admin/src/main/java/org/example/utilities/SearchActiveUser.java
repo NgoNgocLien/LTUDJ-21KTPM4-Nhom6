@@ -19,11 +19,10 @@ public class SearchActiveUser extends SwingWorker<Void, Void> {
     public static Object[][] request(String start_date, String end_date , Socket socket) throws IOException, ClassNotFoundException {
 
         OutputStream outputStream = socket.getOutputStream();
-        String method = "searchActiveUser";
-        String message = start_date + "\n" + end_date;
-        System.out.println(method);
-        outputStream.write(method.getBytes());
-        outputStream.write(message.getBytes());
+        String msg = "searchActiveUser" + "\n" + start_date + " \n" + end_date;
+
+        outputStream.write(msg.getBytes());
+        System.out.println(msg);
 
 
         // receive object
