@@ -16,11 +16,10 @@ public class GetMonthlyActiveUser extends SwingWorker<Void, Void> {
     public static int[] request(String year, Socket socket) throws IOException, ClassNotFoundException {
 
         OutputStream outputStream = socket.getOutputStream();
-        String method = "getMonthlyActiveUser";
-        System.out.println(method);
-        outputStream.write(method.getBytes());
-        outputStream.write(year.getBytes());
-        System.out.println(method);
+        String msg = "getMonthlyActiveUser" + "\n" + year;
+
+        outputStream.write(msg.getBytes());
+        System.out.println(msg);
 
         // receive object
         ObjectInputStream objectInputStream = new ObjectInputStream(socket.getInputStream());

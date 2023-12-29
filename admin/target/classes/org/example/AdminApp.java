@@ -1357,7 +1357,7 @@ public class AdminApp extends javax.swing.JFrame {
 
         startHourInput.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
         startHourInput.setHorizontalAlignment(javax.swing.JTextField.CENTER);
-        startHourInput.setText("0");
+        startHourInput.setText("00");
         startHourInput.setPreferredSize(new java.awt.Dimension(124, 35));
 //        startHourInput.addActionListener(new java.awt.event.ActionListener() {
 //            public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -1367,7 +1367,7 @@ public class AdminApp extends javax.swing.JFrame {
 
         startMinInput.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
         startMinInput.setHorizontalAlignment(javax.swing.JTextField.CENTER);
-        startMinInput.setText("0");
+        startMinInput.setText("00");
         startMinInput.setPreferredSize(new java.awt.Dimension(124, 35));
 //        startMinInput.addActionListener(new java.awt.event.ActionListener() {
 //            public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -1377,7 +1377,7 @@ public class AdminApp extends javax.swing.JFrame {
 
         startSecInput.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
         startSecInput.setHorizontalAlignment(javax.swing.JTextField.CENTER);
-        startSecInput.setText("0");
+        startSecInput.setText("00");
         startSecInput.setPreferredSize(new java.awt.Dimension(124, 35));
 //        startSecInput.addActionListener(new java.awt.event.ActionListener() {
 //            public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -1548,7 +1548,7 @@ public class AdminApp extends javax.swing.JFrame {
 
         endHourInput.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
         endHourInput.setHorizontalAlignment(javax.swing.JTextField.CENTER);
-        endHourInput.setText("0");
+        endHourInput.setText("00");
         endHourInput.setPreferredSize(new java.awt.Dimension(124, 35));
 //        endHourInput.addActionListener(new java.awt.event.ActionListener() {
 //            public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -1558,7 +1558,7 @@ public class AdminApp extends javax.swing.JFrame {
 
         endMinInput.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
         endMinInput.setHorizontalAlignment(javax.swing.JTextField.CENTER);
-        endMinInput.setText("0");
+        endMinInput.setText("00");
         endMinInput.setPreferredSize(new java.awt.Dimension(124, 35));
 //        endMinInput.addActionListener(new java.awt.event.ActionListener() {
 //            public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -1568,7 +1568,7 @@ public class AdminApp extends javax.swing.JFrame {
 
         endSecInput.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
         endSecInput.setHorizontalAlignment(javax.swing.JTextField.CENTER);
-        endSecInput.setText("0");
+        endSecInput.setText("00");
         endSecInput.setPreferredSize(new java.awt.Dimension(124, 35));
 //        endSecInput.addActionListener(new java.awt.event.ActionListener() {
 //            public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -2205,13 +2205,13 @@ public class AdminApp extends javax.swing.JFrame {
         startDateInput.setText("(dd-mm-yyyy)");
         endDateInput.setText("(dd-mm-yyyy)");
 
-        startHourInput.setText("0");
-        startMinInput.setText("0");
-        startSecInput.setText("0");
+        startHourInput.setText("00");
+        startMinInput.setText("00");
+        startSecInput.setText("00");
 
-        endHourInput.setText("0");
-        endMinInput.setText("0");
-        endSecInput.setText("0");
+        endHourInput.setText("00");
+        endMinInput.setText("00");
+        endSecInput.setText("00");
 
         searchNameInput.setText("");
         searchSessionInput.setText("");
@@ -2902,13 +2902,13 @@ public class AdminApp extends javax.swing.JFrame {
         startDateInput.setText("(dd-mm-yyyy)");
         endDateInput.setText("(dd-mm-yyyy)");
 
-        startHourInput.setText("0");
-        startMinInput.setText("0");
-        startSecInput.setText("0");
+        startHourInput.setText("00");
+        startMinInput.setText("00");
+        startSecInput.setText("00");
 
-        endHourInput.setText("0");
-        endMinInput.setText("0");
-        endSecInput.setText("0");
+        endHourInput.setText("00");
+        endMinInput.setText("00");
+        endSecInput.setText("00");
 
         searchNameInput.setText("");
         searchSessionInput.setText("");
@@ -2989,9 +2989,9 @@ public class AdminApp extends javax.swing.JFrame {
                 if ((component.equals("hour") && (0 <= num && num <= 23)) ||
                         ((component.equals("min")) && (0 <= num && num <= 59)) ||
                         ((component.equals("sec")) && (0 <= num && num <= 59))){
-                    return Integer.toString(num);
+                    return time;
                 } else{
-                    return "0";
+                    return "00";
                 }
             } catch (NumberFormatException e) {
                 JOptionPane.showMessageDialog(null, "Invalid " + component, "Error", JOptionPane.ERROR_MESSAGE);
@@ -2999,7 +2999,7 @@ public class AdminApp extends javax.swing.JFrame {
             }
         }
         else{
-            return "0";
+            return "00";
         }
         return "";
     }

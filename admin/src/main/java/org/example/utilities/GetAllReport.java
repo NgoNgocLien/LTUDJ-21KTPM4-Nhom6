@@ -13,10 +13,10 @@ public class GetAllReport extends SwingWorker<Void, Void> {
     public static Object[][] request(Socket socket) throws IOException, ClassNotFoundException {
 
         OutputStream outputStream = socket.getOutputStream();
-        String method = "getAllReport";
-        System.out.println(method);
-        outputStream.write(method.getBytes());
-        System.out.println(method);
+        String msg = "getAllReport" + "\n";
+
+        outputStream.write(msg.getBytes());
+        System.out.println(msg);
 
         // receive object
         ObjectInputStream objectInputStream = new ObjectInputStream(socket.getInputStream());

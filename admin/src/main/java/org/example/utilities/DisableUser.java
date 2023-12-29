@@ -19,11 +19,10 @@ public class DisableUser extends SwingWorker<Void, Void> {
     public static Object[][] request(String username, Socket socket) throws IOException, ClassNotFoundException {
 
         OutputStream outputStream = socket.getOutputStream();
-        String method = "disableUser";
-        String message = username;
-        System.out.println(method);
-        outputStream.write(method.getBytes());
-        outputStream.write(message.getBytes());
+        String msg = "disableUser" + "\n" + username;
+
+        outputStream.write(msg.getBytes());
+        System.out.println(msg);
 
         ObjectInputStream objectInputStream = new ObjectInputStream(socket.getInputStream());
         Object[][] data = (Object[][]) objectInputStream.readObject();

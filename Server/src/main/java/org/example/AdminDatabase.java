@@ -78,7 +78,7 @@ public class AdminDatabase {
                     + "FROM GROUP_MEMBER gm "
                     + "INNER JOIN GROUP_CHAT gc ON gc.id_group = gm.id_group "
                     + "INNER JOIN USER u ON u.username = gm.username "
-                    + "WHERE gm.id_group = ? AND gm.is_admin = 1";
+                    + "WHERE gm.id_group = ? AND gm.is_admin = 1 AND u.is_locked != 2";
 
             PreparedStatement stmt = connection.prepareStatement(sql);
             stmt.setString(1, selected_id);
@@ -118,7 +118,7 @@ public class AdminDatabase {
                     + "FROM GROUP_MEMBER gm "
                     + "INNER JOIN GROUP_CHAT gc ON gc.id_group = gm.id_group "
                     + "INNER JOIN USER u ON u.username = gm.username "
-                    + "WHERE gm.id_group = ? AND gm.is_admin = 0";
+                    + "WHERE gm.id_group = ? AND gm.is_admin = 0 AND u.is_locked != 2";
 
             PreparedStatement stmt = connection.prepareStatement(sql);
             stmt.setString(1, selected_id);
@@ -202,7 +202,7 @@ public class AdminDatabase {
             sql = "SELECT u.username, s.report_time, u.is_locked "
                     + "FROM SPAM s "
                     + "INNER JOIN MESSAGE m ON m.id_message = s.id_message "
-                    + "INNER JOIN USER u ON u.username = m.sender ";
+                    + "INNER JOIN USER u ON u.username = m.sender AND u.is_locked != 2";
             ResultSet rs = stmt.executeQuery(sql);
             List<Object[]> rows = new ArrayList<>();
             int i = 1;
@@ -246,7 +246,7 @@ public class AdminDatabase {
             String sql = "SELECT u.username, s.report_time, u.is_locked "
                     + "FROM SPAM s "
                     + "INNER JOIN MESSAGE m ON m.id_message = s.id_message "
-                    + "INNER JOIN USER u ON u.username = m.sender ";
+                    + "INNER JOIN USER u ON u.username = m.sender AND u.is_locked != 2";
             PreparedStatement stmt;
             if (text.isEmpty()){
                 sql += "WHERE DAY(s.report_time) = ? "
@@ -373,7 +373,7 @@ public class AdminDatabase {
                     "       ELSE m.to_user " +
                     "    END as to_user, m.to_group " +
                     "	FROM HISTORY_LOGIN h  " +
-                    "	INNER JOIN USER u ON h.username = u.username " +
+                    "	INNER JOIN USER u ON h.username = u.username AND u.is_locked != 2 " +
                     "	LEFT JOIN MESSAGE m ON m.sender = u.username AND m.sent_time BETWEEN h.login_time AND h.logout_time " +
                     "	GROUP BY u.username, u.fullname, u.creation_time, h.login_time, h.logout_time, m.to_user, m.to_group) AS res " +
                     "GROUP BY username, fullname, creation_time ";
@@ -474,7 +474,7 @@ public class AdminDatabase {
 
                 LocalDateTime localDateTime = timestamp.toLocalDateTime();
 //                LocalDate localDate = ((java.sql.Date) create_time).toLocalDate();
-                DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-MM-yyyy H:m:s");
+                DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-MM-yyyy HH:mm:ss");
                 String format_time = localDateTime.format(formatter);
 
                 int session_count = rs.getInt("session_count");
