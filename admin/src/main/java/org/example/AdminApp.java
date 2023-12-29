@@ -774,7 +774,7 @@ public class AdminApp extends javax.swing.JFrame {
             userTable.getColumnModel().getColumn(1).setResizable(false);
             userTable.getColumnModel().getColumn(1).setPreferredWidth(140);
             userTable.getColumnModel().getColumn(2).setResizable(false);
-            userTable.getColumnModel().getColumn(2).setPreferredWidth(155);
+            userTable.getColumnModel().getColumn(2).setPreferredWidth(170);
             userTable.getColumnModel().getColumn(3).setResizable(false);
             userTable.getColumnModel().getColumn(3).setPreferredWidth(420);
             userTable.getColumnModel().getColumn(4).setResizable(false);
@@ -831,14 +831,14 @@ public class AdminApp extends javax.swing.JFrame {
                         {null, null, null, null, null, null, null, null, null}
                 },
                 new String [] {
-                        "Username", "Password", "Full name", "Address", "Birth date", "Gender", "Email", "Registration time", "Account status"
+                        "Username", "Full name", "Address", "Birth date", "Gender", "Email", "Registration time", "Account status"
                 }
         ) {
             Class[] types = new Class [] {
-                    java.lang.Object.class, java.lang.Object.class, java.lang.Object.class, java.lang.Object.class, java.lang.Object.class, java.lang.Object.class, java.lang.Object.class, java.lang.Object.class, java.lang.Object.class
+                    java.lang.Object.class, java.lang.Object.class, java.lang.Object.class, java.lang.Object.class, java.lang.Object.class, java.lang.Object.class, java.lang.Object.class, java.lang.Object.class
             };
             boolean[] canEdit = new boolean [] {
-                    false, false, true, true, true, true, true, false, false
+                    false, true, true, true, true, true, false, false
             };
 
             @Override
@@ -860,23 +860,21 @@ public class AdminApp extends javax.swing.JFrame {
 
         if (userDetailTable.getColumnModel().getColumnCount() > 0) {
             userDetailTable.getColumnModel().getColumn(0).setResizable(false);
-            userDetailTable.getColumnModel().getColumn(0).setPreferredWidth(120);
+            userDetailTable.getColumnModel().getColumn(0).setPreferredWidth(130);
             userDetailTable.getColumnModel().getColumn(1).setResizable(false);
-            userDetailTable.getColumnModel().getColumn(1).setPreferredWidth(120);
+            userDetailTable.getColumnModel().getColumn(1).setPreferredWidth(175);
             userDetailTable.getColumnModel().getColumn(2).setResizable(false);
-            userDetailTable.getColumnModel().getColumn(2).setPreferredWidth(175);
+            userDetailTable.getColumnModel().getColumn(2).setPreferredWidth(400);
             userDetailTable.getColumnModel().getColumn(3).setResizable(false);
-            userDetailTable.getColumnModel().getColumn(3).setPreferredWidth(350);
+            userDetailTable.getColumnModel().getColumn(3).setPreferredWidth(95);
             userDetailTable.getColumnModel().getColumn(4).setResizable(false);
-            userDetailTable.getColumnModel().getColumn(4).setPreferredWidth(95);
+            userDetailTable.getColumnModel().getColumn(4).setPreferredWidth(65);
             userDetailTable.getColumnModel().getColumn(5).setResizable(false);
-            userDetailTable.getColumnModel().getColumn(5).setPreferredWidth(80);
+            userDetailTable.getColumnModel().getColumn(5).setPreferredWidth(190);
             userDetailTable.getColumnModel().getColumn(6).setResizable(false);
-            userDetailTable.getColumnModel().getColumn(6).setPreferredWidth(190);
+            userDetailTable.getColumnModel().getColumn(6).setPreferredWidth(140);
             userDetailTable.getColumnModel().getColumn(7).setResizable(false);
-            userDetailTable.getColumnModel().getColumn(7).setPreferredWidth(120);
-            userDetailTable.getColumnModel().getColumn(8).setResizable(false);
-            userDetailTable.getColumnModel().getColumn(8).setPreferredWidth(95);
+            userDetailTable.getColumnModel().getColumn(7).setPreferredWidth(95);
         }
 
         updateUserButton.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
@@ -964,9 +962,9 @@ public class AdminApp extends javax.swing.JFrame {
             historyLoginTable.getColumnModel().getColumn(0).setResizable(false);
             historyLoginTable.getColumnModel().getColumn(0).setPreferredWidth(70);
             historyLoginTable.getColumnModel().getColumn(1).setResizable(false);
-            historyLoginTable.getColumnModel().getColumn(1).setPreferredWidth(140);
+            historyLoginTable.getColumnModel().getColumn(1).setPreferredWidth(150);
             historyLoginTable.getColumnModel().getColumn(2).setResizable(false);
-            historyLoginTable.getColumnModel().getColumn(2).setPreferredWidth(140);
+            historyLoginTable.getColumnModel().getColumn(2).setPreferredWidth(150);
         }
 
         listFriendTable.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
@@ -1110,10 +1108,10 @@ public class AdminApp extends javax.swing.JFrame {
                                                 .addComponent(buttonContainer, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                                                 .addGroup(javax.swing.GroupLayout.Alignment.LEADING, userDetailPanelLayout.createSequentialGroup()
                                                         .addComponent(userTitle15)
-                                                        .addGap(365)
+                                                        .addGap(420)
                                                         .addComponent(userTitle16))
                                                 .addGroup(javax.swing.GroupLayout.Alignment.LEADING, userDetailPanelLayout.createSequentialGroup()
-                                                        .addComponent(historyLoginTableScrollPane, javax.swing.GroupLayout.PREFERRED_SIZE, 350, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                                        .addComponent(historyLoginTableScrollPane, javax.swing.GroupLayout.PREFERRED_SIZE, 370, javax.swing.GroupLayout.PREFERRED_SIZE)
                                                         .addGap(250, 250, 250)
                                                         .addComponent(listFriendTableScrollPane, javax.swing.GroupLayout.PREFERRED_SIZE, 365, javax.swing.GroupLayout.PREFERRED_SIZE))
                                                 .addComponent(userTitle14, javax.swing.GroupLayout.Alignment.LEADING)
@@ -1136,12 +1134,12 @@ public class AdminApp extends javax.swing.JFrame {
                                         .addComponent(userTitle16))
                                 .addGap(30, 30, 30)
                                 .addGroup(userDetailPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                                        .addComponent(historyLoginTableScrollPane, javax.swing.GroupLayout.PREFERRED_SIZE, 173, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                        .addComponent(listFriendTableScrollPane, javax.swing.GroupLayout.PREFERRED_SIZE, 173, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                        .addComponent(historyLoginTableScrollPane, javax.swing.GroupLayout.PREFERRED_SIZE, 180, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addComponent(listFriendTableScrollPane, javax.swing.GroupLayout.PREFERRED_SIZE, 180, javax.swing.GroupLayout.PREFERRED_SIZE))
                                 .addGap(40, 40, 40)
                                 .addComponent(userTitle14)
                                 .addGap(30, 30, 30)
-                                .addComponent(passRequestTableScrollPane, javax.swing.GroupLayout.PREFERRED_SIZE, 172, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(passRequestTableScrollPane, javax.swing.GroupLayout.PREFERRED_SIZE, 180, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         )
         );
@@ -1205,7 +1203,7 @@ public class AdminApp extends javax.swing.JFrame {
                                                 .addComponent(addNewUserButton, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
                                 .addGap(18, 18, 18)
                                 .addGroup(userTableMainPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                        .addComponent(userTableScrollPanel, javax.swing.GroupLayout.PREFERRED_SIZE, 320, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addComponent(userTableScrollPanel, javax.swing.GroupLayout.PREFERRED_SIZE, 330, javax.swing.GroupLayout.PREFERRED_SIZE)
                                         )
                                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
@@ -2446,7 +2444,6 @@ public class AdminApp extends javax.swing.JFrame {
     }
 
     private void userTableMouseClicked(java.awt.event.MouseEvent evt) throws IOException, ClassNotFoundException {
-        //userPanel.add(userDetailPanel);
         userPanel.revalidate();
         userPanel.repaint();
         DefaultTableModel userDetailModel = (DefaultTableModel) userDetailTable.getModel();
@@ -2467,7 +2464,7 @@ public class AdminApp extends javax.swing.JFrame {
         ((DefaultTableCellRenderer)userDetailTable.getDefaultRenderer(String.class)).setHorizontalAlignment(SwingConstants.CENTER);
         userDetailTable.setPreferredScrollableViewportSize(userDetailTable.getPreferredSize());
 
-        originalEmail = model.getValueAt(0, 6).toString();
+        originalEmail = model.getValueAt(0, 5).toString();
 
         DefaultTableModel historyModel = (DefaultTableModel) historyLoginTable.getModel();
         historyModel.setRowCount(0);
@@ -2509,11 +2506,11 @@ public class AdminApp extends javax.swing.JFrame {
     private void updateUserButtonActionPerformed(java.awt.event.ActionEvent evt) throws IOException, ClassNotFoundException {
         DefaultTableModel model = (DefaultTableModel) userDetailTable.getModel();
         String username = model.getValueAt(0, 0).toString();
-        String fullname = model.getValueAt(0, 2).toString();
-        String address = model.getValueAt(0, 3).toString();
-        String birthdate = model.getValueAt(0, 4).toString();
-        String gender = model.getValueAt(0, 5).toString();
-        String email = model.getValueAt(0, 6).toString();
+        String fullname = model.getValueAt(0, 1).toString();
+        String address = model.getValueAt(0, 2).toString();
+        String birthdate = model.getValueAt(0, 3).toString();
+        String gender = model.getValueAt(0, 4).toString();
+        String email = model.getValueAt(0, 5).toString();
 
         if(email.equals(originalEmail)){
             Boolean success = UpdateUser.request(username, fullname, address, birthdate, gender, email, socket);
@@ -2528,6 +2525,13 @@ public class AdminApp extends javax.swing.JFrame {
 
             for (Object[] row : user) {
                 model.addRow(row);
+            }
+            DefaultTableModel model1 = (DefaultTableModel) userTable.getModel();
+            model1.setRowCount(0);
+
+            Object[][] data = GetAllUser.request(socket);
+            for (Object[] row : data) {
+                model1.addRow(row);
             }
         }
         else{
@@ -2558,6 +2562,13 @@ public class AdminApp extends javax.swing.JFrame {
             for (Object[] row : user) {
                 model.addRow(row);
             }
+            DefaultTableModel model1 = (DefaultTableModel) userTable.getModel();
+            model1.setRowCount(0);
+
+            Object[][] data = GetAllUser.request(socket);
+            for (Object[] row : data) {
+                model1.addRow(row);
+            }
         }
     }
 
@@ -2576,9 +2587,17 @@ public class AdminApp extends javax.swing.JFrame {
                 for (Object[] row : data) {
                     userModel.addRow(row);
                 }
-                userPanel.remove(userDetailPanel);
-                userPanel.revalidate();
-                userPanel.repaint();
+                DefaultTableModel userDetailModel = (DefaultTableModel) userDetailTable.getModel();
+                userDetailModel.setRowCount(0);
+
+                DefaultTableModel historyModel = (DefaultTableModel) historyLoginTable.getModel();
+                historyModel.setRowCount(0);
+
+                DefaultTableModel friendModel = (DefaultTableModel) listFriendTable.getModel();
+                friendModel.setRowCount(0);
+
+//                userPanel.revalidate();
+//                userPanel.repaint();
             } else {
                 JOptionPane.showMessageDialog(null, "Failed to delete user.");
             }
@@ -2587,7 +2606,7 @@ public class AdminApp extends javax.swing.JFrame {
 
     private void disableEnableUserButtonActionPerformed(java.awt.event.ActionEvent evt) throws IOException, ClassNotFoundException {
         DefaultTableModel model = (DefaultTableModel) userDetailTable.getModel();
-        String is_locked = model.getValueAt(0, 8).toString();
+        String is_locked = model.getValueAt(0, 7).toString();
         int dialogResult;
         if(is_locked.equals("Disabled")){
             dialogResult = JOptionPane.showConfirmDialog(null, "Are you sure to enable this user?", "Confirmation", JOptionPane.YES_NO_OPTION);

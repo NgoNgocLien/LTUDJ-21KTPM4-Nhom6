@@ -782,7 +782,6 @@ public class AdminDatabase {
 
             while(rs.next()){
                 String username = rs.getString("username");
-                String password = rs.getString("password");
                 String fullname = rs.getString("fullname");
                 String address = rs.getString("address");
                 Date birthdate = rs.getDate("birthdate");
@@ -803,7 +802,7 @@ public class AdminDatabase {
 
                 String genderString = gender ? "Female" : "Male";
                 String statusString = (is_locked == 1) ? "Disabled" : "Enabled";
-                Object[] row = {username, password, fullname, address, format_time, genderString, email, format_time1, statusString};
+                Object[] row = {username, fullname, address, format_time, genderString, email, format_time1, statusString};
 
                 rows.add(row);
             }
