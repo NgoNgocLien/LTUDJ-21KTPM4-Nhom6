@@ -1,9 +1,9 @@
 package org.example;
 
-import javax.swing.border.EmptyBorder;
 import javax.swing.border.LineBorder;
 import javax.swing.table.*;
 import java.awt.*;
+import java.awt.event.*;
 import javax.swing.*;
 import java.io.IOException;
 import java.net.Socket;
@@ -18,16 +18,19 @@ import org.jfree.chart.renderer.category.BarRenderer;
 
 public class AdminApp extends javax.swing.JFrame {
 
-    public AdminApp(Socket socket) {
+    public AdminApp(Socket socket) throws UnsupportedLookAndFeelException, ClassNotFoundException, InstantiationException, IllegalAccessException {
+        UIManager.setLookAndFeel("com.sun.java.swing.plaf.windows.WindowsLookAndFeel");
 
         initComponents();
+        customStyle();
         setExtendedState(JFrame.MAXIMIZED_BOTH);
 
         groupMainPanel.setVisible(false);
         reportMainPanel.setVisible(false);
         dataMainPanel.setVisible(false);
-        userMainPanel.setVisible(false);
+        userMainPanel.setVisible(true);
         loginHistoryMainPanel.setVisible(false);
+        getContentPane().add(userMainPanel);
         this.socket = socket;
     }
 
@@ -65,7 +68,6 @@ public class AdminApp extends javax.swing.JFrame {
         groupTitle1 = new javax.swing.JLabel();
         dataMainPanel = new javax.swing.JPanel();
         dataTitlePanel = new javax.swing.JPanel();
-        statisticTitle = new javax.swing.JLabel();
         ScrollPanel = new javax.swing.JScrollPane();
         dataPanel = new javax.swing.JPanel();
         activeUserMainPanel = new javax.swing.JPanel();
@@ -488,7 +490,7 @@ public class AdminApp extends javax.swing.JFrame {
             }
         });
 
-        groupTable.setFont(new java.awt.Font("Arial", 0, 12)); // NOI18N
+        groupTable.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
         groupTable.setModel(new javax.swing.table.DefaultTableModel(
                 new Object [][] {
                         {null, null, null},
@@ -536,12 +538,12 @@ public class AdminApp extends javax.swing.JFrame {
             groupTable.getColumnModel().getColumn(1).setResizable(false);
             groupTable.getColumnModel().getColumn(1).setPreferredWidth(90);
             groupTable.getColumnModel().getColumn(2).setResizable(false);
-            groupTable.getColumnModel().getColumn(2).setPreferredWidth(75);
+            groupTable.getColumnModel().getColumn(2).setPreferredWidth(100);
         }
 
         memberScrollPane.setRowHeaderView(null);
 
-        memberTable.setFont(new java.awt.Font("Arial", 0, 12)); // NOI18N
+        memberTable.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
         memberTable.setModel(new javax.swing.table.DefaultTableModel(
                 new Object [][] {
 
@@ -562,14 +564,14 @@ public class AdminApp extends javax.swing.JFrame {
         memberScrollPane.setViewportView(memberTable);
         if (memberTable.getColumnModel().getColumnCount() > 0) {
             memberTable.getColumnModel().getColumn(0).setResizable(false);
-            memberTable.getColumnModel().getColumn(0).setPreferredWidth(40);
+            memberTable.getColumnModel().getColumn(0).setPreferredWidth(70);
             memberTable.getColumnModel().getColumn(1).setResizable(false);
-            memberTable.getColumnModel().getColumn(1).setPreferredWidth(90);
+            memberTable.getColumnModel().getColumn(1).setPreferredWidth(130);
         }
 
         adminScrollPanel.setRowHeaderView(null);
 
-        adminTable.setFont(new java.awt.Font("Arial", 0, 12)); // NOI18N
+        adminTable.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
         adminTable.setModel(new javax.swing.table.DefaultTableModel(
                 new Object [][] {
 
@@ -590,9 +592,9 @@ public class AdminApp extends javax.swing.JFrame {
         adminScrollPanel.setViewportView(adminTable);
         if (adminTable.getColumnModel().getColumnCount() > 0) {
             adminTable.getColumnModel().getColumn(0).setResizable(false);
-            adminTable.getColumnModel().getColumn(0).setPreferredWidth(40);
+            adminTable.getColumnModel().getColumn(0).setPreferredWidth(70);
             adminTable.getColumnModel().getColumn(1).setResizable(false);
-            adminTable.getColumnModel().getColumn(1).setPreferredWidth(90);
+            adminTable.getColumnModel().getColumn(1).setPreferredWidth(130);
         }
 
         adminTitle.setFont(new java.awt.Font("Arial", 1, 18)); // NOI18N
@@ -643,15 +645,15 @@ public class AdminApp extends javax.swing.JFrame {
                                                 .addGap(85, 85, 85)
                                                 .addGroup(groupMainPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                                         .addGroup(groupMainPanelLayout.createSequentialGroup()
-                                                                .addGap(69, 69, 69)
+                                                                .addGap(75, 75, 75)
                                                                 .addComponent(adminTitle)
-                                                                .addGap(166, 166, 166)
+                                                                .addGap(270, 270, 270)
                                                                 .addComponent(memberTitle))
                                                         .addGroup(groupMainPanelLayout.createSequentialGroup()
                                                                 .addGap(2, 2, 2)
-                                                                .addComponent(adminScrollPanel, javax.swing.GroupLayout.PREFERRED_SIZE, 266, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                                                .addGap(60, 60, 60)
-                                                                .addComponent(memberScrollPane, javax.swing.GroupLayout.PREFERRED_SIZE, 247, javax.swing.GroupLayout.PREFERRED_SIZE)))))
+                                                                .addComponent(adminScrollPanel, javax.swing.GroupLayout.PREFERRED_SIZE, 300, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                                                .addGap(100, 100, 100)
+                                                                .addComponent(memberScrollPane, javax.swing.GroupLayout.PREFERRED_SIZE, 300, javax.swing.GroupLayout.PREFERRED_SIZE)))))
                                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         groupMainPanelLayout.setVerticalGroup(
@@ -724,7 +726,7 @@ public class AdminApp extends javax.swing.JFrame {
             }
         });
 
-        userTable.setFont(new java.awt.Font("Arial", 0, 12)); // NOI18N
+        userTable.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
         userTable.setModel(new javax.swing.table.DefaultTableModel(
                 new Object [][] {
                         {null, null, null, null, null, null, null, null},
@@ -768,21 +770,21 @@ public class AdminApp extends javax.swing.JFrame {
         userTableScrollPanel.setViewportView(userTable);
         if (userTable.getColumnModel().getColumnCount() > 0) {
             userTable.getColumnModel().getColumn(0).setResizable(false);
-            userTable.getColumnModel().getColumn(0).setPreferredWidth(70);
+            userTable.getColumnModel().getColumn(0).setPreferredWidth(50);
             userTable.getColumnModel().getColumn(1).setResizable(false);
             userTable.getColumnModel().getColumn(1).setPreferredWidth(140);
             userTable.getColumnModel().getColumn(2).setResizable(false);
-            userTable.getColumnModel().getColumn(2).setPreferredWidth(150);
+            userTable.getColumnModel().getColumn(2).setPreferredWidth(155);
             userTable.getColumnModel().getColumn(3).setResizable(false);
             userTable.getColumnModel().getColumn(3).setPreferredWidth(420);
             userTable.getColumnModel().getColumn(4).setResizable(false);
             userTable.getColumnModel().getColumn(4).setPreferredWidth(105);
             userTable.getColumnModel().getColumn(5).setResizable(false);
-            userTable.getColumnModel().getColumn(5).setPreferredWidth(105);
+            userTable.getColumnModel().getColumn(5).setPreferredWidth(95);
             userTable.getColumnModel().getColumn(6).setResizable(false);
-            userTable.getColumnModel().getColumn(6).setPreferredWidth(210);
+            userTable.getColumnModel().getColumn(6).setPreferredWidth(215);
             userTable.getColumnModel().getColumn(7).setResizable(false);
-            userTable.getColumnModel().getColumn(7).setPreferredWidth(140);
+            userTable.getColumnModel().getColumn(7).setPreferredWidth(160);
         }
 
         viewAllUserButton.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
@@ -823,7 +825,7 @@ public class AdminApp extends javax.swing.JFrame {
         userTitle4.setForeground(new java.awt.Color(23, 70, 162));
         userTitle4.setText("USER DETAILS");
 
-        userDetailTable.setFont(new java.awt.Font("Arial", 0, 12)); // NOI18N
+        userDetailTable.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
         userDetailTable.setModel(new javax.swing.table.DefaultTableModel(
                 new Object [][] {
                         {null, null, null, null, null, null, null, null, null}
@@ -922,7 +924,7 @@ public class AdminApp extends javax.swing.JFrame {
             }
         });
 
-        historyLoginTable.setFont(new java.awt.Font("Arial", 0, 12)); // NOI18N
+        historyLoginTable.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
         historyLoginTable.setModel(new javax.swing.table.DefaultTableModel(
                 new Object [][] {
                         {null, null, null},
@@ -967,7 +969,7 @@ public class AdminApp extends javax.swing.JFrame {
             historyLoginTable.getColumnModel().getColumn(2).setPreferredWidth(140);
         }
 
-        listFriendTable.setFont(new java.awt.Font("Arial", 0, 12)); // NOI18N
+        listFriendTable.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
         listFriendTable.setModel(new javax.swing.table.DefaultTableModel(
                 new Object [][] {
                         {null, null, null},
@@ -1040,7 +1042,7 @@ public class AdminApp extends javax.swing.JFrame {
         userTitle14.setForeground(new java.awt.Color(23, 70, 162));
         userTitle14.setText("UPDATE PASSWORD REQUEST");
 
-        passRequestTable.setFont(new java.awt.Font("Arial", 0, 12)); // NOI18N
+        passRequestTable.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
         passRequestTable.setModel(new javax.swing.table.DefaultTableModel(
                 new Object [][] {
                         {null, null, null},
@@ -1125,7 +1127,7 @@ public class AdminApp extends javax.swing.JFrame {
                                 .addGap(40, 40, 40)
                                 .addComponent(userTitle4)
                                 .addGap(30, 30, 30)
-                                .addComponent(userDetailTableScrollPanel, javax.swing.GroupLayout.PREFERRED_SIZE, 52, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(userDetailTableScrollPanel, javax.swing.GroupLayout.PREFERRED_SIZE, 60, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addGap(18, 18, 18)
                                 .addComponent(buttonContainer)
                                 .addGap(40, 40, 40)
@@ -1241,7 +1243,7 @@ public class AdminApp extends javax.swing.JFrame {
         loginHistoryTitle.setForeground(new java.awt.Color(23, 70, 162));
         loginHistoryTitle.setText("LIST OF LOGIN HISTORIES");
 
-        loginHistoryTable.setFont(new java.awt.Font("Arial", 0, 12)); // NOI18N
+        loginHistoryTable.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
         loginHistoryTable.setModel(new javax.swing.table.DefaultTableModel(
                 new Object [][] {
                         {null, null, null, null},
@@ -1321,28 +1323,8 @@ public class AdminApp extends javax.swing.JFrame {
         dataMainPanel.setPreferredSize(new java.awt.Dimension(1440, 2079));
         dataMainPanel.setLayout(new java.awt.BorderLayout());
 
-        statisticTitle.setFont(new java.awt.Font("Arial", 1, 18)); // NOI18N
-        statisticTitle.setForeground(new java.awt.Color(23, 70, 162));
-        statisticTitle.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
-        statisticTitle.setText("STATISTICS");
-
         javax.swing.GroupLayout dataTitlePanelLayout = new javax.swing.GroupLayout(dataTitlePanel);
         dataTitlePanel.setLayout(dataTitlePanelLayout);
-        dataTitlePanelLayout.setHorizontalGroup(
-                dataTitlePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                        .addGroup(dataTitlePanelLayout.createSequentialGroup()
-                                .addGap(68, 68, 68)
-                                .addComponent(statisticTitle)
-                                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-        );
-        dataTitlePanelLayout.setVerticalGroup(
-                dataTitlePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                        .addGroup(dataTitlePanelLayout.createSequentialGroup()
-                                .addGap(37, 37, 37)
-                                .addComponent(statisticTitle)
-                                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-        );
-
         dataMainPanel.add(dataTitlePanel, java.awt.BorderLayout.PAGE_START);
 
         ScrollPanel.setBorder(null);
@@ -1362,7 +1344,7 @@ public class AdminApp extends javax.swing.JFrame {
 
         activeTitle.setFont(new java.awt.Font("Arial", 1, 18)); // NOI18N
         activeTitle.setForeground(new java.awt.Color(23, 70, 162));
-        activeTitle.setText("List of active users");
+        activeTitle.setText("LIST OF ACTIVE USERS");
 
         startDateInput.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
         startDateInput.setText("(dd-mm-yyyy)");
@@ -1512,15 +1494,15 @@ public class AdminApp extends javax.swing.JFrame {
             activeUserTable.getColumnModel().getColumn(1).setResizable(false);
             activeUserTable.getColumnModel().getColumn(1).setPreferredWidth(80);
             activeUserTable.getColumnModel().getColumn(2).setResizable(false);
-            activeUserTable.getColumnModel().getColumn(2).setPreferredWidth(100);
+            activeUserTable.getColumnModel().getColumn(2).setPreferredWidth(150);
             activeUserTable.getColumnModel().getColumn(3).setResizable(false);
-            activeUserTable.getColumnModel().getColumn(3).setPreferredWidth(100);
+            activeUserTable.getColumnModel().getColumn(3).setPreferredWidth(150);
             activeUserTable.getColumnModel().getColumn(4).setResizable(false);
             activeUserTable.getColumnModel().getColumn(4).setPreferredWidth(60);
             activeUserTable.getColumnModel().getColumn(5).setResizable(false);
             activeUserTable.getColumnModel().getColumn(5).setPreferredWidth(95);
             activeUserTable.getColumnModel().getColumn(6).setResizable(false);
-            activeUserTable.getColumnModel().getColumn(6).setPreferredWidth(75);
+            activeUserTable.getColumnModel().getColumn(6).setPreferredWidth(95);
         }
 
         sessionCountDropdown.setBackground(new java.awt.Color(255, 255, 254));
@@ -1660,15 +1642,15 @@ public class AdminApp extends javax.swing.JFrame {
                                                                 .addComponent(searchSessionInput, javax.swing.GroupLayout.PREFERRED_SIZE, 105, javax.swing.GroupLayout.PREFERRED_SIZE))
                                                         .addComponent(searchNameInput, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                                .addComponent(activeUserScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 770, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                                .addGap(251, 251, 251))))
+                                                .addComponent(activeUserScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 900, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                                .addGap(0, 0, 251))))
         );
         activeUserMainPanelLayout.setVerticalGroup(
                 activeUserMainPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                         .addGroup(activeUserMainPanelLayout.createSequentialGroup()
-                                .addGap(29, 29, 29)
+                                .addGap(50, 50, 50)
                                 .addComponent(activeTitle)
-                                .addGap(18, 18, 18)
+                                .addGap(50, 50, 50)
                                 .addGroup(activeUserMainPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                         .addGroup(activeUserMainPanelLayout.createSequentialGroup()
                                                 .addComponent(activeTitle3)
@@ -1718,7 +1700,7 @@ public class AdminApp extends javax.swing.JFrame {
 
         chartActiveUserTitle.setFont(new java.awt.Font("Arial", 1, 18)); // NOI18N
         chartActiveUserTitle.setForeground(new java.awt.Color(23, 70, 162));
-        chartActiveUserTitle.setText("Chart of monthly active users");
+        chartActiveUserTitle.setText("CHART OF MONTLY ACTIVE USERS");
 
         yearTitle.setFont(new java.awt.Font("Arial", 1, 14)); // NOI18N
         yearTitle.setText("Year");
@@ -1815,6 +1797,178 @@ public class AdminApp extends javax.swing.JFrame {
         pack();
     }// </editor-fold>
 
+    private void customStyle(){
+        DefaultTableCellRenderer centerHeaderRenderer = new DefaultTableCellRenderer();
+
+        // căn giữa
+        centerHeaderRenderer.setHorizontalAlignment(SwingConstants.CENTER);
+
+        // chỉnh màu
+        centerHeaderRenderer.setForeground(Color.WHITE);
+        centerHeaderRenderer.setBackground(blue);
+
+        // chỉnh header height
+        Dimension headerPreferredSize;
+
+        groupTable.getTableHeader().setDefaultRenderer(centerHeaderRenderer);
+        headerPreferredSize = groupTable.getTableHeader().getPreferredSize();
+        headerPreferredSize.height = 30;
+        groupTable.getTableHeader().setPreferredSize(headerPreferredSize);
+
+        adminTable.getTableHeader().setDefaultRenderer(centerHeaderRenderer);
+        headerPreferredSize = adminTable.getTableHeader().getPreferredSize();
+        headerPreferredSize.height = 30;
+        adminTable.getTableHeader().setPreferredSize(headerPreferredSize);
+
+        memberTable.getTableHeader().setDefaultRenderer(centerHeaderRenderer);
+        headerPreferredSize = memberTable.getTableHeader().getPreferredSize();
+        headerPreferredSize.height = 30;
+        memberTable.getTableHeader().setPreferredSize(headerPreferredSize);
+
+        reportTable.getTableHeader().setDefaultRenderer(centerHeaderRenderer);
+        headerPreferredSize = reportTable.getTableHeader().getPreferredSize();
+        headerPreferredSize.height = 30;
+        reportTable.getTableHeader().setPreferredSize(headerPreferredSize);
+
+        activeUserTable.getTableHeader().setDefaultRenderer(centerHeaderRenderer);
+        headerPreferredSize = activeUserTable.getTableHeader().getPreferredSize();
+        headerPreferredSize.height = 30;
+        activeUserTable.getTableHeader().setPreferredSize(headerPreferredSize);
+
+        userTable.getTableHeader().setDefaultRenderer(centerHeaderRenderer);
+        headerPreferredSize = userTable.getTableHeader().getPreferredSize();
+        headerPreferredSize.height = 30;
+        userTable.getTableHeader().setPreferredSize(headerPreferredSize);
+
+        userDetailTable.getTableHeader().setDefaultRenderer(centerHeaderRenderer);
+        headerPreferredSize = userDetailTable.getTableHeader().getPreferredSize();
+        headerPreferredSize.height = 30;
+        userDetailTable.getTableHeader().setPreferredSize(headerPreferredSize);
+
+        listFriendTable.getTableHeader().setDefaultRenderer(centerHeaderRenderer);
+        headerPreferredSize = listFriendTable.getTableHeader().getPreferredSize();
+        headerPreferredSize.height = 30;
+        listFriendTable.getTableHeader().setPreferredSize(headerPreferredSize);
+
+        historyLoginTable.getTableHeader().setDefaultRenderer(centerHeaderRenderer);
+        headerPreferredSize = historyLoginTable.getTableHeader().getPreferredSize();
+        headerPreferredSize.height = 30;
+        historyLoginTable.getTableHeader().setPreferredSize(headerPreferredSize);
+
+        passRequestTable.getTableHeader().setDefaultRenderer(centerHeaderRenderer);
+        headerPreferredSize = passRequestTable.getTableHeader().getPreferredSize();
+        headerPreferredSize.height = 30;
+        passRequestTable.getTableHeader().setPreferredSize(headerPreferredSize);
+
+        loginHistoryTable.getTableHeader().setDefaultRenderer(centerHeaderRenderer);
+        headerPreferredSize = loginHistoryTable.getTableHeader().getPreferredSize();
+        headerPreferredSize.height = 30;
+        loginHistoryTable.getTableHeader().setPreferredSize(headerPreferredSize);
+
+        // chỉnh center row
+        DefaultTableCellRenderer centerDataRenderer = new DefaultTableCellRenderer();
+        centerDataRenderer.setHorizontalAlignment(SwingConstants.CENTER);
+        groupTable.setDefaultRenderer(Object.class, centerDataRenderer);
+        groupTable.setDefaultRenderer(Integer.class, centerDataRenderer);
+        adminTable.setDefaultRenderer(Object.class, centerDataRenderer);
+        adminTable.setDefaultRenderer(Integer.class, centerDataRenderer);
+        memberTable.setDefaultRenderer(Object.class, centerDataRenderer);
+        memberTable.setDefaultRenderer(Integer.class, centerDataRenderer);
+        reportTable.setDefaultRenderer(Object.class, centerDataRenderer);
+        reportTable.setDefaultRenderer(Integer.class, centerDataRenderer);
+        activeUserTable.setDefaultRenderer(Object.class, centerDataRenderer);
+        activeUserTable.setDefaultRenderer(Integer.class, centerDataRenderer);
+
+        userTable.setDefaultRenderer(Object.class, centerDataRenderer);
+        userTable.setDefaultRenderer(Integer.class, centerDataRenderer);
+        passRequestTable.setDefaultRenderer(Object.class, centerDataRenderer);
+        passRequestTable.setDefaultRenderer(Integer.class, centerDataRenderer);
+
+        // chỉnh selection color
+        groupTable.setSelectionForeground(Color.WHITE);
+        groupTable.setSelectionBackground(Color.LIGHT_GRAY);
+        reportTable.setSelectionForeground(Color.WHITE);
+        reportTable.setSelectionBackground(Color.LIGHT_GRAY);
+
+        userTable.setSelectionForeground(Color.WHITE);
+        userTable.setSelectionBackground(Color.LIGHT_GRAY);
+        passRequestTable.setSelectionForeground(Color.WHITE);
+        passRequestTable.setSelectionBackground(Color.LIGHT_GRAY);
+
+        // disable selection
+        memberTable.setRowSelectionAllowed(false);
+        memberTable.setColumnSelectionAllowed(false);
+        memberTable.setIntercellSpacing(new Dimension(0, 0));
+
+        adminTable.setRowSelectionAllowed(false);
+        adminTable.setColumnSelectionAllowed(false);
+        adminTable.setIntercellSpacing(new Dimension(0, 0));
+
+        activeUserTable.setRowSelectionAllowed(false);
+        activeUserTable.setColumnSelectionAllowed(false);
+        activeUserTable.setIntercellSpacing(new Dimension(0, 0));
+
+        loginHistoryTable.setRowSelectionAllowed(false);
+        loginHistoryTable.setColumnSelectionAllowed(false);
+        loginHistoryTable.setIntercellSpacing(new Dimension(0, 0));
+
+        historyLoginTable.setRowSelectionAllowed(false);
+        historyLoginTable.setColumnSelectionAllowed(false);
+        historyLoginTable.setIntercellSpacing(new Dimension(0, 0));
+
+        userDetailTable.setRowSelectionAllowed(false);
+        userDetailTable.setColumnSelectionAllowed(false);
+        userDetailTable.setIntercellSpacing(new Dimension(0, 0));
+
+        listFriendTable.setRowSelectionAllowed(false);
+        listFriendTable.setColumnSelectionAllowed(false);
+        listFriendTable.setIntercellSpacing(new Dimension(0, 0));
+
+        //user + login
+        customButton(searchUserButton);
+        customButton(viewAllUserButton);
+        customButton(addNewUserButton);
+        customButton(updateUserButton);
+        customButton(deleteUserButton);
+        customButton(disableEnableUserButton);
+        customButton(updatePasswordButton);
+
+        // group + report + active
+        customButton(viewAllGroupButton);
+        customButton(searchButton);
+        customButton(viewAllReportButton);
+        customButton(searchReportButton);
+        customButton(disableUserButton);
+        customButton(searchDateButton);
+        customButton(resetButton1);
+        customButton(searchNameSessionButton);
+        customButton(resetButton2);
+        customButton(searchYearButton);
+        customButton(resetButton3);
+
+    }
+
+    private void customButton(JButton button){
+        button.setBackground(blue);
+        button.setForeground(Color.WHITE);
+        button.setBorderPainted(false);
+
+        button.addMouseListener(new MouseAdapter() {
+            @Override
+            public void mouseEntered(MouseEvent e) {
+                // Change background color on hover
+                button.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
+                button.setBackground(light_blue);
+            }
+
+            @Override
+            public void mouseExited(MouseEvent e) {
+                button.setCursor(Cursor.getPredefinedCursor(Cursor.DEFAULT_CURSOR));
+                button.setBackground(blue);
+            }
+        });
+    }
+
     private void searchButtonActionPerformed(java.awt.event.ActionEvent evt) throws IOException, ClassNotFoundException {
         String text = searchInput.getText();
         System.out.println(text);
@@ -1890,19 +2044,7 @@ public class AdminApp extends javax.swing.JFrame {
         };
         groupTable.setRowSorter(sorter);
 
-        // chỉnh header
-        JTableHeader headerAdmin = adminTable.getTableHeader();
-        headerAdmin.setBackground(blue);
-        headerAdmin.setForeground(Color.WHITE);
 
-        JTableHeader headerMember = memberTable.getTableHeader();
-        headerMember.setBackground(blue);
-        headerMember.setForeground(Color.WHITE);
-
-        // chỉnh center
-        ((DefaultTableCellRenderer)groupTable.getDefaultRenderer(String.class)).setHorizontalAlignment(SwingConstants.CENTER);
-        ((DefaultTableCellRenderer)groupTable.getDefaultRenderer(Integer.class)).setHorizontalAlignment(SwingConstants.CENTER);
-        groupTable.setPreferredScrollableViewportSize(groupTable.getPreferredSize());
 
         reportMainPanel.setVisible(false);
         getContentPane().remove(reportMainPanel);
@@ -2795,7 +2937,6 @@ public class AdminApp extends javax.swing.JFrame {
         }
     }
 
-
     private void searchYearButtonActionPerformed(java.awt.event.ActionEvent evt) {
         try {
             String text = searchYearInput.getText();
@@ -2905,8 +3046,8 @@ public class AdminApp extends javax.swing.JFrame {
 
     private Socket socket;
     private Object[][] currentActiveUserList;
-    AdminController adminController = new AdminController();
-    Color blue = new Color (23,70,162);
+    Color blue = new Color (23, 70, 162);
+    Color light_blue = new Color(92, 124, 208);
     private String originalEmail;
     // Variables declaration - do not modify
     private javax.swing.JScrollPane ScrollPanel;
@@ -2973,7 +3114,7 @@ public class AdminApp extends javax.swing.JFrame {
     private javax.swing.JTextField startHourInput;
     private javax.swing.JTextField startMinInput;
     private javax.swing.JTextField startSecInput;
-    private javax.swing.JLabel statisticTitle;
+//    private javax.swing.JLabel statisticTitle;
     private javax.swing.JButton userNavButton;
     private javax.swing.JButton viewAllGroupButton;
     private javax.swing.JButton viewAllReportButton;

@@ -47,7 +47,7 @@ public class AdminDatabase {
 
                 LocalDateTime localDateTime = timestamp.toLocalDateTime();
 //                LocalDate localDate = ((java.sql.Date) create_time).toLocalDate();
-                DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-MM-yyyy H:m:s");
+                DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-MM-yyyy HH:mm:ss");
                 String format_time = localDateTime.format(formatter);
 
                 Object[] row = {id_group, group_name, format_time};
