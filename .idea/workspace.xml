@@ -6,27 +6,12 @@
   <component name="ChangeListManager">
     <list default="true" id="ffaf42bc-6bfe-4d2e-bcc5-9de6824c0e6b" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Server/src/main/java/org/example/ClientHandler.java" beforeDir="false" afterPath="$PROJECT_DIR$/Server/src/main/java/org/example/ClientHandler.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Server/src/main/java/org/example/DBconnection.java" beforeDir="false" afterPath="$PROJECT_DIR$/Server/src/main/java/org/example/DBconnection.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Server/target/classes/org/example/AdminDatabase.class" beforeDir="false" afterPath="$PROJECT_DIR$/Server/target/classes/org/example/AdminDatabase.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Server/target/classes/org/example/AdminHandler.class" beforeDir="false" afterPath="$PROJECT_DIR$/Server/target/classes/org/example/AdminHandler.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Server/target/classes/org/example/AdminServer.class" beforeDir="false" afterPath="$PROJECT_DIR$/Server/target/classes/org/example/AdminServer.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Server/target/classes/org/example/ClientHandler$1.class" beforeDir="false" afterPath="$PROJECT_DIR$/Server/target/classes/org/example/ClientHandler$1.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Server/target/classes/org/example/ClientHandler.class" beforeDir="false" afterPath="$PROJECT_DIR$/Server/target/classes/org/example/ClientHandler.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Server/target/classes/org/example/DBconnection.class" beforeDir="false" afterPath="$PROJECT_DIR$/Server/target/classes/org/example/DBconnection.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Server/target/classes/org/example/Main.class" beforeDir="false" afterPath="$PROJECT_DIR$/Server/target/classes/org/example/Main.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Server/target/classes/org/example/UserServer.class" beforeDir="false" afterPath="$PROJECT_DIR$/Server/target/classes/org/example/UserServer.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/user/src/main/java/org/example/Main.java" beforeDir="false" afterPath="$PROJECT_DIR$/user/src/main/java/org/example/Main.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/user/src/main/java/org/example/controllers/ForgotPasswordFrameController.java" beforeDir="false" afterPath="$PROJECT_DIR$/user/src/main/java/org/example/controllers/ForgotPasswordFrameController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/user/src/main/java/org/example/controllers/IconPanelController.java" beforeDir="false" afterPath="$PROJECT_DIR$/user/src/main/java/org/example/controllers/IconPanelController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/user/src/main/java/org/example/controllers/LoginFrameController.java" beforeDir="false" afterPath="$PROJECT_DIR$/user/src/main/java/org/example/controllers/LoginFrameController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/user/src/main/java/org/example/controllers/MainFrameController.java" beforeDir="false" afterPath="$PROJECT_DIR$/user/src/main/java/org/example/controllers/MainFrameController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/user/src/main/java/org/example/controllers/RegisterFrameController.java" beforeDir="false" afterPath="$PROJECT_DIR$/user/src/main/java/org/example/controllers/RegisterFrameController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/user/src/main/java/org/example/utilities/DatabaseHandler.java" beforeDir="false" afterPath="$PROJECT_DIR$/user/src/main/java/org/example/utilities/DatabaseHandler.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/user/src/main/java/org/example/utilities/ForgetPwd.java" beforeDir="false" afterPath="$PROJECT_DIR$/user/src/main/java/org/example/utilities/ForgetPwd.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/user/src/main/java/org/example/views/LoginFrame.java" beforeDir="false" afterPath="$PROJECT_DIR$/user/src/main/java/org/example/views/LoginFrame.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/user/src/main/java/org/example/views/LoginSignUpScreen.java" beforeDir="false" afterPath="$PROJECT_DIR$/user/src/main/java/org/example/views/LoginSignUpScreen.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/user/src/main/java/org/example/views/MainFrame.java" beforeDir="false" afterPath="$PROJECT_DIR$/user/src/main/java/org/example/views/MainFrame.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/admin/src/main/java/org/example/AdminApp.java" beforeDir="false" afterPath="$PROJECT_DIR$/admin/src/main/java/org/example/AdminApp.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/admin/target/classes/org/example/AdminApp.class" beforeDir="false" afterPath="$PROJECT_DIR$/admin/target/classes/org/example/AdminApp.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/admin/target/classes/org/example/AdminApp.java" beforeDir="false" afterPath="$PROJECT_DIR$/admin/target/classes/org/example/AdminApp.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/user/target/classes/org/example/Main.class" beforeDir="false" afterPath="$PROJECT_DIR$/user/target/classes/org/example/Main.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/user/target/classes/org/example/controllers/ChatListPanelController$ChatPanelMouseListener.class" beforeDir="false" afterPath="$PROJECT_DIR$/user/target/classes/org/example/controllers/ChatListPanelController$ChatPanelMouseListener.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/user/target/classes/org/example/controllers/ChatListPanelController$InputFieldListener.class" beforeDir="false" afterPath="$PROJECT_DIR$/user/target/classes/org/example/controllers/ChatListPanelController$InputFieldListener.class" afterDir="false" />
@@ -153,7 +138,7 @@
   <component name="PropertiesComponent"><![CDATA[{
   "keyToString": {
     "WebServerToolWindowFactoryState": "false",
-    "git-widget-placeholder": "main",
+    "git-widget-placeholder": "Merging main",
     "last_opened_file_path": "D:/jiconfont-swing-1.0.1.jar",
     "node.js.detected.package.eslint": "true",
     "node.js.selected.package.eslint": "(autodetect)",
@@ -365,10 +350,13 @@
       <workItem from="1703389566151" duration="59157000" />
       <workItem from="1703600070985" duration="19281000" />
       <workItem from="1703677435271" duration="819000" />
+      <workItem from="1703695632969" duration="2386000" />
+      <workItem from="1703786122272" duration="1288000" />
       <workItem from="1703695632969" duration="2146000" />
       <workItem from="1703822425476" duration="8741000" />
       <workItem from="1703833988582" duration="5366000" />
       <workItem from="1703841107528" duration="12569000" />
+      <workItem from="1703864646293" duration="61000" />
     </task>
     <servers />
   </component>
