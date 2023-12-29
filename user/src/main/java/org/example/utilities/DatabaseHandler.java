@@ -12,7 +12,7 @@ public class DatabaseHandler {
     private final String JDBC_DRIVER = "com.mysql.cj.jdbc.Driver";
     private final String DB_URL = "jdbc:mysql://localhost:3306/db_chat";
     private final String USER = "root";
-    private final String PASS = "1234";
+    private final String PASS = "admin";
     private Connection conn = null;
 
     public DatabaseHandler() {

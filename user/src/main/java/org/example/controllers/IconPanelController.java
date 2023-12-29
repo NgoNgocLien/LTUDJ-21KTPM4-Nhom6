@@ -11,6 +11,7 @@ import org.example.views.MyProfileFrame;
 import javax.swing.*;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.net.Socket;
 import java.util.ArrayList;
 
 public class IconPanelController {
@@ -27,8 +28,10 @@ public class IconPanelController {
     private JLabel requestIconLabel;
     private JLabel blockIconLabel;
     private JLabel logoutIconLabel;
+    private Socket socket;
 
-    public IconPanelController(MainFrameController mfc) {
+    public IconPanelController(Socket socket, MainFrameController mfc) {
+        this.socket = socket;
         this.MFC = mfc;
         this.myUsername = mfc.getMyUsername();
         this.DB = mfc.getDB();
@@ -154,7 +157,7 @@ public class IconPanelController {
                     }
                     MF.dispose();
                     LoginFrame LF = new LoginFrame();
-                    LoginFrameController LFC = new LoginFrameController(LF, DB);
+                    LoginFrameController LFC = new LoginFrameController(socket, LF, DB);
                 }
             }
         }

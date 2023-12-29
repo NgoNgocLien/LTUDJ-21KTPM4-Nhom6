@@ -1,10 +1,8 @@
 package org.example;
 
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.OutputStream;
-import java.io.PrintWriter;
+import java.io.*;
 import java.net.Socket;
+import java.nio.charset.StandardCharsets;
 import java.sql.SQLException;
 import java.util.*;
 import javax.mail.*;
@@ -31,6 +29,7 @@ public class ClientHandler implements Runnable {
 //                 Get the input and output streams of the client socket
                 InputStream inputStream = clientSocket.getInputStream();
                 OutputStream outputStream = clientSocket.getOutputStream();
+                ObjectOutputStream objectOutputStream = new ObjectOutputStream(clientSocket.getOutputStream());
 
                 // Read data from the client
                 byte[] buffer = new byte[1024];
@@ -41,8 +40,8 @@ public class ClientHandler implements Runnable {
                 System.out.println(method);
                 System.out.println("check");
 
-                outputStream.write("ok".getBytes());
                 if (method.equals("login")) {
+                    outputStream.write(("ok").getBytes(StandardCharsets.UTF_8));
                     System.out.println("user wnt to login");
                     bytesRead = inputStream.read(buffer);
                     String clientMessage = new String(buffer, 0, bytesRead);
@@ -57,6 +56,7 @@ public class ClientHandler implements Runnable {
 
                 }
                 else if (method.equals("signup")) {
+                    outputStream.write(("ok").getBytes(StandardCharsets.UTF_8));
                     System.out.println("user wnt to signup");
                     bytesRead = inputStream.read(buffer);
                     String clientMessage = new String(buffer, 0, bytesRead);
@@ -78,9 +78,10 @@ public class ClientHandler implements Runnable {
                 else if (method.equals("forgetpassword")) {
                     System.out.println("user forget pwd");
                     bytesRead = inputStream.read(buffer);
-                    String email = new String(buffer, 0, bytesRead);
-
-                    System.out.println(email);
+                    String msg = new String(buffer, 0, bytesRead);
+                    String[] msgArr = msg.split("\n");
+                    String username = msgArr[0], email = msgArr[1];
+                    System.out.println(email + " " + username);
 
                     // random mật khẩu
                     String allowedChars = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
@@ -97,14 +98,14 @@ public class ClientHandler implements Runnable {
                     String newPwd = password.toString();
 
                     String response = "false";
-                    if (dbcon.updatePwd(email, newPwd) && sendMail(email, newPwd)){
+                    if (dbcon.updatePwd(username, email, newPwd) && sendMail(email, newPwd)){
                         response = "true";
                     }
 
                     System.out.println("response");
                     System.out.println(response);
-                    outputStream.write(response.getBytes());
-//
+
+                    outputStream.write(response.getBytes(StandardCharsets.UTF_8));
                 }
 
 
@@ -121,8 +122,8 @@ public class ClientHandler implements Runnable {
             throw new RuntimeException(e);
         } finally {
             try {
-                input.close();
-                output.close();
+//                input.close();
+//                output.close();
                 clientSocket.close();
             } catch (IOException e) {
                 e.printStackTrace();

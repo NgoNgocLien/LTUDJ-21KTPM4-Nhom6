@@ -8,6 +8,7 @@ import org.example.views.*;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.*;
+import java.net.*;
 import java.sql.SQLException;
 import java.util.ArrayList;
 
@@ -20,7 +21,9 @@ public class LoginFrameController {
     private JLabel registerLine;
     private JLabel forgotPasswordLine;
 
-    public LoginFrameController(LoginFrame LF, DatabaseHandler DB) {
+    private Socket socket;
+
+    public LoginFrameController(Socket socket, LoginFrame LF, DatabaseHandler DB) {
         this.LF = LF;
         this.DB = DB;
 
@@ -34,6 +37,8 @@ public class LoginFrameController {
                 }
             }
         });
+
+        this.socket = socket;
 
         this.usernameField = LF.getUsernameField();
         this.passwordField = LF.getPasswordField();
@@ -130,8 +135,8 @@ public class LoginFrameController {
             } catch (SQLException se) {
                 se.printStackTrace();
             }
-            MainFrame mainFrame = new MainFrame(allChats);
-            MainFrameController mainFrameController = new MainFrameController(mainFrame, DB, "hlong");
+            MainFrame mainFrame = new MainFrame( allChats);
+            MainFrameController mainFrameController = new MainFrameController(socket, mainFrame, DB, "hlong");
         }
     }
 
@@ -149,13 +154,13 @@ public class LoginFrameController {
                 LF.dispose();
                 // open register frame
                 RegisterFrame RF = new RegisterFrame();
-                RegisterFrameController RFC = new RegisterFrameController(RF, DB);
+                RegisterFrameController RFC = new RegisterFrameController(socket, RF, DB);
             } else if (e.getSource() == forgotPasswordLine) {
                 // close login frame
                 LF.dispose();
                 // open forgot password frame
                 ForgotPasswordFrame FPF = new ForgotPasswordFrame();
-                ForgotPasswordFrameController FPFC = new ForgotPasswordFrameController(FPF, DB);
+                ForgotPasswordFrameController FPFC = new ForgotPasswordFrameController(socket, FPF, DB);
             }
         }
 
