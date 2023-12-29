@@ -1013,11 +1013,11 @@ public class AdminApp extends javax.swing.JFrame {
 
         userTitle15.setFont(new java.awt.Font("Arial", 1, 18)); // NOI18N
         userTitle15.setForeground(new java.awt.Color(23, 70, 162));
-        userTitle15.setText("LIST OF LOGIN HISTORIES");
+        userTitle15.setText("USER LOGIN HISTORY");
 
         userTitle16.setFont(new java.awt.Font("Arial", 1, 18)); // NOI18N
         userTitle16.setForeground(new java.awt.Color(23, 70, 162));
-        userTitle16.setText("LIST OF FRIENDS");
+        userTitle16.setText("USER LIST OF FRIENDS");
 
         userTableMainPanel.setMaximumSize(new java.awt.Dimension(32767, 600));
         userTableMainPanel.setPreferredSize(new java.awt.Dimension(2276, 500));

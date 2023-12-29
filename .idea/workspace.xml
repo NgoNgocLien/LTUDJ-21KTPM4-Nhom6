@@ -5,9 +5,8 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="ffaf42bc-6bfe-4d2e-bcc5-9de6824c0e6b" name="Changes" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Server/src/main/java/org/example/AdminDatabase.java" beforeDir="false" afterPath="$PROJECT_DIR$/Server/src/main/java/org/example/AdminDatabase.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/admin/src/main/java/org/example/AdminApp.java" beforeDir="false" afterPath="$PROJECT_DIR$/admin/src/main/java/org/example/AdminApp.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -274,7 +273,8 @@
       <workItem from="1703389566151" duration="59157000" />
       <workItem from="1703600070985" duration="19281000" />
       <workItem from="1703677435271" duration="819000" />
-      <workItem from="1703695632969" duration="2146000" />
+      <workItem from="1703695632969" duration="2386000" />
+      <workItem from="1703786122272" duration="1288000" />
     </task>
     <servers />
   </component>
