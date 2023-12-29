@@ -1311,7 +1311,7 @@ public class AdminApp extends javax.swing.JFrame {
                                 .addComponent(loginHistoryTitle)
                                 .addGap(30, 30, 30)
                                 .addGroup(loginHistoryTableMainPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                        .addComponent(loginHistoryTableScrollPane, javax.swing.GroupLayout.PREFERRED_SIZE, 320, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                        .addComponent(loginHistoryTableScrollPane, javax.swing.GroupLayout.PREFERRED_SIZE, 330, javax.swing.GroupLayout.PREFERRED_SIZE))
                                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         getContentPane().add(loginHistoryMainPanel, java.awt.BorderLayout.CENTER);
