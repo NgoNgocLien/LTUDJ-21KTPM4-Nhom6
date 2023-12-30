@@ -1,6 +1,7 @@
 package org.example.controllers;
 
 import org.example.models.ChatInfo;
+import org.example.models.Profile;
 import org.example.utilities.Constants;
 import org.example.utilities.DatabaseHandler;
 import org.example.views.*;
@@ -111,32 +112,48 @@ public class LoginFrameController {
                 new ErrorMessage(LF, "Please enter your password");
                 return;
             }
-            else if (!checkUsername(username) || !checkPassword(password)) { // Kiểm tra format trước khi kiểm tra qua database
-                new ErrorMessage(LF, "Invalid username or password");
-                return;
-            }
+//            else if (!checkUsername(username) || !checkPassword(password)) { // Kiểm tra format trước khi kiểm tra qua database
+//                new ErrorMessage(LF, "Invalid username or password");
+//                return;
+//            }
 
             // TEST & DELETE AFTER: show username and password
             JOptionPane.showMessageDialog(LF, "Username: " + username + "\nPassword: " + password);
 
             // TODO: verify login info with database
-
-            // TODO: if fail: show error message
-            // new ErrorMessage(LF, "Wrong username or password");
-
-            // TODO: if success: close login frame, open main frame
-
-            // success: close login frame, open main frame
-            LF.dispose();
-
-            ArrayList<ChatInfo> allChats = null;
             try {
-                allChats= DB.getAllChats("hlong");
-            } catch (SQLException se) {
-                se.printStackTrace();
+                Profile profile = DB.getProfile(username);
+
+                if(profile.getUsername() == null){
+                    new ErrorMessage(LF, "Wrong username or password");
+                }
+                else if(!profile.getPassword().equals(password)){
+                    new ErrorMessage(LF, "Wrong username or password");
+                }
+                else{
+                    JOptionPane.showMessageDialog(LF, "Login success");
+                    ArrayList<ChatInfo> allChats = null;
+                    try {
+                        allChats= DB.getAllChats(username);
+                    } catch (SQLException se) {
+                        se.printStackTrace();
+                    }
+                    MainFrame mainFrame = new MainFrame(allChats);
+                    MainFrameController mainFrameController = new MainFrameController(socket, mainFrame, DB, username);
+                }
+                LF.dispose();
+            } catch (SQLException ex) {
+                throw new RuntimeException(ex);
             }
-            MainFrame mainFrame = new MainFrame( allChats);
-            MainFrameController mainFrameController = new MainFrameController(socket, mainFrame, DB, "hlong");
+
+//            ArrayList<ChatInfo> allChats = null;
+//            try {
+//                allChats= DB.getAllChats("hlong");
+//            } catch (SQLException se) {
+//                se.printStackTrace();
+//            }
+//            MainFrame mainFrame = new MainFrame( allChats);
+//            MainFrameController mainFrameController = new MainFrameController(socket, mainFrame, DB, "hlong");
         }
     }
 

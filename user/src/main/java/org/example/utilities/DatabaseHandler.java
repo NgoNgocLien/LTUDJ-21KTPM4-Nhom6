@@ -32,7 +32,7 @@ public class DatabaseHandler {
     }
 
     public Profile getProfile(String username) throws SQLException {
-        String sql = "SELECT username, fullname, address, birthdate, gender, email, creation_time FROM USER WHERE username = ?";
+        String sql = "SELECT username, fullname, address, birthdate, gender, email, creation_time, password FROM USER WHERE username = ?";
         PreparedStatement stmt = conn.prepareStatement(sql);
         stmt.setString(1, username);
         ResultSet rs = stmt.executeQuery();
@@ -44,7 +44,8 @@ public class DatabaseHandler {
             int gender = rs.getInt("gender");
             String email = rs.getString("email");
             LocalDate dateJoined = rs.getDate("creation_time").toLocalDate();
-            profile = new Profile(dateJoined, fullname, username, gender, birthdate, email, address);
+            String password = rs.getString("password");
+            profile = new Profile(dateJoined, fullname, username, gender, birthdate, email, address, password);
         }
         return profile;
     }
