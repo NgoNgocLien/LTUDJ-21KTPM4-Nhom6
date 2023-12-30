@@ -68,7 +68,7 @@ public class IconPanelController {
 //                iconPanel.setFocusLabel(homeIconLabel);
                 // TODO: open my profile
                 try {
-                    Profile myProfile = DB.getProfile(myUsername);
+                    Profile myProfile = DB.getProfilebyUsername(myUsername);
                     MyProfileFrame MPF = new MyProfileFrame(myProfile);
                     MyProfileFrameController MPFC = new MyProfileFrameController(MPF, DB);
                 } catch (Exception ex) {

@@ -1,5 +1,6 @@
 package org.example.controllers;
 
+import org.example.models.Profile;
 import org.example.utilities.Constants;
 import org.example.utilities.DatabaseHandler;
 import org.example.views.ErrorMessage;
@@ -11,6 +12,7 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.*;
 import java.net.Socket;
+import java.sql.SQLException;
 import java.time.DateTimeException;
 import java.time.LocalDate;
 
@@ -31,6 +33,7 @@ public class RegisterFrameController {
     private JButton registerButton;
     private JLabel loginLine;
     private Socket socket;
+
     public RegisterFrameController(Socket socket, RegisterFrame RF, DatabaseHandler DB) {
         this.RF = RF;
         this.DB = DB;
@@ -73,6 +76,42 @@ public class RegisterFrameController {
 
     }
 
+    private boolean checkFullName(String fullname) {
+        String regex = "^[a-zA-Z\\s]+";
+        return fullname.matches(regex);
+    }
+
+    private boolean checkUsername(String username) {
+        String regex = "^[a-z0-9._-]{1,}$";
+        return username.matches(regex);
+    }
+
+    private boolean checkPassword(String password) {
+        // password can contain any special character
+        String regex = "^[a-zA-Z0-9!@#$%^&*()_+\\-=\\[\\]{};':\"\\\\|,.<>/?]{8,}$";
+        return password.matches(regex);
+    }
+
+    private boolean checkEmail(String email) {
+        // aa@bb.cc
+        String regex = "^[a-zA-Z0-9+_.-]+@[a-zA-Z0-9.-]+$";
+        return email.matches(regex);
+    }
+
+    private boolean checkAddress(String address) {
+        String regex = "^[a-zA-Z0-9.,/()\\s]+";
+        return address.matches(regex);
+    }
+
+    private boolean checkDOB(int day, int month, int year) {
+        try {
+            LocalDate.of(year, month, day);
+            return true;
+        } catch (DateTimeException e) {
+            return false;
+        }
+    }
+
     private class InputFieldListener implements KeyListener {
         private JTextField inputField;
 
@@ -105,10 +144,12 @@ public class RegisterFrameController {
 
         // Không để làm gì nhưng không xóa vì KeyListener bắt buộc phải override
         @Override
-        public void keyTyped(KeyEvent e) {}
+        public void keyTyped(KeyEvent e) {
+        }
 
         @Override
-        public void keyReleased(KeyEvent e) {}
+        public void keyReleased(KeyEvent e) {
+        }
     }
 
     private class RegisterButtonListener implements ActionListener {
@@ -167,9 +208,9 @@ public class RegisterFrameController {
                 yearComboBox.requestFocus();
                 return;
             } else if (!checkFullName(fullname)) {
-                new ErrorMessage(RF, "Fullname is invalid");
-                fullnameField.requestFocus();
-                return;
+//                new ErrorMessage(RF, "Fullname is invalid");
+//                fullnameField.requestFocus();
+//                return;
             } else if (!checkUsername(username)) {
                 new ErrorMessage(RF, "Username must be at least 1 character and can only contain lowercase letters, numbers, and special characters . _ -");
                 usernameField.requestFocus();
@@ -200,6 +241,42 @@ public class RegisterFrameController {
             }
 
             // TODO: check username and email exist
+            Profile checkProfile = null;
+            try {
+                checkProfile = DB.getProfilebyUsername(username);
+                if (checkProfile != null) {
+                    if (checkProfile.getUsername().equals(username)) {
+                        new ErrorMessage(RF, "Username already exists");
+                        usernameField.requestFocus();
+                        return;
+                    }
+                }
+            } catch (SQLException ex) {
+                throw new RuntimeException(ex);
+            }
+
+            try {
+                checkProfile = DB.getProfilebyEmail(email);
+                if (checkProfile != null) {
+                    if (checkProfile.getEmail().equals(email)) {
+                        new ErrorMessage(RF, "Email already exists");
+                        emailField.requestFocus();
+                        return;
+                    }
+                }
+            } catch (SQLException ex) {
+                throw new RuntimeException(ex);
+            }
+
+            LocalDate localDate;
+            try {
+                localDate = LocalDate.of(Integer.parseInt(year), Integer.parseInt(month), Integer.parseInt(day));
+            } catch (DateTimeException ex) {
+                new ErrorMessage(RF, "Date of birth is invalid");
+                dayComboBox.requestFocus();
+                return;
+            }
+
             // TODO: if exist, show error message
             // new ErrorMessage(RF, "Username or email already exists"); return;
 
@@ -211,46 +288,17 @@ public class RegisterFrameController {
             // TEST & DELETE AFTER: show all info
             JOptionPane.showMessageDialog(RF, "Fullname: " + fullname + "\nUsername: " + username + "\nPassword: " + password + "\nEmail: " + email + "\nAddress: " + address + "\nGender: " + gender + "\nDate of birth: " + day + "/" + month + "/" + year);
 
+
+            try {
+                DB.saveRegisteredAccount(username, password, fullname, address, localDate, gender.equals("Male"), email);
+            } catch (SQLException ex) {
+                throw new RuntimeException(ex);
+            }
+
             // close register frame, open login frame
             RF.dispose();
             LoginFrame LF = new LoginFrame();
             LoginFrameController LFC = new LoginFrameController(socket, LF, DB);
-        }
-    }
-
-    private boolean checkFullName(String fullname) {
-        String regex = "^[a-zA-Z\\s]+";
-        return fullname.matches(regex);
-    }
-
-    private boolean checkUsername(String username) {
-        String regex = "^[a-z0-9._-]{1,}$";
-        return username.matches(regex);
-    }
-
-    private boolean checkPassword(String password) {
-        // password can contain any special character
-        String regex = "^[a-zA-Z0-9!@#$%^&*()_+\\-=\\[\\]{};':\"\\\\|,.<>/?]{8,}$";
-        return password.matches(regex);
-    }
-
-    private boolean checkEmail(String email) {
-        // aa@bb.cc
-        String regex = "^[a-zA-Z0-9+_.-]+@[a-zA-Z0-9.-]+$";
-        return email.matches(regex);
-    }
-
-    private boolean checkAddress(String address) {
-        String regex = "^[a-zA-Z0-9.,/()\\s]+";
-        return address.matches(regex);
-    }
-
-    private boolean checkDOB(int day, int month, int year) {
-        try {
-            LocalDate.of(year, month, day);
-            return true;
-        } catch (DateTimeException e) {
-            return false;
         }
     }
 
@@ -292,9 +340,11 @@ public class RegisterFrameController {
 
         // Không để làm gì nhưng không xóa vì MouseListener bắt buộc phải override
         @Override
-        public void mousePressed(MouseEvent e) {}
+        public void mousePressed(MouseEvent e) {
+        }
 
         @Override
-        public void mouseReleased(MouseEvent e) {}
+        public void mouseReleased(MouseEvent e) {
+        }
     }
 }

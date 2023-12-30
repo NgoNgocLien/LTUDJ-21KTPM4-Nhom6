@@ -118,11 +118,11 @@ public class LoginFrameController {
 //            }
 
             // TEST & DELETE AFTER: show username and password
-            JOptionPane.showMessageDialog(LF, "Username: " + username + "\nPassword: " + password);
+//            JOptionPane.showMessageDialog(LF, "Username: " + username + "\nPassword: " + password);
 
             // TODO: verify login info with database
             try {
-                Profile profile = DB.getProfile(username);
+                Profile profile = DB.getProfilebyUsername(username);
 
                 if(profile.getUsername() == null){
                     new ErrorMessage(LF, "Wrong username or password");

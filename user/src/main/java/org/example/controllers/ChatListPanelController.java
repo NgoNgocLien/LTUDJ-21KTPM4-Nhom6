@@ -183,7 +183,7 @@ public class ChatListPanelController {
                 // open profile
                 Profile profile = null;
                 try {
-                    profile = DB.getProfile(chatInfo.getUsername());
+                    profile = DB.getProfilebyUsername(chatInfo.getUsername());
                 } catch (Exception exception) {
                     exception.printStackTrace();
                 }
