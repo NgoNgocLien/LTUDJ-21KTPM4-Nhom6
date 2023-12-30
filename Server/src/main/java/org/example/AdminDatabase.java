@@ -1158,4 +1158,55 @@ public class AdminDatabase {
         }
         return null;
     }
+
+    Object[][] getAllUserFriend(){
+        try{
+            String sql = "WITH DirectFriends AS (SELECT U.username, CASE WHEN U.username = F1.username1 THEN F1.username2 ELSE F1.username1 END AS friend_username " +
+                            "FROM USER U LEFT JOIN FRIEND F1 ON (U.username = F1.username1 OR U.username = F1.username2) AND F1.accepted = 1 WHERE U.is_locked != 2) " +
+                            "SELECT U.username, U.fullname, U.creation_time, COUNT(DISTINCT DF.friend_username) AS direct_friends_count, " +
+                            "COUNT(DISTINCT FF.friend_of_friend_username) AS friends_of_friends_count FROM USER U LEFT JOIN DirectFriends DF ON U.username = DF.username " +
+                            "LEFT JOIN ((SELECT U.username AS user_username, F2.username2 AS friend_of_friend_username FROM USER U " +
+                            "LEFT JOIN DirectFriends DF ON U.username = DF.username " +
+                            "LEFT JOIN FRIEND F2 ON DF.friend_username = F2.username1 AND F2.accepted = 1 " +
+                            "WHERE U.is_locked != 2 GROUP BY U.username, F2.username2) " +
+                            "UNION " +
+                            "(SELECT U.username AS user_username, F3.username1 AS friend_of_friend_username FROM USER U LEFT JOIN DirectFriends DF ON U.username = DF.username " +
+                            "LEFT JOIN FRIEND F3 ON DF.friend_username = F3.username2 AND F3.accepted = 1 WHERE U.is_locked != 2 GROUP BY U.username, F3.username1) " +
+                            ") FF ON U.username = FF.user_username WHERE U.is_locked != 2 GROUP BY U.username, U.fullname, U.creation_time";
+            PreparedStatement stmt;
+            stmt = connection.prepareStatement(sql);
+            ResultSet rs = stmt.executeQuery();
+            List<Object[]> rows = new ArrayList<>();
+            int i = 1;
+            while(rs.next()){
+                String username = rs.getString("U.username");
+                String fullname = rs.getString("U.fullname");
+                Date registration_time = rs.getDate("U.creation_time");
+                int direct_friend_count = rs.getInt("direct_friends_count");
+                int friends_of_friends_count = rs.getInt("friends_of_friends_count");
+                Timestamp timestamp = new Timestamp(registration_time.getTime());
+
+                LocalDateTime localDateTime = timestamp.toLocalDateTime();
+                DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-MM-yyyy HH:mm:ss");
+                String format_time = localDateTime.format(formatter);
+
+                Object[] row = {i, username,  fullname, format_time, direct_friend_count, friends_of_friends_count};
+                rows.add(row);
+                i++;
+            }
+
+            rs.close();
+            stmt.close();
+
+            Object[][] data = new Object[rows.size()][];
+            rows.toArray(data);
+
+            return data;
+        }catch(SQLException se){
+            se.printStackTrace();
+        }catch(Exception e){
+            e.printStackTrace();
+        }
+        return null;
+    }
 }

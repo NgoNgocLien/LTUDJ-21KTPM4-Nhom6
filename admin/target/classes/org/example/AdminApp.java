@@ -162,6 +162,16 @@ public class AdminApp extends javax.swing.JFrame {
         loginHistoryTitle = new javax.swing.JLabel();
         loginHistoryTable = new javax.swing.JTable();
         loginHistoryTableScrollPane = new javax.swing.JScrollPane();
+        userFriendPanel = new javax.swing.JPanel();
+        userTitle17 = new javax.swing.JLabel();
+        userTitle18 = new javax.swing.JLabel();
+        searchFriendFullNameInput = new javax.swing.JTextField();
+        searchFriendDropDown = new javax.swing.JComboBox<>();
+        searchFriendButton = new javax.swing.JButton();
+        resetButton = new javax.swing.JButton();
+        friendTable = new javax.swing.JTable();
+        friendTableScrollPane = new javax.swing.JScrollPane();
+        userTitle19 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -1023,7 +1033,7 @@ public class AdminApp extends javax.swing.JFrame {
         userTableMainPanel.setPreferredSize(new java.awt.Dimension(2276, 500));
         userTableMainPanel.setRequestFocusEnabled(false);
 
-        userDetailPanel.setPreferredSize(new java.awt.Dimension(2276, 800));
+        userDetailPanel.setPreferredSize(new java.awt.Dimension(2276, 1300));
 
         javax.swing.JPanel buttonContainer = new javax.swing.JPanel();
         buttonContainer.setLayout(new javax.swing.BoxLayout(buttonContainer, javax.swing.BoxLayout.X_AXIS));
@@ -1094,9 +1104,115 @@ public class AdminApp extends javax.swing.JFrame {
             }
         });
 
+        //userFriendPanel.setPreferredSize(new java.awt.Dimension(2276, 500));
+
+        userTitle17.setFont(new java.awt.Font("Arial", 1, 14)); // NOI18N
+        userTitle17.setText("Full name");
+
+        userTitle18.setFont(new java.awt.Font("Arial", 1, 14)); // NOI18N
+        userTitle18.setText("Direct friend count");
+
+        searchFriendFullNameInput.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
+        searchFriendFullNameInput.setPreferredSize(new java.awt.Dimension(135, 35));
+
+        searchFriendDropDown.setBackground(new java.awt.Color(255, 255, 254));
+        searchFriendDropDown.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
+        searchFriendDropDown.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Equal to", "Greater than", "Less than" }));
+        searchFriendDropDown.setToolTipText("");
+        searchFriendDropDown.setFocusable(false);
+        searchFriendDropDown.setPreferredSize(new java.awt.Dimension(120, 35));
+
+        searchFriendButton.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
+        searchFriendButton.setText("Search");
+        searchFriendButton.setFocusable(false);
+        searchFriendButton.setMargin(new java.awt.Insets(2, 5, 3, 5));
+        searchFriendButton.setPreferredSize(new java.awt.Dimension(60, 35));
+//        searchFriendButton.addActionListener(new java.awt.event.ActionListener() {
+//            public void actionPerformed(java.awt.event.ActionEvent evt) {
+//                try {
+//                    searchFriendButtonActionPerformed(evt);
+//                } catch (IOException e) {
+//                    throw new RuntimeException(e);
+//                } catch (ClassNotFoundException e) {
+//                    throw new RuntimeException(e);
+//                }
+//            }
+//        });
+
+        friendTable.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
+        friendTable.setModel(new javax.swing.table.DefaultTableModel(
+                new Object [][] {
+                        {null, null, null, null, null, null},
+                        {null, null, null, null, null, null},
+                        {null, null, null, null, null, null},
+                        {null, null, null, null, null, null}
+                },
+                new String [] {
+                        "No", "Username", "Full name", "Registration time", "Direct friend count", "Friends of friends count"
+                }
+        ) {
+            Class[] types = new Class [] {
+                    java.lang.Integer.class, java.lang.Object.class, java.lang.Object.class, java.lang.Object.class, java.lang.Integer.class, java.lang.Integer.class
+            };
+            boolean[] canEdit = new boolean [] {
+                    false, false, false, false, false, false
+            };
+
+            public Class getColumnClass(int columnIndex) {
+                return types [columnIndex];
+            }
+
+            public boolean isCellEditable(int rowIndex, int columnIndex) {
+                return canEdit [columnIndex];
+            }
+        });
+        friendTable.setRowHeight(30);
+        friendTable.setSelectionMode(javax.swing.ListSelectionModel.SINGLE_SELECTION);
+        friendTable.setSelectionMode(javax.swing.ListSelectionModel.SINGLE_SELECTION);
+        friendTable.getTableHeader().setResizingAllowed(false);
+        friendTable.getTableHeader().setReorderingAllowed(false);
+
+        friendTableScrollPane.setViewportView(friendTable);
+        if (friendTable.getColumnModel().getColumnCount() > 0) {
+            friendTable.getColumnModel().getColumn(0).setResizable(false);
+            friendTable.getColumnModel().getColumn(0).setPreferredWidth(50);
+            friendTable.getColumnModel().getColumn(1).setResizable(false);
+            friendTable.getColumnModel().getColumn(1).setPreferredWidth(140);
+            friendTable.getColumnModel().getColumn(2).setResizable(false);
+            friendTable.getColumnModel().getColumn(2).setPreferredWidth(170);
+            friendTable.getColumnModel().getColumn(3).setResizable(false);
+            friendTable.getColumnModel().getColumn(3).setPreferredWidth(160);
+            friendTable.getColumnModel().getColumn(4).setResizable(false);
+            friendTable.getColumnModel().getColumn(4).setPreferredWidth(125);
+            friendTable.getColumnModel().getColumn(5).setResizable(false);
+            friendTable.getColumnModel().getColumn(5).setPreferredWidth(145);
+        }
+
+        resetButton.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
+        resetButton.setText("Reset");
+        resetButton.setFocusable(false);
+        resetButton.setMargin(new java.awt.Insets(2, 5, 3, 5));
+        resetButton.setPreferredSize(new java.awt.Dimension(60, 35));
+//        resetButton.addActionListener(new java.awt.event.ActionListener() {
+//            public void actionPerformed(java.awt.event.ActionEvent evt) {
+//                try {
+//                    resetButtonActionPerformed(evt);
+//                } catch (IOException | ClassNotFoundException e) {
+//                    throw new RuntimeException(e);
+//                }
+//            }
+//        });
+
+        userTitle.setFont(new java.awt.Font("Arial", 1, 18)); // NOI18N
+        userTitle.setForeground(new java.awt.Color(23, 70, 162));
+        userTitle.setText("MANAGE USER");
+
+        userTitle19.setFont(new java.awt.Font("Arial", 1, 18)); // NOI18N
+        userTitle19.setForeground(new java.awt.Color(23, 70, 162));
+        userTitle19.setText("MANAGE USER AND FRIENDS");
+
         javax.swing.GroupLayout userDetailPanelLayout = new javax.swing.GroupLayout(userDetailPanel);
         userDetailPanel.setLayout(userDetailPanelLayout);
-
         userDetailPanelLayout.setHorizontalGroup(
                 userDetailPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                         .addGroup(userDetailPanelLayout.createSequentialGroup()
@@ -1115,7 +1231,21 @@ public class AdminApp extends javax.swing.JFrame {
                                                         .addGap(250, 250, 250)
                                                         .addComponent(listFriendTableScrollPane, javax.swing.GroupLayout.PREFERRED_SIZE, 365, javax.swing.GroupLayout.PREFERRED_SIZE))
                                                 .addComponent(userTitle14, javax.swing.GroupLayout.Alignment.LEADING)
-                                                .addComponent(passRequestTableScrollPane, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.PREFERRED_SIZE, 350, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                                                .addComponent(passRequestTableScrollPane, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.PREFERRED_SIZE, 350, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                                .addComponent(userTitle19)
+                                                .addGroup(javax.swing.GroupLayout.Alignment.LEADING, userDetailPanelLayout.createSequentialGroup()
+                                                        .addComponent(searchFriendFullNameInput, javax.swing.GroupLayout.PREFERRED_SIZE, 160, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                                        .addGap(30, 30, 30)
+                                                        .addComponent(searchFriendDropDown, javax.swing.GroupLayout.PREFERRED_SIZE, 140, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                                        .addGap(30, 30, 30)
+                                                        .addComponent(searchFriendButton, javax.swing.GroupLayout.PREFERRED_SIZE, 75, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                                        .addGap(30, 30, 30)
+                                                        .addComponent(resetButton, javax.swing.GroupLayout.PREFERRED_SIZE, 75, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                                .addGroup(javax.swing.GroupLayout.Alignment.LEADING, userDetailPanelLayout.createSequentialGroup()
+                                                        .addComponent(userTitle17)
+                                                        .addGap(120, 120, 120)
+                                                        .addComponent(userTitle18))
+                                                .addComponent(friendTableScrollPane, javax.swing.GroupLayout.PREFERRED_SIZE, 900, javax.swing.GroupLayout.PREFERRED_SIZE))
                                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
@@ -1140,11 +1270,22 @@ public class AdminApp extends javax.swing.JFrame {
                                 .addComponent(userTitle14)
                                 .addGap(30, 30, 30)
                                 .addComponent(passRequestTableScrollPane, javax.swing.GroupLayout.PREFERRED_SIZE, 180, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(40, 40, 40)
+                                .addComponent(userTitle19)
+                                .addGap(30, 30, 30)
+                                .addGroup(userDetailPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                        .addComponent(userTitle17)
+                                        .addComponent(userTitle18))
+                                .addGap(5, 5, 5)
+                                .addGroup(userDetailPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE).addComponent(searchFriendFullNameInput, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addComponent(searchFriendDropDown, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addComponent(searchFriendButton, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addComponent(resetButton, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addGap(18, 18, 18)
+                                .addComponent(friendTableScrollPane, javax.swing.GroupLayout.PREFERRED_SIZE, 330, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         )
         );
-
-
 
         LineBorder lineBorderPassTable = new LineBorder(Color.BLUE);
         //userDetailPanel.setBorder(BorderFactory.createCompoundBorder(lineBorderPassTable, userDetailPanel.getBorder()));
@@ -1208,6 +1349,55 @@ public class AdminApp extends javax.swing.JFrame {
                                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
+//        javax.swing.GroupLayout userFriendMainPanelLayout = new javax.swing.GroupLayout(userFriendPanel);
+//        userFriendPanel.setLayout(userTableMainPanelLayout);
+//        userFriendMainPanelLayout.setHorizontalGroup(
+//                userFriendMainPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+//                        .addGroup(userFriendMainPanelLayout.createSequentialGroup()
+//                                .addGap(70, 70, 70)
+//                                .addGroup(userFriendMainPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+//                                        .addComponent(userTitle19)
+//                                        .addGroup(userFriendMainPanelLayout.createSequentialGroup()
+//                                                .addGroup(userFriendMainPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+//                                                        .addGroup(userFriendMainPanelLayout.createSequentialGroup()
+//                                                                .addComponent(searchFriendFullNameInput, javax.swing.GroupLayout.PREFERRED_SIZE, 160, javax.swing.GroupLayout.PREFERRED_SIZE)
+//                                                                .addGap(30, 30, 30)
+//                                                                .addComponent(searchFriendDropDown, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE)
+//                                                                .addGap(30, 30, 30)
+//                                                                .addComponent(searchFriendButton, javax.swing.GroupLayout.PREFERRED_SIZE, 75, javax.swing.GroupLayout.PREFERRED_SIZE)
+//                                                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+//                                                                .addComponent(resetButton, javax.swing.GroupLayout.PREFERRED_SIZE, 123, javax.swing.GroupLayout.PREFERRED_SIZE))
+//                                                        .addGroup(userFriendMainPanelLayout.createSequentialGroup()
+//                                                                .addComponent(userTitle17)
+//                                                                .addGap(120, 120, 120)
+//                                                                .addComponent(userTitle18)
+//                                                        .addComponent(friendTableScrollPane, javax.swing.GroupLayout.PREFERRED_SIZE, 1370, javax.swing.GroupLayout.PREFERRED_SIZE))
+//                                                .addGap(0, 0, Short.MAX_VALUE))))
+//                                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+//        );
+//        userFriendMainPanelLayout.setVerticalGroup(
+//                userFriendMainPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+//                        .addGroup(userFriendMainPanelLayout.createSequentialGroup()
+//                                .addGap(40, 40, 40)
+//                                .addComponent(userTitle19)
+//                                .addGap(30, 30, 30)
+//                                .addGroup(userFriendMainPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+//                                        .addComponent(userTitle17)
+//                                        .addComponent(userTitle18))
+//                                .addGap(5, 5, 5)
+//                                .addGroup(userFriendMainPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+//                                        .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, userFriendMainPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+//                                                .addComponent(searchFriendFullNameInput, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+//                                                .addComponent(searchFriendDropDown, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+//                                                .addComponent(searchFriendButton, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+//                                                .addComponent(resetButton, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+//                                .addGap(18, 18, 18)
+//                                .addGroup(userFriendMainPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+//                                        .addComponent(friendTableScrollPane, javax.swing.GroupLayout.PREFERRED_SIZE, 330, javax.swing.GroupLayout.PREFERRED_SIZE)
+//                                )
+//                                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+//        );
+
         userScrollPanel.setBorder(null);
         userScrollPanel.setHorizontalScrollBarPolicy(javax.swing.ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
         userScrollPanel.setMaximumSize(new java.awt.Dimension(1440, 32767));
@@ -1215,7 +1405,7 @@ public class AdminApp extends javax.swing.JFrame {
 
         userPanel.setFocusable(false);
         userPanel.setMaximumSize(new java.awt.Dimension(1440, 4000));
-        userPanel.setPreferredSize(new java.awt.Dimension(1440, 1400));
+        userPanel.setPreferredSize(new java.awt.Dimension(1440, 1800));
         userPanel.setRequestFocusEnabled(false);
         userPanel.setLayout(new javax.swing.BoxLayout(userPanel, javax.swing.BoxLayout.Y_AXIS));
 
@@ -1227,6 +1417,7 @@ public class AdminApp extends javax.swing.JFrame {
 
         userPanel.add(userTableMainPanel);
         userPanel.add(userDetailPanel);
+        //userPanel.add(userFriendPanel);
 
         userScrollPanel.setViewportView(userPanel);
         userMainPanel.add(userScrollPanel, java.awt.BorderLayout.CENTER);
@@ -1858,6 +2049,11 @@ public class AdminApp extends javax.swing.JFrame {
         headerPreferredSize.height = 30;
         passRequestTable.getTableHeader().setPreferredSize(headerPreferredSize);
 
+        friendTable.getTableHeader().setDefaultRenderer(centerHeaderRenderer);
+        headerPreferredSize = friendTable.getTableHeader().getPreferredSize();
+        headerPreferredSize.height = 30;
+        friendTable.getTableHeader().setPreferredSize(headerPreferredSize);
+
         loginHistoryTable.getTableHeader().setDefaultRenderer(centerHeaderRenderer);
         headerPreferredSize = loginHistoryTable.getTableHeader().getPreferredSize();
         headerPreferredSize.height = 30;
@@ -1881,6 +2077,8 @@ public class AdminApp extends javax.swing.JFrame {
         userTable.setDefaultRenderer(Integer.class, centerDataRenderer);
         passRequestTable.setDefaultRenderer(Object.class, centerDataRenderer);
         passRequestTable.setDefaultRenderer(Integer.class, centerDataRenderer);
+        friendTable.setDefaultRenderer(Object.class, centerDataRenderer);
+        friendTable.setDefaultRenderer(Integer.class, centerDataRenderer);
 
         // chỉnh selection color
         groupTable.setSelectionForeground(Color.WHITE);
@@ -1892,6 +2090,8 @@ public class AdminApp extends javax.swing.JFrame {
         userTable.setSelectionBackground(Color.LIGHT_GRAY);
         passRequestTable.setSelectionForeground(Color.WHITE);
         passRequestTable.setSelectionBackground(Color.LIGHT_GRAY);
+        friendTable.setSelectionForeground(Color.WHITE);
+        friendTable.setSelectionBackground(Color.LIGHT_GRAY);
 
         // disable selection
         memberTable.setRowSelectionAllowed(false);
@@ -1922,6 +2122,10 @@ public class AdminApp extends javax.swing.JFrame {
         listFriendTable.setColumnSelectionAllowed(false);
         listFriendTable.setIntercellSpacing(new Dimension(0, 0));
 
+        friendTable.setRowSelectionAllowed(false);
+        friendTable.setColumnSelectionAllowed(false);
+        friendTable.setIntercellSpacing(new Dimension(0, 0));
+
         //user + login
         customButton(searchUserButton);
         customButton(viewAllUserButton);
@@ -1930,6 +2134,8 @@ public class AdminApp extends javax.swing.JFrame {
         customButton(deleteUserButton);
         customButton(disableEnableUserButton);
         customButton(updatePasswordButton);
+        customButton(searchFriendButton);
+        customButton(resetButton);
 
         // group + report + active
         customButton(viewAllGroupButton);
@@ -2134,6 +2340,51 @@ public class AdminApp extends javax.swing.JFrame {
         ((DefaultTableCellRenderer)passRequestTable.getDefaultRenderer(String.class)).setHorizontalAlignment(SwingConstants.CENTER);
         ((DefaultTableCellRenderer)passRequestTable.getDefaultRenderer(Integer.class)).setHorizontalAlignment(SwingConstants.CENTER);
         passRequestTable.setPreferredScrollableViewportSize(passRequestTable.getPreferredSize());
+
+        searchFriendFullNameInput.setText("");
+        searchFriendDropDown.setSelectedItem("Equal to");
+
+        DefaultTableModel model1 = (DefaultTableModel) friendTable.getModel();
+        model1.setRowCount(0);
+
+        Object[][] data1 = GetAllUserFriend.request(socket);
+        for (Object[] row : data1) {
+            for (Object element : row) {
+                System.out.print(element + " ");
+            }
+            System.out.println();
+        }
+        for (Object[] row : data1) {
+            model1.addRow(row);
+        }
+
+        // sort
+        TableRowSorter<DefaultTableModel> sorter1 = new TableRowSorter<>(model1);
+        friendTable.setRowSorter(sorter1);
+
+        sorter1.setSortKeys(
+                java.util.Collections.singletonList(
+                        new javax.swing.RowSorter.SortKey(2, SortOrder.ASCENDING)
+                )
+        );
+        sorter1.setSortKeys(
+                java.util.Collections.singletonList(
+                        new javax.swing.RowSorter.SortKey(3, SortOrder.ASCENDING)
+                )
+        );
+
+        sorter1 = new TableRowSorter<DefaultTableModel>(model1) {
+            @Override
+            public boolean isSortable(int column) {
+                return (column == 2) || (column == 3);
+            }
+        };
+        friendTable.setRowSorter(sorter1);
+
+        // chỉnh center
+        ((DefaultTableCellRenderer)friendTable.getDefaultRenderer(String.class)).setHorizontalAlignment(SwingConstants.CENTER);
+        ((DefaultTableCellRenderer)friendTable.getDefaultRenderer(Integer.class)).setHorizontalAlignment(SwingConstants.CENTER);
+        friendTable.setPreferredScrollableViewportSize(friendTable.getPreferredSize());
 
         groupMainPanel.setVisible(false);
         getContentPane().remove(groupMainPanel);
@@ -3195,5 +3446,15 @@ public class AdminApp extends javax.swing.JFrame {
     private javax.swing.JLabel loginHistoryTitle;
     private javax.swing.JTable loginHistoryTable;
     private javax.swing.JScrollPane loginHistoryTableScrollPane;
+    private javax.swing.JPanel userFriendPanel;
+    private javax.swing.JLabel userTitle17;
+    private javax.swing.JLabel userTitle18;
+    private javax.swing.JTextField searchFriendFullNameInput;
+    private javax.swing.JComboBox<String> searchFriendDropDown;
+    private javax.swing.JButton searchFriendButton;
+    private javax.swing.JButton resetButton;
+    private javax.swing.JTable friendTable;
+    private javax.swing.JScrollPane friendTableScrollPane;
+    private javax.swing.JLabel userTitle19;
     // End of variables declaration
 }
