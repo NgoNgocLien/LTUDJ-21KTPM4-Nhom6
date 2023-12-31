@@ -9,7 +9,7 @@ import org.example.views.*;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.*;
-import java.net.*;
+import java.net.Socket;
 import java.sql.SQLException;
 import java.util.ArrayList;
 
@@ -80,8 +80,7 @@ public class LoginFrameController {
                 String password = new String(passwordField.getPassword());
                 if (inputField == usernameField && !username.isEmpty()) {
                     passwordField.requestFocus();
-                }
-                else if (inputField == passwordField && !password.isEmpty()) {
+                } else if (inputField == passwordField && !password.isEmpty()) {
                     loginButton.doClick();
                 }
             }
@@ -89,10 +88,12 @@ public class LoginFrameController {
 
         // Không để làm gì nhưng không xóa vì KeyListener bắt buộc phải override
         @Override
-        public void keyTyped(KeyEvent e) {}
+        public void keyTyped(KeyEvent e) {
+        }
 
         @Override
-        public void keyReleased(KeyEvent e) {}
+        public void keyReleased(KeyEvent e) {
+        }
     }
 
     private class LoginButtonListener implements ActionListener {
@@ -106,8 +107,7 @@ public class LoginFrameController {
                 usernameField.requestFocus();
                 new ErrorMessage(LF, "Please enter your username");
                 return;
-            }
-            else if (password.isEmpty()) {
+            } else if (password.isEmpty()) {
                 passwordField.requestFocus();
                 new ErrorMessage(LF, "Please enter your password");
                 return;
@@ -124,17 +124,15 @@ public class LoginFrameController {
             try {
                 Profile profile = DB.getProfilebyUsername(username);
 
-                if(profile.getUsername() == null){
+                if (profile.getUsername() == null) {
                     new ErrorMessage(LF, "Wrong username or password");
-                }
-                else if(!profile.getPassword().equals(password)){
+                } else if (!profile.getPassword().equals(password)) {
                     new ErrorMessage(LF, "Wrong username or password");
-                }
-                else{
+                } else {
                     JOptionPane.showMessageDialog(LF, "Login success");
                     ArrayList<ChatInfo> allChats = null;
                     try {
-                        allChats= DB.getAllChats(username);
+                        allChats = DB.getAllChats(username);
                     } catch (SQLException se) {
                         se.printStackTrace();
                     }
@@ -209,9 +207,11 @@ public class LoginFrameController {
 
         // Không để làm gì nhưng không xóa vì MouseListener bắt buộc phải override
         @Override
-        public void mousePressed(MouseEvent e) {}
+        public void mousePressed(MouseEvent e) {
+        }
 
         @Override
-        public void mouseReleased(MouseEvent e) {}
+        public void mouseReleased(MouseEvent e) {
+        }
     }
 }

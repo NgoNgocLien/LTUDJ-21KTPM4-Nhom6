@@ -170,6 +170,15 @@ public class ProfileFrame extends JFrame {
         // empty space
         add(Box.createRigidArea(new Dimension(0, 20)));
 
+        friendButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                System.out.println("click");
+                System.out.println(profile.getFullname());
+
+            }
+        });
+
         pack();
         setVisible(true);
     }

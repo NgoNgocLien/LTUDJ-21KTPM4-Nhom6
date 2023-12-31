@@ -82,7 +82,7 @@ public class RegisterFrameController {
     }
 
     private boolean checkUsername(String username) {
-        String regex = "^[a-z0-9._-]{1,}$";
+        String regex = "^[a-z0-9._-]+$";
         return username.matches(regex);
     }
 

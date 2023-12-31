@@ -10,7 +10,7 @@ import java.util.ArrayList;
 
 public class DatabaseHandler {
     private final String JDBC_DRIVER = "com.mysql.cj.jdbc.Driver";
-    private final String DB_URL = "jdbc:mysql://localhost:3306/db_chat";
+    private final String DB_URL = "jdbc:mysql://localhost:3306/db_chat?allowPublicKeyRetrieval=true&useSSL=false";
     private final String USER = "root";
     private final String PASS = "admin";
     private Connection conn = null;
@@ -552,6 +552,26 @@ public class DatabaseHandler {
         } catch (SQLException throwables) {
             throwables.printStackTrace();
         }
+    }
+
+    public void updateMyProfile(Profile newProfile, String currentPass) throws SQLException {
+        String sql = "UPDATE user SET password = ?, fullname = ?, address = ?, birthdate = ?, gender = ?, email = ? WHERE username = ?";
+        PreparedStatement stmt = null;
+        stmt = conn.prepareStatement(sql);
+        if (!newProfile.getPassword().isEmpty()) {
+            stmt.setString(1, newProfile.getPassword());
+        }
+        else {
+            stmt.setString(1, currentPass);
+        }
+        stmt.setString(2, newProfile.getFullname());
+        stmt.setString(3, newProfile.getAddress());
+        stmt.setDate(4, Date.valueOf(newProfile.getBirthdate()));
+        stmt.setInt(5, newProfile.getGender());
+        stmt.setString(6, newProfile.getEmail());
+        stmt.setString(7, newProfile.getUsername());
+        stmt.executeUpdate();
+        stmt.close();
     }
 
 
