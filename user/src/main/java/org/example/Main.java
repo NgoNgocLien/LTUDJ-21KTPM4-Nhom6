@@ -14,17 +14,11 @@
 package org.example;
 
 import org.example.controllers.LoginFrameController;
-import org.example.utilities.*;
+import org.example.utilities.Client_Socket;
+import org.example.utilities.DatabaseHandler;
 import org.example.views.LoginFrame;
-import org.example.views.MainFrame;
-import org.example.controllers.MainFrameController;
-import org.example.models.ChatInfo;
-
 
 import javax.swing.*;
-import java.sql.SQLException;
-import java.util.ArrayList;
-import org.example.utilities.*;
 
 public class Main {
     public static void main(String[] args) {
