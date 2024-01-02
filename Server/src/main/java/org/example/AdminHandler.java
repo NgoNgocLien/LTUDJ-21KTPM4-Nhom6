@@ -568,6 +568,23 @@ public class AdminHandler implements Runnable {
                         break;
                     }
 
+                    case "getMonthlyNewUser":{
+                        System.out.println("Admin get monthly new user");
+
+                        int[] data1 = dbcon.getMonthlyNewUser(msgArr[1]);
+                        objectOutputStream.reset();
+                        objectOutputStream.writeObject(data1);
+                        objectOutputStream.flush();
+
+                        for (int row : data1) {
+                            System.out.println(row);
+                        }
+
+                        System.out.println("Data sent to client.");
+
+                        break;
+                    }
+
                 }
             }
         } catch (IOException | ClassNotFoundException e) {

@@ -173,6 +173,41 @@ public class AdminApp extends javax.swing.JFrame {
         friendTableScrollPane = new javax.swing.JScrollPane();
         userTitle19 = new javax.swing.JLabel();
         searchDirectFriendInput = new javax.swing.JTextField();
+        // Manage login history & new registered user
+        loginHistoryTableMainPanel = new javax.swing.JPanel();
+        loginHistoryScrollPanel = new javax.swing.JScrollPane();
+        loginHistoryPanel = new javax.swing.JPanel();
+        newUserMainPanel = new javax.swing.JPanel();
+        newUserMonthlyMainPanel = new javax.swing.JPanel();
+        newUserTitle = new javax.swing.JLabel();
+        startDateUserInput = new javax.swing.JTextField();
+        startHourUserInput = new javax.swing.JTextField();
+        startMinUserInput = new javax.swing.JTextField();
+        startSecUserInput = new javax.swing.JTextField();
+        newUserTitle7 = new javax.swing.JLabel();
+        newUserTitle8 = new javax.swing.JLabel();
+        endDateUserInput = new javax.swing.JTextField();
+        searchDateUserButton = new javax.swing.JButton();
+        resetUserButton = new javax.swing.JButton();
+        searchNameUserInput = new javax.swing.JTextField();
+        newUserTableScrollPane = new javax.swing.JScrollPane();
+        newUserTable = new javax.swing.JTable();
+        searchNewUserButton = new javax.swing.JButton();
+        resetUserButton1 = new javax.swing.JButton();
+        newUserTitle3 = new javax.swing.JLabel();
+        newUserTitle4 = new javax.swing.JLabel();
+        newUserTitle5 = new javax.swing.JLabel();
+        newUserTitle6 = new javax.swing.JLabel();
+        endHourUserInput = new javax.swing.JTextField();
+        endMinUserInput = new javax.swing.JTextField();
+        endSecUserInput = new javax.swing.JTextField();
+        newUserTitle9 = new javax.swing.JLabel();
+        chartNewUserTitle = new javax.swing.JLabel();
+        yearUserTitle = new javax.swing.JLabel();
+        searchYearDropDown = new javax.swing.JComboBox<>();
+        searchYearUserButton = new javax.swing.JButton();
+        newUserMonthlyChartPanel = new javax.swing.JPanel();
+        resetUserButton2 = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -1357,55 +1392,6 @@ public class AdminApp extends javax.swing.JFrame {
                                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
-//        javax.swing.GroupLayout userFriendMainPanelLayout = new javax.swing.GroupLayout(userFriendPanel);
-//        userFriendPanel.setLayout(userTableMainPanelLayout);
-//        userFriendMainPanelLayout.setHorizontalGroup(
-//                userFriendMainPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-//                        .addGroup(userFriendMainPanelLayout.createSequentialGroup()
-//                                .addGap(70, 70, 70)
-//                                .addGroup(userFriendMainPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-//                                        .addComponent(userTitle19)
-//                                        .addGroup(userFriendMainPanelLayout.createSequentialGroup()
-//                                                .addGroup(userFriendMainPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-//                                                        .addGroup(userFriendMainPanelLayout.createSequentialGroup()
-//                                                                .addComponent(searchFriendFullNameInput, javax.swing.GroupLayout.PREFERRED_SIZE, 160, javax.swing.GroupLayout.PREFERRED_SIZE)
-//                                                                .addGap(30, 30, 30)
-//                                                                .addComponent(searchFriendDropDown, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE)
-//                                                                .addGap(30, 30, 30)
-//                                                                .addComponent(searchFriendButton, javax.swing.GroupLayout.PREFERRED_SIZE, 75, javax.swing.GroupLayout.PREFERRED_SIZE)
-//                                                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-//                                                                .addComponent(resetButton, javax.swing.GroupLayout.PREFERRED_SIZE, 123, javax.swing.GroupLayout.PREFERRED_SIZE))
-//                                                        .addGroup(userFriendMainPanelLayout.createSequentialGroup()
-//                                                                .addComponent(userTitle17)
-//                                                                .addGap(120, 120, 120)
-//                                                                .addComponent(userTitle18)
-//                                                        .addComponent(friendTableScrollPane, javax.swing.GroupLayout.PREFERRED_SIZE, 1370, javax.swing.GroupLayout.PREFERRED_SIZE))
-//                                                .addGap(0, 0, Short.MAX_VALUE))))
-//                                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-//        );
-//        userFriendMainPanelLayout.setVerticalGroup(
-//                userFriendMainPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-//                        .addGroup(userFriendMainPanelLayout.createSequentialGroup()
-//                                .addGap(40, 40, 40)
-//                                .addComponent(userTitle19)
-//                                .addGap(30, 30, 30)
-//                                .addGroup(userFriendMainPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-//                                        .addComponent(userTitle17)
-//                                        .addComponent(userTitle18))
-//                                .addGap(5, 5, 5)
-//                                .addGroup(userFriendMainPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-//                                        .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, userFriendMainPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-//                                                .addComponent(searchFriendFullNameInput, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-//                                                .addComponent(searchFriendDropDown, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-//                                                .addComponent(searchFriendButton, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-//                                                .addComponent(resetButton, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
-//                                .addGap(18, 18, 18)
-//                                .addGroup(userFriendMainPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-//                                        .addComponent(friendTableScrollPane, javax.swing.GroupLayout.PREFERRED_SIZE, 330, javax.swing.GroupLayout.PREFERRED_SIZE)
-//                                )
-//                                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-//        );
-
         userScrollPanel.setBorder(null);
         userScrollPanel.setHorizontalScrollBarPolicy(javax.swing.ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
         userScrollPanel.setMaximumSize(new java.awt.Dimension(1440, 32767));
@@ -1435,6 +1421,10 @@ public class AdminApp extends javax.swing.JFrame {
         loginHistoryMainPanel.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
         loginHistoryMainPanel.setPreferredSize(new java.awt.Dimension(1440, 2079));
         loginHistoryMainPanel.setLayout(new java.awt.BorderLayout());
+
+        loginHistoryTableMainPanel.setMaximumSize(new java.awt.Dimension(32767, 1800));
+        loginHistoryTableMainPanel.setPreferredSize(new java.awt.Dimension(2276, 500));
+        loginHistoryTableMainPanel.setRequestFocusEnabled(false);
 
         loginHistoryTitle.setFont(new java.awt.Font("Arial", 1, 18)); // NOI18N
         loginHistoryTitle.setForeground(new java.awt.Color(23, 70, 162));
@@ -1492,8 +1482,8 @@ public class AdminApp extends javax.swing.JFrame {
             loginHistoryTable.getColumnModel().getColumn(3).setPreferredWidth(200);
         }
 
-        javax.swing.GroupLayout loginHistoryTableMainPanelLayout = new javax.swing.GroupLayout(loginHistoryMainPanel);
-        loginHistoryMainPanel.setLayout(loginHistoryTableMainPanelLayout);
+        javax.swing.GroupLayout loginHistoryTableMainPanelLayout = new javax.swing.GroupLayout(loginHistoryTableMainPanel);
+        loginHistoryTableMainPanel.setLayout(loginHistoryTableMainPanelLayout);
         loginHistoryTableMainPanelLayout.setHorizontalGroup(
                 loginHistoryTableMainPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                         .addGroup(loginHistoryTableMainPanelLayout.createSequentialGroup()
@@ -1501,8 +1491,9 @@ public class AdminApp extends javax.swing.JFrame {
                                 .addGroup(loginHistoryTableMainPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                         .addComponent(loginHistoryTitle)
                                         .addComponent(loginHistoryTableScrollPane, javax.swing.GroupLayout.PREFERRED_SIZE, 800, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-        );
+                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+);
+
         loginHistoryTableMainPanelLayout.setVerticalGroup(
                 loginHistoryTableMainPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                         .addGroup(loginHistoryTableMainPanelLayout.createSequentialGroup()
@@ -1513,6 +1504,400 @@ public class AdminApp extends javax.swing.JFrame {
                                         .addComponent(loginHistoryTableScrollPane, javax.swing.GroupLayout.PREFERRED_SIZE, 330, javax.swing.GroupLayout.PREFERRED_SIZE))
                                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
+
+
+        newUserMainPanel.setMaximumSize(new java.awt.Dimension(32767, 600));
+        newUserMainPanel.setPreferredSize(new java.awt.Dimension(2276, 600));
+        newUserMainPanel.setRequestFocusEnabled(false);
+        LineBorder lineBorderNewUserTable = new LineBorder(Color.RED);
+        //loginHistoryTableMainPanel.setBorder(BorderFactory.createCompoundBorder(lineBorderNewUserTable, loginHistoryTableMainPanel.getBorder()));
+
+        LineBorder lineBorderYserTable = new LineBorder(Color.GREEN);
+        //newUserMainPanel.setBorder(BorderFactory.createCompoundBorder(lineBorderYserTable, newUserMainPanel.getBorder()));
+        newUserTitle.setFont(new java.awt.Font("Arial", 1, 18)); // NOI18N
+        newUserTitle.setForeground(new java.awt.Color(23, 70, 162));
+        newUserTitle.setText("LIST OF NEW REGISTERED USERS");
+
+        startDateUserInput.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
+        startDateUserInput.setText("(dd-mm-yyyy)");
+        startDateUserInput.setPreferredSize(new java.awt.Dimension(124, 35));
+
+        startHourUserInput.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
+        startHourUserInput.setHorizontalAlignment(javax.swing.JTextField.CENTER);
+        startHourUserInput.setText("00");
+        startHourUserInput.setPreferredSize(new java.awt.Dimension(124, 35));
+
+        startMinUserInput.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
+        startMinUserInput.setHorizontalAlignment(javax.swing.JTextField.CENTER);
+        startMinUserInput.setText("00");
+        startMinUserInput.setPreferredSize(new java.awt.Dimension(124, 35));
+
+        startSecUserInput.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
+        startSecUserInput.setHorizontalAlignment(javax.swing.JTextField.CENTER);
+        startSecUserInput.setText("00");
+        startSecUserInput.setPreferredSize(new java.awt.Dimension(124, 35));
+
+        newUserTitle6.setFont(new java.awt.Font("Arial", 1, 14)); // NOI18N
+        newUserTitle6.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        newUserTitle6.setText(":");
+
+        newUserTitle7.setFont(new java.awt.Font("Arial", 1, 14)); // NOI18N
+        newUserTitle7.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
+        newUserTitle7.setText(":");
+
+        endDateUserInput.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
+        endDateUserInput.setText("(dd-mm-yyyy)");
+        endDateUserInput.setPreferredSize(new java.awt.Dimension(124, 35));
+
+        searchDateUserButton.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
+        searchDateUserButton.setText("Search");
+        searchDateUserButton.setFocusable(false);
+        searchDateUserButton.setMargin(new java.awt.Insets(2, 5, 3, 5));
+        searchDateUserButton.setPreferredSize(new java.awt.Dimension(57, 35));
+        searchDateUserButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                try {
+                    searchDateButtonActionPerformed(evt);
+                } catch (IOException | ClassNotFoundException e) {
+                    throw new RuntimeException(e);
+                }
+            }
+        });
+
+        resetUserButton.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
+        resetUserButton.setText("Reset");
+        resetUserButton.setFocusable(false);
+        resetUserButton.setMargin(new java.awt.Insets(2, 5, 3, 5));
+        resetUserButton.setPreferredSize(new java.awt.Dimension(57, 35));
+        resetUserButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                try {
+                    resetButton1ActionPerformed(evt);
+                } catch (IOException | ClassNotFoundException e) {
+                    throw new RuntimeException(e);
+                }
+            }
+        });
+
+        searchNameUserInput.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
+        searchNameUserInput.setPreferredSize(new java.awt.Dimension(124, 35));
+
+        newUserTableScrollPane.setMaximumSize(new java.awt.Dimension(32767, 600));
+        newUserTableScrollPane.setPreferredSize(new java.awt.Dimension(452, 500));
+
+        newUserTable.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
+        newUserTable.setModel(new javax.swing.table.DefaultTableModel(
+                new Object [][] {
+                        {null, null, null, null, null, null, null, null},
+                        {null, null, null, null, null, null, null, null},
+                        {null, null, null, null, null, null, null, null},
+                        {null, null, null, null, null, null, null, null}
+                },
+                new String [] {
+                        "No", "Username", "Full name", "Address", "Birth date", "Gender", "Email", "Registration time"
+                }
+        ) {
+            Class[] types = new Class [] {
+                    java.lang.Integer.class, java.lang.Object.class, java.lang.Object.class, java.lang.Object.class, java.lang.Object.class, java.lang.Object.class, java.lang.Object.class, java.lang.Object.class
+            };
+            boolean[] canEdit = new boolean [] {
+                    false, false, false, false, false, false, false, false
+            };
+
+            public Class getColumnClass(int columnIndex) {
+                return types [columnIndex];
+            }
+
+            public boolean isCellEditable(int rowIndex, int columnIndex) {
+                return canEdit [columnIndex];
+            }
+        });
+        newUserTable.setRowHeight(30);
+        newUserTable.setSelectionMode(javax.swing.ListSelectionModel.SINGLE_SELECTION);
+        newUserTable.setSelectionMode(javax.swing.ListSelectionModel.SINGLE_SELECTION);
+        newUserTable.getTableHeader().setResizingAllowed(false);
+        newUserTable.getTableHeader().setReorderingAllowed(false);
+
+        newUserTableScrollPane.setViewportView(newUserTable);
+        if (newUserTable.getColumnModel().getColumnCount() > 0) {
+            newUserTable.getColumnModel().getColumn(0).setResizable(false);
+            newUserTable.getColumnModel().getColumn(0).setPreferredWidth(50);
+            newUserTable.getColumnModel().getColumn(1).setResizable(false);
+            newUserTable.getColumnModel().getColumn(1).setPreferredWidth(140);
+            newUserTable.getColumnModel().getColumn(2).setResizable(false);
+            newUserTable.getColumnModel().getColumn(2).setPreferredWidth(170);
+            newUserTable.getColumnModel().getColumn(3).setResizable(false);
+            newUserTable.getColumnModel().getColumn(3).setPreferredWidth(420);
+            newUserTable.getColumnModel().getColumn(4).setResizable(false);
+            newUserTable.getColumnModel().getColumn(4).setPreferredWidth(105);
+            newUserTable.getColumnModel().getColumn(5).setResizable(false);
+            newUserTable.getColumnModel().getColumn(5).setPreferredWidth(95);
+            newUserTable.getColumnModel().getColumn(6).setResizable(false);
+            newUserTable.getColumnModel().getColumn(6).setPreferredWidth(215);
+            newUserTable.getColumnModel().getColumn(7).setResizable(false);
+            newUserTable.getColumnModel().getColumn(7).setPreferredWidth(160);
+        }
+
+        searchNewUserButton.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
+        searchNewUserButton.setText("Search");
+        searchNewUserButton.setFocusable(false);
+        searchNewUserButton.setMargin(new java.awt.Insets(2, 5, 3, 5));
+        searchNewUserButton.setPreferredSize(new java.awt.Dimension(57, 35));
+        searchNewUserButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                searchNameSessionButtonActionPerformed(evt);
+            }
+        });
+
+        resetUserButton1.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
+        resetUserButton1.setText("Reset");
+        resetUserButton1.setFocusable(false);
+        resetUserButton1.setMargin(new java.awt.Insets(2, 5, 3, 5));
+        resetUserButton1.setPreferredSize(new java.awt.Dimension(57, 35));
+        resetUserButton1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                resetButton2ActionPerformed(evt);
+            }
+        });
+
+        newUserTitle3.setFont(new java.awt.Font("Arial", 1, 14)); // NOI18N
+        newUserTitle3.setText("Start date");
+
+        newUserTitle4.setFont(new java.awt.Font("Arial", 1, 14)); // NOI18N
+        newUserTitle4.setText("End date");
+
+        newUserTitle5.setFont(new java.awt.Font("Arial", 1, 14)); // NOI18N
+        newUserTitle5.setText("Name");
+
+        endHourUserInput.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
+        endHourUserInput.setHorizontalAlignment(javax.swing.JTextField.CENTER);
+        endHourUserInput.setText("00");
+        endHourUserInput.setPreferredSize(new java.awt.Dimension(124, 35));
+
+        endMinUserInput.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
+        endMinUserInput.setHorizontalAlignment(javax.swing.JTextField.CENTER);
+        endMinUserInput.setText("00");
+        endMinUserInput.setPreferredSize(new java.awt.Dimension(124, 35));
+
+        endSecUserInput.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
+        endSecUserInput.setHorizontalAlignment(javax.swing.JTextField.CENTER);
+        endSecUserInput.setText("00");
+        endSecUserInput.setPreferredSize(new java.awt.Dimension(124, 35));
+
+        newUserTitle8.setFont(new java.awt.Font("Arial", 1, 14)); // NOI18N
+        newUserTitle8.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        newUserTitle8.setText(":");
+
+        newUserTitle9.setFont(new java.awt.Font("Arial", 1, 14)); // NOI18N
+        newUserTitle9.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
+        newUserTitle9.setText(":");
+
+        javax.swing.GroupLayout newUserMainPanelLayout = new javax.swing.GroupLayout(newUserMainPanel);
+        newUserMainPanel.setLayout(newUserMainPanelLayout);
+        newUserMainPanelLayout.setHorizontalGroup(
+                newUserMainPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGroup(newUserMainPanelLayout.createSequentialGroup()
+                                .addGap(70, 70, 70)
+                                .addGroup(newUserMainPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                        .addGroup(newUserMainPanelLayout.createSequentialGroup()
+                                                .addComponent(newUserTitle))
+                                                //.addContainerGap(1203, Short.MAX_VALUE))
+                                        .addGroup(newUserMainPanelLayout.createSequentialGroup()
+                                                .addGroup(newUserMainPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                                        .addComponent(newUserTitle3)
+                                                        .addGroup(newUserMainPanelLayout.createSequentialGroup()
+                                                                .addComponent(searchNewUserButton, javax.swing.GroupLayout.PREFERRED_SIZE, 67, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                                                .addGap(18, 18, 18)
+                                                                .addComponent(resetUserButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 56, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                                        .addGroup(newUserMainPanelLayout.createSequentialGroup()
+                                                                .addComponent(searchDateUserButton, javax.swing.GroupLayout.PREFERRED_SIZE, 69, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                                                .addGap(18, 18, 18)
+                                                                .addComponent(resetUserButton, javax.swing.GroupLayout.PREFERRED_SIZE, 55, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                                        .addGroup(newUserMainPanelLayout.createSequentialGroup()
+                                                                .addGroup(newUserMainPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                                                        .addGroup(newUserMainPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                                                                                .addComponent(endDateUserInput, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 116, Short.MAX_VALUE)
+                                                                                .addComponent(startDateUserInput, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.PREFERRED_SIZE, 1, Short.MAX_VALUE))
+                                                                        .addComponent(newUserTitle4))
+                                                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                                                .addGroup(newUserMainPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                                                        .addGroup(newUserMainPanelLayout.createSequentialGroup()
+                                                                                .addComponent(startHourUserInput, javax.swing.GroupLayout.PREFERRED_SIZE, 34, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                                                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                                                                .addComponent(newUserTitle6)
+                                                                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                                                                .addComponent(startMinUserInput, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                                                                .addGap(2, 2, 2)
+                                                                                .addComponent(newUserTitle7, javax.swing.GroupLayout.PREFERRED_SIZE, 7, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                                                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                                                                .addComponent(startSecUserInput, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                                                        .addGroup(newUserMainPanelLayout.createSequentialGroup()
+                                                                                .addComponent(endHourUserInput, javax.swing.GroupLayout.PREFERRED_SIZE, 34, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                                                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                                                                .addComponent(newUserTitle8)
+                                                                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                                                                .addComponent(endMinUserInput, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                                                                .addGap(2, 2, 2)
+                                                                                .addComponent(newUserTitle9, javax.swing.GroupLayout.PREFERRED_SIZE, 7, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                                                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                                                                .addComponent(endSecUserInput, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                                                        .addGroup(newUserMainPanelLayout.createSequentialGroup()
+                                                                .addGroup(newUserMainPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                                                        .addComponent(newUserTitle5))
+                                                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 25, Short.MAX_VALUE))
+                                                        .addComponent(searchNameUserInput, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                                .addComponent(newUserTableScrollPane, javax.swing.GroupLayout.PREFERRED_SIZE, 1100, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                                .addGap(0, 0, 251))))
+        );
+        newUserMainPanelLayout.setVerticalGroup(
+                newUserMainPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGroup(newUserMainPanelLayout.createSequentialGroup()
+                                .addComponent(newUserTitle)
+                                .addGap(40, 40, 40)
+                                .addGroup(newUserMainPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                        .addGroup(newUserMainPanelLayout.createSequentialGroup()
+                                                .addComponent(newUserTitle3)
+                                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                                .addGroup(newUserMainPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                                        .addComponent(startDateUserInput, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                                        .addComponent(startHourUserInput, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                                        .addComponent(startMinUserInput, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                                        .addComponent(startSecUserInput, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                                        .addComponent(newUserTitle6, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                                        .addComponent(newUserTitle7, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                                .addComponent(newUserTitle4)
+                                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                                .addGroup(newUserMainPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                                        .addComponent(endDateUserInput, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                                        .addComponent(endHourUserInput, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                                        .addComponent(endMinUserInput, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                                        .addComponent(endSecUserInput, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                                        .addComponent(newUserTitle8, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                                        .addComponent(newUserTitle9, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                                .addGap(18, 18, 18)
+                                                .addGroup(newUserMainPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                                        .addComponent(searchDateUserButton, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                                        .addComponent(resetUserButton, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                                .addGap(29, 29, 29)
+                                                .addComponent(newUserTitle5)
+                                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                                .addComponent(searchNameUserInput, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                                .addGap(18, 18, 18)
+                                                .addGroup(newUserMainPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                                        .addComponent(searchNewUserButton, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                                        .addComponent(resetUserButton1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                                        .addComponent(newUserTableScrollPane, javax.swing.GroupLayout.PREFERRED_SIZE, 150, Short.MAX_VALUE))
+                                .addGap(70, 70, 70))
+        );
+
+        newUserMonthlyMainPanel.setPreferredSize(new java.awt.Dimension(2276, 500));
+
+        chartNewUserTitle.setFont(new java.awt.Font("Arial", 1, 18)); // NOI18N
+        chartNewUserTitle.setForeground(new java.awt.Color(23, 70, 162));
+        chartNewUserTitle.setText("CHART OF MONTHLY NEW REGISTERED USERS");
+
+        yearUserTitle.setFont(new java.awt.Font("Arial", 1, 14)); // NOI18N
+        yearUserTitle.setText("Year");
+
+        searchYearDropDown.setBackground(new java.awt.Color(255, 255, 254));
+        searchYearDropDown.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
+        searchYearDropDown.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "2017", "2018", "2019", "2020", "2021", "2022", "2023", "2024" }));
+        searchYearDropDown.setToolTipText("");
+        searchYearDropDown.setFocusable(false);
+        searchYearDropDown.setPreferredSize(new java.awt.Dimension(88, 35));
+
+        searchYearUserButton.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
+        searchYearUserButton.setText("Apply");
+        searchYearUserButton.setFocusable(false);
+        searchYearUserButton.setMargin(new java.awt.Insets(2, 5, 3, 5));
+        searchYearUserButton.setPreferredSize(new java.awt.Dimension(57, 35));
+        searchYearUserButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                searchYearButtonActionPerformed(evt);
+            }
+        });
+
+        newUserMonthlyChartPanel.setBackground(new java.awt.Color(0, 0, 0));
+        newUserMonthlyChartPanel.setMaximumSize(new java.awt.Dimension(1000, 590));
+        newUserMonthlyChartPanel.setPreferredSize(new java.awt.Dimension(525, 590));
+        newUserMonthlyChartPanel.setLayout(new java.awt.BorderLayout());
+
+        resetUserButton2.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
+        resetUserButton2.setText("Reset");
+        resetUserButton2.setFocusable(false);
+        resetUserButton2.setMargin(new java.awt.Insets(2, 5, 3, 5));
+        resetUserButton2.setPreferredSize(new java.awt.Dimension(57, 35));
+        resetUserButton2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                try {
+                    resetButton3ActionPerformed(evt);
+                } catch (IOException | ClassNotFoundException e) {
+                    throw new RuntimeException(e);
+                }
+            }
+        });
+
+        javax.swing.GroupLayout newUserMonthlyMainPanelLayout = new javax.swing.GroupLayout(newUserMonthlyMainPanel);
+        newUserMonthlyMainPanel.setLayout(newUserMonthlyMainPanelLayout);
+        newUserMonthlyMainPanelLayout.setHorizontalGroup(
+                newUserMonthlyMainPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGroup(newUserMonthlyMainPanelLayout.createSequentialGroup()
+                                .addGap(70, 70, 70)
+                                .addGroup(newUserMonthlyMainPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                        .addGroup(newUserMonthlyMainPanelLayout.createSequentialGroup()
+                                                .addComponent(chartNewUserTitle)
+                                                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                                        .addGroup(newUserMonthlyMainPanelLayout.createSequentialGroup()
+                                                .addGroup(newUserMonthlyMainPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                                        .addGroup(newUserMonthlyMainPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                                                .addGroup(newUserMonthlyMainPanelLayout.createSequentialGroup()
+                                                                        .addComponent(searchYearUserButton, javax.swing.GroupLayout.PREFERRED_SIZE, 75, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                                                        .addComponent(resetUserButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 70, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                                                .addComponent(searchYearDropDown, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                                                        .addComponent(yearUserTitle))
+                                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 194, Short.MAX_VALUE)
+                                                .addComponent(newUserMonthlyChartPanel, javax.swing.GroupLayout.PREFERRED_SIZE, 768, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                                .addGap(251, 251, 251))))
+        );
+        newUserMonthlyMainPanelLayout.setVerticalGroup(
+                newUserMonthlyMainPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGroup(newUserMonthlyMainPanelLayout.createSequentialGroup()
+                                .addContainerGap()
+                                .addComponent(chartNewUserTitle)
+                                .addGap(37, 37, 37)
+                                .addGroup(newUserMonthlyMainPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                        .addGroup(newUserMonthlyMainPanelLayout.createSequentialGroup()
+                                                .addComponent(yearUserTitle)
+                                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                                .addComponent(searchYearDropDown, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                                .addGroup(newUserMonthlyMainPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                                        .addComponent(searchYearUserButton, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                                        .addComponent(resetUserButton2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                                        .addComponent(newUserMonthlyChartPanel, javax.swing.GroupLayout.PREFERRED_SIZE, 395, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addContainerGap(954, Short.MAX_VALUE))
+        );
+
+        loginHistoryScrollPanel.setBorder(null);
+        loginHistoryScrollPanel.setHorizontalScrollBarPolicy(javax.swing.ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
+        loginHistoryScrollPanel.setMaximumSize(new java.awt.Dimension(1440, 32767));
+        loginHistoryScrollPanel.setPreferredSize(new java.awt.Dimension(1440, 4000));
+
+        loginHistoryPanel.setFocusable(false);
+        loginHistoryPanel.setMaximumSize(new java.awt.Dimension(1440, 4000));
+        loginHistoryPanel.setPreferredSize(new java.awt.Dimension(1440, 1600));
+        loginHistoryPanel.setRequestFocusEnabled(false);
+        loginHistoryPanel.setLayout(new javax.swing.BoxLayout(loginHistoryPanel, javax.swing.BoxLayout.Y_AXIS));
+
+        loginHistoryPanel.add(loginHistoryTableMainPanel);
+        loginHistoryPanel.add(newUserMainPanel);
+        loginHistoryPanel.add(newUserMonthlyMainPanel);
+
+        loginHistoryScrollPanel.setViewportView(loginHistoryPanel);
+        loginHistoryMainPanel.add(loginHistoryScrollPanel, java.awt.BorderLayout.CENTER);
         getContentPane().add(loginHistoryMainPanel, java.awt.BorderLayout.CENTER);
 
         // DATA MANAGEMENT
@@ -2067,6 +2452,11 @@ public class AdminApp extends javax.swing.JFrame {
         headerPreferredSize.height = 30;
         loginHistoryTable.getTableHeader().setPreferredSize(headerPreferredSize);
 
+        newUserTable.getTableHeader().setDefaultRenderer(centerHeaderRenderer);
+        headerPreferredSize = newUserTable.getTableHeader().getPreferredSize();
+        headerPreferredSize.height = 30;
+        newUserTable.getTableHeader().setPreferredSize(headerPreferredSize);
+
         // chỉnh center row
         DefaultTableCellRenderer centerDataRenderer = new DefaultTableCellRenderer();
         centerDataRenderer.setHorizontalAlignment(SwingConstants.CENTER);
@@ -2088,6 +2478,9 @@ public class AdminApp extends javax.swing.JFrame {
         friendTable.setDefaultRenderer(Object.class, centerDataRenderer);
         friendTable.setDefaultRenderer(Integer.class, centerDataRenderer);
 
+        newUserTable.setDefaultRenderer(Object.class, centerDataRenderer);
+        newUserTable.setDefaultRenderer(Integer.class, centerDataRenderer);
+
         // chỉnh selection color
         groupTable.setSelectionForeground(Color.WHITE);
         groupTable.setSelectionBackground(Color.LIGHT_GRAY);
@@ -2100,6 +2493,9 @@ public class AdminApp extends javax.swing.JFrame {
         passRequestTable.setSelectionBackground(Color.LIGHT_GRAY);
         friendTable.setSelectionForeground(Color.WHITE);
         friendTable.setSelectionBackground(Color.LIGHT_GRAY);
+
+        newUserTable.setSelectionForeground(Color.WHITE);
+        newUserTable.setSelectionBackground(Color.LIGHT_GRAY);
 
         // disable selection
         memberTable.setRowSelectionAllowed(false);
@@ -2134,6 +2530,10 @@ public class AdminApp extends javax.swing.JFrame {
         friendTable.setColumnSelectionAllowed(false);
         friendTable.setIntercellSpacing(new Dimension(0, 0));
 
+        newUserTable.setRowSelectionAllowed(false);
+        newUserTable.setColumnSelectionAllowed(false);
+        newUserTable.setIntercellSpacing(new Dimension(0, 0));
+
         //user + login
         customButton(searchUserButton);
         customButton(viewAllUserButton);
@@ -2144,6 +2544,12 @@ public class AdminApp extends javax.swing.JFrame {
         customButton(updatePasswordButton);
         customButton(searchFriendButton);
         customButton(resetButton);
+        customButton(searchDateUserButton);
+        customButton(resetUserButton);
+        customButton(searchNewUserButton);
+        customButton(resetUserButton1);
+        customButton(searchYearUserButton);
+        customButton(resetUserButton2);
 
         // group + report + active
         customButton(viewAllGroupButton);
@@ -2419,6 +2825,73 @@ public class AdminApp extends javax.swing.JFrame {
         ((DefaultTableCellRenderer)loginHistoryTable.getDefaultRenderer(String.class)).setHorizontalAlignment(SwingConstants.CENTER);
         ((DefaultTableCellRenderer)loginHistoryTable.getDefaultRenderer(Integer.class)).setHorizontalAlignment(SwingConstants.CENTER);
         loginHistoryTable.setPreferredScrollableViewportSize(loginHistoryTable.getPreferredSize());
+
+        startDateUserInput.setText("(dd-mm-yyyy)");
+        endDateUserInput.setText("(dd-mm-yyyy)");
+
+        startHourUserInput.setText("00");
+        startMinUserInput.setText("00");
+        startSecUserInput.setText("00");
+
+        endHourUserInput.setText("00");
+        endMinUserInput.setText("00");
+        endSecUserInput.setText("00");
+
+        searchNameUserInput.setText("");
+
+        DefaultTableModel model1 = (DefaultTableModel) newUserTable.getModel();
+        model1.setRowCount(0);
+
+        Object[][] data1 = GetAllUser.request(socket);
+        for (Object[] row : data1) {
+            for (Object element : row) {
+                System.out.print(element + " ");
+            }
+            System.out.println();
+        }
+        for (Object[] row : data1) {
+            model1.addRow(row);
+        }
+
+        // sort
+        TableRowSorter<DefaultTableModel> sorter1 = new TableRowSorter<>(model1);
+        newUserTable.setRowSorter(sorter1);
+
+        Comparator<Integer> integerComparator = Comparator.comparing(Integer::valueOf);
+        sorter1.setComparator(0, integerComparator);
+
+        sorter1.setSortKeys(
+                java.util.Collections.singletonList(
+                        new javax.swing.RowSorter.SortKey(0, SortOrder.ASCENDING)
+                )
+        );
+
+        sorter1.setSortKeys(
+                java.util.Collections.singletonList(
+                        new javax.swing.RowSorter.SortKey(2, SortOrder.ASCENDING)
+                )
+        );
+
+        sorter1.setSortKeys(
+                java.util.Collections.singletonList(
+                        new javax.swing.RowSorter.SortKey(7, SortOrder.ASCENDING)
+                )
+        );
+
+        sorter1 = new TableRowSorter<DefaultTableModel>(model1) {
+            @Override
+            public boolean isSortable(int column) {
+                return (column == 0) || (column == 2) || (column == 7);
+            }
+        };
+        newUserTable.setRowSorter(sorter1);
+
+        ((DefaultTableCellRenderer)newUserTable.getDefaultRenderer(String.class)).setHorizontalAlignment(SwingConstants.CENTER);
+        ((DefaultTableCellRenderer)newUserTable.getDefaultRenderer(Integer.class)).setHorizontalAlignment(SwingConstants.CENTER);
+        newUserTable.setPreferredScrollableViewportSize(newUserTable.getPreferredSize());
+
+        searchYearDropDown.setSelectedItem("2023");
+        createNewUsersChart("2023");
 
         reportMainPanel.setVisible(false);
         getContentPane().remove(reportMainPanel);
@@ -2991,6 +3464,44 @@ public class AdminApp extends javax.swing.JFrame {
         searchFriendDropDown.setSelectedItem("Equal to");
     }
 
+    public void createNewUsersChart(String year) throws IOException, ClassNotFoundException {
+        String[] monthNames = {
+                "Jan", "Feb", "Mar", "Apr", "May", "Jun",
+                "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"
+        };
+        DefaultCategoryDataset dataset = new DefaultCategoryDataset();
+
+        int[] data = GetMonthlyNewUser.request(year, socket);
+        for (int i = 0; i < 12; i++){
+            System.out.println(data[i]);
+            dataset.addValue(data[i], "New users", monthNames[i]);
+        }
+
+        JFreeChart chart = ChartFactory.createBarChart(
+                "Monthly new users",
+                "Month",
+                "Numbers of active users",
+                dataset,
+                PlotOrientation.VERTICAL,
+                true,
+                true,
+                false
+        );
+
+        ChartPanel chartPanel = new ChartPanel(chart);
+        chartPanel.setPreferredSize(new Dimension(200, 400));
+
+        CategoryPlot plot = (CategoryPlot) chart.getPlot();
+
+        BarRenderer renderer = (BarRenderer) plot.getRenderer();
+
+        for (int i = 0; i < 12; i++) {
+            renderer.setSeriesPaint(i, Color.blue); // Set the color to blue
+        }
+
+        newUserMonthlyChartPanel.add(chartPanel, BorderLayout.NORTH);
+    }
+
     private void reportTableMouseClicked(java.awt.event.MouseEvent evt) {
         int index = reportTable.getSelectedRow();
         TableModel model = reportTable.getModel();
@@ -3505,5 +4016,39 @@ public class AdminApp extends javax.swing.JFrame {
     private javax.swing.JScrollPane friendTableScrollPane;
     private javax.swing.JLabel userTitle19;
     private javax.swing.JTextField searchDirectFriendInput;
+    private javax.swing.JPanel loginHistoryTableMainPanel;
+    private javax.swing.JScrollPane loginHistoryScrollPanel;
+    private javax.swing.JPanel loginHistoryPanel;
+    private javax.swing.JPanel newUserMainPanel;
+    private javax.swing.JPanel newUserMonthlyMainPanel;
+    private javax.swing.JLabel newUserTitle;
+    private javax.swing.JTextField startDateUserInput;
+    private javax.swing.JTextField startHourUserInput;
+    private javax.swing.JTextField startMinUserInput;
+    private javax.swing.JTextField startSecUserInput;
+    private javax.swing.JLabel newUserTitle7;
+    private javax.swing.JLabel newUserTitle8;
+    private javax.swing.JTextField endDateUserInput;
+    private javax.swing.JButton searchDateUserButton;
+    private javax.swing.JButton resetUserButton;
+    private javax.swing.JTextField searchNameUserInput;
+    private javax.swing.JScrollPane newUserTableScrollPane;
+    private javax.swing.JTable newUserTable;
+    private javax.swing.JButton searchNewUserButton;
+    private javax.swing.JButton resetUserButton1;
+    private javax.swing.JLabel newUserTitle3;
+    private javax.swing.JLabel newUserTitle4;
+    private javax.swing.JLabel newUserTitle5;
+    private javax.swing.JLabel newUserTitle6;
+    private javax.swing.JTextField endHourUserInput;
+    private javax.swing.JTextField endMinUserInput;
+    private javax.swing.JTextField endSecUserInput;
+    private javax.swing.JLabel newUserTitle9;
+    private javax.swing.JLabel chartNewUserTitle;
+    private javax.swing.JLabel yearUserTitle;
+    private javax.swing.JComboBox<String> searchYearDropDown;
+    private javax.swing.JButton searchYearUserButton;
+    private javax.swing.JPanel newUserMonthlyChartPanel;
+    private javax.swing.JButton resetUserButton2;
     // End of variables declaration
 }

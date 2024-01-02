@@ -1310,4 +1310,38 @@ public class AdminDatabase {
         }
         return null;
     }
+
+    int[] getMonthlyNewUser(String year){
+        try{
+            String sql = "SELECT MONTH(u.creation_time) as month, COUNT(DISTINCT u.username) as user_count " +
+                    "FROM USER u " +
+                    "WHERE YEAR(u.creation_time) = ? " +
+                    "GROUP BY MONTH(u.creation_time) ORDER BY month ;";
+
+            PreparedStatement stmt;
+            stmt = connection.prepareStatement(sql);
+            stmt.setString(1, year);
+
+            ResultSet rs = stmt.executeQuery();
+
+            int[] user_count_month = new int[12];
+            for (int i = 0; i < 12; i++)
+                user_count_month[i] = 0;
+            while(rs.next()){
+                int month = rs.getInt("month");
+                int user_count = rs.getInt("user_count");
+                user_count_month[month-1] = user_count;
+            }
+            rs.close();
+            stmt.close();
+
+            return user_count_month;
+        }catch(SQLException se){
+            //Handle errors for JDBC
+            se.printStackTrace();
+        }catch(Exception e){ //Handle errors for Class.forName
+            e.printStackTrace();
+        }
+        return null;
+    }
 }
