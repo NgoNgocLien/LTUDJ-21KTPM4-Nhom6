@@ -544,6 +544,30 @@ public class AdminHandler implements Runnable {
                         break;
                     }
 
+                    case "searchUserFriend":{
+                        System.out.println("Admin search user friend");
+
+                        String directFriendCount = msgArr[1];
+                        String fullname = msgArr[2];
+                        String selectedString = msgArr[3];
+                        System.out.println(directFriendCount + " & " + fullname + " & " + selectedString);
+                        Object[][] data1 = dbcon.searchUserFriend(directFriendCount, fullname, selectedString);
+                        objectOutputStream.reset();
+                        objectOutputStream.writeObject(data1);
+                        objectOutputStream.flush();
+
+                        for (Object[] row : data1) {
+                            for (Object element : row) {
+                                System.out.print(element + " ");
+                            }
+                            System.out.println();
+                        }
+
+                        System.out.println("Data sent to client.");
+
+                        break;
+                    }
+
                 }
             }
         } catch (IOException | ClassNotFoundException e) {

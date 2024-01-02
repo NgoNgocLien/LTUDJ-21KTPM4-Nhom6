@@ -1209,4 +1209,105 @@ public class AdminDatabase {
         }
         return null;
     }
+
+    Object[][] searchUserFriend(String text1, String text2, String text3){
+        try{
+            PreparedStatement stmt = null;
+            String sql = "WITH DirectFriends AS (SELECT U.username, CASE WHEN U.username = F1.username1 THEN F1.username2 ELSE F1.username1 END AS friend_username " +
+                    "FROM USER U LEFT JOIN FRIEND F1 ON (U.username = F1.username1 OR U.username = F1.username2) AND F1.accepted = 1 WHERE U.is_locked != 2) " +
+                    "SELECT U.username, U.fullname, U.creation_time, COUNT(DISTINCT DF.friend_username) AS direct_friends_count, " +
+                    "COUNT(DISTINCT FF.friend_of_friend_username) AS friends_of_friends_count FROM USER U LEFT JOIN DirectFriends DF ON U.username = DF.username " +
+                    "LEFT JOIN ((SELECT U.username AS user_username, F2.username2 AS friend_of_friend_username FROM USER U " +
+                    "LEFT JOIN DirectFriends DF ON U.username = DF.username " +
+                    "LEFT JOIN FRIEND F2 ON DF.friend_username = F2.username1 AND F2.accepted = 1 " +
+                    "WHERE U.is_locked != 2 GROUP BY U.username, F2.username2) " +
+                    "UNION " +
+                    "(SELECT U.username AS user_username, F3.username1 AS friend_of_friend_username FROM USER U LEFT JOIN DirectFriends DF ON U.username = DF.username " +
+                    "LEFT JOIN FRIEND F3 ON DF.friend_username = F3.username2 AND F3.accepted = 1 WHERE U.is_locked != 2 GROUP BY U.username, F3.username1) " +
+                    ") FF ON U.username = FF.user_username WHERE U.is_locked != 2 ";
+
+            if (text2.isEmpty()) {
+                System.out.println("search by direct friend count");
+                int friend_count = Integer.parseInt(text1);
+                // search by direct friend count
+                if (Objects.equals(text3, "Equal to")) {
+                    sql += "GROUP BY U.username, U.fullname, U.creation_time HAVING direct_friends_count = ?";
+                    stmt = connection.prepareStatement(sql);
+                    stmt.setInt(1, friend_count);
+                } else if (Objects.equals(text3, "Greater than")) {
+                    sql += "GROUP BY U.username, U.fullname, U.creation_time HAVING direct_friends_count > ?";
+                    stmt = connection.prepareStatement(sql);
+                    stmt.setInt(1, friend_count);
+                } else {
+                    sql += "GROUP BY U.username, U.fullname, U.creation_time HAVING direct_friends_count < ?";
+                    stmt = connection.prepareStatement(sql);
+                    stmt.setInt(1, friend_count);
+                }
+            }
+            else{
+                if(text1.isEmpty()){
+                    // search by fullname
+                    System.out.println("search by fullname");
+                    sql += "AND U.fullname LIKE ? GROUP BY U.username, U.fullname, U.creation_time";
+                    stmt = connection.prepareStatement(sql);
+                    stmt.setString(1, "%" + text2 + "%");
+                }
+                else {
+                    // search by fullname + direct friend count
+                    int friend_count = Integer.parseInt(text1);
+                    System.out.println("search by username + direct friend count");
+                    sql += "AND U.fullname LIKE ? ";
+                    if (Objects.equals(text3, "Equal to")) {
+                        sql += "GROUP BY U.username, U.fullname, U.creation_time HAVING direct_friends_count = ?";
+                        stmt = connection.prepareStatement(sql);
+                        stmt.setString(1, "%" + text2 + "%");
+                        stmt.setInt(2, friend_count);
+                    } else if (Objects.equals(text3, "Greater than")) {
+                        sql += "GROUP BY U.username, U.fullname, U.creation_time HAVING direct_friends_count > ?";
+                        stmt = connection.prepareStatement(sql);
+                        stmt.setString(1, "%" + text2 + "%");
+                        stmt.setInt(2, friend_count);
+                    } else {
+                        sql += "GROUP BY U.username, U.fullname, U.creation_time HAVING direct_friends_count < ?";
+                        stmt = connection.prepareStatement(sql);
+                        stmt.setString(1, "%" + text2 + "%");
+                        stmt.setInt(2, friend_count);
+                    }
+                }
+            }
+
+            ResultSet rs = stmt.executeQuery();
+
+            List<Object[]> rows = new ArrayList<>();
+            int i = 1;
+            while(rs.next()){
+                String username = rs.getString("U.username");
+                String fullname = rs.getString("U.fullname");
+                Date registration_time = rs.getDate("U.creation_time");
+                int direct_friend_count = rs.getInt("direct_friends_count");
+                int friends_of_friends_count = rs.getInt("friends_of_friends_count");
+                Timestamp timestamp = new Timestamp(registration_time.getTime());
+
+                LocalDateTime localDateTime = timestamp.toLocalDateTime();
+                DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-MM-yyyy HH:mm:ss");
+                String format_time = localDateTime.format(formatter);
+
+                Object[] row = {i, username,  fullname, format_time, direct_friend_count, friends_of_friends_count};
+                rows.add(row);
+                i++;
+            }
+            rs.close();
+            stmt.close();
+
+            Object[][] data = new Object[rows.size()][];
+            rows.toArray(data);
+
+            return data;
+        }catch(SQLException se){
+            se.printStackTrace();
+        }catch(Exception e){
+            e.printStackTrace();
+        }
+        return null;
+    }
 }

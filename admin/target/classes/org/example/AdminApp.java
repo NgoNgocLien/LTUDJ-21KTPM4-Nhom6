@@ -1197,15 +1197,15 @@ public class AdminApp extends javax.swing.JFrame {
         resetButton.setFocusable(false);
         resetButton.setMargin(new java.awt.Insets(2, 5, 3, 5));
         resetButton.setPreferredSize(new java.awt.Dimension(60, 35));
-//        resetButton.addActionListener(new java.awt.event.ActionListener() {
-//            public void actionPerformed(java.awt.event.ActionEvent evt) {
-//                try {
-//                    resetButtonActionPerformed(evt);
-//                } catch (IOException | ClassNotFoundException e) {
-//                    throw new RuntimeException(e);
-//                }
-//            }
-//        });
+        resetButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                try {
+                    resetButtonActionPerformed(evt);
+                } catch (IOException | ClassNotFoundException e) {
+                    throw new RuntimeException(e);
+                }
+            }
+        });
 
         userTitle.setFont(new java.awt.Font("Arial", 1, 18)); // NOI18N
         userTitle.setForeground(new java.awt.Color(23, 70, 162));
@@ -2954,9 +2954,10 @@ public class AdminApp extends javax.swing.JFrame {
     private void searchFriendButtonActionPerformed(java.awt.event.ActionEvent evt) throws IOException, ClassNotFoundException {
         String fullname = searchFriendFullNameInput.getText();
         Object selectedValue = searchFriendDropDown.getSelectedItem();
+        String directFriendCount = searchDirectFriendInput.getText();
 
-        if ((fullname.isEmpty()) && selectedValue == null) {
-            JOptionPane.showMessageDialog(null, "Empty fullname and active status", "Error", JOptionPane.ERROR_MESSAGE);
+        if ((fullname.isEmpty()) && selectedValue == null && (directFriendCount.isEmpty())) {
+            JOptionPane.showMessageDialog(null, "Empty fullname and direct friend count", "Error", JOptionPane.ERROR_MESSAGE);
         }
         else {
             DefaultTableModel model = (DefaultTableModel) friendTable.getModel();
@@ -2965,15 +2966,29 @@ public class AdminApp extends javax.swing.JFrame {
             String selectedString = "";
             selectedString = selectedValue.toString();
 
-//            Object[][] data = SearchUser.request(username, fullname, selectedString, socket);
-//            if (data.length == 0) {
-//                JOptionPane.showMessageDialog(null, "No user found", "Information", JOptionPane.INFORMATION_MESSAGE);
-//            } else {
-//                for (Object[] row : data) {
-//                    model.addRow(row);
-//                }
-//            }
+            Object[][] data = SearchUserFriend.request(directFriendCount, fullname, selectedString, socket);
+            if (data.length == 0) {
+                JOptionPane.showMessageDialog(null, "No user found", "Information", JOptionPane.INFORMATION_MESSAGE);
+            } else {
+                for (Object[] row : data) {
+                    model.addRow(row);
+                }
+            }
         }
+    }
+
+    private void resetButtonActionPerformed(java.awt.event.ActionEvent evt) throws IOException, ClassNotFoundException {
+        DefaultTableModel model = (DefaultTableModel) friendTable.getModel();
+        model.setRowCount(0);
+
+        Object[][] data = GetAllUserFriend.request(socket);
+        for (Object[] row : data) {
+            model.addRow(row);
+        }
+
+        searchDirectFriendInput.setText("");
+        searchFriendFullNameInput.setText("");
+        searchFriendDropDown.setSelectedItem("Equal to");
     }
 
     private void reportTableMouseClicked(java.awt.event.MouseEvent evt) {
