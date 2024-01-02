@@ -172,6 +172,7 @@ public class AdminApp extends javax.swing.JFrame {
         friendTable = new javax.swing.JTable();
         friendTableScrollPane = new javax.swing.JScrollPane();
         userTitle19 = new javax.swing.JLabel();
+        searchDirectFriendInput = new javax.swing.JTextField();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -1122,22 +1123,25 @@ public class AdminApp extends javax.swing.JFrame {
         searchFriendDropDown.setFocusable(false);
         searchFriendDropDown.setPreferredSize(new java.awt.Dimension(120, 35));
 
+        searchDirectFriendInput.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
+        searchDirectFriendInput.setPreferredSize(new java.awt.Dimension(135, 35));
+
         searchFriendButton.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
         searchFriendButton.setText("Search");
         searchFriendButton.setFocusable(false);
         searchFriendButton.setMargin(new java.awt.Insets(2, 5, 3, 5));
         searchFriendButton.setPreferredSize(new java.awt.Dimension(60, 35));
-//        searchFriendButton.addActionListener(new java.awt.event.ActionListener() {
-//            public void actionPerformed(java.awt.event.ActionEvent evt) {
-//                try {
-//                    searchFriendButtonActionPerformed(evt);
-//                } catch (IOException e) {
-//                    throw new RuntimeException(e);
-//                } catch (ClassNotFoundException e) {
-//                    throw new RuntimeException(e);
-//                }
-//            }
-//        });
+        searchFriendButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                try {
+                    searchFriendButtonActionPerformed(evt);
+                } catch (IOException e) {
+                    throw new RuntimeException(e);
+                } catch (ClassNotFoundException e) {
+                    throw new RuntimeException(e);
+                }
+            }
+        });
 
         friendTable.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
         friendTable.setModel(new javax.swing.table.DefaultTableModel(
@@ -1238,8 +1242,10 @@ public class AdminApp extends javax.swing.JFrame {
                                                         .addGap(30, 30, 30)
                                                         .addComponent(searchFriendDropDown, javax.swing.GroupLayout.PREFERRED_SIZE, 140, javax.swing.GroupLayout.PREFERRED_SIZE)
                                                         .addGap(30, 30, 30)
-                                                        .addComponent(searchFriendButton, javax.swing.GroupLayout.PREFERRED_SIZE, 75, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                                        .addComponent(searchDirectFriendInput, javax.swing.GroupLayout.PREFERRED_SIZE, 75, javax.swing.GroupLayout.PREFERRED_SIZE)
                                                         .addGap(30, 30, 30)
+                                                        .addComponent(searchFriendButton, javax.swing.GroupLayout.PREFERRED_SIZE, 75, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                                        .addGap(285, 285, 285)
                                                         .addComponent(resetButton, javax.swing.GroupLayout.PREFERRED_SIZE, 75, javax.swing.GroupLayout.PREFERRED_SIZE))
                                                 .addGroup(javax.swing.GroupLayout.Alignment.LEADING, userDetailPanelLayout.createSequentialGroup()
                                                         .addComponent(userTitle17)
@@ -1278,7 +1284,9 @@ public class AdminApp extends javax.swing.JFrame {
                                         .addComponent(userTitle18))
                                 .addGap(5, 5, 5)
                                 .addGroup(userDetailPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE).addComponent(searchFriendFullNameInput, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addComponent(searchFriendFullNameInput, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                                         .addComponent(searchFriendDropDown, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addComponent(searchDirectFriendInput, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                                         .addComponent(searchFriendButton, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                                         .addComponent(resetButton, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                                 .addGap(18, 18, 18)
@@ -2943,6 +2951,31 @@ public class AdminApp extends javax.swing.JFrame {
         }
     }
 
+    private void searchFriendButtonActionPerformed(java.awt.event.ActionEvent evt) throws IOException, ClassNotFoundException {
+        String fullname = searchFriendFullNameInput.getText();
+        Object selectedValue = searchFriendDropDown.getSelectedItem();
+
+        if ((fullname.isEmpty()) && selectedValue == null) {
+            JOptionPane.showMessageDialog(null, "Empty fullname and active status", "Error", JOptionPane.ERROR_MESSAGE);
+        }
+        else {
+            DefaultTableModel model = (DefaultTableModel) friendTable.getModel();
+            model.setRowCount(0);
+
+            String selectedString = "";
+            selectedString = selectedValue.toString();
+
+//            Object[][] data = SearchUser.request(username, fullname, selectedString, socket);
+//            if (data.length == 0) {
+//                JOptionPane.showMessageDialog(null, "No user found", "Information", JOptionPane.INFORMATION_MESSAGE);
+//            } else {
+//                for (Object[] row : data) {
+//                    model.addRow(row);
+//                }
+//            }
+        }
+    }
+
     private void reportTableMouseClicked(java.awt.event.MouseEvent evt) {
         int index = reportTable.getSelectedRow();
         TableModel model = reportTable.getModel();
@@ -3456,5 +3489,6 @@ public class AdminApp extends javax.swing.JFrame {
     private javax.swing.JTable friendTable;
     private javax.swing.JScrollPane friendTableScrollPane;
     private javax.swing.JLabel userTitle19;
+    private javax.swing.JTextField searchDirectFriendInput;
     // End of variables declaration
 }
