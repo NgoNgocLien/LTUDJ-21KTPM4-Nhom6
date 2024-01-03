@@ -10,29 +10,30 @@ import java.util.ArrayList;
 
 public class DatabaseHandler {
     private final String JDBC_DRIVER = "com.mysql.cj.jdbc.Driver";
-    private final String DB_URL = "jdbc:mysql://localhost:3306/db_chat";
+    private final String DB_URL = "jdbc:mysql://localhost:3306/db_chat?allowPublicKeyRetrieval=true&useSSL=false";
     private final String USER = "root";
-    private final String PASS = "1234";
+    private final String PASS = "admin";
     private Connection conn = null;
 
     public DatabaseHandler() {
         try {
             Class.forName(JDBC_DRIVER); // Register JDBC driver
             System.out.println("Connecting to database...");
-            conn = DriverManager.getConnection(DB_URL,USER,PASS); // Open a connection
+            conn = DriverManager.getConnection(DB_URL, USER, PASS); // Open a connection
         } catch (SQLException se) {
             se.printStackTrace();
         } catch (Exception e) {
             e.printStackTrace();
         }
     }
+
     public void closeConnection() throws SQLException {
         System.out.println("Database closed.");
         if (conn != null) conn.close();
     }
 
-    public Profile getProfile(String username) throws SQLException {
-        String sql = "SELECT username, fullname, address, birthdate, gender, email, creation_time FROM USER WHERE username = ?";
+    public Profile getProfilebyUsername(String username) throws SQLException {
+        String sql = "SELECT username, fullname, address, birthdate, gender, email, creation_time, password FROM USER WHERE username = ?";
         PreparedStatement stmt = conn.prepareStatement(sql);
         stmt.setString(1, username);
         ResultSet rs = stmt.executeQuery();
@@ -44,9 +45,45 @@ public class DatabaseHandler {
             int gender = rs.getInt("gender");
             String email = rs.getString("email");
             LocalDate dateJoined = rs.getDate("creation_time").toLocalDate();
-            profile = new Profile(dateJoined, fullname, username, gender, birthdate, email, address);
+            String password = rs.getString("password");
+            profile = new Profile(dateJoined, fullname, username, gender, birthdate, email, address, password);
         }
         return profile;
+    }
+
+    public Profile getProfilebyEmail(String email) throws SQLException {
+        String sql = "SELECT username, fullname, address, birthdate, gender, email, creation_time, password FROM USER WHERE email = ?";
+        PreparedStatement stmt = conn.prepareStatement(sql);
+        stmt.setString(1, email);
+        ResultSet rs = stmt.executeQuery();
+        Profile profile = null;
+        if (rs.next()) {
+            String fullname = rs.getString("fullname");
+            String address = rs.getString("address");
+            LocalDate birthdate = rs.getDate("birthdate").toLocalDate();
+            int gender = rs.getInt("gender");
+            String username = rs.getString("username");
+            LocalDate dateJoined = rs.getDate("creation_time").toLocalDate();
+            String password = rs.getString("password");
+            profile = new Profile(dateJoined, fullname, username, gender, birthdate, email, address, password);
+        }
+        return profile;
+    }
+
+    public void saveRegisteredAccount(String username, String password, String fullname, String address, LocalDate birthdate, boolean gender, String email) throws SQLException {
+        String sql = "INSERT INTO user (username, password, fullname, address, birthdate, gender, email, creation_time, is_locked) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)";
+        PreparedStatement stmt = conn.prepareStatement(sql);
+        stmt.setString(1, username);
+        stmt.setString(2, password);
+        stmt.setString(3, fullname);
+        stmt.setString(4, address);
+        stmt.setDate(5, Date.valueOf(birthdate));
+        stmt.setInt(6, gender ? 1 : 0);
+        stmt.setString(7, email);
+        stmt.setDate(8, Date.valueOf(LocalDate.now()));
+        stmt.setBoolean(9, false);
+
+        stmt.executeUpdate();
     }
 
     public ArrayList<ChatInfo> getAllChats(String myUsername) throws SQLException {
@@ -128,7 +165,7 @@ public class DatabaseHandler {
             String sender = rs.getString("sender");
             String msg;
             boolean isMyMessage = sender.equals(myUsername);
-            if(isMyMessage) msg = "You: " + message;
+            if (isMyMessage) msg = "You: " + message;
             else msg = sender + ": " + message;
             String toUser = rs.getString("to_user");
             int toGroup = rs.getObject("to_group") != null ? rs.getInt("to_group") : -1;
@@ -139,8 +176,7 @@ public class DatabaseHandler {
                 // get group quantity
                 int quantity = getGroupMemberQuantity(toGroup);
                 chats.add(new ChatInfo(chatName, toGroup, quantity, msg, !seen));
-            }
-            else {
+            } else {
                 boolean isOnline = getIsOnline(toUser);
                 if (isMyMessage)
                     chats.add(new ChatInfo(chatName, toUser, msg, isOnline, !seen));
@@ -152,6 +188,7 @@ public class DatabaseHandler {
         stmt.close();
         return chats;
     }
+
     public int getGroupMemberQuantity(int idGroup) throws SQLException {
         String sql = "SELECT COUNT(M.username) AS quantity " +
                 "FROM GROUP_MEMBER M  " +
@@ -164,18 +201,18 @@ public class DatabaseHandler {
             rs.close();
             stmt.close();
             return quantity;
-        }
-        else {
+        } else {
             rs.close();
             stmt.close();
             return -1;
         }
 
     }
+
     public boolean getIsOnline(String username) throws SQLException {
         String sql = "SELECT H.logout_time " +
-                    "FROM HISTORY_LOGIN H " +
-                    "WHERE H.username = ? AND H.logout_time IS NULL";
+                "FROM HISTORY_LOGIN H " +
+                "WHERE H.username = ? AND H.logout_time IS NULL";
         PreparedStatement stmt = conn.prepareStatement(sql);
         stmt.setString(1, username);
         ResultSet rs = stmt.executeQuery();
@@ -183,13 +220,13 @@ public class DatabaseHandler {
             rs.close();
             stmt.close();
             return true;
-        }
-        else {
+        } else {
             rs.close();
             stmt.close();
             return false;
         }
     }
+
     public ArrayList<ChatInfo> getAllFriends(String myUsername) throws SQLException {
         String sql = "WITH RankedLogin AS (" +
                 "SELECT " +
@@ -232,8 +269,7 @@ public class DatabaseHandler {
             Timestamp logoutTime = rs.getTimestamp("logout_time");
             if (logoutTime == null) {
                 friends.add(new ChatInfo(friendFullname, friendUsername, friendUsername, true, false));
-            }
-            else {
+            } else {
                 friends.add(new ChatInfo(friendFullname, friendUsername, friendUsername, false, false));
             }
         }
@@ -241,6 +277,7 @@ public class DatabaseHandler {
         stmt.close();
         return friends;
     }
+
     public ArrayList<ChatInfo> getAllBlocks(String myUsername) throws SQLException {
         String sql = "SELECT B.block, U.fullname " +
                 "FROM BLOCK B " +
@@ -259,6 +296,7 @@ public class DatabaseHandler {
         stmt.close();
         return blocks;
     }
+
     public ArrayList<ChatInfo> getAllRequests(String myUsername) throws SQLException {
         String sql = "SELECT U.username, U.fullname " +
                 "FROM FRIEND F " +
@@ -277,6 +315,7 @@ public class DatabaseHandler {
         stmt.close();
         return requests;
     }
+
     public ArrayList<ChatInfo> getAllGroups(String myUsername) throws SQLException {
         String sql = "SELECT G.group_name, G.id_group, COUNT(M.username) AS quantity " +
                 "FROM GROUP_MEMBER M " +
@@ -301,53 +340,54 @@ public class DatabaseHandler {
         stmt.close();
         return groups;
     }
+
     public ArrayList<ChatInfo> getAllSuggests(String myUsername) {
         String sql = "WITH Suggested AS ( " +
                 "SELECT U.username, U.fullname " +
                 "FROM USER U " +
                 "INNER JOIN FRIEND F ON F.username1 = U.username " +
                 "WHERE F.username1 != ? AND F.username2 IN  (SELECT U1.username " +
-                                                            "FROM USER U1 " +
-                                                            "INNER JOIN FRIEND F1 ON F1.username1 = U1.username " +
-                                                            "WHERE F1.username2 = ?  " +
-                                                            "UNION " +
-                                                            "SELECT U2.username " +
-                                                            "FROM USER U2 " +
-                                                            "INNER JOIN FRIEND F2 ON F2.username2 = U2.username " +
-                                                            "WHERE F2.username1 = ?) " +
+                "FROM USER U1 " +
+                "INNER JOIN FRIEND F1 ON F1.username1 = U1.username " +
+                "WHERE F1.username2 = ?  " +
+                "UNION " +
+                "SELECT U2.username " +
+                "FROM USER U2 " +
+                "INNER JOIN FRIEND F2 ON F2.username2 = U2.username " +
+                "WHERE F2.username1 = ?) " +
                 "UNION ALL " +
                 "SELECT U.username, U.fullname " +
                 "FROM USER U " +
                 "INNER JOIN FRIEND F ON F.username2 = U.username " +
                 "WHERE F.username2 != ? AND F.username1 IN  (SELECT U1.username " +
-                                                            "FROM USER U1 " +
-                                                            "INNER JOIN FRIEND F1 ON F1.username1 = U1.username " +
-                                                            "WHERE F1.username2 = ?  " +
-                                                            "UNION " +
-                                                            "SELECT U2.username " +
-                                                            "FROM USER U2 " +
-                                                            "INNER JOIN FRIEND F2 ON F2.username2 = U2.username " +
-                                                            "WHERE F2.username1 = ?) " +
+                "FROM USER U1 " +
+                "INNER JOIN FRIEND F1 ON F1.username1 = U1.username " +
+                "WHERE F1.username2 = ?  " +
+                "UNION " +
+                "SELECT U2.username " +
+                "FROM USER U2 " +
+                "INNER JOIN FRIEND F2 ON F2.username2 = U2.username " +
+                "WHERE F2.username1 = ?) " +
                 "UNION ALL " +
                 "SELECT U.username, U.fullname " +
                 "FROM USER U " +
                 "INNER JOIN GROUP_MEMBER M ON M.username = U.username " +
                 "WHERE U.username != ? AND M.id_group IN (SELECT M1.id_group FROM GROUP_MEMBER M1 WHERE M1.username = ?) " +
                 "AND U.username NOT IN  (SELECT U.username " +
-                                        "FROM USER U " +
-                                        "INNER JOIN FRIEND F ON F.username1 = U.username " +
-                                        "WHERE F.username2 = ? " +
-                                        "UNION " +
-                                        "SELECT U.username " +
-                                        "FROM USER U " +
-                                        "INNER JOIN FRIEND F ON F.username2 = U.username " +
-                                        "WHERE F.username1 = ?) " +
+                "FROM USER U " +
+                "INNER JOIN FRIEND F ON F.username1 = U.username " +
+                "WHERE F.username2 = ? " +
+                "UNION " +
+                "SELECT U.username " +
+                "FROM USER U " +
+                "INNER JOIN FRIEND F ON F.username2 = U.username " +
+                "WHERE F.username1 = ?) " +
                 ") " +
                 "SELECT S.username, S.fullname, COUNT(*) AS priority " +
                 "FROM Suggested S " +
                 "WHERE S.username NOT IN (SELECT B.block FROM BLOCK B WHERE B.username = ? " +
-                                        "UNION  " +
-                                        "SELECT B.username FROM BLOCK B WHERE B.block = ?) " +
+                "UNION  " +
+                "SELECT B.username FROM BLOCK B WHERE B.block = ?) " +
                 "GROUP BY username, fullname " +
                 "ORDER BY priority DESC ";
         PreparedStatement stmt = null;
@@ -383,10 +423,10 @@ public class DatabaseHandler {
     }
 
     public ArrayList<Message> getFriendMessages(String myUsername, String friendUsername) {
-        String sql ="SELECT M.id_message, M.sender, M.to_user, M.content, M.sent_time " +
-                    "FROM MESSAGE M " +
-                    "WHERE ((M.sender = ? AND M.to_user = ?) OR (M.sender = ? AND M.to_user = ?)) AND M.to_group IS NULL " +
-                    "ORDER BY M.sent_time";
+        String sql = "SELECT M.id_message, M.sender, M.to_user, M.content, M.sent_time " +
+                "FROM MESSAGE M " +
+                "WHERE ((M.sender = ? AND M.to_user = ?) OR (M.sender = ? AND M.to_user = ?)) AND M.to_group IS NULL " +
+                "ORDER BY M.sent_time";
         PreparedStatement stmt = null;
         try {
             stmt = conn.prepareStatement(sql);
@@ -417,15 +457,16 @@ public class DatabaseHandler {
         }
         return null;
     }
+
     public ArrayList<Message> getGroupMessages(String myUsername, int idGroup) {
         String sql = "WITH GroupMessage AS ( " +
-                    "SELECT M.sender, M.sent_time, M.content, M.id_message, " +
-                    "ROW_NUMBER() OVER (PARTITION BY M.sent_time) AS rnk " +
-                    "FROM MESSAGE M " +
-                    "WHERE M.to_group = ?) " +
-                    "SELECT sender, sent_time, content, id_message " +
-                    "FROM GroupMessage " +
-                    "WHERE rnk = 1";
+                "SELECT M.sender, M.sent_time, M.content, M.id_message, " +
+                "ROW_NUMBER() OVER (PARTITION BY M.sent_time) AS rnk " +
+                "FROM MESSAGE M " +
+                "WHERE M.to_group = ?) " +
+                "SELECT sender, sent_time, content, id_message " +
+                "FROM GroupMessage " +
+                "WHERE rnk = 1";
         PreparedStatement stmt = null;
         try {
             stmt = conn.prepareStatement(sql);
@@ -455,8 +496,8 @@ public class DatabaseHandler {
 
     public ArrayList<String> getAllMembers(int idGroup) {
         String sql = "SELECT M.username " +
-                    "FROM GROUP_MEMBER M " +
-                    "WHERE M.id_group = ?";
+                "FROM GROUP_MEMBER M " +
+                "WHERE M.id_group = ?";
         PreparedStatement stmt = null;
         try {
             stmt = conn.prepareStatement(sql);
@@ -475,9 +516,10 @@ public class DatabaseHandler {
         }
         return null;
     }
+
     public void addMyMessage(Message message) {
         String sql = "INSERT INTO MESSAGE (sender, to_user, to_group, content, sent_time, seen_time) " +
-                    "VALUES (?, ?, ?, ?, ?, ?)";
+                "VALUES (?, ?, ?, ?, ?, ?)";
         PreparedStatement stmt = null;
         try {
             if (message.getToGroup() == -1) {
@@ -512,6 +554,26 @@ public class DatabaseHandler {
         }
     }
 
+    public void updateMyProfile(Profile newProfile, String currentPass) throws SQLException {
+        String sql = "UPDATE user SET password = ?, fullname = ?, address = ?, birthdate = ?, gender = ?, email = ? WHERE username = ?";
+        PreparedStatement stmt = null;
+        stmt = conn.prepareStatement(sql);
+        if (!newProfile.getPassword().isEmpty()) {
+            stmt.setString(1, newProfile.getPassword());
+        }
+        else {
+            stmt.setString(1, currentPass);
+        }
+        stmt.setString(2, newProfile.getFullname());
+        stmt.setString(3, newProfile.getAddress());
+        stmt.setDate(4, Date.valueOf(newProfile.getBirthdate()));
+        stmt.setInt(5, newProfile.getGender());
+        stmt.setString(6, newProfile.getEmail());
+        stmt.setString(7, newProfile.getUsername());
+        stmt.executeUpdate();
+        stmt.close();
+    }
+
 
 //    public static void main(String[] args) {
 //        DatabaseHandler DB = new DatabaseHandler();
@@ -527,7 +589,6 @@ public class DatabaseHandler {
 //    }
 
 }
-
 
 
 //package utilities;

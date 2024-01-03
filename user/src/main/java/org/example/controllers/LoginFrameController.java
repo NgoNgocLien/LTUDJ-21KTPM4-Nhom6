@@ -1,6 +1,7 @@
 package org.example.controllers;
 
 import org.example.models.ChatInfo;
+import org.example.models.Profile;
 import org.example.utilities.Constants;
 import org.example.utilities.DatabaseHandler;
 import org.example.views.*;
@@ -8,6 +9,7 @@ import org.example.views.*;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.*;
+import java.net.Socket;
 import java.sql.SQLException;
 import java.util.ArrayList;
 
@@ -20,7 +22,9 @@ public class LoginFrameController {
     private JLabel registerLine;
     private JLabel forgotPasswordLine;
 
-    public LoginFrameController(LoginFrame LF, DatabaseHandler DB) {
+    private Socket socket;
+
+    public LoginFrameController(Socket socket, LoginFrame LF, DatabaseHandler DB) {
         this.LF = LF;
         this.DB = DB;
 
@@ -34,6 +38,8 @@ public class LoginFrameController {
                 }
             }
         });
+
+        this.socket = socket;
 
         this.usernameField = LF.getUsernameField();
         this.passwordField = LF.getPasswordField();
@@ -74,8 +80,7 @@ public class LoginFrameController {
                 String password = new String(passwordField.getPassword());
                 if (inputField == usernameField && !username.isEmpty()) {
                     passwordField.requestFocus();
-                }
-                else if (inputField == passwordField && !password.isEmpty()) {
+                } else if (inputField == passwordField && !password.isEmpty()) {
                     loginButton.doClick();
                 }
             }
@@ -83,10 +88,12 @@ public class LoginFrameController {
 
         // Không để làm gì nhưng không xóa vì KeyListener bắt buộc phải override
         @Override
-        public void keyTyped(KeyEvent e) {}
+        public void keyTyped(KeyEvent e) {
+        }
 
         @Override
-        public void keyReleased(KeyEvent e) {}
+        public void keyReleased(KeyEvent e) {
+        }
     }
 
     private class LoginButtonListener implements ActionListener {
@@ -100,38 +107,51 @@ public class LoginFrameController {
                 usernameField.requestFocus();
                 new ErrorMessage(LF, "Please enter your username");
                 return;
-            }
-            else if (password.isEmpty()) {
+            } else if (password.isEmpty()) {
                 passwordField.requestFocus();
                 new ErrorMessage(LF, "Please enter your password");
                 return;
             }
-            else if (!checkUsername(username) || !checkPassword(password)) { // Kiểm tra format trước khi kiểm tra qua database
-                new ErrorMessage(LF, "Invalid username or password");
-                return;
-            }
+//            else if (!checkUsername(username) || !checkPassword(password)) { // Kiểm tra format trước khi kiểm tra qua database
+//                new ErrorMessage(LF, "Invalid username or password");
+//                return;
+//            }
 
             // TEST & DELETE AFTER: show username and password
-            JOptionPane.showMessageDialog(LF, "Username: " + username + "\nPassword: " + password);
+//            JOptionPane.showMessageDialog(LF, "Username: " + username + "\nPassword: " + password);
 
             // TODO: verify login info with database
-
-            // TODO: if fail: show error message
-            // new ErrorMessage(LF, "Wrong username or password");
-
-            // TODO: if success: close login frame, open main frame
-
-            // success: close login frame, open main frame
-            LF.dispose();
-
-            ArrayList<ChatInfo> allChats = null;
             try {
-                allChats= DB.getAllChats("hlong");
-            } catch (SQLException se) {
-                se.printStackTrace();
+                Profile profile = DB.getProfilebyUsername(username);
+
+                if (profile.getUsername() == null) {
+                    new ErrorMessage(LF, "Wrong username or password");
+                } else if (!profile.getPassword().equals(password)) {
+                    new ErrorMessage(LF, "Wrong username or password");
+                } else {
+                    JOptionPane.showMessageDialog(LF, "Login success");
+                    ArrayList<ChatInfo> allChats = null;
+                    try {
+                        allChats = DB.getAllChats(username);
+                    } catch (SQLException se) {
+                        se.printStackTrace();
+                    }
+                    MainFrame mainFrame = new MainFrame(allChats);
+                    MainFrameController mainFrameController = new MainFrameController(socket, mainFrame, DB, username);
+                }
+                LF.dispose();
+            } catch (SQLException ex) {
+                throw new RuntimeException(ex);
             }
-            MainFrame mainFrame = new MainFrame(allChats);
-            MainFrameController mainFrameController = new MainFrameController(mainFrame, DB, "hlong");
+
+//            ArrayList<ChatInfo> allChats = null;
+//            try {
+//                allChats= DB.getAllChats("hlong");
+//            } catch (SQLException se) {
+//                se.printStackTrace();
+//            }
+//            MainFrame mainFrame = new MainFrame( allChats);
+//            MainFrameController mainFrameController = new MainFrameController(socket, mainFrame, DB, "hlong");
         }
     }
 
@@ -149,13 +169,13 @@ public class LoginFrameController {
                 LF.dispose();
                 // open register frame
                 RegisterFrame RF = new RegisterFrame();
-                RegisterFrameController RFC = new RegisterFrameController(RF, DB);
+                RegisterFrameController RFC = new RegisterFrameController(socket, RF, DB);
             } else if (e.getSource() == forgotPasswordLine) {
                 // close login frame
                 LF.dispose();
                 // open forgot password frame
                 ForgotPasswordFrame FPF = new ForgotPasswordFrame();
-                ForgotPasswordFrameController FPFC = new ForgotPasswordFrameController(FPF, DB);
+                ForgotPasswordFrameController FPFC = new ForgotPasswordFrameController(socket, FPF, DB);
             }
         }
 
@@ -187,9 +207,11 @@ public class LoginFrameController {
 
         // Không để làm gì nhưng không xóa vì MouseListener bắt buộc phải override
         @Override
-        public void mousePressed(MouseEvent e) {}
+        public void mousePressed(MouseEvent e) {
+        }
 
         @Override
-        public void mouseReleased(MouseEvent e) {}
+        public void mouseReleased(MouseEvent e) {
+        }
     }
 }

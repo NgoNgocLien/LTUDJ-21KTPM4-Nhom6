@@ -18,13 +18,10 @@ public class UpdatePassUser extends SwingWorker<Void, Void> {
     }
     public static Boolean request(String username, String new_pwd, Socket socket) throws IOException, ClassNotFoundException {
         OutputStream outputStream = socket.getOutputStream();
-        String method = "updatePassUser";
-        String message = username + "\n" + new_pwd;
-        System.out.println(method);
-        outputStream.write(method.getBytes());
-        outputStream.write(message.getBytes());
+        String msg = "updatePassUser" + "\n" + username + "\n" + new_pwd;
+        outputStream.write(msg.getBytes());
+        System.out.println(msg);
 
-        // receive object
         ObjectInputStream objectInputStream = new ObjectInputStream(socket.getInputStream());
         Boolean success = (Boolean) objectInputStream.readObject();
 

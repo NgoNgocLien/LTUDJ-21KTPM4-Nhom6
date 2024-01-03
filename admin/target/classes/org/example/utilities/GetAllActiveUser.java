@@ -13,10 +13,10 @@ public class GetAllActiveUser extends SwingWorker<Void, Void> {
     public static Object[][] request(Socket socket) throws IOException, ClassNotFoundException {
 
         OutputStream outputStream = socket.getOutputStream();
-        String method = "getAllActiveUser";
-        System.out.println(method);
-        outputStream.write(method.getBytes());
-        System.out.println(method);
+        String msg = "getAllActiveUser" + "\n";
+
+        outputStream.write(msg.getBytes());
+        System.out.println(msg);
 
         // receive object
         ObjectInputStream objectInputStream = new ObjectInputStream(socket.getInputStream());

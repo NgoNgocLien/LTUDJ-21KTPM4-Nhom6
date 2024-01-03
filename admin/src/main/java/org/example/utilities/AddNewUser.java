@@ -28,13 +28,10 @@ public class AddNewUser extends SwingWorker<Void, Void> {
     public static Boolean request(String username, String password, String fullname , String address, String birthdate, String gender, String email, Socket socket) throws IOException, ClassNotFoundException {
 
         OutputStream outputStream = socket.getOutputStream();
-        String method = "addNewUser";
-        String message = username + "\n" +  password + "\n" + fullname + "\n" + address + "\n" + birthdate + "\n" + gender + "\n" + email ;
-        System.out.println(method);
-        outputStream.write(method.getBytes());
-        outputStream.write(message.getBytes());
+        String msg = "addNewUser" + "\n" + username + "\n" +  password + "\n" + fullname + "\n" + address + "\n" + birthdate + "\n" + gender + "\n" + email ;
+        outputStream.write(msg.getBytes());
+        System.out.println(msg);
 
-        // receive object
         ObjectInputStream objectInputStream = new ObjectInputStream(socket.getInputStream());
         Boolean success = (Boolean) objectInputStream.readObject();
 

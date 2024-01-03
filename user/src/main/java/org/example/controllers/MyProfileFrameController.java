@@ -8,8 +8,10 @@ import org.example.views.SuccessMessage;
 
 import javax.swing.*;
 import java.awt.event.*;
+import java.sql.SQLException;
 import java.time.DateTimeException;
 import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 
 public class MyProfileFrameController {
     private MyProfileFrame MPF;
@@ -25,6 +27,7 @@ public class MyProfileFrameController {
     private JComboBox<String> monthComboBox;
     private JComboBox<String> yearComboBox;
     private JButton editProfileButton;
+
     public MyProfileFrameController(MyProfileFrame MPF, DatabaseHandler DB) {
         this.MPF = MPF;
         this.DB = DB;
@@ -80,18 +83,54 @@ public class MyProfileFrameController {
         String year = (String) yearComboBox.getSelectedItem();
 
         if (!fullname.equals(myProfile.getFullname()) ||
-            !email.equals(myProfile.getEmail()) ||
-            !address.equals(myProfile.getAddress()) ||
-            !currentPassword.isEmpty() ||
-            !newPassword.isEmpty() ||
-            (gender.equals("Male") && myProfile.getGender() == 0) ||
-            (gender.equals("Female") && myProfile.getGender() == 1) ||
-            (!day.equals("Day") && Integer.parseInt(day) != myProfile.getBirthdate().getDayOfMonth()) ||
-            (!month.equals("Month") && Integer.parseInt(month) != myProfile.getBirthdate().getMonthValue()) ||
-            (!year.equals("Year") && Integer.parseInt(year) != myProfile.getBirthdate().getYear())) {
+                !email.equals(myProfile.getEmail()) ||
+                !address.equals(myProfile.getAddress()) ||
+                !currentPassword.isEmpty() ||
+                !newPassword.isEmpty() ||
+                (gender.equals("Male") && myProfile.getGender() == 0) ||
+                (gender.equals("Female") && myProfile.getGender() == 1) ||
+                (!day.equals("Day") && Integer.parseInt(day) != myProfile.getBirthdate().getDayOfMonth()) ||
+                (!month.equals("Month") && Integer.parseInt(month) != myProfile.getBirthdate().getMonthValue()) ||
+                (!year.equals("Year") && Integer.parseInt(year) != myProfile.getBirthdate().getYear())) {
             isChanged = true;
         }
         return isChanged;
+    }
+
+    private boolean checkFullName(String fullname) {
+        String regex = "^[a-zA-Z\\s]+";
+        return fullname.matches(regex);
+    }
+
+    private boolean checkUsername(String username) {
+        String regex = "^[a-z0-9._-]{1,}$";
+        return username.matches(regex);
+    }
+
+    private boolean checkPassword(String password) {
+        // password can contain any special character
+        String regex = "^[a-zA-Z0-9!@#$%^&*()_+\\-=\\[\\]{};':\"\\\\|,.<>/?]{8,}$";
+        return password.matches(regex);
+    }
+
+    private boolean checkEmail(String email) {
+        // aa@bb.cc
+        String regex = "^[a-zA-Z0-9+_.-]+@[a-zA-Z0-9.-]+$";
+        return email.matches(regex);
+    }
+
+    private boolean checkAddress(String address) {
+        String regex = "^[a-zA-Z0-9.,/()\\s]+";
+        return address.matches(regex);
+    }
+
+    private boolean checkDOB(int day, int month, int year) {
+        try {
+            LocalDate.of(year, month, day);
+            return true;
+        } catch (DateTimeException e) {
+            return false;
+        }
     }
 
     private class InputFieldListener implements KeyListener {
@@ -123,10 +162,12 @@ public class MyProfileFrameController {
 
         // Không để làm gì nhưng không xóa vì KeyListener bắt buộc phải override
         @Override
-        public void keyTyped(KeyEvent e) {}
+        public void keyTyped(KeyEvent e) {
+        }
 
         @Override
-        public void keyReleased(KeyEvent e) {}
+        public void keyReleased(KeyEvent e) {
+        }
     }
 
     private class EditProfileButtonListener implements ActionListener {
@@ -179,18 +220,18 @@ public class MyProfileFrameController {
                 new ErrorMessage(MPF, "Year is required");
                 yearComboBox.requestFocus();
                 return;
-            } else if (!checkFullName(fullname)) {
-                new ErrorMessage(MPF, "Fullname is invalid");
-                fullnameField.requestFocus();
-                return;
-            } else if (!checkPassword(currentPassword)) {
-                new ErrorMessage(MPF, "Current password is invalid");
-                currentPasswordField.requestFocus();
-                return;
-            } else if (!checkPassword(newPassword)) {
-                new ErrorMessage(MPF, "New password is invalid");
-                newPasswordField.requestFocus();
-                return;
+//            } else if (!checkFullName(fullname)) {
+//                new ErrorMessage(MPF, "Fullname is invalid");
+//                fullnameField.requestFocus();
+//                return;
+//            } else if (!checkPassword(currentPassword)) {
+//                new ErrorMessage(MPF, "Current password is invalid");
+//                currentPasswordField.requestFocus();
+//                return;
+//            } else if (!checkPassword(newPassword)) {
+//                new ErrorMessage(MPF, "New password is invalid");
+//                newPasswordField.requestFocus();
+//                return;
             } else if (!checkEmail(email)) {
                 new ErrorMessage(MPF, "Email is invalid");
                 emailField.requestFocus();
@@ -217,46 +258,21 @@ public class MyProfileFrameController {
             // TEST & DELETE AFTER: show all info
             JOptionPane.showMessageDialog(MPF, "Fullname: " + fullname + "\nEmail: " + email + "\nAddress: " + address + "\nGender: " + gender + "\nDate of birth: " + day + "/" + month + "/" + year + "\nCurrent password: " + currentPassword + "\nNew password: " + newPassword);
 
+            if(month.length() == 1) month = "0" + month;
+            String dateString = String.format("%s-%s-%s", day, month, year);
+            DateTimeFormatter formatters = DateTimeFormatter.ofPattern("dd-MM-yyyy");
+
+            Profile newProfile = new Profile(myProfile.getDateJoined(), fullname, myProfile.getUsername(), (gender.equals("Male")) ? 1 : 0, LocalDate.parse(dateString, formatters), email, address, newPassword);
+            try {
+                DB.updateMyProfile(newProfile, myProfile.getPassword());
+            } catch (SQLException ex) {
+                throw new RuntimeException(ex);
+            }
+
             // close register frame, open login frame
             MPF.dispose();
-            MPF = new MyProfileFrame(myProfile);
+            MPF = new MyProfileFrame(newProfile);
             MyProfileFrameController MPFC = new MyProfileFrameController(MPF, DB);
-        }
-    }
-
-    private boolean checkFullName(String fullname) {
-        String regex = "^[a-zA-Z\\s]+";
-        return fullname.matches(regex);
-    }
-
-    private boolean checkUsername(String username) {
-        String regex = "^[a-z0-9._-]{1,}$";
-        return username.matches(regex);
-    }
-
-    private boolean checkPassword(String password) {
-        // password can contain any special character
-        String regex = "^[a-zA-Z0-9!@#$%^&*()_+\\-=\\[\\]{};':\"\\\\|,.<>/?]{8,}$";
-        return password.matches(regex);
-    }
-
-    private boolean checkEmail(String email) {
-        // aa@bb.cc
-        String regex = "^[a-zA-Z0-9+_.-]+@[a-zA-Z0-9.-]+$";
-        return email.matches(regex);
-    }
-
-    private boolean checkAddress(String address) {
-        String regex = "^[a-zA-Z0-9.,/()\\s]+";
-        return address.matches(regex);
-    }
-
-    private boolean checkDOB(int day, int month, int year) {
-        try {
-            LocalDate.of(year, month, day);
-            return true;
-        } catch (DateTimeException e) {
-            return false;
         }
     }
 }

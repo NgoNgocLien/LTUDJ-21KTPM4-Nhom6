@@ -108,14 +108,37 @@ public class IconPanel extends JPanel {
         add(lowerPanel, BorderLayout.SOUTH);
     }
 
-    public JLabel getHomeIconLabel() { return homeIconLabel; }
-    public JLabel getChatIconLabel() { return chatIconLabel; }
-    public JLabel getFriendIconLabel() { return friendIconLabel; }
-    public JLabel getGroupIconLabel() { return groupIconLabel; }
-    public JLabel getAddIconLabel() { return addIconLabel; }
-    public JLabel getRequestIconLabel() { return requestIconLabel; }
-    public JLabel getBlockIconLabel() { return blockIconLabel; }
-    public JLabel getLogoutIconLabel() { return logoutIconLabel; }
+    public JLabel getHomeIconLabel() {
+        return homeIconLabel;
+    }
+
+    public JLabel getChatIconLabel() {
+        return chatIconLabel;
+    }
+
+    public JLabel getFriendIconLabel() {
+        return friendIconLabel;
+    }
+
+    public JLabel getGroupIconLabel() {
+        return groupIconLabel;
+    }
+
+    public JLabel getAddIconLabel() {
+        return addIconLabel;
+    }
+
+    public JLabel getRequestIconLabel() {
+        return requestIconLabel;
+    }
+
+    public JLabel getBlockIconLabel() {
+        return blockIconLabel;
+    }
+
+    public JLabel getLogoutIconLabel() {
+        return logoutIconLabel;
+    }
 
     public void setFocusLabel(JLabel label) {
         homeIconLabel.setBackground(Constants.COLOR_PRIMARY);
@@ -129,9 +152,11 @@ public class IconPanel extends JPanel {
 
         label.setBackground(Constants.COLOR_SECONDARY);
     }
+
     public void setUnfocusLabel(JLabel label) {
         label.setBackground(Constants.COLOR_PRIMARY);
     }
+
     public void setFocusTemporaryLabel(JLabel label) {
         label.setBackground(Constants.COLOR_SECONDARY);
     }

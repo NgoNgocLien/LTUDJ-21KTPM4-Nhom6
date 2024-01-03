@@ -19,11 +19,10 @@ public class SearchReport extends SwingWorker<Void, Void> {
     public static Object[][] request(String username, String date , Socket socket) throws IOException, ClassNotFoundException {
 
         OutputStream outputStream = socket.getOutputStream();
-        String method = "searchReport";
-        String message = username + "\n" + date;
-        System.out.println(method);
-        outputStream.write(method.getBytes());
-        outputStream.write(message.getBytes());
+        String msg = "searchReport" + "\n" + username + "\n" + date;
+
+        outputStream.write(msg.getBytes());
+        System.out.println(msg);
 
 
         // receive object

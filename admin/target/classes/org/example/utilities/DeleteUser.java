@@ -15,14 +15,11 @@ public class DeleteUser extends SwingWorker<Void, Void> {
         this.username = username;
     }
     public static Boolean request(String username, Socket socket) throws IOException, ClassNotFoundException {
-
         OutputStream outputStream = socket.getOutputStream();
-        String method = "deleteUser";
-        System.out.println(method);
-        outputStream.write(method.getBytes());
-        outputStream.write(username.getBytes());
+        String msg = "deleteUser" + "\n" + username;
+        outputStream.write(msg.getBytes());
+        System.out.println(msg);
 
-        // receive object
         ObjectInputStream objectInputStream = new ObjectInputStream(socket.getInputStream());
         Boolean success = (Boolean) objectInputStream.readObject();
 

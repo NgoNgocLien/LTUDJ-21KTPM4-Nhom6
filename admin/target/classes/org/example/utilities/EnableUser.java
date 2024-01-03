@@ -17,11 +17,9 @@ public class EnableUser extends SwingWorker<Void, Void> {
     public static Boolean request(String username, Socket socket) throws IOException, ClassNotFoundException {
 
         OutputStream outputStream = socket.getOutputStream();
-        String method = "enableUser";
-        String message = username;
-        System.out.println(method);
-        outputStream.write(method.getBytes());
-        outputStream.write(message.getBytes());
+        String msg = "enableUser" + "\n" + username;
+        outputStream.write(msg.getBytes());
+        System.out.println(msg);
 
         ObjectInputStream objectInputStream = new ObjectInputStream(socket.getInputStream());
         Boolean data = (Boolean) objectInputStream.readObject();

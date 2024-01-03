@@ -78,7 +78,7 @@ public class AdminDatabase {
                     + "FROM GROUP_MEMBER gm "
                     + "INNER JOIN GROUP_CHAT gc ON gc.id_group = gm.id_group "
                     + "INNER JOIN USER u ON u.username = gm.username "
-                    + "WHERE gm.id_group = ? AND gm.is_admin = 1";
+                    + "WHERE gm.id_group = ? AND gm.is_admin = 1 AND u.is_locked != 2";
 
             PreparedStatement stmt = connection.prepareStatement(sql);
             stmt.setString(1, selected_id);
@@ -118,7 +118,7 @@ public class AdminDatabase {
                     + "FROM GROUP_MEMBER gm "
                     + "INNER JOIN GROUP_CHAT gc ON gc.id_group = gm.id_group "
                     + "INNER JOIN USER u ON u.username = gm.username "
-                    + "WHERE gm.id_group = ? AND gm.is_admin = 0";
+                    + "WHERE gm.id_group = ? AND gm.is_admin = 0 AND u.is_locked != 2";
 
             PreparedStatement stmt = connection.prepareStatement(sql);
             stmt.setString(1, selected_id);
@@ -202,7 +202,7 @@ public class AdminDatabase {
             sql = "SELECT u.username, s.report_time, u.is_locked "
                     + "FROM SPAM s "
                     + "INNER JOIN MESSAGE m ON m.id_message = s.id_message "
-                    + "INNER JOIN USER u ON u.username = m.sender ";
+                    + "INNER JOIN USER u ON u.username = m.sender AND u.is_locked != 2";
             ResultSet rs = stmt.executeQuery(sql);
             List<Object[]> rows = new ArrayList<>();
             int i = 1;
@@ -246,7 +246,7 @@ public class AdminDatabase {
             String sql = "SELECT u.username, s.report_time, u.is_locked "
                     + "FROM SPAM s "
                     + "INNER JOIN MESSAGE m ON m.id_message = s.id_message "
-                    + "INNER JOIN USER u ON u.username = m.sender ";
+                    + "INNER JOIN USER u ON u.username = m.sender AND u.is_locked != 2";
             PreparedStatement stmt;
             if (text.isEmpty()){
                 sql += "WHERE DAY(s.report_time) = ? "
@@ -373,7 +373,7 @@ public class AdminDatabase {
                     "       ELSE m.to_user " +
                     "    END as to_user, m.to_group " +
                     "	FROM HISTORY_LOGIN h  " +
-                    "	INNER JOIN USER u ON h.username = u.username " +
+                    "	INNER JOIN USER u ON h.username = u.username AND u.is_locked != 2 " +
                     "	LEFT JOIN MESSAGE m ON m.sender = u.username AND m.sent_time BETWEEN h.login_time AND h.logout_time " +
                     "	GROUP BY u.username, u.fullname, u.creation_time, h.login_time, h.logout_time, m.to_user, m.to_group) AS res " +
                     "GROUP BY username, fullname, creation_time ";
@@ -474,7 +474,7 @@ public class AdminDatabase {
 
                 LocalDateTime localDateTime = timestamp.toLocalDateTime();
 //                LocalDate localDate = ((java.sql.Date) create_time).toLocalDate();
-                DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-MM-yyyy H:m:s");
+                DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-MM-yyyy HH:mm:ss");
                 String format_time = localDateTime.format(formatter);
 
                 int session_count = rs.getInt("session_count");
@@ -782,7 +782,6 @@ public class AdminDatabase {
 
             while(rs.next()){
                 String username = rs.getString("username");
-                String password = rs.getString("password");
                 String fullname = rs.getString("fullname");
                 String address = rs.getString("address");
                 Date birthdate = rs.getDate("birthdate");
@@ -803,7 +802,7 @@ public class AdminDatabase {
 
                 String genderString = gender ? "Female" : "Male";
                 String statusString = (is_locked == 1) ? "Disabled" : "Enabled";
-                Object[] row = {username, password, fullname, address, format_time, genderString, email, format_time1, statusString};
+                Object[] row = {username, fullname, address, format_time, genderString, email, format_time1, statusString};
 
                 rows.add(row);
             }
@@ -1151,6 +1150,192 @@ public class AdminDatabase {
             rows.toArray(data);
 
             return data;
+        }catch(SQLException se){
+            //Handle errors for JDBC
+            se.printStackTrace();
+        }catch(Exception e){ //Handle errors for Class.forName
+            e.printStackTrace();
+        }
+        return null;
+    }
+
+    Object[][] getAllUserFriend(){
+        try{
+            String sql = "WITH DirectFriends AS (SELECT U.username, CASE WHEN U.username = F1.username1 THEN F1.username2 ELSE F1.username1 END AS friend_username " +
+                            "FROM USER U LEFT JOIN FRIEND F1 ON (U.username = F1.username1 OR U.username = F1.username2) AND F1.accepted = 1 WHERE U.is_locked != 2) " +
+                            "SELECT U.username, U.fullname, U.creation_time, COUNT(DISTINCT DF.friend_username) AS direct_friends_count, " +
+                            "COUNT(DISTINCT FF.friend_of_friend_username) AS friends_of_friends_count FROM USER U LEFT JOIN DirectFriends DF ON U.username = DF.username " +
+                            "LEFT JOIN ((SELECT U.username AS user_username, F2.username2 AS friend_of_friend_username FROM USER U " +
+                            "LEFT JOIN DirectFriends DF ON U.username = DF.username " +
+                            "LEFT JOIN FRIEND F2 ON DF.friend_username = F2.username1 AND F2.accepted = 1 " +
+                            "WHERE U.is_locked != 2 GROUP BY U.username, F2.username2) " +
+                            "UNION " +
+                            "(SELECT U.username AS user_username, F3.username1 AS friend_of_friend_username FROM USER U LEFT JOIN DirectFriends DF ON U.username = DF.username " +
+                            "LEFT JOIN FRIEND F3 ON DF.friend_username = F3.username2 AND F3.accepted = 1 WHERE U.is_locked != 2 GROUP BY U.username, F3.username1) " +
+                            ") FF ON U.username = FF.user_username WHERE U.is_locked != 2 GROUP BY U.username, U.fullname, U.creation_time";
+            PreparedStatement stmt;
+            stmt = connection.prepareStatement(sql);
+            ResultSet rs = stmt.executeQuery();
+            List<Object[]> rows = new ArrayList<>();
+            int i = 1;
+            while(rs.next()){
+                String username = rs.getString("U.username");
+                String fullname = rs.getString("U.fullname");
+                Date registration_time = rs.getDate("U.creation_time");
+                int direct_friend_count = rs.getInt("direct_friends_count");
+                int friends_of_friends_count = rs.getInt("friends_of_friends_count");
+                Timestamp timestamp = new Timestamp(registration_time.getTime());
+
+                LocalDateTime localDateTime = timestamp.toLocalDateTime();
+                DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-MM-yyyy HH:mm:ss");
+                String format_time = localDateTime.format(formatter);
+
+                Object[] row = {i, username,  fullname, format_time, direct_friend_count, friends_of_friends_count};
+                rows.add(row);
+                i++;
+            }
+
+            rs.close();
+            stmt.close();
+
+            Object[][] data = new Object[rows.size()][];
+            rows.toArray(data);
+
+            return data;
+        }catch(SQLException se){
+            se.printStackTrace();
+        }catch(Exception e){
+            e.printStackTrace();
+        }
+        return null;
+    }
+
+    Object[][] searchUserFriend(String text1, String text2, String text3){
+        try{
+            PreparedStatement stmt = null;
+            String sql = "WITH DirectFriends AS (SELECT U.username, CASE WHEN U.username = F1.username1 THEN F1.username2 ELSE F1.username1 END AS friend_username " +
+                    "FROM USER U LEFT JOIN FRIEND F1 ON (U.username = F1.username1 OR U.username = F1.username2) AND F1.accepted = 1 WHERE U.is_locked != 2) " +
+                    "SELECT U.username, U.fullname, U.creation_time, COUNT(DISTINCT DF.friend_username) AS direct_friends_count, " +
+                    "COUNT(DISTINCT FF.friend_of_friend_username) AS friends_of_friends_count FROM USER U LEFT JOIN DirectFriends DF ON U.username = DF.username " +
+                    "LEFT JOIN ((SELECT U.username AS user_username, F2.username2 AS friend_of_friend_username FROM USER U " +
+                    "LEFT JOIN DirectFriends DF ON U.username = DF.username " +
+                    "LEFT JOIN FRIEND F2 ON DF.friend_username = F2.username1 AND F2.accepted = 1 " +
+                    "WHERE U.is_locked != 2 GROUP BY U.username, F2.username2) " +
+                    "UNION " +
+                    "(SELECT U.username AS user_username, F3.username1 AS friend_of_friend_username FROM USER U LEFT JOIN DirectFriends DF ON U.username = DF.username " +
+                    "LEFT JOIN FRIEND F3 ON DF.friend_username = F3.username2 AND F3.accepted = 1 WHERE U.is_locked != 2 GROUP BY U.username, F3.username1) " +
+                    ") FF ON U.username = FF.user_username WHERE U.is_locked != 2 ";
+
+            if (text2.isEmpty()) {
+                System.out.println("search by direct friend count");
+                int friend_count = Integer.parseInt(text1);
+                // search by direct friend count
+                if (Objects.equals(text3, "Equal to")) {
+                    sql += "GROUP BY U.username, U.fullname, U.creation_time HAVING direct_friends_count = ?";
+                    stmt = connection.prepareStatement(sql);
+                    stmt.setInt(1, friend_count);
+                } else if (Objects.equals(text3, "Greater than")) {
+                    sql += "GROUP BY U.username, U.fullname, U.creation_time HAVING direct_friends_count > ?";
+                    stmt = connection.prepareStatement(sql);
+                    stmt.setInt(1, friend_count);
+                } else {
+                    sql += "GROUP BY U.username, U.fullname, U.creation_time HAVING direct_friends_count < ?";
+                    stmt = connection.prepareStatement(sql);
+                    stmt.setInt(1, friend_count);
+                }
+            }
+            else{
+                if(text1.isEmpty()){
+                    // search by fullname
+                    System.out.println("search by fullname");
+                    sql += "AND U.fullname LIKE ? GROUP BY U.username, U.fullname, U.creation_time";
+                    stmt = connection.prepareStatement(sql);
+                    stmt.setString(1, "%" + text2 + "%");
+                }
+                else {
+                    // search by fullname + direct friend count
+                    int friend_count = Integer.parseInt(text1);
+                    System.out.println("search by username + direct friend count");
+                    sql += "AND U.fullname LIKE ? ";
+                    if (Objects.equals(text3, "Equal to")) {
+                        sql += "GROUP BY U.username, U.fullname, U.creation_time HAVING direct_friends_count = ?";
+                        stmt = connection.prepareStatement(sql);
+                        stmt.setString(1, "%" + text2 + "%");
+                        stmt.setInt(2, friend_count);
+                    } else if (Objects.equals(text3, "Greater than")) {
+                        sql += "GROUP BY U.username, U.fullname, U.creation_time HAVING direct_friends_count > ?";
+                        stmt = connection.prepareStatement(sql);
+                        stmt.setString(1, "%" + text2 + "%");
+                        stmt.setInt(2, friend_count);
+                    } else {
+                        sql += "GROUP BY U.username, U.fullname, U.creation_time HAVING direct_friends_count < ?";
+                        stmt = connection.prepareStatement(sql);
+                        stmt.setString(1, "%" + text2 + "%");
+                        stmt.setInt(2, friend_count);
+                    }
+                }
+            }
+
+            ResultSet rs = stmt.executeQuery();
+
+            List<Object[]> rows = new ArrayList<>();
+            int i = 1;
+            while(rs.next()){
+                String username = rs.getString("U.username");
+                String fullname = rs.getString("U.fullname");
+                Date registration_time = rs.getDate("U.creation_time");
+                int direct_friend_count = rs.getInt("direct_friends_count");
+                int friends_of_friends_count = rs.getInt("friends_of_friends_count");
+                Timestamp timestamp = new Timestamp(registration_time.getTime());
+
+                LocalDateTime localDateTime = timestamp.toLocalDateTime();
+                DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-MM-yyyy HH:mm:ss");
+                String format_time = localDateTime.format(formatter);
+
+                Object[] row = {i, username,  fullname, format_time, direct_friend_count, friends_of_friends_count};
+                rows.add(row);
+                i++;
+            }
+            rs.close();
+            stmt.close();
+
+            Object[][] data = new Object[rows.size()][];
+            rows.toArray(data);
+
+            return data;
+        }catch(SQLException se){
+            se.printStackTrace();
+        }catch(Exception e){
+            e.printStackTrace();
+        }
+        return null;
+    }
+
+    int[] getMonthlyNewUser(String year){
+        try{
+            String sql = "SELECT MONTH(u.creation_time) as month, COUNT(DISTINCT u.username) as user_count " +
+                    "FROM USER u " +
+                    "WHERE YEAR(u.creation_time) = ? " +
+                    "GROUP BY MONTH(u.creation_time) ORDER BY month ;";
+
+            PreparedStatement stmt;
+            stmt = connection.prepareStatement(sql);
+            stmt.setString(1, year);
+
+            ResultSet rs = stmt.executeQuery();
+
+            int[] user_count_month = new int[12];
+            for (int i = 0; i < 12; i++)
+                user_count_month[i] = 0;
+            while(rs.next()){
+                int month = rs.getInt("month");
+                int user_count = rs.getInt("user_count");
+                user_count_month[month-1] = user_count;
+            }
+            rs.close();
+            stmt.close();
+
+            return user_count_month;
         }catch(SQLException se){
             //Handle errors for JDBC
             se.printStackTrace();

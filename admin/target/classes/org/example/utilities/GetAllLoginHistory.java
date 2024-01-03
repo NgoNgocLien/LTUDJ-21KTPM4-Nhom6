@@ -13,12 +13,10 @@ public class GetAllLoginHistory extends SwingWorker<Void, Void> {
     public static Object[][] request(Socket socket) throws IOException, ClassNotFoundException {
 
         OutputStream outputStream = socket.getOutputStream();
-        String method = "getAllLoginHistory";
-        System.out.println(method);
-        outputStream.write(method.getBytes());
-        System.out.println(method);
+        String msg = "getAllLoginHistory\n";
+        outputStream.write(msg.getBytes());
+        System.out.println(msg);
 
-        // receive object
         ObjectInputStream objectInputStream = new ObjectInputStream(socket.getInputStream());
         Object[][] data = (Object[][]) objectInputStream.readObject();
 

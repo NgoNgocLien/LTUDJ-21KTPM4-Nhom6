@@ -16,12 +16,10 @@ public class GetAllEmail extends SwingWorker<Void, Void> {
     public static Object[][] request(String username, Socket socket) throws IOException, ClassNotFoundException {
 
         OutputStream outputStream = socket.getOutputStream();
-        String method = "getAllEmail";
-        System.out.println(method);
-        outputStream.write(method.getBytes());
-        outputStream.write(username.getBytes());
+        String msg = "getAllEmail" + "\n" + username;
+        outputStream.write(msg.getBytes());
+        System.out.println(msg);
 
-        // receive object
         ObjectInputStream objectInputStream = new ObjectInputStream(socket.getInputStream());
         Object[][] data = (Object[][]) objectInputStream.readObject();
 

@@ -8,6 +8,7 @@ import java.awt.*;
 import java.awt.event.ComponentAdapter;
 import java.awt.event.ComponentEvent;
 import java.lang.reflect.Array;
+import java.net.Socket;
 import java.util.ArrayList;
 
 public class MainFrame extends JFrame {
@@ -17,6 +18,7 @@ public class MainFrame extends JFrame {
     private ConversationPanel conversationPanel;
     private String currentIcon;
     private String currentChat; // Chat currentChat
+
 
     public MainFrame(ArrayList<ChatInfo> infos) {
         // set windows look and feel

@@ -21,13 +21,10 @@ public class SearchUser extends SwingWorker<Void, Void> {
     public static Object[][] request(String username, String fullname , String selectedString, Socket socket) throws IOException, ClassNotFoundException {
 
         OutputStream outputStream = socket.getOutputStream();
-        String method = "searchUser";
-        String message = username + "\n" + fullname + "\n" + selectedString;
-        System.out.println(method);
-        outputStream.write(method.getBytes());
-        outputStream.write(message.getBytes());
+        String msg = "searchUser" + "\n" + username + "\n" + fullname + "\n" + selectedString;
+        outputStream.write(msg.getBytes());
+        System.out.println(msg);
 
-        // receive object
         ObjectInputStream objectInputStream = new ObjectInputStream(socket.getInputStream());
         Object[][] data = (Object[][]) objectInputStream.readObject();
 

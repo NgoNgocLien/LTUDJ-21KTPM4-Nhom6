@@ -17,11 +17,9 @@ public class GetAllAdmin extends SwingWorker<Void, Void> {
     public static Object[][] request(String selected_id , Socket socket) throws IOException, ClassNotFoundException {
 
         OutputStream outputStream = socket.getOutputStream();
-        String method = "getAllAdmin";
-        System.out.println(method);
-        outputStream.write(method.getBytes());
-        outputStream.write(selected_id.getBytes());
-        System.out.println(method);
+        String msg = "getAllAdmin" + "\n" + selected_id;
+        outputStream.write(msg.getBytes());
+        System.out.println(msg);
 
         // receive object
         ObjectInputStream objectInputStream = new ObjectInputStream(socket.getInputStream());

@@ -25,15 +25,11 @@ public class UpdateUser extends SwingWorker<Void, Void> {
         this.email = email;
     }
     public static Boolean request(String username, String fullname , String address, String birthdate, String gender, String email, Socket socket) throws IOException, ClassNotFoundException {
-        System.out.println("birthdate utilities: " + birthdate);
         OutputStream outputStream = socket.getOutputStream();
-        String method = "updateUser";
-        String message = username + "\n" + fullname + "\n" + address + "\n" + birthdate + "\n" + gender + "\n" + email ;
-        System.out.println(method);
-        outputStream.write(method.getBytes());
-        outputStream.write(message.getBytes());
+        String msg = "updateUser" + "\n" + username + "\n" + fullname + "\n" + address + "\n" + birthdate + "\n" + gender + "\n" + email ;
+        outputStream.write(msg.getBytes());
+        System.out.println(msg);
 
-        // receive object
         ObjectInputStream objectInputStream = new ObjectInputStream(socket.getInputStream());
         Boolean success = (Boolean) objectInputStream.readObject();
 

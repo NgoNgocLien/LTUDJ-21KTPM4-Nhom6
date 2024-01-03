@@ -85,18 +85,19 @@ public class DBconnection {
         return false;
     }
 
-    boolean updatePwd(String email, String pwd) throws SQLException {
+    boolean updatePwd(String username, String email, String pwd) throws SQLException {
         Statement stm = connection.createStatement();
         String sql = "USE db_chat";
         stm.executeUpdate(sql);
 
         try{
             String sql1;
-            sql1 = "UPDATE USER SET password = ? WHERE email = ?";
+            sql1 = "UPDATE USER SET password = ? WHERE email = ? AND username = ?";
 
             PreparedStatement stmt = connection.prepareStatement(sql1);
             stmt.setString(1, pwd);
             stmt.setString(2, email);
+            stmt.setString(3, username);
             int row = stmt.executeUpdate();
             stmt.close();
 

@@ -82,7 +82,7 @@ public class LoginSignUpScreen extends JFrame {
         forgotButton.addActionListener(e -> {
             try {
                 forgot(socket);
-            } catch (IOException ex) {
+            } catch (IOException | ClassNotFoundException ex) {
                 throw new RuntimeException(ex);
             }
         });
@@ -126,7 +126,7 @@ public class LoginSignUpScreen extends JFrame {
 
     }
 
-    private void forgot(Socket socket) throws IOException {
+    private void forgot(Socket socket) throws IOException, ClassNotFoundException {
         String email = JOptionPane.showInputDialog(this, "Enter your email to reset the password:");
         if (email != null && !email.isEmpty()) {
             OutputStream outputStream = socket.getOutputStream();
@@ -136,7 +136,7 @@ public class LoginSignUpScreen extends JFrame {
             InputStream inputStream = socket.getInputStream();
             inputStream.readNBytes(2);
 
-            if (ForgetPwd.request(email, socket))
+            if (ForgetPwd.request("", email, socket))
                 JOptionPane.showMessageDialog(this, "We sent the new password to your email", "Reset password",JOptionPane.INFORMATION_MESSAGE);
             else
                 JOptionPane.showMessageDialog(this, "Reset password unsuccessfully. Do again", "Error", JOptionPane.ERROR_MESSAGE);

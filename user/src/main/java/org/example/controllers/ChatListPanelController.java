@@ -15,6 +15,7 @@ import org.example.views.ProfileFrame;
 import javax.swing.*;
 import java.awt.event.*;
 import java.util.ArrayList;
+import java.util.Objects;
 
 public class ChatListPanelController {
     private MainFrameController MFC;
@@ -110,27 +111,27 @@ public class ChatListPanelController {
             }
             System.out.println("Search for: " + input);
 
-            if (chatListPanel.getInputFieldPlaceholder() == "Search for a message") {
+            if (Objects.equals(chatListPanel.getInputFieldPlaceholder(), "Search for a message")) {
 //                ArrayList<ChatInfo> infos = DB.searchMessages(myUsername, input);
 //                chatListPanel.rebuildChatPanelsScrollPane(infos, true);
                 return;
-            } else if (chatListPanel.getInputFieldPlaceholder() == "Search for a friend") {
+            } else if (Objects.equals(chatListPanel.getInputFieldPlaceholder(), "Search for a friend")) {
 //                ArrayList<ChatInfo> infos = DB.searchFriends(myUsername, input);
 //                chatListPanel.rebuildChatPanelsScrollPane(infos, true);
                 return;
-            } else if (chatListPanel.getInputFieldPlaceholder() == "Search for a group") {
+            } else if (Objects.equals(chatListPanel.getInputFieldPlaceholder(), "Search for a group")) {
 //                ArrayList<ChatInfo> infos = DB.searchGroups(myUsername, input);
 //                chatListPanel.rebuildChatPanelsScrollPane(infos, true);
                 return;
-            } else if (chatListPanel.getInputFieldPlaceholder() == "Search for a user") {
+            } else if (Objects.equals(chatListPanel.getInputFieldPlaceholder(), "Search for a user")) {
 //                ArrayList<ChatInfo> infos = DB.searchUsers(myUsername, input);
 //                chatListPanel.rebuildChatPanelsScrollPane(infos, true);
                 return;
-            } else if (chatListPanel.getInputFieldPlaceholder() == "Search for a friend request") {
+            } else if (Objects.equals(chatListPanel.getInputFieldPlaceholder(), "Search for a friend request")) {
 //                ArrayList<ChatInfo> infos = DB.searchRequests(myUsername, input);
 //                chatListPanel.rebuildChatPanelsScrollPane(infos, true);
                 return;
-            } else if (chatListPanel.getInputFieldPlaceholder() == "Search for a blocked user") {
+            } else if (Objects.equals(chatListPanel.getInputFieldPlaceholder(), "Search for a blocked user")) {
 //                ArrayList<ChatInfo> infos = DB.searchBlockedUsers(myUsername, input);
 //                chatListPanel.rebuildChatPanelsScrollPane(infos, true);
                 return;
@@ -183,7 +184,7 @@ public class ChatListPanelController {
                 // open profile
                 Profile profile = null;
                 try {
-                    profile = DB.getProfile(chatInfo.getUsername());
+                    profile = DB.getProfilebyUsername(chatInfo.getUsername());
                 } catch (Exception exception) {
                     exception.printStackTrace();
                 }
