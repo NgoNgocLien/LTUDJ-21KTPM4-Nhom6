@@ -7,12 +7,15 @@ import java.util.Scanner;
 public class AdminHandler implements Runnable {
     private final AdminServer server;
     private final Socket clientSocket;
+    private final AdminDatabase dbcon;
     private final Scanner input;
     private final PrintWriter output;
 
-    public AdminHandler(AdminServer server, Socket clientSocket) throws IOException {
+    public AdminHandler(AdminServer server, Socket clientSocket, AdminDatabase dbcon) throws IOException {
         this.server = server;
         this.clientSocket = clientSocket;
+        this.dbcon = dbcon;
+
         this.input = new Scanner(clientSocket.getInputStream());
         this.output = new PrintWriter(clientSocket.getOutputStream(), true);
     }
@@ -20,8 +23,6 @@ public class AdminHandler implements Runnable {
     @Override
     public void run() {
         try {
-            AdminDatabase dbcon = new AdminDatabase();
-            dbcon.connect();
             while (true) {
 //                 Get the input and output streams of the client socket
                 InputStream inputStream = clientSocket.getInputStream();
@@ -587,7 +588,7 @@ public class AdminHandler implements Runnable {
 
                 }
             }
-        } catch (IOException | ClassNotFoundException e) {
+        } catch (IOException e) {
             throw new RuntimeException(e);
         }
         finally {

@@ -4,27 +4,29 @@ import java.io.*;
 import java.net.Socket;
 import java.nio.charset.StandardCharsets;
 import java.sql.SQLException;
+import java.time.LocalDate;
 import java.util.*;
 import javax.mail.*;
 import javax.mail.internet.*;
 
-public class ClientHandler implements Runnable {
+public class UserHandler implements Runnable {
     private final UserServer server;
     private final Socket clientSocket;
+    private final UserDatabase DB;
     private final Scanner input;
     private final PrintWriter output;
+    private String username;
 
-    public ClientHandler(UserServer server, Socket clientSocket) throws IOException {
+    public UserHandler(UserServer server, Socket clientSocket, UserDatabase DB) throws IOException {
         this.server = server;
         this.clientSocket = clientSocket;
+        this.DB = DB;
         this.input = new Scanner(clientSocket.getInputStream());
         this.output = new PrintWriter(clientSocket.getOutputStream(), true);
     }
     @Override
     public void run() {
         try {
-            DBconnection dbcon = new DBconnection();
-            dbcon.connect();
             while (true) {
 //                 Get the input and output streams of the client socket
                 InputStream inputStream = clientSocket.getInputStream();
@@ -34,7 +36,12 @@ public class ClientHandler implements Runnable {
                 // Read data from the client
                 byte[] buffer = new byte[1024];
                 int bytesRead = inputStream.read(buffer);
-                String method = new String(buffer, 0, bytesRead);
+                String msg = new String(buffer, 0, bytesRead);
+
+                System.out.println("msg: " + msg);
+
+                String msgArr[] = msg.split("\n");
+                String method = msgArr[0];
 
                 System.out.println("check");
                 System.out.println(method);
@@ -48,7 +55,7 @@ public class ClientHandler implements Runnable {
                     System.out.println(clientMessage);
                     String[] parts = clientMessage.split(":");
                     String response_login;
-                    if (dbcon.login(parts[0], parts[1]))
+                    if (DB.login(parts[0], parts[1]))
                         response_login = "true";
                     else
                         response_login = "false";
@@ -67,7 +74,7 @@ public class ClientHandler implements Runnable {
                         outputStream.write("false".getBytes());
                     } else {
                         String response_signup;
-                        if (dbcon.signup(parts))
+                        if (DB.signup(parts))
                             response_signup = "true";
                         else response_signup = "false";
                         System.out.println("response");
@@ -77,10 +84,7 @@ public class ClientHandler implements Runnable {
                 }
                 else if (method.equals("forgetpassword")) {
                     System.out.println("user forget pwd");
-                    bytesRead = inputStream.read(buffer);
-                    String msg = new String(buffer, 0, bytesRead);
-                    String[] msgArr = msg.split("\n");
-                    String username = msgArr[0], email = msgArr[1];
+                    String username = msgArr[1], email = msgArr[2];
                     System.out.println(email + " " + username);
 
                     // random mật khẩu
@@ -98,7 +102,7 @@ public class ClientHandler implements Runnable {
                     String newPwd = password.toString();
 
                     String response = "false";
-                    if (dbcon.updatePwd(username, email, newPwd) && sendMail(email, newPwd)){
+                    if (DB.updatePwd(username, email, newPwd) && sendMail(email, newPwd)){
                         response = "true";
                     }
 
@@ -106,6 +110,19 @@ public class ClientHandler implements Runnable {
                     System.out.println(response);
 
                     outputStream.write(response.getBytes(StandardCharsets.UTF_8));
+                } else if (method.equals("getNewFriendMessage")) {
+                    System.out.println("user get new friend's message");
+                    String fromUsername = msgArr[1];
+                    String toUsername = msgArr[2];
+                    LocalDate lastMessage = LocalDate.parse(msgArr[3]);
+
+
+
+//
+//                    System.out.println("response");
+//                    System.out.println(response);
+//
+//                    outputStream.write(response.getBytes(StandardCharsets.UTF_8));
                 }
 
 
@@ -118,7 +135,7 @@ public class ClientHandler implements Runnable {
 
 //                server.broadcastMessage("Client " + clientSocket + ": " + message, this);
             }
-        } catch (IOException | SQLException | ClassNotFoundException e) {
+        } catch (IOException | SQLException e) {
             throw new RuntimeException(e);
         } finally {
             try {

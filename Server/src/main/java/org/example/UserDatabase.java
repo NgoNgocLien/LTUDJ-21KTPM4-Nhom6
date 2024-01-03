@@ -1,32 +1,14 @@
 package org.example;
 
 import java.sql.*;
-import java.time.LocalDateTime;
-import java.time.format.DateTimeFormatter;
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.List;
 import java.util.Objects;
 
 
-public class DBconnection {
+public class UserDatabase {
     Connection connection;
 
-    DBconnection() {
-        this.connection = null;
-    }
-
-    void connect() throws ClassNotFoundException {
-        try {
-            Class.forName("com.mysql.cj.jdbc.Driver");
-            final String DB_URL = "jdbc:mysql://localhost/?allowPublicKeyRetrieval=true&useSSL=false";
-            final String USER = "root";
-            final String PASSWORD = "admin";
-            connection = DriverManager.getConnection(DB_URL, USER, PASSWORD);
-            System.out.println("Connected to DBMS!");
-        } catch (SQLException e) {
-            throw new RuntimeException(e);
-        }
+    UserDatabase(MainDatabase mainDB) {
+        this.connection = mainDB.getConnection();
     }
 
     boolean login(String username, String password) throws SQLException {

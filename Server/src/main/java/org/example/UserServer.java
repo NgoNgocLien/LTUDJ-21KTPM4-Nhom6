@@ -7,19 +7,23 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class UserServer {
-    private final List<ClientHandler> clients = new ArrayList<>();
+    private final List<UserHandler> clients = new ArrayList<>();
 
     public void startServer() {
         try {
             ServerSocket serverSocketUser = new ServerSocket(1435);
             System.out.println("Server started. Listening on port 1435...");
 
+            MainDatabase mainDB = new MainDatabase();
+            mainDB.connect();
+            UserDatabase userDB = new UserDatabase(mainDB);
+
             while (true) {
 
                 Socket clientSocket = serverSocketUser.accept();
                 System.out.println("New user connected: " + clientSocket);
 
-                ClientHandler clientHandler = new ClientHandler(this, clientSocket);
+                UserHandler clientHandler = new UserHandler(this, clientSocket, userDB);
                 clients.add(clientHandler);
 
                 new Thread(clientHandler).start();
@@ -27,18 +31,20 @@ public class UserServer {
 
         } catch (IOException e) {
             e.printStackTrace();
+        } catch (ClassNotFoundException e) {
+            throw new RuntimeException(e);
         }
     }
 
-    public void broadcastMessage(String message, ClientHandler sender) {
-        for (ClientHandler client : clients) {
+    public void broadcastMessage(String message, UserHandler sender) {
+        for (UserHandler client : clients) {
             if (client != sender) {
                 client.sendMessage(message);
             }
         }
     }
 
-    public void removeClient(ClientHandler client) {
+    public void removeClient(UserHandler client) {
         clients.remove(client);
     }
 

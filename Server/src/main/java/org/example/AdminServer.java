@@ -17,24 +17,29 @@ public class AdminServer {
 
             System.out.println("Server started. Listening on port 1235...");
 
+            MainDatabase mainDB = new MainDatabase();
+            mainDB.connect();
+            AdminDatabase adminDB = new AdminDatabase(mainDB);
+
             while (true) {
 
                 Socket adminSocket = serverSocketAdmin.accept();
                 System.out.println("New admin connected: " + adminSocket);
 
-                AdminHandler adminHandler = new AdminHandler(this, adminSocket);
+                AdminHandler adminHandler = new AdminHandler(this, adminSocket, adminDB);
                 admins.add(adminHandler);
 
                 new Thread(adminHandler).start();
-
             }
 
         } catch (IOException e) {
             e.printStackTrace();
+        } catch (ClassNotFoundException e) {
+            throw new RuntimeException(e);
         }
     }
 
-    public void broadcastMessage(String message, ClientHandler sender) {
+    public void broadcastMessage(String message, UserHandler sender) {
 //        for (ClientHandler client : clients) {
 //            if (client != sender) {
 //                client.sendMessage(message);
