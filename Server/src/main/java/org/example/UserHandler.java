@@ -112,11 +112,25 @@ public class UserHandler implements Runnable {
                     outputStream.write(response.getBytes(StandardCharsets.UTF_8));
                 } else if (method.equals("getNewFriendMessage")) {
                     System.out.println("user get new friend's message");
-                    String fromUsername = msgArr[1];
-                    String toUsername = msgArr[2];
+                    String myUsername = msgArr[1];
+                    String friendUsername = msgArr[2];
                     LocalDate lastMessage = LocalDate.parse(msgArr[3]);
 
+                    Object[][] messages = DB.getFriendMessages(myUsername, friendUsername, lastMessage);
+                    objectOutputStream.reset();
+                    objectOutputStream.writeObject(messages);
+                    objectOutputStream.flush();
 
+                    for (Object[] row : messages) {
+                        for (Object element : row) {
+                            System.out.print(element + " ");
+                        }
+                        System.out.println();
+                    }
+
+                    System.out.println("Data sent to client.");
+
+                } else if (method.equals("getNewGroupMessage")) {
 
 //
 //                    System.out.println("response");

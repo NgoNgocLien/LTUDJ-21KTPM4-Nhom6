@@ -88,7 +88,7 @@ public class RegisterFrameController {
 
     private boolean checkPassword(String password) {
         // password can contain any special character
-        String regex = "^[a-zA-Z0-9!@#$%^&*()_+\\-=\\[\\]{};':\"\\\\|,.<>/?]{8,}$";
+        String regex = "^[a-zA-Z0-9!@#$%^&*()_+\\-=\\[\\]{};':\"\\\\|,.<>/?]{6,}$";
         return password.matches(regex);
     }
 
@@ -216,7 +216,7 @@ public class RegisterFrameController {
                 usernameField.requestFocus();
                 return;
             } else if (!checkPassword(password)) {
-                new ErrorMessage(RF, "Password must be at least 8 characters");
+                new ErrorMessage(RF, "Password must be at least 6 characters");
                 passwordField.requestFocus();
                 return;
             } else if (!checkEmail(email)) {

@@ -109,7 +109,7 @@ public class MyProfileFrameController {
 
     private boolean checkPassword(String password) {
         // password can contain any special character
-        String regex = "^[a-zA-Z0-9!@#$%^&*()_+\\-=\\[\\]{};':\"\\\\|,.<>/?]{8,}$";
+        String regex = "^[a-zA-Z0-9!@#$%^&*()_+\\-=\\[\\]{};':\"\\\\|,.<>/?]{6,}$";
         return password.matches(regex);
     }
 
@@ -224,14 +224,14 @@ public class MyProfileFrameController {
 //                new ErrorMessage(MPF, "Fullname is invalid");
 //                fullnameField.requestFocus();
 //                return;
-//            } else if (!checkPassword(currentPassword)) {
-//                new ErrorMessage(MPF, "Current password is invalid");
-//                currentPasswordField.requestFocus();
-//                return;
-//            } else if (!checkPassword(newPassword)) {
-//                new ErrorMessage(MPF, "New password is invalid");
-//                newPasswordField.requestFocus();
-//                return;
+            } else if (!checkPassword(currentPassword)) {
+                new ErrorMessage(MPF, "Current password is invalid");
+                currentPasswordField.requestFocus();
+                return;
+            } else if (!checkPassword(newPassword)) {
+                new ErrorMessage(MPF, "New password is invalid");
+                newPasswordField.requestFocus();
+                return;
             } else if (!checkEmail(email)) {
                 new ErrorMessage(MPF, "Email is invalid");
                 emailField.requestFocus();
@@ -263,11 +263,11 @@ public class MyProfileFrameController {
             DateTimeFormatter formatters = DateTimeFormatter.ofPattern("dd-MM-yyyy");
 
             Profile newProfile = new Profile(myProfile.getDateJoined(), fullname, myProfile.getUsername(), (gender.equals("Male")) ? 1 : 0, LocalDate.parse(dateString, formatters), email, address, newPassword);
-            try {
-                DB.updateMyProfile(newProfile, myProfile.getPassword());
-            } catch (SQLException ex) {
-                throw new RuntimeException(ex);
-            }
+//            try {
+//                DB.updateMyProfile(newProfile, myProfile.getPassword());
+//            } catch (SQLException ex) {
+//                throw new RuntimeException(ex);
+//            }
 
             // close register frame, open login frame
             MPF.dispose();

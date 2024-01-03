@@ -152,6 +152,7 @@ public class IconPanelController {
                 if (confirm == JOptionPane.YES_OPTION) {
                     try {
                         // TODO: set user status to offline
+
                     } catch (Exception ex) {
                         System.out.println("Error closing window: " + ex);
                     }

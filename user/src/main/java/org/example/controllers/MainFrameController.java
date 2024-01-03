@@ -26,6 +26,7 @@ public class MainFrameController {
                     // TODO: update status to offline
 
 
+                    socket.close();
                     DB.closeConnection();
                 } catch (Exception e) {
                     System.out.println("Error closing window: " + e);
@@ -34,8 +35,8 @@ public class MainFrameController {
         });
 
         iconPanelController = new IconPanelController(socket, this);
-        chatListPanelController = new ChatListPanelController(this);
-        conversationPanelController = new ConversationPanelController(this);
+        chatListPanelController = new ChatListPanelController(socket, this);
+        conversationPanelController = new ConversationPanelController(socket, this);
     }
 
     public String getMyUsername() {

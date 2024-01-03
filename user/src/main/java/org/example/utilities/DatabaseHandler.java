@@ -12,7 +12,7 @@ public class DatabaseHandler {
     private final String JDBC_DRIVER = "com.mysql.cj.jdbc.Driver";
     private final String DB_URL = "jdbc:mysql://localhost:3306/db_chat?allowPublicKeyRetrieval=true&useSSL=false";
     private final String USER = "root";
-    private final String PASS = "admin";
+    private final String PASS = "1234";
     private Connection conn = null;
 
     public DatabaseHandler() {
@@ -422,10 +422,10 @@ public class DatabaseHandler {
         return null;
     }
 
-    public ArrayList<Message> getFriendMessages(String myUsername, String friendUsername) {
+    public ArrayList<Message> getFriendMessages(String myUsername, String friendUsername, LocalDate lastMessage) {
         String sql = "SELECT M.id_message, M.sender, M.to_user, M.content, M.sent_time " +
                 "FROM MESSAGE M " +
-                "WHERE ((M.sender = ? AND M.to_user = ?) OR (M.sender = ? AND M.to_user = ?)) AND M.to_group IS NULL " +
+                "WHERE ((M.sender = ? AND M.to_user = ?) OR (M.sender = ? AND M.to_user = ?)) AND M.to_group IS NULL AND M.sent_time > ? " +
                 "ORDER BY M.sent_time";
         PreparedStatement stmt = null;
         try {
@@ -434,6 +434,7 @@ public class DatabaseHandler {
             stmt.setString(2, friendUsername);
             stmt.setString(3, friendUsername);
             stmt.setString(4, myUsername);
+            stmt.setDate(5, Date.valueOf(lastMessage));
             ResultSet rs = stmt.executeQuery();
             ArrayList<Message> messages = new ArrayList<>();
             while (rs.next()) {

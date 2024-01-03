@@ -4,15 +4,20 @@ import org.example.Main;
 import org.example.models.Message;
 import org.example.utilities.Constants;
 import org.example.utilities.DatabaseHandler;
+import org.example.utilities.GetNewMessageWorker;
 import org.example.views.ConversationPanel;
 import org.example.views.MainFrame;
 
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.*;
+import java.io.IOException;
+import java.net.Socket;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 
 public class ConversationPanelController {
+    private Socket socket;
     private MainFrameController MFC;
     private String myUsername;
     private DatabaseHandler DB;
@@ -23,7 +28,40 @@ public class ConversationPanelController {
     private JButton moreButton;
     private JScrollBar messagesScrollBar;
 
-    public ConversationPanelController(MainFrameController mfc) {
+    private class ListenToNewMessage implements Runnable {
+        Thread t;
+        public ListenToNewMessage() {
+            t = new Thread(this, "ListenToNewMessage");
+            t.start();
+        }
+        @Override
+        public void run() {
+            while (true) {
+                try {
+                    Thread.sleep(1000);
+                    if (conversationPanel.getChatInfo() == null) {
+                        continue;
+                    }
+                    ArrayList<Message> messages = GetNewMessageWorker.request(socket, myUsername, conversationPanel.getChatInfo().getUsername(), conversationPanel.getLastMessage());
+                    if (messages.size() > 0) {
+                        for (Message message : messages) {
+                            conversationPanel.addMessage(message);
+                        }
+                        conversationPanel.scrollToBottom();
+                    }
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                } catch (ClassNotFoundException e) {
+                    e.printStackTrace();
+                }
+            }
+        }
+    }
+
+    public ConversationPanelController(Socket socket, MainFrameController mfc) {
+        this.socket = socket;
         this.MFC = mfc;
         this.myUsername = mfc.getMyUsername();
         this.DB = mfc.getDB();
@@ -38,6 +76,8 @@ public class ConversationPanelController {
         inputField.addFocusListener(new InputFieldListener());
         inputField.addKeyListener(new InputFieldListener());
         sendButton.addActionListener(new SendButtonActionListener());
+
+        new ListenToNewMessage();
     }
 
     private class InputFieldListener implements FocusListener, KeyListener {
@@ -89,7 +129,7 @@ public class ConversationPanelController {
                 DB.addMyMessage(msg);
                 conversationPanel.addMessage(msg);
                 inputField.setText("");
-                conversationPanel.srollToBottom();
+                conversationPanel.scrollToBottom();
             }
         }
     }

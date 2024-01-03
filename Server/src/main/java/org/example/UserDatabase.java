@@ -1,6 +1,9 @@
 package org.example;
 
 import java.sql.*;
+import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Objects;
 
 
@@ -93,5 +96,56 @@ public class UserDatabase {
             e.printStackTrace();
         }
         return false;
+    }
+
+    public Object[][] getFriendMessages(String myUsername, String friendUsername, LocalDate lastMessage) {
+//        SELECT M.id_message, M.sender, M.to_user, M.content, M.sent_time
+//        FROM MESSAGE M
+//        INNER JOIN FRIEND F ON (F.username1 = M.sender AND F.username2 = M.to_user) OR (F.username2 = M.sender AND F.username1 = M.to_user)
+//        WHERE ((M.sender = 'hlong' AND M.to_user = 'hlap') OR (M.sender = 'hlap' AND M.to_user = 'hlong')) AND M.to_group IS NULL AND '1990-02-02' < M.sent_time AND ((F.username1 = 'hlong' AND M.sent_time > F.user1_deleteChat) OR (F.username2 = 'hlong' AND M.sent_time > F.user2_deleteChat))
+//        ORDER BY M.sent_time;
+        String sql = "SELECT M.id_message, M.sender, M.to_user, M.content, M.sent_time\n" +
+                "FROM MESSAGE M\n" +
+                "INNER JOIN FRIEND F ON (F.username1 = M.sender AND F.username2 = M.to_user) OR (F.username2 = M.sender AND F.username1 = M.to_user)\n" +
+                "WHERE ((M.sender = ? AND M.to_user = ?) OR (M.sender = ? AND M.to_user = ?)) AND M.to_group IS NULL AND ? < M.sent_time AND ((F.username1 = ? AND M.sent_time > F.user1_deleteChat) OR (F.username2 = ? AND M.sent_time > F.user2_deleteChat))\n" +
+                "ORDER BY M.sent_time;";
+        PreparedStatement stmt = null;
+        try {
+            stmt = connection.prepareStatement(sql);
+            stmt.setString(1, myUsername);
+            stmt.setString(2, friendUsername);
+            stmt.setString(3, friendUsername);
+            stmt.setString(4, myUsername);
+            stmt.setString(5, lastMessage.toString());
+            stmt.setString(6, myUsername);
+            stmt.setString(7, myUsername);
+            ResultSet rs = stmt.executeQuery();
+
+            List<Object[]> rows = new ArrayList<>();
+            while (rs.next()) {
+                int id;
+                String sender, to_user, content;
+                Timestamp sent_time;
+
+                id = rs.getInt("id_message");
+                sender = rs.getString("sender");
+                to_user = rs.getString("to_user");
+                content = rs.getString("content");
+                sent_time = rs.getTimestamp("sent_time");
+
+//                messages.add(new Message(id, sender, to_user, -1, content, sent_time.toLocalDateTime(), sender.equals(myUsername)));
+                Object[] row = {id, sender, to_user, -1, content, sent_time.toLocalDateTime(), sender.equals(myUsername)};
+                rows.add(row);
+            }
+            rs.close();
+            stmt.close();
+
+            Object[][] messages = new Object[rows.size()][];
+            rows.toArray(messages);
+            return messages;
+        } catch (SQLException throwables) {
+            throwables.printStackTrace();
+        }
+        return null;
     }
 }

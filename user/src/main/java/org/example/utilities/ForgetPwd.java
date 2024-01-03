@@ -21,18 +21,13 @@ public class ForgetPwd extends SwingWorker<Void, Void> {
 
     public static boolean request(String username, String email, Socket socket) throws IOException, ClassNotFoundException {
         OutputStream outputStream = socket.getOutputStream();
-        outputStream.write(("forgetpassword").getBytes());
-        String message = username + "\n" + email;
-        outputStream.write(message.getBytes());
+        outputStream.write(("forgetpassword\n" + username + "\n" + email + "\n").getBytes());
 
         InputStream inputStream = socket.getInputStream();
         byte[] buffer = new byte[1024];
 //        inputStream.read(buffer);
         int bytesRead = inputStream.read(buffer);
         String response = new String(buffer, 0, bytesRead, StandardCharsets.UTF_8);
-        System.out.println(response);
-         bytesRead = inputStream.read(buffer);
-         response = new String(buffer, 0, bytesRead, StandardCharsets.UTF_8);
         System.out.println(response);
         return response.equals("true");
     }

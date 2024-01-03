@@ -18,9 +18,10 @@ import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
-import java.util.Locale;
 
 public class ConversationPanel extends JPanel {
+    private ChatInfo chatInfo;
+    private LocalDateTime lastMessage;
     private JPanel chatNamePanel;
     private JLabel nameLabel;
     private JPanel messagesPanel;
@@ -31,7 +32,6 @@ public class ConversationPanel extends JPanel {
     private JPopupMenu moreMenu;
     private JButton moreButton;
     private ArrayList<AMessagePanel> messagePanelList;
-    private ChatInfo chatInfo;
     private ArrayList<JMenuItem> moreOptions;
 
     public ConversationPanel() {
@@ -175,6 +175,7 @@ public class ConversationPanel extends JPanel {
         this.messagesPanel.revalidate();
         this.messagesPanel.repaint();
         this.messagePanelList.add(amp);
+        lastMessage = message.getSentTime();
     }
     public void addTime(LocalDateTime timestamp) {
         MessageTimePanel mtp = new MessageTimePanel(timestamp);
@@ -441,6 +442,7 @@ public class ConversationPanel extends JPanel {
                 addMessage(message);
             }
             buildMoreMenu(true);
+            lastMessage = messages.get(messages.size() - 1).getSentTime();
         }
         else {
             String statement;
@@ -469,6 +471,7 @@ public class ConversationPanel extends JPanel {
                 addMessage(message);
             }
             buildMoreMenu(false);
+            lastMessage = messages.get(messages.size() - 1).getSentTime();
         }
     }
 
@@ -480,6 +483,7 @@ public class ConversationPanel extends JPanel {
     }
     public JButton getMoreButton() { return moreButton; }
     public ChatInfo getChatInfo() { return chatInfo; }
+    public LocalDateTime getLastMessage() { return lastMessage; }
 
     public void buildMoreOptions() {
         moreMenu.removeAll();
@@ -530,7 +534,7 @@ public class ConversationPanel extends JPanel {
     public JScrollBar getMessagesScrollBar() {
         return messagesScrollPane.getVerticalScrollBar();
     }
-    public void srollToBottom() {
+    public void scrollToBottom() {
         JScrollBar verticalBar = messagesScrollPane.getVerticalScrollBar();
         AdjustmentListener downScroller = new AdjustmentListener() {
             @Override

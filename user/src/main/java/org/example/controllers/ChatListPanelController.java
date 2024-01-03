@@ -14,10 +14,13 @@ import org.example.views.ProfileFrame;
 
 import javax.swing.*;
 import java.awt.event.*;
+import java.net.Socket;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Objects;
 
 public class ChatListPanelController {
+    private Socket socket;
     private MainFrameController MFC;
     private MainFrame MF;
     private DatabaseHandler DB;
@@ -28,7 +31,8 @@ public class ChatListPanelController {
     private JButton searchButton;
     private JLabel titleLabel;
 
-    public ChatListPanelController(MainFrameController mfc) {
+    public ChatListPanelController(Socket socket, MainFrameController mfc) {
+        this.socket = socket;
         this.MFC = mfc;
         this.MF = mfc.getMainFrame();
         this.DB = mfc.getDB();
@@ -61,6 +65,9 @@ public class ChatListPanelController {
         @Override
         public void mouseEntered(MouseEvent e) {
             // replace plus icon with plus icon with background
+            if (!titleLabel.getText().trim().equals("Groups")) {
+                return;
+            }
             IconFontSwing.register(FontAwesome.getIconFont());
             Icon plusIcon = IconFontSwing.buildIcon(FontAwesome.PLUS_CIRCLE, 35, Constants.COLOR_TEXT_LIGHT_SECONDARY);
             titleLabel.setIcon(plusIcon);
@@ -68,6 +75,9 @@ public class ChatListPanelController {
 
         @Override
         public void mouseExited(MouseEvent e) {
+            if (!titleLabel.getText().trim().equals("Groups")) {
+                return;
+            }
             // replace plus icon with normal plus icon
             IconFontSwing.register(FontAwesome.getIconFont());
             Icon plusIcon = IconFontSwing.buildIcon(FontAwesome.PLUS_CIRCLE, 35, Constants.COLOR_ICON_PRIMARY);
@@ -168,17 +178,17 @@ public class ChatListPanelController {
                     exception.printStackTrace();
                 }
                 MF.getConversationPanel().rebuildConversationPanel(chatInfo, messages);
-                MF.getConversationPanel().srollToBottom();
+                MF.getConversationPanel().scrollToBottom();
             } else {
                 String username = chatInfo.getUsername();
                 ArrayList<Message> messages = null;
                 try {
-                    messages = DB.getFriendMessages(myUsername, username);
+                    messages = DB.getFriendMessages(myUsername, username, LocalDate.of(1990, 1, 1));
                 } catch (Exception exception) {
                     exception.printStackTrace();
                 }
                 MF.getConversationPanel().rebuildConversationPanel(chatInfo, messages);
-                MF.getConversationPanel().srollToBottom();
+                MF.getConversationPanel().scrollToBottom();
             }
             if (!chatPanel.getMode()) {
                 // open profile

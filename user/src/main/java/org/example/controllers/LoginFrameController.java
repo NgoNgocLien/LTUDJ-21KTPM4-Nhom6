@@ -32,6 +32,7 @@ public class LoginFrameController {
             @Override
             public void windowClosing(WindowEvent windowEvent) {
                 try {
+                    socket.close();
                     DB.closeConnection();
                 } catch (Exception e) {
                     System.out.println("Error closing window: " + e);
@@ -62,7 +63,7 @@ public class LoginFrameController {
 
     private boolean checkPassword(String password) {
         // password can contain any special character
-        String regex = "^[a-zA-Z0-9!@#$%^&*()_+\\-=\\[\\]{};':\"\\\\|,.<>/?]{8,}$";
+        String regex = "^[a-zA-Z0-9!@#$%^&*()_+\\-=\\[\\]{};':\"\\\\|,.<>/?]{6,}$";
         return password.matches(regex);
     }
 
@@ -112,10 +113,10 @@ public class LoginFrameController {
                 new ErrorMessage(LF, "Please enter your password");
                 return;
             }
-//            else if (!checkUsername(username) || !checkPassword(password)) { // Kiểm tra format trước khi kiểm tra qua database
-//                new ErrorMessage(LF, "Invalid username or password");
-//                return;
-//            }
+            else if (!checkUsername(username) || !checkPassword(password)) { // Kiểm tra format trước khi kiểm tra qua database
+                new ErrorMessage(LF, "Invalid username or password");
+                return;
+            }
 
             // TEST & DELETE AFTER: show username and password
 //            JOptionPane.showMessageDialog(LF, "Username: " + username + "\nPassword: " + password);
