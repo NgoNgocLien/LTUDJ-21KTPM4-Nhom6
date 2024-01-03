@@ -2,6 +2,7 @@ package org.example;
 
 import java.sql.*;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
@@ -98,7 +99,7 @@ public class UserDatabase {
         return false;
     }
 
-    public Object[][] getFriendMessages(String myUsername, String friendUsername, LocalDate lastMessage) {
+    public Object[][] getFriendMessages(String myUsername, String friendUsername, String lastMessage) {
 //        SELECT M.id_message, M.sender, M.to_user, M.content, M.sent_time
 //        FROM MESSAGE M
 //        INNER JOIN FRIEND F ON (F.username1 = M.sender AND F.username2 = M.to_user) OR (F.username2 = M.sender AND F.username1 = M.to_user)
@@ -116,7 +117,7 @@ public class UserDatabase {
             stmt.setString(2, friendUsername);
             stmt.setString(3, friendUsername);
             stmt.setString(4, myUsername);
-            stmt.setString(5, lastMessage.toString());
+            stmt.setString(5, lastMessage);
             stmt.setString(6, myUsername);
             stmt.setString(7, myUsername);
             ResultSet rs = stmt.executeQuery();
@@ -134,7 +135,7 @@ public class UserDatabase {
                 sent_time = rs.getTimestamp("sent_time");
 
 //                messages.add(new Message(id, sender, to_user, -1, content, sent_time.toLocalDateTime(), sender.equals(myUsername)));
-                Object[] row = {id, sender, to_user, -1, content, sent_time.toLocalDateTime(), sender.equals(myUsername)};
+                Object[] row = {id, sender, to_user, -1, content, sent_time.toLocalDateTime().toString(), sender.equals(myUsername)};
                 rows.add(row);
             }
             rs.close();

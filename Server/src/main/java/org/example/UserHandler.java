@@ -5,6 +5,7 @@ import java.net.Socket;
 import java.nio.charset.StandardCharsets;
 import java.sql.SQLException;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.*;
 import javax.mail.*;
 import javax.mail.internet.*;
@@ -114,7 +115,7 @@ public class UserHandler implements Runnable {
                     System.out.println("user get new friend's message");
                     String myUsername = msgArr[1];
                     String friendUsername = msgArr[2];
-                    LocalDate lastMessage = LocalDate.parse(msgArr[3]);
+                    String lastMessage = msgArr[3];
 
                     Object[][] messages = DB.getFriendMessages(myUsername, friendUsername, lastMessage);
                     objectOutputStream.reset();
