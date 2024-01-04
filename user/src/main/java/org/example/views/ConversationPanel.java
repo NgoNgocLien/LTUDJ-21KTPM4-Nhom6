@@ -35,6 +35,7 @@ public class ConversationPanel extends JPanel {
     private ArrayList<JMenuItem> moreOptions;
 
     public ConversationPanel() {
+        this.lastMessage = LocalDateTime.of(1990, 1, 1, 0, 0, 0);
         this.chatInfo = null;
         this.messagePanelList = null;
         this.moreOptions = new ArrayList<JMenuItem>();
