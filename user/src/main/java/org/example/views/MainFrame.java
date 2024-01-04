@@ -1,5 +1,6 @@
 package org.example.views;
 
+import org.example.controllers.ConversationPanelController;
 import org.example.models.ChatInfo;
 import org.example.utilities.Constants;
 
@@ -49,6 +50,7 @@ public class MainFrame extends JFrame {
 
         // build the conversation panel
         conversationPanel = new ConversationPanel();
+//        ConversationPanelController conversationPanelController = new ConversationPanelController(null, this);
 
         add(sidePanel, BorderLayout.WEST);
         add(conversationPanel, BorderLayout.CENTER);

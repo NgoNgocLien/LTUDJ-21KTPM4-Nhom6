@@ -15,6 +15,8 @@ public class DatabaseHandler {
     private final String PASS = "admin";
     private Connection conn = null;
 
+    private String loginedUsername;
+
     public DatabaseHandler() {
         try {
             Class.forName(JDBC_DRIVER); // Register JDBC driver
@@ -30,6 +32,14 @@ public class DatabaseHandler {
     public void closeConnection() throws SQLException {
         System.out.println("Database closed.");
         if (conn != null) conn.close();
+    }
+
+    public String getLoginedUsername() {
+        return this.loginedUsername;
+    }
+
+    public void setLoginedUsername(String username) {
+        this.loginedUsername = username;
     }
 
     public Profile getProfilebyUsername(String username) throws SQLException {
@@ -207,6 +217,47 @@ public class DatabaseHandler {
             return -1;
         }
 
+    }
+
+    public void addFriend(String myUsername, String friendUsername) throws SQLException {
+        String sql = "INSERT INTO FRIEND (username1, username2, accepted, user1_deleteChat, user2_deleteChat) VALUES (?, ?, ?, ?, ?)";
+        PreparedStatement stmt = conn.prepareStatement(sql);
+        stmt.setString(1, myUsername);
+        stmt.setString(2, friendUsername);
+        stmt.setInt(3, 0);
+        stmt.setDate(4, Date.valueOf(LocalDate.now()));
+        stmt.setDate(5, Date.valueOf(LocalDate.now()));
+        stmt.executeUpdate();
+        stmt.close();
+    }
+
+    public void blockFriend(String myUsername, String friendUsername) throws SQLException {
+        String sql = "INSERT INTO block (username, block) VALUES (?, ?)";
+        PreparedStatement stmt = conn.prepareStatement(sql);
+        stmt.setString(1, myUsername);
+        stmt.setString(2, friendUsername);
+        stmt.executeUpdate();
+        stmt.close();
+    }
+
+    public void unFriend(String myUsername, String friendUsername) throws SQLException {
+        String sql = "DELETE FROM friend WHERE (username1 = ? AND username2 = ?) OR (username1 = ? AND username2 = ?)";
+        PreparedStatement stmt = conn.prepareStatement(sql);
+        stmt.setString(1, myUsername);
+        stmt.setString(2, friendUsername);
+        stmt.setString(3, friendUsername);
+        stmt.setString(4, myUsername);
+        stmt.executeUpdate();
+        stmt.close();
+    }
+
+    public void acceptFriend(String myUsername, String friendUsername) throws SQLException {
+        String sql = "UPDATE friend SET accepted = 1 WHERE username1 = ? AND username2 = ?";
+        PreparedStatement stmt = conn.prepareStatement(sql);
+        stmt.setString(1, friendUsername);
+        stmt.setString(2, myUsername);
+        stmt.executeUpdate();
+        stmt.close();
     }
 
     public boolean getIsOnline(String username) throws SQLException {
@@ -584,8 +635,7 @@ public class DatabaseHandler {
         stmt = conn.prepareStatement(sql);
         if (!newProfile.getPassword().isEmpty()) {
             stmt.setString(1, newProfile.getPassword());
-        }
-        else {
+        } else {
             stmt.setString(1, currentPass);
         }
         stmt.setString(2, newProfile.getFullname());
@@ -596,6 +646,29 @@ public class DatabaseHandler {
         stmt.setString(7, newProfile.getUsername());
         stmt.executeUpdate();
         stmt.close();
+    }
+
+    public void deleteChat(String deleteUsername, String username2) throws SQLException {
+        String sql = "SELECT * FROM friend WHERE username1 = ? AND username2 = ?";
+        PreparedStatement stmt = conn.prepareStatement(sql);
+        stmt.setString(1, deleteUsername);
+        stmt.setString(2, username2);
+        ResultSet rs = stmt.executeQuery();
+        if (rs.next()) {
+            sql = "UPDATE friend SET user1_deleteChat = ? WHERE username1 = ? AND username2 = ?";
+            stmt.setDate(1, Date.valueOf(LocalDate.now()));
+            stmt.setString(2, deleteUsername);
+            stmt.setString(3, username2);
+            stmt.executeUpdate();
+            stmt.close();
+        } else {
+            sql = "UPDATE friend SET user2_deleteChat = ? WHERE username1 = ? AND username2 = ?";
+            stmt.setDate(1, Date.valueOf(LocalDate.now()));
+            stmt.setString(2, username2);
+            stmt.setString(3, deleteUsername);
+            stmt.executeUpdate();
+            stmt.close();
+        }
     }
 
 

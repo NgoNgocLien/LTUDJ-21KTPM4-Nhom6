@@ -2,9 +2,12 @@ package org.example.views;
 
 import jiconfont.icons.font_awesome.FontAwesome;
 import jiconfont.swing.IconFontSwing;
+import org.example.controllers.ProfileFrameController;
 import org.example.models.ChatInfo;
 import org.example.models.Message;
+import org.example.models.Profile;
 import org.example.utilities.Constants;
+import org.example.utilities.DatabaseHandler;
 
 import javax.swing.*;
 import javax.swing.border.EmptyBorder;
@@ -13,11 +16,13 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.AdjustmentEvent;
 import java.awt.event.AdjustmentListener;
+import java.sql.SQLException;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 
 public class ConversationPanel extends JPanel {
+    DatabaseHandler DB = new DatabaseHandler();
     private ChatInfo chatInfo;
     private LocalDateTime lastMessage;
     private JPanel chatNamePanel;
@@ -29,6 +34,8 @@ public class ConversationPanel extends JPanel {
     private JTextField inputField;
     private JPopupMenu moreMenu;
     private JButton moreButton;
+
+    private JMenuItem viewMembers, addMember, leaveGroup, viewProfile, deleteChat;
     private ArrayList<AMessagePanel> messagePanelList;
     private ArrayList<JMenuItem> moreOptions;
 
@@ -47,6 +54,22 @@ public class ConversationPanel extends JPanel {
         add(chatNamePanel, BorderLayout.NORTH);
         add(messagesScrollPane, BorderLayout.CENTER);
         add(inputPanel, BorderLayout.SOUTH);
+    }
+
+    public JMenuItem getAddMember() {
+        return addMember;
+    }
+
+    public JMenuItem getLeaveGroup() {
+        return leaveGroup;
+    }
+
+    public JMenuItem getViewProfile() {
+        return viewProfile;
+    }
+
+    public JMenuItem getDeleteChat() {
+        return deleteChat;
     }
 
     private void buildChatNamePanel() {
@@ -114,11 +137,29 @@ public class ConversationPanel extends JPanel {
             moreMenu.setPreferredSize(new Dimension(180, 80));
 
             // Create JMenuItems
-            JMenuItem deleteChat, viewProfile;
             viewProfile = new JMenuItem("View profile");
             viewProfile.setFont(Constants.FONT_NORMAL);
+            viewProfile.addActionListener(e -> {
+                try {
+                    Profile profile = DB.getProfilebyUsername(chatInfo.getUsername());
+                    ProfileFrame PF = new ProfileFrame(profile, 2);
+                    ProfileFrameController PFC = new ProfileFrameController(null, PF, DB);
+                } catch (SQLException ex) {
+                    throw new RuntimeException(ex);
+                }
+
+            });
             deleteChat = new JMenuItem("Delete chat");
+            deleteChat.addActionListener(e -> {
+                int dialogResult = JOptionPane.showConfirmDialog(null, "Are you sure you want to delete the chat?", "Confirmation", JOptionPane.YES_NO_OPTION);
+                if (dialogResult == JOptionPane.YES_OPTION) {
+                    System.out.println("Chat deleted!");
+                } else {
+                    System.out.println("Deletion canceled");
+                }
+            });
             deleteChat.setFont(Constants.FONT_NORMAL);
+
 
             // Add JMenuItems to JPopupMenu
             moreMenu.add(viewProfile);
@@ -126,6 +167,8 @@ public class ConversationPanel extends JPanel {
         }
 
 //         Create an ActionListener
+
+
         moreButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {

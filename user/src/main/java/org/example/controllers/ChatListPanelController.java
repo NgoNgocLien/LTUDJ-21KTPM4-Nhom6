@@ -210,6 +210,7 @@ public class ChatListPanelController {
                 }
                 ProfileFrame PF = new ProfileFrame(profile, chatPanel.getMode());
                 ProfileFrameController PFC = new ProfileFrameController(socket, PF, DB);
+                chatPanel.repaint();
             }
             else if(chatPanel.getMode() == 3){
                 // open profile

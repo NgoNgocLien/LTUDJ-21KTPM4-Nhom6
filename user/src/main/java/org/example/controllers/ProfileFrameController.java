@@ -7,6 +7,7 @@ import javax.swing.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.net.Socket;
+import java.sql.SQLException;
 
 public class ProfileFrameController {
     private ProfileFrame PF;
@@ -36,28 +37,54 @@ public class ProfileFrameController {
         }
     }
 
-    private static class addFriendButtonListener implements ActionListener {
+    private class addFriendButtonListener implements ActionListener {
         @Override
         public void actionPerformed(ActionEvent e) {
+            try {
+                DB.addFriend(DB.getLoginedUsername(), PF.getProfile().getUsername());
+                JOptionPane.showMessageDialog(null, "Friend added successfully!", "Success", JOptionPane.INFORMATION_MESSAGE);
+                PF.dispose();
+            } catch (SQLException ex) {
+                throw new RuntimeException(ex);
+            }
 
         }
     }
-    private static class blockButtonListener implements ActionListener {
+    private class blockButtonListener implements ActionListener {
         @Override
         public void actionPerformed(ActionEvent e) {
+            try {
+                DB.blockFriend(DB.getLoginedUsername(), PF.getProfile().getUsername());
+                JOptionPane.showMessageDialog(null, "Friend blocked successfully!", "Success", JOptionPane.INFORMATION_MESSAGE);
+                PF.dispose();
+            } catch (SQLException ex) {
+                throw new RuntimeException(ex);
+            }
+        }
+    }
+    private class unfriendButtonListener implements ActionListener {
+        @Override
+        public void actionPerformed(ActionEvent e) {
+            try {
+                DB.unFriend(DB.getLoginedUsername(), PF.getProfile().getUsername());
+                JOptionPane.showMessageDialog(null, "Friend removed successfully!", "Success", JOptionPane.INFORMATION_MESSAGE);
+                PF.dispose();
+            } catch (SQLException ex) {
+                throw new RuntimeException(ex);
+            }
 
         }
     }
-    private static class unfriendButtonListener implements ActionListener {
+    private class acceptButtonListener implements ActionListener {
         @Override
         public void actionPerformed(ActionEvent e) {
-
-        }
-    }
-    private static class acceptButtonListener implements ActionListener {
-        @Override
-        public void actionPerformed(ActionEvent e) {
-
+            try {
+                DB.acceptFriend(DB.getLoginedUsername(), PF.getProfile().getUsername());
+                JOptionPane.showMessageDialog(null, "Friend request accepted successfully!", "Success", JOptionPane.INFORMATION_MESSAGE);
+                PF.dispose();
+            }catch (SQLException ex) {
+                throw new RuntimeException(ex);
+            }
         }
     }
     private static class removeButtonListener implements ActionListener {
