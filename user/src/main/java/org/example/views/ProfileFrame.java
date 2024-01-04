@@ -8,7 +8,7 @@ import java.awt.*;
 import java.time.format.DateTimeFormatter;
 
 public class ProfileFrame extends JFrame {
-    int mode;
+    int mode; //1: not a friend //2: is a friend //3: request
     private Profile profile;
     private JButton leftButton;
     private JButton rightButton;

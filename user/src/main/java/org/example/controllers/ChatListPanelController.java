@@ -200,8 +200,7 @@ public class ChatListPanelController {
                 MF.getConversationPanel().rebuildConversationPanel(chatInfo, messages);
                 MF.getConversationPanel().scrollToBottom();
             }
-            if (!chatPanel.getMode()) {
-                System.out.println(chatPanel.getMode());
+            if (chatPanel.getMode() == 1) {
                 // open profile
                 Profile profile = null;
                 try {
@@ -209,7 +208,18 @@ public class ChatListPanelController {
                 } catch (Exception exception) {
                     exception.printStackTrace();
                 }
-                ProfileFrame PF = new ProfileFrame(profile, 2);
+                ProfileFrame PF = new ProfileFrame(profile, chatPanel.getMode());
+                ProfileFrameController PFC = new ProfileFrameController(socket, PF, DB);
+            }
+            else if(chatPanel.getMode() == 3){
+                // open profile
+                Profile profile = null;
+                try {
+                    profile = DB.getProfilebyUsername(chatInfo.getUsername());
+                } catch (Exception exception) {
+                    exception.printStackTrace();
+                }
+                ProfileFrame PF = new ProfileFrame(profile, chatPanel.getMode());
                 ProfileFrameController PFC = new ProfileFrameController(socket, PF, DB);
             }
         }

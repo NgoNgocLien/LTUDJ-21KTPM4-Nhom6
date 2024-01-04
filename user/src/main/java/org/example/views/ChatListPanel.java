@@ -86,7 +86,7 @@ public class ChatListPanel extends JPanel {
             chatPanelsPanel.add(noChatPanel);
         } else {
             for (ChatInfo info : infos) {
-                AChatPanel chatPanel = new AChatPanel(info, true);
+                AChatPanel chatPanel = new AChatPanel(info, 2);
                 chatPanels.add(chatPanel);
                 chatPanelsPanel.add(chatPanel);
                 if (info.isUnread()) {
@@ -109,7 +109,7 @@ public class ChatListPanel extends JPanel {
         chatPanelsPanel.add(sentencePanel);
     }
 
-    public void rebuildChatPanelsScrollPane(ArrayList<ChatInfo> infos, boolean mode, boolean suggestedSentence) {
+    public void rebuildChatPanelsScrollPane(ArrayList<ChatInfo> infos, int mode, boolean suggestedSentence) {
         chatPanelsPanel.removeAll();
         if (infos == null || infos.isEmpty()) {
             SentencePanel noChatPanel = new SentencePanel("Empty");
@@ -217,14 +217,14 @@ public class ChatListPanel extends JPanel {
     }
 
     public class AChatPanel extends JPanel {
-        private boolean mode; // true: open chat, false: open profile
+        private int mode; // true: open chat, 1: open profile
         private ChatInfo info;
         private JLabel titleLabel;
         private JLabel subtitleLabel;
         private JLabel onlineLabel;
         private Icon onlineIcon;
 
-        public AChatPanel(ChatInfo info, boolean mode) {
+        public AChatPanel(ChatInfo info, int mode) {
             this.mode = mode;
             this.info = info;
             setBackground(Constants.COLOR_SECONDARY);
@@ -286,7 +286,7 @@ public class ChatListPanel extends JPanel {
             return info;
         }
 
-        public boolean getMode() {
+        public int getMode() {
             return mode;
         }
     }
