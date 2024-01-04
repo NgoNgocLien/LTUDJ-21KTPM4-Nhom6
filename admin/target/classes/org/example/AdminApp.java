@@ -734,7 +734,7 @@ public class AdminApp extends javax.swing.JFrame {
         userMainPanel.setLayout(new java.awt.BorderLayout());
 
         userTitle1.setFont(new java.awt.Font("Arial", 1, 14)); // NOI18N
-        userTitle1.setText("Full name");
+        userTitle1.setText("Name");
 
         userTitle2.setFont(new java.awt.Font("Arial", 1, 14)); // NOI18N
         userTitle2.setText("Username");
@@ -1143,7 +1143,7 @@ public class AdminApp extends javax.swing.JFrame {
         //userFriendPanel.setPreferredSize(new java.awt.Dimension(2276, 500));
 
         userTitle17.setFont(new java.awt.Font("Arial", 1, 14)); // NOI18N
-        userTitle17.setText("Full name");
+        userTitle17.setText("Name");
 
         userTitle18.setFont(new java.awt.Font("Arial", 1, 14)); // NOI18N
         userTitle18.setText("Direct friend count");
@@ -1284,7 +1284,7 @@ public class AdminApp extends javax.swing.JFrame {
                                                         .addComponent(resetButton, javax.swing.GroupLayout.PREFERRED_SIZE, 75, javax.swing.GroupLayout.PREFERRED_SIZE))
                                                 .addGroup(javax.swing.GroupLayout.Alignment.LEADING, userDetailPanelLayout.createSequentialGroup()
                                                         .addComponent(userTitle17)
-                                                        .addGap(120, 120, 120)
+                                                        .addGap(150, 150, 150)
                                                         .addComponent(userTitle18))
                                                 .addComponent(friendTableScrollPane, javax.swing.GroupLayout.PREFERRED_SIZE, 900, javax.swing.GroupLayout.PREFERRED_SIZE))
                                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
@@ -3480,7 +3480,7 @@ public class AdminApp extends javax.swing.JFrame {
         JFreeChart chart = ChartFactory.createBarChart(
                 "Monthly new users",
                 "Month",
-                "Numbers of active users",
+                "Numbers of new users",
                 dataset,
                 PlotOrientation.VERTICAL,
                 true,
@@ -3496,7 +3496,7 @@ public class AdminApp extends javax.swing.JFrame {
         BarRenderer renderer = (BarRenderer) plot.getRenderer();
 
         for (int i = 0; i < 12; i++) {
-            renderer.setSeriesPaint(i, Color.blue); // Set the color to blue
+            renderer.setSeriesPaint(i, Color.blue);
         }
 
         newUserMonthlyChartPanel.add(chartPanel, BorderLayout.NORTH);
