@@ -2,14 +2,10 @@ package org.example.views;
 
 import jiconfont.icons.font_awesome.FontAwesome;
 import jiconfont.swing.IconFontSwing;
-import org.example.controllers.LoginFrameController;
 import org.example.utilities.Constants;
 
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import java.net.Socket;
 
 public class LoginFrame extends JFrame {
     private JTextField usernameField;
@@ -31,7 +27,7 @@ public class LoginFrame extends JFrame {
         setResizable(true);
         // center the frame on screen
         Dimension dim = Toolkit.getDefaultToolkit().getScreenSize();
-        setLocation(dim.width/2 - 240, dim.height/2 - 265);
+        setLocation(dim.width / 2 - 240, dim.height / 2 - 265);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
         // register jiconfont
@@ -118,9 +114,24 @@ public class LoginFrame extends JFrame {
         pack();
         setVisible(true);
     }
-    public JTextField getUsernameField() { return usernameField; }
-    public JPasswordField getPasswordField() { return passwordField; }
-    public JButton getLoginButton() { return loginButton; }
-    public JLabel getRegisterLine() { return registerLine; }
-    public JLabel getForgotPasswordLine() { return forgotPasswordLine; }
+
+    public JTextField getUsernameField() {
+        return usernameField;
+    }
+
+    public JPasswordField getPasswordField() {
+        return passwordField;
+    }
+
+    public JButton getLoginButton() {
+        return loginButton;
+    }
+
+    public JLabel getRegisterLine() {
+        return registerLine;
+    }
+
+    public JLabel getForgotPasswordLine() {
+        return forgotPasswordLine;
+    }
 }

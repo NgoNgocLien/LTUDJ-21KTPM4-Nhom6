@@ -127,7 +127,7 @@ public class ConversationPanelController {
 //                String receiver = conversationPanel.getReceiver();
 //                DB.sendMessage(myUsername, receiver, message);
                 DB.addMyMessage(msg);
-                conversationPanel.addMessage(msg);
+//                conversationPanel.addMessage(msg);
                 inputField.setText("");
                 conversationPanel.scrollToBottom();
             }
