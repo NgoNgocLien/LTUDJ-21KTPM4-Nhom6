@@ -12,7 +12,7 @@ import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 
-public class GetNewMessageWorker extends SwingWorker<Void, Void> {
+public class GetNewMessageWorker extends SwingWorker<ArrayList<Message>, Void> {
     private Socket socket;
     private String myUsername;
     private String friendUsername;
@@ -43,9 +43,9 @@ public class GetNewMessageWorker extends SwingWorker<Void, Void> {
     }
 
     @Override
-    protected Void doInBackground() throws Exception {
+    protected ArrayList<Message> doInBackground() throws Exception {
         try {
-            request(socket, myUsername, friendUsername, lastMessage);
+            return request(socket, myUsername, friendUsername, lastMessage);
         } catch (IOException e) {
             e.printStackTrace();
         }

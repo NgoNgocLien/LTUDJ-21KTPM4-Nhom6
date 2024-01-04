@@ -12,7 +12,7 @@ public class DatabaseHandler {
     private final String JDBC_DRIVER = "com.mysql.cj.jdbc.Driver";
     private final String DB_URL = "jdbc:mysql://localhost:3306/db_chat?allowPublicKeyRetrieval=true&useSSL=false";
     private final String USER = "root";
-    private final String PASS = "1234";
+    private final String PASS = "admin";
     private Connection conn = null;
 
     public DatabaseHandler() {
@@ -460,39 +460,62 @@ public class DatabaseHandler {
     }
 
     public ArrayList<Message> getGroupMessages(String myUsername, int idGroup) {
-        String sql = "WITH GroupMessage AS ( " +
-                "SELECT M.sender, M.sent_time, M.content, M.id_message, " +
-                "ROW_NUMBER() OVER (PARTITION BY M.sent_time) AS rnk " +
-                "FROM MESSAGE M " +
-                "WHERE M.to_group = ?) " +
-                "SELECT sender, sent_time, content, id_message " +
-                "FROM GroupMessage " +
-                "WHERE rnk = 1";
-        PreparedStatement stmt = null;
+//        SELECT delete_history
+//        FROM GROUP_MEMBER
+//        WHERE username = 'hlong' and id_group = 5;
+        ArrayList<Message> messages = new ArrayList<>();
+        String tempSql = "SELECT delete_history " +
+                "FROM GROUP_MEMBER " +
+                "WHERE username = ? and id_group = ?";
+        PreparedStatement tempStmt = null;
         try {
-            stmt = conn.prepareStatement(sql);
-            stmt.setInt(1, idGroup);
-            ResultSet rs = stmt.executeQuery();
-            ArrayList<Message> messages = new ArrayList<>();
-            while (rs.next()) {
-                int id;
-                String sender, content;
-                Timestamp sent_time;
+            tempStmt = conn.prepareStatement(tempSql);
+            tempStmt.setString(1, myUsername);
+            tempStmt.setInt(2, idGroup);
+            ResultSet tempRs = tempStmt.executeQuery();
+            if (tempRs.next()) {
+                Timestamp deleteHistory = tempRs.getTimestamp("delete_history");
+                tempRs.close();
+                tempStmt.close();
+                if (deleteHistory != null) {
+                    String sql = "WITH GroupMessage AS ( " +
+                            "SELECT M.sender, M.sent_time, M.content, M.id_message, " +
+                            "ROW_NUMBER() OVER (PARTITION BY M.sent_time) AS rnk " +
+                            "FROM MESSAGE M " +
+                            "WHERE M.to_group = ?) " +
+                            "SELECT sender, sent_time, content, id_message " +
+                            "FROM GroupMessage " +
+                            "WHERE rnk = 1 AND (sent_time > ?)";
+                    PreparedStatement stmt = null;
+                    try {
+                        stmt = conn.prepareStatement(sql);
+                        stmt.setInt(1, idGroup);
+                        stmt.setTimestamp(2, deleteHistory);
+                        ResultSet rs = stmt.executeQuery();
+                        while (rs.next()) {
+                            int id;
+                            String sender, content;
+                            Timestamp sent_time;
 
-                id = rs.getInt("id_message");
-                sender = rs.getString("sender");
-                content = rs.getString("content");
-                sent_time = rs.getTimestamp("sent_time");
+                            id = rs.getInt("id_message");
+                            sender = rs.getString("sender");
+                            content = rs.getString("content");
+                            sent_time = rs.getTimestamp("sent_time");
 
-                messages.add(new Message(id, sender, "", idGroup, content, sent_time.toLocalDateTime(), sender.equals(myUsername)));
+                            messages.add(new Message(id, sender, "", idGroup, content, sent_time.toLocalDateTime(), sender.equals(myUsername)));
+                        }
+                        rs.close();
+                        stmt.close();
+                        return messages;
+                    } catch (SQLException throwables) {
+                        throwables.printStackTrace();
+                    }
+                }
             }
-            rs.close();
-            stmt.close();
-            return messages;
         } catch (SQLException throwables) {
             throwables.printStackTrace();
         }
-        return null;
+        return messages;
     }
 
     public ArrayList<String> getAllMembers(int idGroup) {

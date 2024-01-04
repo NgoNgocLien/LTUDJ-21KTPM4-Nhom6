@@ -14,7 +14,7 @@ public class MainDatabase {
             Class.forName("com.mysql.cj.jdbc.Driver");
             final String DB_URL = "jdbc:mysql://localhost/db_chat?allowPublicKeyRetrieval=true&useSSL=false";
             final String USER = "root";
-            final String PASSWORD = "1234";
+            final String PASSWORD = "admin";
             connection = DriverManager.getConnection(DB_URL, USER, PASSWORD);
             System.out.println("Connected to DBMS!");
         } catch (SQLException e) {
