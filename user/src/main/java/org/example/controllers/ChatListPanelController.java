@@ -7,9 +7,10 @@ import org.example.models.Message;
 import org.example.models.Profile;
 import org.example.utilities.Constants;
 import org.example.utilities.DatabaseHandler;
+import org.example.utilities.GetFriendMessageWorker;
+import org.example.utilities.GetGroupMessageWorker;
 import org.example.views.ChatListPanel;
 import org.example.views.MainFrame;
-import org.example.views.MyProfileFrame;
 import org.example.views.ProfileFrame;
 
 import javax.swing.*;
@@ -173,7 +174,8 @@ public class ChatListPanelController {
                 int groupId = chatInfo.getGroupId();
                 ArrayList<Message> messages = null;
                 try {
-                    messages = DB.getGroupMessages(myUsername, groupId);
+//                    messages = DB.getGroupMessages(myUsername, groupId);
+                    messages = GetGroupMessageWorker.request(socket, myUsername, groupId, LocalDate.of(1990, 1, 1).atStartOfDay());
                 } catch (Exception exception) {
                     exception.printStackTrace();
                 }
@@ -183,7 +185,8 @@ public class ChatListPanelController {
                 String username = chatInfo.getUsername();
                 ArrayList<Message> messages = null;
                 try {
-                    messages = DB.getFriendMessages(myUsername, username, LocalDate.of(1990, 1, 1));
+//                    messages = DB.getFriendMessages(myUsername, username, LocalDate.of(1990, 1, 1));
+                    messages = GetFriendMessageWorker.request(socket, myUsername, username, LocalDate.of(1990, 1, 1).atStartOfDay());
                 } catch (Exception exception) {
                     exception.printStackTrace();
                 }
