@@ -19,7 +19,6 @@ public class UserServer {
             UserDatabase userDB = new UserDatabase(mainDB);
 
             while (true) {
-
                 Socket clientSocket = serverSocketUser.accept();
                 System.out.println("New user connected: " + clientSocket);
 

@@ -21,11 +21,31 @@ public class Message {
         this.myMessage = myMessage;
     }
 
-    public int getId() { return id; }
-    public String getSender() { return sender; }
-    public String getToUser() { return toUser; }
-    public int getToGroup() { return toGroup; }
-    public String getContent() { return content; }
-    public LocalDateTime getSentTime() { return sentTime; }
-    public boolean isMyMessage() { return myMessage; }
+    public int getId() {
+        return id;
+    }
+
+    public String getSender() {
+        return sender;
+    }
+
+    public String getToUser() {
+        return toUser;
+    }
+
+    public int getToGroup() {
+        return toGroup;
+    }
+
+    public String getContent() {
+        return content;
+    }
+
+    public LocalDateTime getSentTime() {
+        return sentTime;
+    }
+
+    public boolean isMyMessage() {
+        return myMessage;
+    }
 }

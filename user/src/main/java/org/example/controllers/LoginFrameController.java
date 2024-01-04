@@ -139,8 +139,8 @@ public class LoginFrameController {
                     }
                     MainFrame mainFrame = new MainFrame(allChats);
                     MainFrameController mainFrameController = new MainFrameController(socket, mainFrame, DB, username);
+                    LF.dispose();
                 }
-                LF.dispose();
             } catch (SQLException ex) {
                 throw new RuntimeException(ex);
             }
