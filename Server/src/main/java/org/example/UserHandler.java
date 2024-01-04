@@ -111,8 +111,8 @@ public class UserHandler implements Runnable {
                     System.out.println(response);
 
                     outputStream.write(response.getBytes(StandardCharsets.UTF_8));
-                } else if (method.equals("getNewFriendMessage")) {
-                    System.out.println("user get new friend's message");
+                } else if (method.equals("getFriendMessage")) {
+                    System.out.println("user get friend's message");
                     String myUsername = msgArr[1];
                     String friendUsername = msgArr[2];
                     String lastMessage = msgArr[3];
@@ -122,22 +122,43 @@ public class UserHandler implements Runnable {
                     objectOutputStream.writeObject(messages);
                     objectOutputStream.flush();
 
-                    for (Object[] row : messages) {
-                        for (Object element : row) {
-                            System.out.print(element + " ");
+                    if (messages == null) {
+                        System.out.println("No message");
+                    } else {
+                        for (Object[] row : messages) {
+                            for (Object element : row) {
+                                System.out.print(element + " ");
+                            }
+                            System.out.println();
                         }
-                        System.out.println();
                     }
 
                     System.out.println("Data sent to client.");
 
-                } else if (method.equals("getNewGroupMessage")) {
+                } else if (method.equals("getGroupMessage")) {
+                    System.out.println("user get group's message");
+                    String myUsername = msgArr[1];
+                    int idGroup = Integer.parseInt(msgArr[2]);
+                    String lastMessage = msgArr[3];
 
-//
-//                    System.out.println("response");
-//                    System.out.println(response);
-//
-//                    outputStream.write(response.getBytes(StandardCharsets.UTF_8));
+                    Object[][] messages = DB.getGroupMessages(myUsername, idGroup, lastMessage);
+                    objectOutputStream.reset();
+                    objectOutputStream.writeObject(messages);
+                    objectOutputStream.flush();
+
+
+                    if (messages == null) {
+                        System.out.println("No message");
+                    } else {
+                        for (Object[] row : messages) {
+                            for (Object element : row) {
+                                System.out.print(element + " ");
+                            }
+                            System.out.println();
+                        }
+                    }
+
+                    System.out.println("Data sent to client.");
                 }
 
 
