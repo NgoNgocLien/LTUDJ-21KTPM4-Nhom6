@@ -6,12 +6,16 @@
   <component name="ChangeListManager">
     <list default="true" id="ffaf42bc-6bfe-4d2e-bcc5-9de6824c0e6b" name="Changes" comment="">
       <change afterPath="$PROJECT_DIR$/user/src/main/java/org/example/controllers/ProfileFrameController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Update_at_07_12_2023_08_27__Changes_.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Update_at_07_12_2023_08_27__Changes_.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Server/src/main/java/org/example/MainDatabase.java" beforeDir="false" afterPath="$PROJECT_DIR$/Server/src/main/java/org/example/MainDatabase.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Server/src/main/java/org/example/UserServer.java" beforeDir="false" afterPath="$PROJECT_DIR$/Server/src/main/java/org/example/UserServer.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Server/target/classes/org/example/MainDatabase.class" beforeDir="false" afterPath="$PROJECT_DIR$/Server/target/classes/org/example/MainDatabase.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Server/target/classes/org/example/UserServer.class" beforeDir="false" afterPath="$PROJECT_DIR$/Server/target/classes/org/example/UserServer.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/admin/src/main/java/org/example/AdminApp.java" beforeDir="false" afterPath="$PROJECT_DIR$/admin/src/main/java/org/example/AdminApp.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/admin/target/classes/org/example/AdminApp.class" beforeDir="false" afterPath="$PROJECT_DIR$/admin/target/classes/org/example/AdminApp.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/admin/target/classes/org/example/AdminApp.java" beforeDir="false" afterPath="$PROJECT_DIR$/admin/target/classes/org/example/AdminApp.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/user/src/main/java/org/example/controllers/ConversationPanelController.java" beforeDir="false" afterPath="$PROJECT_DIR$/user/src/main/java/org/example/controllers/ConversationPanelController.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/user/src/main/java/org/example/controllers/LoginFrameController.java" beforeDir="false" afterPath="$PROJECT_DIR$/user/src/main/java/org/example/controllers/LoginFrameController.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/user/src/main/java/org/example/models/Message.java" beforeDir="false" afterPath="$PROJECT_DIR$/user/src/main/java/org/example/models/Message.java" afterDir="false" />
@@ -83,7 +87,7 @@
     "RunOnceActivity.OpenProjectViewOnStart": "true",
     "RunOnceActivity.ShowReadmeOnStart": "true",
     "WebServerToolWindowFactoryState": "false",
-    "git-widget-placeholder": "main",
+    "git-widget-placeholder": "Merging main",
     "ignore.virus.scanning.warn.message": "true",
     "kotlin-language-version-configured": "true",
     "last_opened_file_path": "D:/jiconfont-swing-1.0.1.jar",
@@ -113,7 +117,7 @@
       <recent name="org.example" />
     </key>
   </component>
-  <component name="RunManager" selected="Application.Main">
+  <component name="RunManager" selected="Application.Main Server">
     <configuration name="Main Admin" type="Application" factoryName="Application" temporary="true">
       <option name="MAIN_CLASS_NAME" value="org.example.Main" />
       <module name="admin" />
@@ -232,8 +236,8 @@
     </list>
     <recent_temporary>
       <list>
-        <item itemvalue="Application.Main" />
         <item itemvalue="Application.Main Server" />
+        <item itemvalue="Application.Main" />
         <item itemvalue="Application.Main Admin" />
         <item itemvalue="Application.Main User" />
         <item itemvalue="Application.Main User" />
@@ -315,6 +319,9 @@
       <workItem from="1703865471114" duration="4711000" />
       <workItem from="1703907245384" duration="10769000" />
       <workItem from="1704181723636" duration="1423000" />
+      <workItem from="1704248708005" duration="1234000" />
+      <workItem from="1704341194035" duration="822000" />
+      <workItem from="1704343832849" duration="3184000" />
     </task>
     <servers />
   </component>
