@@ -1,7 +1,6 @@
 package org.example.controllers;
 
 import org.example.utilities.DatabaseHandler;
-import org.example.views.LoginFrame;
 import org.example.views.ProfileFrame;
 
 import javax.swing.*;
@@ -12,28 +11,59 @@ import java.net.Socket;
 public class ProfileFrameController {
     private ProfileFrame PF;
     private DatabaseHandler DB;
-    private JButton friendButton;
-    private JButton blockButton;
+    private JButton leftButton;
+    private JButton rightButton;
+
+    private int mode;
 
     public ProfileFrameController(Socket socket, ProfileFrame PF, DatabaseHandler DB) {
         this.PF = PF;
         this.DB = DB;
 
-        this.friendButton = PF.getFriendButton();
-        this.blockButton = PF.getBlockButton();
+        this.leftButton = PF.getLeftButton();
+        this.rightButton = PF.getRightButton();
+        this.mode = PF.getMode();
 
-        this.friendButton.addActionListener(new FriendButtonListener());
-//        this.blockButton.addMouseListener(new BlockButtonListener());
+        if (mode == 1) {
+            leftButton.addActionListener(new addFriendButtonListener());
+            rightButton.addActionListener(new blockButtonListener());
+        } else if (mode == 2) {
+            leftButton.addActionListener(new unfriendButtonListener());
+            rightButton.addActionListener(new blockButtonListener());
+        } else if (mode == 3) {
+            leftButton.addActionListener(new acceptButtonListener());
+            rightButton.addActionListener(new removeButtonListener());
+        }
     }
 
-    private class FriendButtonListener implements ActionListener {
+    private static class addFriendButtonListener implements ActionListener {
         @Override
         public void actionPerformed(ActionEvent e) {
-            if (friendButton.getText().equals("Add friend")) {
-                friendButton.setText("Remove friend");
-            } else {
-                friendButton.setText("Add friend");
-            }
+
+        }
+    }
+    private static class blockButtonListener implements ActionListener {
+        @Override
+        public void actionPerformed(ActionEvent e) {
+
+        }
+    }
+    private static class unfriendButtonListener implements ActionListener {
+        @Override
+        public void actionPerformed(ActionEvent e) {
+
+        }
+    }
+    private static class acceptButtonListener implements ActionListener {
+        @Override
+        public void actionPerformed(ActionEvent e) {
+
+        }
+    }
+    private static class removeButtonListener implements ActionListener {
+        @Override
+        public void actionPerformed(ActionEvent e) {
+
         }
     }
 }

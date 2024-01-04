@@ -8,7 +8,6 @@ import org.example.utilities.Constants;
 import javax.swing.*;
 import javax.swing.border.EmptyBorder;
 import java.awt.*;
-import java.lang.reflect.InvocationTargetException;
 import java.util.ArrayList;
 
 public class ChatListPanel extends JPanel {
@@ -20,6 +19,8 @@ public class ChatListPanel extends JPanel {
     private ArrayList<AChatPanel> chatPanels;
     private String inputFieldPlaceholder;
     private Icon plusIcon;
+    private JPanel chatPanelsPanel;
+
     public ChatListPanel(ArrayList<ChatInfo> infos) {
         this.infos = infos;
         this.inputFieldPlaceholder = "Search for a message";
@@ -67,7 +68,6 @@ public class ChatListPanel extends JPanel {
         add(chatPanelsScrollPane, BorderLayout.CENTER);
     }
 
-    private JPanel chatPanelsPanel;
     public void buildChatPanelsScrollPane(ArrayList<ChatInfo> infos) {
         chatPanelsScrollPane = new JScrollPane();
         chatPanelsScrollPane.setBackground(Constants.COLOR_SECONDARY);
@@ -84,8 +84,7 @@ public class ChatListPanel extends JPanel {
         if (infos == null || infos.isEmpty()) {
             SentencePanel noChatPanel = new SentencePanel("Empty");
             chatPanelsPanel.add(noChatPanel);
-        }
-        else {
+        } else {
             for (ChatInfo info : infos) {
                 AChatPanel chatPanel = new AChatPanel(info, true);
                 chatPanels.add(chatPanel);
@@ -105,23 +104,6 @@ public class ChatListPanel extends JPanel {
         chatPanelsScrollPane.setViewportView(tmp);
     }
 
-    private class SentencePanel extends JPanel {
-        String sentence;
-        public SentencePanel(String sentence) {
-            setBackground(Constants.COLOR_SECONDARY);
-            setLayout(new GridLayout(1, 1, 0, 0));
-            setBorder(new EmptyBorder(10, 10, 0, 10));
-            setPreferredSize(new Dimension(300, 45));
-
-            JLabel sentenceLabel = new JLabel();
-            sentenceLabel.setText(sentence);
-            sentenceLabel.setForeground(Constants.COLOR_TEXT_LIGHT);
-            sentenceLabel.setFont(Constants.FONT_ITALIC);
-
-            add(sentenceLabel);
-        }
-    }
-
     public void addSentenceToChatList(String sentence) {
         SentencePanel sentencePanel = new SentencePanel(sentence);
         chatPanelsPanel.add(sentencePanel);
@@ -132,8 +114,7 @@ public class ChatListPanel extends JPanel {
         if (infos == null || infos.isEmpty()) {
             SentencePanel noChatPanel = new SentencePanel("Empty");
             chatPanelsPanel.add(noChatPanel);
-        }
-        else {
+        } else {
             if (suggestedSentence) {
                 addSentenceToChatList("Users you may know");
             }
@@ -154,6 +135,85 @@ public class ChatListPanel extends JPanel {
         tmp.setBackground(Constants.COLOR_SECONDARY);
         tmp.add(chatPanelsPanel, BorderLayout.NORTH);
         chatPanelsScrollPane.setViewportView(tmp);
+    }
+
+    public void setTitleLabel(String title, boolean hasPlusIcon) {
+        titleLabel.setText(title);
+        titleLabel.setIcon(null);
+
+        if (hasPlusIcon) {
+            IconFontSwing.register(FontAwesome.getIconFont());
+            this.plusIcon = IconFontSwing.buildIcon(FontAwesome.PLUS_CIRCLE, 35, Constants.COLOR_ICON_PRIMARY);
+            titleLabel.setIcon(this.plusIcon);
+            titleLabel.setHorizontalTextPosition(JLabel.LEFT);
+            titleLabel.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
+            titleLabel.setToolTipText("Create a new group");
+            ToolTipManager.sharedInstance().setInitialDelay(100);
+        } else {
+            titleLabel.setCursor(Cursor.getPredefinedCursor(Cursor.DEFAULT_CURSOR));
+            titleLabel.setToolTipText(null);
+        }
+    }
+
+    public ArrayList<AChatPanel> getChatPanels() {
+        return chatPanels;
+    }
+
+    public void setFocusChatPanel(AChatPanel chatPanel) {
+        chatPanels.forEach(panel -> panel.setBackground(Constants.COLOR_SECONDARY));
+        chatPanel.setHighlighted();
+    }
+
+    public JScrollPane getChatPanelsScrollPane() {
+        return chatPanelsScrollPane;
+    }
+
+    public JTextField getInputField() {
+        return searchField;
+    }
+
+    public JButton getSearchButton() {
+        return searchButton;
+    }
+
+    public Icon getPlusIcon() {
+        return this.plusIcon;
+    }
+
+    public JLabel getTitleLabel() {
+        return titleLabel;
+    }
+
+    public String getInputFieldPlaceholder() {
+        return inputFieldPlaceholder;
+    }
+
+    public void setInputFieldPlaceholder(String placeholder) {
+        this.inputFieldPlaceholder = placeholder;
+        if (this.searchField.hasFocus()) {
+            return;
+        } else {
+            searchField.setText(placeholder);
+            searchField.setForeground(Constants.COLOR_TEXT_SECONDARY);
+        }
+    }
+
+    private class SentencePanel extends JPanel {
+        String sentence;
+
+        public SentencePanel(String sentence) {
+            setBackground(Constants.COLOR_SECONDARY);
+            setLayout(new GridLayout(1, 1, 0, 0));
+            setBorder(new EmptyBorder(10, 10, 0, 10));
+            setPreferredSize(new Dimension(300, 45));
+
+            JLabel sentenceLabel = new JLabel();
+            sentenceLabel.setText(sentence);
+            sentenceLabel.setForeground(Constants.COLOR_TEXT_LIGHT);
+            sentenceLabel.setFont(Constants.FONT_ITALIC);
+
+            add(sentenceLabel);
+        }
     }
 
     public class AChatPanel extends JPanel {
@@ -187,14 +247,17 @@ public class ChatListPanel extends JPanel {
             add(titleLabel);
             add(subtitleLabel);
         }
+
         public void setHighlighted() {
             setBackground(Constants.COLOR_TERTIARY);
         }
+
         public void setUnread() {
             titleLabel.setForeground(Constants.COLOR_TEXT_LIGHT);
             subtitleLabel.setForeground(Constants.COLOR_TEXT_LIGHT);
             subtitleLabel.setFont(Constants.FONT_SMALL_BOLD);
         }
+
         public void setOnlineLabel(boolean isOnline) {
             if (!isOnline) {
                 titleLabel.setIcon(null);
@@ -210,60 +273,21 @@ public class ChatListPanel extends JPanel {
             titleLabel.setIcon(onlineIcon);
             titleLabel.setHorizontalTextPosition(JLabel.LEFT);
         }
+
         public void setTitleLabel(String title) {
             titleLabel.setText(title);
         }
+
         public void setSubtitleLabel(String subtitle) {
             subtitleLabel.setText(subtitle);
         }
-        public ChatInfo getInfo() { return info; }
-        public boolean getMode() { return mode; }
-    }
 
-    public void setTitleLabel(String title, boolean hasPlusIcon) {
-        titleLabel.setText(title);
-        titleLabel.setIcon(null);
+        public ChatInfo getInfo() {
+            return info;
+        }
 
-        if (hasPlusIcon) {
-            IconFontSwing.register(FontAwesome.getIconFont());
-            this.plusIcon = IconFontSwing.buildIcon(FontAwesome.PLUS_CIRCLE, 35, Constants.COLOR_ICON_PRIMARY);
-            titleLabel.setIcon(this.plusIcon);
-            titleLabel.setHorizontalTextPosition(JLabel.LEFT);
-            titleLabel.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
-            titleLabel.setToolTipText("Create a new group");
-            ToolTipManager.sharedInstance().setInitialDelay(100);
-        } else {
-            titleLabel.setCursor(Cursor.getPredefinedCursor(Cursor.DEFAULT_CURSOR));
-            titleLabel.setToolTipText(null);
+        public boolean getMode() {
+            return mode;
         }
     }
-
-    public ArrayList<AChatPanel> getChatPanels() {
-        return chatPanels;
-    }
-
-    public void setFocusChatPanel(AChatPanel chatPanel) {
-        chatPanels.forEach(panel -> panel.setBackground(Constants.COLOR_SECONDARY));
-        chatPanel.setHighlighted();
-    }
-
-    public JScrollPane getChatPanelsScrollPane() {
-        return chatPanelsScrollPane;
-    }
-    public JTextField getInputField() { return searchField; }
-    public JButton getSearchButton() { return searchButton; }
-    public Icon getPlusIcon() {
-        return this.plusIcon;
-    }
-    public JLabel getTitleLabel() { return titleLabel; }
-    public void setInputFieldPlaceholder(String placeholder) {
-        this.inputFieldPlaceholder = placeholder;
-        if (this.searchField.hasFocus()) {
-            return;
-        } else {
-            searchField.setText(placeholder);
-            searchField.setForeground(Constants.COLOR_TEXT_SECONDARY);
-        }
-    }
-    public String getInputFieldPlaceholder() { return inputFieldPlaceholder; }
 }

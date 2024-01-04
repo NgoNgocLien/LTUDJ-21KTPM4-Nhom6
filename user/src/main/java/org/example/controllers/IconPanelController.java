@@ -124,6 +124,7 @@ public class IconPanelController {
                     System.out.println("Error getting all suggested users: " + ex);
                 }
             } else if (e.getSource() == requestIconLabel) {
+                System.out.println("request Icon clicked");
                 iconPanel.setFocusLabel(requestIconLabel);
                 try {
                     ArrayList<ChatInfo> requests = DB.getAllRequests(myUsername);

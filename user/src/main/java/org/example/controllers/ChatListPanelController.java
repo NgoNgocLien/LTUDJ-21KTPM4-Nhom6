@@ -21,11 +21,11 @@ import java.util.ArrayList;
 import java.util.Objects;
 
 public class ChatListPanelController {
+    String myUsername;
     private Socket socket;
     private MainFrameController MFC;
     private MainFrame MF;
     private DatabaseHandler DB;
-    String myUsername;
     private ChatListPanel chatListPanel;
     private ArrayList<ChatListPanel.AChatPanel> chatPanels;
     private JTextField inputField;
@@ -55,6 +55,11 @@ public class ChatListPanelController {
 
     public void setPlusIconListener() {
         titleLabel.addMouseListener(new PlusIconMouseListener());
+    }
+
+    public void renewListener() {
+        chatPanels = chatListPanel.getChatPanels();
+        chatPanels.forEach(chatPanel -> chatPanel.addMouseListener(new ChatPanelMouseListener(chatPanel)));
     }
 
     private class PlusIconMouseListener extends MouseAdapter {
@@ -94,6 +99,7 @@ public class ChatListPanelController {
                 inputField.setForeground(Constants.COLOR_TEXT_PRIMARY);
             }
         }
+
         @Override
         public void focusLost(FocusEvent e) {
             if (inputField.getText().isEmpty()) {
@@ -101,19 +107,24 @@ public class ChatListPanelController {
                 inputField.setText(chatListPanel.getInputFieldPlaceholder());
             }
         }
+
         @Override
         public void keyPressed(KeyEvent e) {
             if (e.getKeyCode() == KeyEvent.VK_ENTER) {
                 searchButton.doClick();
             }
         }
+
         @Override
-        public void keyTyped(KeyEvent e) {}
+        public void keyTyped(KeyEvent e) {
+        }
+
         @Override
-        public void keyReleased(KeyEvent e) {}
+        public void keyReleased(KeyEvent e) {
+        }
     }
 
-    private class  SearchButtonListener implements ActionListener {
+    private class SearchButtonListener implements ActionListener {
         @Override
         public void actionPerformed(ActionEvent e) {
             String input = inputField.getText();
@@ -150,13 +161,9 @@ public class ChatListPanelController {
         }
     }
 
-    public void renewListener() {
-        chatPanels = chatListPanel.getChatPanels();
-        chatPanels.forEach(chatPanel -> chatPanel.addMouseListener(new ChatPanelMouseListener(chatPanel)));
-    }
-
     private class ChatPanelMouseListener extends MouseAdapter {
         ChatListPanel.AChatPanel chatPanel;
+
         public ChatPanelMouseListener(ChatListPanel.AChatPanel chatPanel) {
             this.chatPanel = chatPanel;
         }
@@ -194,6 +201,7 @@ public class ChatListPanelController {
                 MF.getConversationPanel().scrollToBottom();
             }
             if (!chatPanel.getMode()) {
+                System.out.println(chatPanel.getMode());
                 // open profile
                 Profile profile = null;
                 try {
@@ -201,7 +209,8 @@ public class ChatListPanelController {
                 } catch (Exception exception) {
                     exception.printStackTrace();
                 }
-                ProfileFrame PF = new ProfileFrame(profile);
+                ProfileFrame PF = new ProfileFrame(profile, 2);
+                ProfileFrameController PFC = new ProfileFrameController(socket, PF, DB);
             }
         }
     }
