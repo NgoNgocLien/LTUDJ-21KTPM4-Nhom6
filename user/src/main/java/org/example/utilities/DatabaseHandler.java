@@ -1049,4 +1049,36 @@ public class DatabaseHandler {
         stmt.close();
         return friends;
     }
+
+    public void deleteFriendChat(String myUsername, String friendUsername) throws SQLException {
+        String sql = "UPDATE FRIEND SET user1_deleteChat = ? WHERE (username1 = ? AND username2 = ?)";
+        PreparedStatement stmt = conn.prepareStatement(sql);
+        stmt.setTimestamp(1, Timestamp.valueOf(LocalDateTime.now()));
+        stmt.setString(2, myUsername);
+        stmt.setString(3, friendUsername);
+        int row = stmt.executeUpdate();
+        stmt.close();
+        System.out.println("delete friend chat 1");
+
+        if (row != 1) {
+            String sql2 = "UPDATE FRIEND SET user2_deleteChat = ? WHERE (username1 = ? AND username2 = ?)";
+            PreparedStatement stmt2 = conn.prepareStatement(sql2);
+            stmt2.setTimestamp(1, Timestamp.valueOf(LocalDateTime.now()));
+            stmt2.setString(2, friendUsername);
+            stmt2.setString(3, myUsername);
+            stmt2.executeUpdate();
+            stmt2.close();
+            System.out.println("delete friend chat 2");
+        }
+    }
+
+    public void deleteGroupChat(String myUsername, int idGroup) throws SQLException {
+        String sql = "UPDATE GROUP_MEMBER SET delete_history = ? WHERE (username = ? AND id_group = ?)";
+        PreparedStatement stmt = conn.prepareStatement(sql);
+        stmt.setTimestamp(1, Timestamp.valueOf(LocalDateTime.now()));
+        stmt.setString(2, myUsername);
+        stmt.setInt(3, idGroup);
+        stmt.executeUpdate();
+        stmt.close();
+    }
 }

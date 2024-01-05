@@ -152,6 +152,26 @@ public class ConversationPanel extends JPanel {
             }
         });
 
+        deleteChat.addActionListener(e -> {
+            int dialogResult = JOptionPane.showConfirmDialog(null, "Are you sure you want to delete the chat?", "Confirmation", JOptionPane.YES_NO_OPTION);
+            if (dialogResult == JOptionPane.YES_OPTION) {
+                if (chatInfo.isGroup()) {
+                    try {
+                        DB.deleteGroupChat(DB.getLoginedUsername(), chatInfo.getGroupId());
+                        rebuildConversationPanel(chatInfo, null);
+                    } catch (SQLException ex) {
+                        throw new RuntimeException(ex);
+                    }
+                } else if (chatInfo.isFriend()) {
+                    try {
+                        DB.deleteFriendChat(DB.getLoginedUsername(), chatInfo.getUsername());
+                        rebuildConversationPanel(chatInfo, null);
+                    } catch (SQLException ex) {
+                        throw new RuntimeException(ex);
+                    }
+                }
+            }
+        });
         if (chatInfo == null) {
             return;
         }
@@ -166,6 +186,7 @@ public class ConversationPanel extends JPanel {
             moreMenu.add(addMember);
             moreMenu.add(deleteChat);
             moreMenu.add(leaveGroup);
+
         } else if (chatInfo.isFriend()) {
             moreMenu.removeAll();
             moreMenu.setBackground(Constants.COLOR_BACKGROUND);
@@ -181,15 +202,6 @@ public class ConversationPanel extends JPanel {
                     throw new RuntimeException(ex);
                 }
 
-            });
-
-            deleteChat.addActionListener(e -> {
-                int dialogResult = JOptionPane.showConfirmDialog(null, "Are you sure you want to delete the chat?", "Confirmation", JOptionPane.YES_NO_OPTION);
-                if (dialogResult == JOptionPane.YES_OPTION) {
-                    System.out.println("Chat deleted!");
-                } else {
-                    System.out.println("Deletion canceled");
-                }
             });
 
             // Add JMenuItems to JPopupMenu
@@ -314,6 +326,8 @@ public class ConversationPanel extends JPanel {
             enableInput();
 
             if (messages == null || messages.isEmpty()) {
+                repaint();
+                revalidate();
                 return;
             }
 
@@ -343,9 +357,11 @@ public class ConversationPanel extends JPanel {
             }
             addStartConversationPanel(info.getChatName(), info.getUsername(), statement);
 
-//            if (messages == null || messages.isEmpty()) {
-//                return;
-//            }
+            if (messages == null || messages.isEmpty()) {
+                repaint();
+                revalidate();
+                return;
+            }
 
             if(messages != null && !messages.isEmpty() && messages.get(0) != null) {
                 LocalDateTime lastTime = messages.get(0).getSentTime();
