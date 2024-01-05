@@ -1,23 +1,21 @@
 package org.example.views;
 
-import jiconfont.icons.font_awesome.FontAwesome;
-import jiconfont.swing.IconFontSwing;
 import org.example.models.Profile;
 import org.example.utilities.Constants;
 
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 
 public class ProfileFrame extends JFrame {
+    int mode; //1: not a friend //2: is a friend //3: request //4: blocked
     private Profile profile;
-    private JButton friendButton;
-    private JButton blockButton;
+    private JButton leftButton;
+    private JButton rightButton;
 
-    public ProfileFrame(Profile profile) {
+
+    public ProfileFrame(Profile profile, int mode) {
+        this.mode = mode;
         try {
             UIManager.setLookAndFeel("com.sun.java.swing.plaf.windows.WindowsLookAndFeel");
         } catch (Exception e) {
@@ -32,7 +30,7 @@ public class ProfileFrame extends JFrame {
         setResizable(true);
         // center the frame on screen
         Dimension dim = Toolkit.getDefaultToolkit().getScreenSize();
-        setLocation(dim.width/2 - 240, dim.height/2 - 320);
+        setLocation(dim.width / 2 - 240, dim.height / 2 - 320);
 
         // title
         JLabel fullnameTitleLabel = new JLabel(profile.getFullname());
@@ -121,24 +119,63 @@ public class ProfileFrame extends JFrame {
         buttonContainer.setAlignmentX(Component.CENTER_ALIGNMENT);
         buttonContainer.setMaximumSize(new Dimension(300, 40));
 
-        // edit profile button
-        friendButton = new JButton("Add friend"); // if friend, show "Unfriend"
-        friendButton.setFont(Constants.FONT_NORMAL);
-        friendButton.setAlignmentX(Component.CENTER_ALIGNMENT);
-        friendButton.setMaximumSize(new Dimension(140, 40));
-        friendButton.setBorder(BorderFactory.createEmptyBorder(10, 0, 10, 0));
+        if (mode == 1) {
+            // edit profile button
+            leftButton = new JButton("Add friend"); // if friend, show "Unfriend"
+            leftButton.setFont(Constants.FONT_NORMAL);
+            leftButton.setAlignmentX(Component.CENTER_ALIGNMENT);
+            leftButton.setMaximumSize(new Dimension(140, 40));
+            leftButton.setBorder(BorderFactory.createEmptyBorder(10, 0, 10, 0));
 
-        // block button
-        blockButton = new JButton("Block"); // if blocked, show "Unblock"
-        blockButton.setFont(Constants.FONT_NORMAL);
-        blockButton.setAlignmentX(Component.CENTER_ALIGNMENT);
-        blockButton.setMaximumSize(new Dimension(140, 40));
-        blockButton.setBorder(BorderFactory.createEmptyBorder(10, 0, 10, 0));
+            // block button
+            rightButton = new JButton("Block"); // if blocked, show "Unblock"
+            rightButton.setFont(Constants.FONT_NORMAL);
+            rightButton.setAlignmentX(Component.CENTER_ALIGNMENT);
+            rightButton.setMaximumSize(new Dimension(140, 40));
+            rightButton.setBorder(BorderFactory.createEmptyBorder(10, 0, 10, 0));
+        } else if (mode == 2) {
+            // edit profile button
+            leftButton = new JButton("Unfriend"); // if friend, show "Unfriend"
+            leftButton.setFont(Constants.FONT_NORMAL);
+            leftButton.setAlignmentX(Component.CENTER_ALIGNMENT);
+            leftButton.setMaximumSize(new Dimension(140, 40));
+            leftButton.setBorder(BorderFactory.createEmptyBorder(10, 0, 10, 0));
 
-        buttonContainer.add(friendButton);
+            // block button
+            rightButton = new JButton("Block"); // if blocked, show "Unblock"
+            rightButton.setFont(Constants.FONT_NORMAL);
+            rightButton.setAlignmentX(Component.CENTER_ALIGNMENT);
+            rightButton.setMaximumSize(new Dimension(140, 40));
+            rightButton.setBorder(BorderFactory.createEmptyBorder(10, 0, 10, 0));
+        } else if (mode == 3) {
+            // edit profile button
+            leftButton = new JButton("Accept"); // if friend, show "Unfriend"
+            leftButton.setFont(Constants.FONT_NORMAL);
+            leftButton.setAlignmentX(Component.CENTER_ALIGNMENT);
+            leftButton.setMaximumSize(new Dimension(140, 40));
+            leftButton.setBorder(BorderFactory.createEmptyBorder(10, 0, 10, 0));
+
+            // block button
+            rightButton = new JButton("Remove"); // if blocked, show "Unblock"
+            rightButton.setFont(Constants.FONT_NORMAL);
+            rightButton.setAlignmentX(Component.CENTER_ALIGNMENT);
+            rightButton.setMaximumSize(new Dimension(140, 40));
+            rightButton.setBorder(BorderFactory.createEmptyBorder(10, 0, 10, 0));
+        } else if (mode == 4) {
+            leftButton = new JButton("Unblock");
+            leftButton.setFont(Constants.FONT_NORMAL);
+            leftButton.setAlignmentX(Component.CENTER_ALIGNMENT);
+            leftButton.setMaximumSize(new Dimension(140, 40));
+            leftButton.setBorder(BorderFactory.createEmptyBorder(10, 0, 10, 0));
+        }
+
+
+        buttonContainer.add(leftButton);
         buttonContainer.add(Box.createRigidArea(new Dimension(20, 0)));
-        buttonContainer.add(blockButton);
+        if (rightButton != null) {
+            buttonContainer.add(rightButton);
 
+        }
         add(fullnameTitleLabel);
         add(usernameTitleLabel);
 
@@ -170,23 +207,43 @@ public class ProfileFrame extends JFrame {
         // empty space
         add(Box.createRigidArea(new Dimension(0, 20)));
 
-        friendButton.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                System.out.println("click");
-                System.out.println(profile.getFullname());
-
-            }
-        });
 
         pack();
         setVisible(true);
     }
-    public Profile getProfile() { return profile; }
-    public JButton getFriendButton() { return friendButton; }
-    public JButton getBlockButton() { return blockButton; }
 
-//    public static void main(String[] args) {
+    public Profile getProfile() {
+        return profile;
+    }
+
+    public void setProfile(Profile profile) {
+        this.profile = profile;
+    }
+
+    public int getMode() {
+        return mode;
+    }
+
+    public void setMode(int mode) {
+        this.mode = mode;
+    }
+
+    public JButton getLeftButton() {
+        return leftButton;
+    }
+
+    public void setLeftButton(JButton leftButton) {
+        this.leftButton = leftButton;
+    }
+
+    public JButton getRightButton() {
+        return rightButton;
+    }
+
+    public void setRightButton(JButton rightButton) {
+        this.rightButton = rightButton;
+    }
+    //    public static void main(String[] args) {
 //        Profile profile = new Profile(LocalDate.now(), "fullname", "username", 1, LocalDate.now(), "email", "address");
 //        SwingUtilities.invokeLater(() -> new ProfileFrame(profile));
 //    }

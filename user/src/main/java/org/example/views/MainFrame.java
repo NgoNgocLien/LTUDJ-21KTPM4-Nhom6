@@ -1,5 +1,6 @@
 package org.example.views;
 
+import org.example.controllers.ConversationPanelController;
 import org.example.models.ChatInfo;
 import org.example.utilities.Constants;
 
@@ -7,8 +8,6 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ComponentAdapter;
 import java.awt.event.ComponentEvent;
-import java.lang.reflect.Array;
-import java.net.Socket;
 import java.util.ArrayList;
 
 public class MainFrame extends JFrame {
@@ -51,9 +50,22 @@ public class MainFrame extends JFrame {
 
         // build the conversation panel
         conversationPanel = new ConversationPanel();
+//        ConversationPanelController conversationPanelController = new ConversationPanelController(null, this);
 
         add(sidePanel, BorderLayout.WEST);
         add(conversationPanel, BorderLayout.CENTER);
+    }
+
+    public IconPanel getIconPanel() {
+        return iconPanel;
+    }
+
+    public ChatListPanel getChatListPanel() {
+        return chatListPanel;
+    }
+
+    public ConversationPanel getConversationPanel() {
+        return conversationPanel;
     }
 
     private class MainFrameComponentListener extends ComponentAdapter {
@@ -71,14 +83,4 @@ public class MainFrame extends JFrame {
             mainFrame.repaint();
         }
     }
-
-    public IconPanel getIconPanel() {
-        return iconPanel;
-    }
-
-    public ChatListPanel getChatListPanel() {
-        return chatListPanel;
-    }
-
-    public ConversationPanel getConversationPanel() { return conversationPanel; }
 }

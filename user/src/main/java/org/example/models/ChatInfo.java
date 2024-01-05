@@ -51,13 +51,39 @@ public class ChatInfo {
         this.isFriend = false;
     }
 
-    public String getChatName() { return chatName; }
-    public String getUsername() { return username; }
-    public String getSubTitle() { return subTitle; }
-    public boolean isGroup() { return isGroup; }
-    public int getGroupId() { return groupId; }
-    public int getQuantity() { return quantity; }
-    public boolean isOnline() { return isOnline; }
-    public boolean isUnread() { return isUnread; }
-    public boolean isFriend() { return isFriend; }
+    public String getChatName() {
+        return chatName;
+    }
+
+    public String getUsername() {
+        return username;
+    }
+
+    public String getSubTitle() {
+        return subTitle;
+    }
+
+    public boolean isGroup() {
+        return isGroup;
+    }
+
+    public int getGroupId() {
+        return groupId;
+    }
+
+    public int getQuantity() {
+        return quantity;
+    }
+
+    public boolean isOnline() {
+        return isOnline;
+    }
+
+    public boolean isUnread() {
+        return isUnread;
+    }
+
+    public boolean isFriend() {
+        return isFriend;
+    }
 }

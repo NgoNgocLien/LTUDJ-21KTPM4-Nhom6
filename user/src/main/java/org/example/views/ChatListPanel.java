@@ -8,7 +8,6 @@ import org.example.utilities.Constants;
 import javax.swing.*;
 import javax.swing.border.EmptyBorder;
 import java.awt.*;
-import java.lang.reflect.InvocationTargetException;
 import java.util.ArrayList;
 
 public class ChatListPanel extends JPanel {
@@ -20,6 +19,8 @@ public class ChatListPanel extends JPanel {
     private ArrayList<AChatPanel> chatPanels;
     private String inputFieldPlaceholder;
     private Icon plusIcon;
+    private JPanel chatPanelsPanel;
+
     public ChatListPanel(ArrayList<ChatInfo> infos) {
         this.infos = infos;
         this.inputFieldPlaceholder = "Search for a message";
@@ -67,7 +68,6 @@ public class ChatListPanel extends JPanel {
         add(chatPanelsScrollPane, BorderLayout.CENTER);
     }
 
-    private JPanel chatPanelsPanel;
     public void buildChatPanelsScrollPane(ArrayList<ChatInfo> infos) {
         chatPanelsScrollPane = new JScrollPane();
         chatPanelsScrollPane.setBackground(Constants.COLOR_SECONDARY);
@@ -84,10 +84,9 @@ public class ChatListPanel extends JPanel {
         if (infos == null || infos.isEmpty()) {
             SentencePanel noChatPanel = new SentencePanel("Empty");
             chatPanelsPanel.add(noChatPanel);
-        }
-        else {
+        } else {
             for (ChatInfo info : infos) {
-                AChatPanel chatPanel = new AChatPanel(info, true);
+                AChatPanel chatPanel = new AChatPanel(info, 2);
                 chatPanels.add(chatPanel);
                 chatPanelsPanel.add(chatPanel);
                 if (info.isUnread()) {
@@ -103,23 +102,6 @@ public class ChatListPanel extends JPanel {
         tmp.setBackground(Constants.COLOR_SECONDARY);
         tmp.add(chatPanelsPanel, BorderLayout.NORTH);
         chatPanelsScrollPane.setViewportView(tmp);
-    }
-
-    private class SentencePanel extends JPanel {
-        String sentence;
-        public SentencePanel(String sentence) {
-            setBackground(Constants.COLOR_SECONDARY);
-            setLayout(new GridLayout(1, 1, 0, 0));
-            setBorder(new EmptyBorder(10, 10, 0, 10));
-            setPreferredSize(new Dimension(300, 45));
-
-            JLabel sentenceLabel = new JLabel();
-            sentenceLabel.setText(sentence);
-            sentenceLabel.setForeground(Constants.COLOR_TEXT_LIGHT);
-            sentenceLabel.setFont(Constants.FONT_ITALIC);
-
-            add(sentenceLabel);
-        }
     }
 
     public void addSentenceToChatList(String sentence) {
@@ -127,18 +109,20 @@ public class ChatListPanel extends JPanel {
         chatPanelsPanel.add(sentencePanel);
     }
 
-    public void rebuildChatPanelsScrollPane(ArrayList<ChatInfo> infos, boolean mode, boolean suggestedSentence) {
+    public void rebuildChatPanelsScrollPane(ArrayList<ChatInfo> infos, int mode, boolean suggestedSentence, ChatInfo currentChatInfo) {
         chatPanelsPanel.removeAll();
         if (infos == null || infos.isEmpty()) {
             SentencePanel noChatPanel = new SentencePanel("Empty");
             chatPanelsPanel.add(noChatPanel);
-        }
-        else {
+        } else {
             if (suggestedSentence) {
                 addSentenceToChatList("Users you may know");
             }
             for (ChatInfo info : infos) {
                 AChatPanel chatPanel = new AChatPanel(info, mode);
+                if (info.equals(currentChatInfo)) {
+                    chatPanel.setHighlighted();
+                }
                 chatPanels.add(chatPanel);
                 chatPanelsPanel.add(chatPanel);
                 if (info.isUnread()) {
@@ -154,70 +138,6 @@ public class ChatListPanel extends JPanel {
         tmp.setBackground(Constants.COLOR_SECONDARY);
         tmp.add(chatPanelsPanel, BorderLayout.NORTH);
         chatPanelsScrollPane.setViewportView(tmp);
-    }
-
-    public class AChatPanel extends JPanel {
-        private boolean mode; // true: open chat, false: open profile
-        private ChatInfo info;
-        private JLabel titleLabel;
-        private JLabel subtitleLabel;
-        private JLabel onlineLabel;
-        private Icon onlineIcon;
-
-        public AChatPanel(ChatInfo info, boolean mode) {
-            this.mode = mode;
-            this.info = info;
-            setBackground(Constants.COLOR_SECONDARY);
-            setLayout(new GridLayout(2, 1, 0, 0));
-            setPreferredSize(new Dimension(300, 70));
-            setBorder(new EmptyBorder(10, 10, 10, 10));
-
-            titleLabel = new JLabel();
-            titleLabel.setText(info.getChatName());
-            titleLabel.setForeground(Constants.COLOR_TEXT_LIGHT);
-            titleLabel.setFont(Constants.FONT_BOLD);
-
-            setOnlineLabel(info.isOnline());
-
-            subtitleLabel = new JLabel();
-            subtitleLabel.setText(info.getSubTitle());
-            subtitleLabel.setForeground(Constants.COLOR_TEXT_LIGHT_SECONDARY);
-            subtitleLabel.setFont(Constants.FONT_SMALL);
-
-            add(titleLabel);
-            add(subtitleLabel);
-        }
-        public void setHighlighted() {
-            setBackground(Constants.COLOR_TERTIARY);
-        }
-        public void setUnread() {
-            titleLabel.setForeground(Constants.COLOR_TEXT_LIGHT);
-            subtitleLabel.setForeground(Constants.COLOR_TEXT_LIGHT);
-            subtitleLabel.setFont(Constants.FONT_SMALL_BOLD);
-        }
-        public void setOnlineLabel(boolean isOnline) {
-            if (!isOnline) {
-                titleLabel.setIcon(null);
-                return;
-            }
-            IconFontSwing.register(FontAwesome.getIconFont());
-            onlineIcon = IconFontSwing.buildIcon(FontAwesome.CIRCLE, 10, Constants.COLOR_ONLINE); // initial color is secondary
-            onlineLabel = new JLabel();
-            onlineLabel.setIcon(onlineIcon);
-            onlineLabel.setPreferredSize(new Dimension(20, 20));
-
-            // set icon to the right
-            titleLabel.setIcon(onlineIcon);
-            titleLabel.setHorizontalTextPosition(JLabel.LEFT);
-        }
-        public void setTitleLabel(String title) {
-            titleLabel.setText(title);
-        }
-        public void setSubtitleLabel(String subtitle) {
-            subtitleLabel.setText(subtitle);
-        }
-        public ChatInfo getInfo() { return info; }
-        public boolean getMode() { return mode; }
     }
 
     public void setTitleLabel(String title, boolean hasPlusIcon) {
@@ -250,12 +170,27 @@ public class ChatListPanel extends JPanel {
     public JScrollPane getChatPanelsScrollPane() {
         return chatPanelsScrollPane;
     }
-    public JTextField getInputField() { return searchField; }
-    public JButton getSearchButton() { return searchButton; }
+
+    public JTextField getInputField() {
+        return searchField;
+    }
+
+    public JButton getSearchButton() {
+        return searchButton;
+    }
+
     public Icon getPlusIcon() {
         return this.plusIcon;
     }
-    public JLabel getTitleLabel() { return titleLabel; }
+
+    public JLabel getTitleLabel() {
+        return titleLabel;
+    }
+
+    public String getInputFieldPlaceholder() {
+        return inputFieldPlaceholder;
+    }
+
     public void setInputFieldPlaceholder(String placeholder) {
         this.inputFieldPlaceholder = placeholder;
         if (this.searchField.hasFocus()) {
@@ -265,5 +200,97 @@ public class ChatListPanel extends JPanel {
             searchField.setForeground(Constants.COLOR_TEXT_SECONDARY);
         }
     }
-    public String getInputFieldPlaceholder() { return inputFieldPlaceholder; }
+
+    private class SentencePanel extends JPanel {
+        String sentence;
+
+        public SentencePanel(String sentence) {
+            setBackground(Constants.COLOR_SECONDARY);
+            setLayout(new GridLayout(1, 1, 0, 0));
+            setBorder(new EmptyBorder(10, 10, 0, 10));
+            setPreferredSize(new Dimension(300, 45));
+
+            JLabel sentenceLabel = new JLabel();
+            sentenceLabel.setText(sentence);
+            sentenceLabel.setForeground(Constants.COLOR_TEXT_LIGHT);
+            sentenceLabel.setFont(Constants.FONT_ITALIC);
+
+            add(sentenceLabel);
+        }
+    }
+
+    public class AChatPanel extends JPanel {
+        private int mode; // true: open chat, 1: open profile
+        private ChatInfo info;
+        private JLabel titleLabel;
+        private JLabel subtitleLabel;
+        private JLabel onlineLabel;
+        private Icon onlineIcon;
+
+        public AChatPanel(ChatInfo info, int mode) {
+            this.mode = mode;
+            this.info = info;
+            setBackground(Constants.COLOR_SECONDARY);
+            setLayout(new GridLayout(2, 1, 0, 0));
+            setPreferredSize(new Dimension(300, 70));
+            setBorder(new EmptyBorder(10, 10, 10, 10));
+
+            titleLabel = new JLabel();
+            titleLabel.setText(info.getChatName());
+            titleLabel.setForeground(Constants.COLOR_TEXT_LIGHT);
+            titleLabel.setFont(Constants.FONT_BOLD);
+
+            setOnlineLabel(info.isOnline());
+
+            subtitleLabel = new JLabel();
+            subtitleLabel.setText(info.getSubTitle());
+            subtitleLabel.setForeground(Constants.COLOR_TEXT_LIGHT_SECONDARY);
+            subtitleLabel.setFont(Constants.FONT_SMALL);
+
+            add(titleLabel);
+            add(subtitleLabel);
+        }
+
+        public void setHighlighted() {
+            setBackground(Constants.COLOR_TERTIARY);
+        }
+
+        public void setUnread() {
+            titleLabel.setForeground(Constants.COLOR_TEXT_LIGHT);
+            subtitleLabel.setForeground(Constants.COLOR_TEXT_LIGHT);
+            subtitleLabel.setFont(Constants.FONT_SMALL_BOLD);
+        }
+
+        public void setOnlineLabel(boolean isOnline) {
+            if (!isOnline) {
+                titleLabel.setIcon(null);
+                return;
+            }
+            IconFontSwing.register(FontAwesome.getIconFont());
+            onlineIcon = IconFontSwing.buildIcon(FontAwesome.CIRCLE, 10, Constants.COLOR_ONLINE); // initial color is secondary
+            onlineLabel = new JLabel();
+            onlineLabel.setIcon(onlineIcon);
+            onlineLabel.setPreferredSize(new Dimension(20, 20));
+
+            // set icon to the right
+            titleLabel.setIcon(onlineIcon);
+            titleLabel.setHorizontalTextPosition(JLabel.LEFT);
+        }
+
+        public void setTitleLabel(String title) {
+            titleLabel.setText(title);
+        }
+
+        public void setSubtitleLabel(String subtitle) {
+            subtitleLabel.setText(subtitle);
+        }
+
+        public ChatInfo getInfo() {
+            return info;
+        }
+
+        public int getMode() {
+            return mode;
+        }
+    }
 }

@@ -1,25 +1,25 @@
 package org.example.views;
 
-import org.example.models.ChatInfo;
-import org.example.models.Message;
-import org.example.utilities.Constants;
-
 import jiconfont.icons.font_awesome.FontAwesome;
 import jiconfont.swing.IconFontSwing;
+import org.example.controllers.ProfileFrameController;
+import org.example.models.ChatInfo;
+import org.example.models.Message;
+import org.example.models.Profile;
+import org.example.utilities.Constants;
+import org.example.utilities.DatabaseHandler;
 
 import javax.swing.*;
 import javax.swing.border.EmptyBorder;
 import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import java.awt.event.AdjustmentEvent;
-import java.awt.event.AdjustmentListener;
-import java.time.LocalDate;
+import java.awt.event.*;
+import java.sql.SQLException;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 
 public class ConversationPanel extends JPanel {
+    DatabaseHandler DB = new DatabaseHandler();
     private ChatInfo chatInfo;
     private LocalDateTime lastMessage;
     private JPanel chatNamePanel;
@@ -31,6 +31,8 @@ public class ConversationPanel extends JPanel {
     private JTextField inputField;
     private JPopupMenu moreMenu;
     private JButton moreButton;
+
+    private JMenuItem viewMembers, addMember, leaveGroup, viewProfile, deleteChat;
     private ArrayList<AMessagePanel> messagePanelList;
     private ArrayList<JMenuItem> moreOptions;
 
@@ -49,6 +51,22 @@ public class ConversationPanel extends JPanel {
         add(chatNamePanel, BorderLayout.NORTH);
         add(messagesScrollPane, BorderLayout.CENTER);
         add(inputPanel, BorderLayout.SOUTH);
+    }
+
+    public JMenuItem getAddMember() {
+        return addMember;
+    }
+
+    public JMenuItem getLeaveGroup() {
+        return leaveGroup;
+    }
+
+    public JMenuItem getViewProfile() {
+        return viewProfile;
+    }
+
+    public JMenuItem getDeleteChat() {
+        return deleteChat;
     }
 
     private void buildChatNamePanel() {
@@ -110,18 +128,35 @@ public class ConversationPanel extends JPanel {
             moreMenu.add(addMember);
             moreMenu.add(deleteChat);
             moreMenu.add(leaveGroup);
-        }
-        else {
+        } else {
             moreMenu.removeAll();
             moreMenu.setBackground(Constants.COLOR_BACKGROUND);
             moreMenu.setPreferredSize(new Dimension(180, 80));
 
             // Create JMenuItems
-            JMenuItem deleteChat, viewProfile;
             viewProfile = new JMenuItem("View profile");
             viewProfile.setFont(Constants.FONT_NORMAL);
+            viewProfile.addActionListener(e -> {
+                try {
+                    Profile profile = DB.getProfilebyUsername(chatInfo.getUsername());
+                    ProfileFrame PF = new ProfileFrame(profile, 2);
+                    ProfileFrameController PFC = new ProfileFrameController(null, PF, DB);
+                } catch (SQLException ex) {
+                    throw new RuntimeException(ex);
+                }
+
+            });
             deleteChat = new JMenuItem("Delete chat");
+            deleteChat.addActionListener(e -> {
+                int dialogResult = JOptionPane.showConfirmDialog(null, "Are you sure you want to delete the chat?", "Confirmation", JOptionPane.YES_NO_OPTION);
+                if (dialogResult == JOptionPane.YES_OPTION) {
+                    System.out.println("Chat deleted!");
+                } else {
+                    System.out.println("Deletion canceled");
+                }
+            });
             deleteChat.setFont(Constants.FONT_NORMAL);
+
 
             // Add JMenuItems to JPopupMenu
             moreMenu.add(viewProfile);
@@ -129,19 +164,21 @@ public class ConversationPanel extends JPanel {
         }
 
 //         Create an ActionListener
+
+
         moreButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                Component b=(Component)e.getSource();
+                Component b = (Component) e.getSource();
 
                 // Get the location of the point 'on the screen'
-                Point p=b.getLocationOnScreen();
+                Point p = b.getLocationOnScreen();
 
-                moreMenu.show(chatNamePanel,0,0);
+                moreMenu.show(chatNamePanel, 0, 0);
 
                 // Now set the location of the JPopupMenu
                 // This location is relative to the screen
-                moreMenu.setLocation(p.x,p.y+b.getHeight());
+                moreMenu.setLocation(p.x, p.y + b.getHeight());
             }
         });
     }
@@ -178,13 +215,202 @@ public class ConversationPanel extends JPanel {
         this.messagePanelList.add(amp);
         lastMessage = message.getSentTime();
     }
+
     public void addTime(LocalDateTime timestamp) {
         MessageTimePanel mtp = new MessageTimePanel(timestamp);
         this.messagesPanel.add(mtp);
     }
+
     public void addMemberName(String username) {
         MemberNamePanel mnp = new MemberNamePanel(username);
         this.messagesPanel.add(mnp);
+    }
+
+    private void buildInputPanel() {
+        inputPanel = new JPanel();
+        inputPanel.setBackground(Constants.COLOR_BACKGROUND);
+        inputPanel.setLayout(new BorderLayout());
+        inputPanel.setBorder(new EmptyBorder(10, 10, 10, 10));
+
+        inputField = new JTextField();
+//        inputField.setBackground(Constants.COLOR_BACKGROUND);
+//        inputField.setBorder(BorderFactory.createLineBorder(Constants.COLOR_PRIMARY, 1));
+        inputField.setFont(Constants.FONT_NORMAL);
+//        inputField.setForeground(Constants.COLOR_TEXT_SECONDARY);
+//        inputField.setText("Type your message here...");
+
+        sendButton = new JButton("Send");
+//        sendButton.setBackground(Constants.COLOR_PRIMARY);
+        sendButton.setFont(Constants.FONT_BOLD);
+        sendButton.setForeground(Constants.COLOR_TEXT_LIGHT);
+        sendButton.setBorderPainted(false);
+        sendButton.setPreferredSize(new Dimension(100, 40));
+
+        disableInput();
+
+        inputPanel.add(inputField, BorderLayout.CENTER);
+        inputPanel.add(sendButton, BorderLayout.EAST);
+    }
+
+    public void setChatName(String chatName, boolean isOnline) {
+        this.nameLabel.setText(chatName);
+        if (isOnline) {
+            IconFontSwing.register(FontAwesome.getIconFont());
+            Icon onlineIcon = IconFontSwing.buildIcon(FontAwesome.CIRCLE, 10, Constants.COLOR_ONLINE);
+            this.nameLabel.setIcon(onlineIcon);
+        } else {
+            IconFontSwing.register(FontAwesome.getIconFont());
+            Icon onlineIcon = IconFontSwing.buildIcon(FontAwesome.CIRCLE, 10, Constants.COLOR_BACKGROUND);
+            this.nameLabel.setIcon(onlineIcon);
+        }
+    }
+
+    public void rebuildConversationPanel(ChatInfo info, ArrayList<Message> messages) {
+        this.chatInfo = info;
+        if (this.messagePanelList != null)
+            this.messagePanelList.clear();
+        this.messagePanelList = new ArrayList<AMessagePanel>();
+
+        setChatName(info.getChatName(), info.isOnline());
+
+        this.messagesPanel.removeAll();
+        if (info.isGroup()) {
+            addStartConversationPanel(info.getChatName(), info.getQuantity() + " members", "You are a member of this group. Let start chatting!");
+            enableInput();
+
+            if (messages == null || messages.isEmpty()) {
+                return;
+            }
+
+            LocalDateTime lastTime = messages.get(0).getSentTime();
+            addTime(lastTime);
+
+            for (Message message : messages) {
+                if (message.getSentTime().getDayOfYear() != lastTime.getDayOfYear() || message.getSentTime().getHour() != lastTime.getHour()) {
+                    addTime(message.getSentTime());
+                    lastTime = message.getSentTime();
+                }
+                if (!message.isMyMessage()) {
+                    addMemberName(message.getSender());
+                }
+                addMessage(message);
+            }
+            buildMoreMenu(true);
+            lastMessage = messages.get(messages.size() - 1).getSentTime();
+        } else {
+            String statement;
+            if (info.isFriend()) {
+                statement = "You are friend with this user. You can now chat with your friend.";
+                enableInput();
+            } else {
+                statement = "You are not friend with this user. You cannot chat with this user.";
+                disableInput();
+            }
+            addStartConversationPanel(info.getChatName(), info.getUsername(), statement);
+
+//            if (messages == null || messages.isEmpty()) {
+//                return;
+//            }
+
+            if(messages != null && !messages.isEmpty()) {
+                LocalDateTime lastTime = messages.get(0).getSentTime();
+                addTime(lastTime);
+
+                for (Message message : messages) {
+                    if (message.getSentTime().getDayOfYear() != lastTime.getDayOfYear() || message.getSentTime().getHour() != lastTime.getHour()) {
+                        addTime(message.getSentTime());
+                        lastTime = message.getSentTime();
+                    }
+                    addMessage(message);
+                }
+                lastMessage = messages.get(messages.size() - 1).getSentTime();
+            }
+
+            buildMoreMenu(false);
+        }
+    }
+
+    public JTextField getInputField() {
+        return inputField;
+    }
+
+    public JButton getSendButton() {
+        return sendButton;
+    }
+
+    public JButton getMoreButton() {
+        return moreButton;
+    }
+
+    public ChatInfo getChatInfo() {
+        return chatInfo;
+    }
+
+    public LocalDateTime getLastMessage() {
+        return lastMessage;
+    }
+
+    public void buildMoreOptions() {
+        moreMenu.removeAll();
+        moreMenu.setBackground(Constants.COLOR_BACKGROUND);
+        moreMenu.setPreferredSize(new Dimension(160, 160));
+
+        // Create JMenuItems
+//        JMenuItem deleteChat, clearChat, viewProfile, blockUser;
+//        deleteChat = new JMenuItem("Delete Chat");
+//        deleteChat.setFont(Constants.FONT_NORMAL);
+//        clearChat = new JMenuItem("Clear Chat");
+//        clearChat.setFont(Constants.FONT_NORMAL);
+//        viewProfile = new JMenuItem("View Profile");
+//        viewProfile.setFont(Constants.FONT_NORMAL);
+//        blockUser = new JMenuItem("Block User");
+//        blockUser.setFont(Constants.FONT_NORMAL);
+//
+//        // Add JMenuItems to JPopupMenu
+//        moreMenu.add(deleteChat);
+//        moreMenu.add(clearChat);
+//        moreMenu.add(viewProfile);
+//        moreMenu.add(blockUser);
+    }
+
+    public void disableInput() {
+        inputField.setEnabled(false);
+        inputField.setBorder(BorderFactory.createLineBorder(Constants.COLOR_TEXT_LIGHT_SECONDARY, 1));
+        inputField.setForeground(Constants.COLOR_TEXT_LIGHT_SECONDARY);
+        inputField.setText("You cannot chat here.");
+        sendButton.setEnabled(false);
+        sendButton.setBackground(Constants.COLOR_TEXT_LIGHT_SECONDARY);
+    }
+
+    public void enableInput() {
+        inputField.setEnabled(true);
+        inputField.setBorder(BorderFactory.createLineBorder(Constants.COLOR_PRIMARY, 1));
+        if (!inputField.hasFocus()) {
+            inputField.setText("Type your message here...");
+            inputField.setForeground(Constants.COLOR_TEXT_SECONDARY);
+        } else {
+            inputField.setText("");
+            inputField.setForeground(Constants.COLOR_TEXT_PRIMARY);
+        }
+        sendButton.setEnabled(true);
+        sendButton.setBackground(Constants.COLOR_PRIMARY);
+    }
+
+    public JScrollBar getMessagesScrollBar() {
+        return messagesScrollPane.getVerticalScrollBar();
+    }
+
+    public void scrollToBottom() {
+        JScrollBar verticalBar = messagesScrollPane.getVerticalScrollBar();
+        AdjustmentListener downScroller = new AdjustmentListener() {
+            @Override
+            public void adjustmentValueChanged(AdjustmentEvent e) {
+                Adjustable adjustable = e.getAdjustable();
+                adjustable.setValue(adjustable.getMaximum());
+                verticalBar.removeAdjustmentListener(this);
+            }
+        };
+        verticalBar.addAdjustmentListener(downScroller);
     }
 
     private class StartConversationPanel extends JPanel {
@@ -242,7 +468,7 @@ public class ConversationPanel extends JPanel {
             setBackground(null);
 
             mLabel = new JLabel(message);
-            if (mLabel.getPreferredSize().width > 500){
+            if (mLabel.getPreferredSize().width > 500) {
                 mLabel = new JLabel("<html><p style='width: 600'>" + message + "</p></html>");
             }
             mLabel.setFont(Constants.FONT_NORMAL);
@@ -275,8 +501,40 @@ public class ConversationPanel extends JPanel {
                 mPanel.add(backgroundPanel);
 
                 add(mPanel);
+                mPanel.addMouseListener(new MouseAdapter() {
+                    @Override
+                    public void mouseClicked(MouseEvent e) {
+                        if(e.getButton() == MouseEvent.BUTTON3){
+                            showContextMenu(e.getX(), e.getY());
+                        }
+                    }
+                });
             }
 
+        }
+        private void showContextMenu(int x, int y) {
+            JPopupMenu contextMenu = new JPopupMenu();
+
+            // Add menu items to the context menu
+            JMenuItem reportSpam = new JMenuItem("Report this message as spam");
+
+            // Add your custom action listeners to the menu items
+            contextMenu.add(reportSpam);
+
+            reportSpam.addActionListener(new ActionListener() {
+                @Override
+                public void actionPerformed(ActionEvent e) {
+                    try {
+                        DB.reportSpamMessage(msg.getId());
+                        JOptionPane.showMessageDialog(null, "Report successfully!", "Success", JOptionPane.INFORMATION_MESSAGE);
+                    } catch (SQLException ex) {
+                        throw new RuntimeException(ex);
+                    }
+                }
+            });
+
+            // Show the context menu at the specified location
+            contextMenu.show(mPanel, x, y);
         }
     }
 
@@ -326,32 +584,6 @@ public class ConversationPanel extends JPanel {
         }
     }
 
-    private void buildInputPanel() {
-        inputPanel = new JPanel();
-        inputPanel.setBackground(Constants.COLOR_BACKGROUND);
-        inputPanel.setLayout(new BorderLayout());
-        inputPanel.setBorder(new EmptyBorder(10, 10, 10, 10));
-
-        inputField = new JTextField();
-//        inputField.setBackground(Constants.COLOR_BACKGROUND);
-//        inputField.setBorder(BorderFactory.createLineBorder(Constants.COLOR_PRIMARY, 1));
-        inputField.setFont(Constants.FONT_NORMAL);
-//        inputField.setForeground(Constants.COLOR_TEXT_SECONDARY);
-//        inputField.setText("Type your message here...");
-
-        sendButton = new JButton("Send");
-//        sendButton.setBackground(Constants.COLOR_PRIMARY);
-        sendButton.setFont(Constants.FONT_BOLD);
-        sendButton.setForeground(Constants.COLOR_TEXT_LIGHT);
-        sendButton.setBorderPainted(false);
-        sendButton.setPreferredSize(new Dimension(100, 40));
-
-        disableInput();
-
-        inputPanel.add(inputField, BorderLayout.CENTER);
-        inputPanel.add(sendButton, BorderLayout.EAST);
-    }
-
     private class RoundedPanel extends JPanel {
         private Color backgroundColor;
         private int cornerRadius = 15;
@@ -393,158 +625,9 @@ public class ConversationPanel extends JPanel {
             } else {
                 graphics.setColor(getBackground());
             }
-            graphics.fillRoundRect(0, 0, width-1, height-1, arcs.width, arcs.height); //paint background
+            graphics.fillRoundRect(0, 0, width - 1, height - 1, arcs.width, arcs.height); //paint background
             graphics.setColor(getBackground());
-            graphics.drawRoundRect(0, 0, width-1, height-1, arcs.width, arcs.height); //paint border
+            graphics.drawRoundRect(0, 0, width - 1, height - 1, arcs.width, arcs.height); //paint border
         }
-    }
-
-    public void setChatName(String chatName, boolean isOnline) {
-        this.nameLabel.setText(chatName);
-        if (isOnline) {
-            IconFontSwing.register(FontAwesome.getIconFont());
-            Icon onlineIcon = IconFontSwing.buildIcon(FontAwesome.CIRCLE, 10, Constants.COLOR_ONLINE);
-            this.nameLabel.setIcon(onlineIcon);
-        } else {
-            IconFontSwing.register(FontAwesome.getIconFont());
-            Icon onlineIcon = IconFontSwing.buildIcon(FontAwesome.CIRCLE, 10, Constants.COLOR_BACKGROUND);
-            this.nameLabel.setIcon(onlineIcon);
-        }
-    }
-
-    public void rebuildConversationPanel(ChatInfo info, ArrayList<Message> messages) {
-        this.chatInfo = info;
-        if (this.messagePanelList != null)
-            this.messagePanelList.clear();
-        this.messagePanelList = new ArrayList<AMessagePanel>();
-
-        setChatName(info.getChatName(), info.isOnline());
-
-        this.messagesPanel.removeAll();
-        if (info.isGroup()) {
-            addStartConversationPanel(info.getChatName(), info.getQuantity() + " members", "You are a member of this group. Let start chatting!");
-            enableInput();
-
-            if (messages == null || messages.isEmpty()) {
-                return;
-            }
-
-            LocalDateTime lastTime = messages.get(0).getSentTime();
-            addTime(lastTime);
-
-            for (Message message : messages) {
-                if (message.getSentTime().getDayOfYear() != lastTime.getDayOfYear() || message.getSentTime().getHour() != lastTime.getHour()) {
-                    addTime(message.getSentTime());
-                    lastTime = message.getSentTime();
-                }
-                if (!message.isMyMessage()) {
-                    addMemberName(message.getSender());
-                }
-                addMessage(message);
-            }
-            buildMoreMenu(true);
-            lastMessage = messages.get(messages.size() - 1).getSentTime();
-        }
-        else {
-            String statement;
-            if (info.isFriend()) {
-                statement = "You are friend with this user. You can now chat with your friend.";
-                enableInput();
-            }
-            else {
-                statement = "You are not friend with this user. You cannot chat with this user.";
-                disableInput();
-            }
-            addStartConversationPanel(info.getChatName(), info.getUsername(), statement);
-
-            if (messages == null || messages.isEmpty()) {
-                return;
-            }
-
-            LocalDateTime lastTime = messages.get(0).getSentTime();
-            addTime(lastTime);
-
-            for (Message message : messages) {
-                if (message.getSentTime().getDayOfYear() != lastTime.getDayOfYear() || message.getSentTime().getHour() != lastTime.getHour()) {
-                    addTime(message.getSentTime());
-                    lastTime = message.getSentTime();
-                }
-                addMessage(message);
-            }
-            buildMoreMenu(false);
-            lastMessage = messages.get(messages.size() - 1).getSentTime();
-        }
-    }
-
-    public JTextField getInputField() {
-        return inputField;
-    }
-    public JButton getSendButton() {
-        return sendButton;
-    }
-    public JButton getMoreButton() { return moreButton; }
-    public ChatInfo getChatInfo() { return chatInfo; }
-    public LocalDateTime getLastMessage() { return lastMessage; }
-
-    public void buildMoreOptions() {
-        moreMenu.removeAll();
-        moreMenu.setBackground(Constants.COLOR_BACKGROUND);
-        moreMenu.setPreferredSize(new Dimension(160, 160));
-
-        // Create JMenuItems
-//        JMenuItem deleteChat, clearChat, viewProfile, blockUser;
-//        deleteChat = new JMenuItem("Delete Chat");
-//        deleteChat.setFont(Constants.FONT_NORMAL);
-//        clearChat = new JMenuItem("Clear Chat");
-//        clearChat.setFont(Constants.FONT_NORMAL);
-//        viewProfile = new JMenuItem("View Profile");
-//        viewProfile.setFont(Constants.FONT_NORMAL);
-//        blockUser = new JMenuItem("Block User");
-//        blockUser.setFont(Constants.FONT_NORMAL);
-//
-//        // Add JMenuItems to JPopupMenu
-//        moreMenu.add(deleteChat);
-//        moreMenu.add(clearChat);
-//        moreMenu.add(viewProfile);
-//        moreMenu.add(blockUser);
-    }
-
-    public void disableInput() {
-        inputField.setEnabled(false);
-        inputField.setBorder(BorderFactory.createLineBorder(Constants.COLOR_TEXT_LIGHT_SECONDARY, 1));
-        inputField.setForeground(Constants.COLOR_TEXT_LIGHT_SECONDARY);
-        inputField.setText("You cannot chat here.");
-        sendButton.setEnabled(false);
-        sendButton.setBackground(Constants.COLOR_TEXT_LIGHT_SECONDARY);
-    }
-
-    public void enableInput() {
-        inputField.setEnabled(true);
-        inputField.setBorder(BorderFactory.createLineBorder(Constants.COLOR_PRIMARY, 1));
-        if (!inputField.hasFocus()) {
-            inputField.setText("Type your message here...");
-            inputField.setForeground(Constants.COLOR_TEXT_SECONDARY);
-        } else {
-            inputField.setText("");
-            inputField.setForeground(Constants.COLOR_TEXT_PRIMARY);
-        }
-        sendButton.setEnabled(true);
-        sendButton.setBackground(Constants.COLOR_PRIMARY);
-    }
-
-    public JScrollBar getMessagesScrollBar() {
-        return messagesScrollPane.getVerticalScrollBar();
-    }
-    public void scrollToBottom() {
-        JScrollBar verticalBar = messagesScrollPane.getVerticalScrollBar();
-        AdjustmentListener downScroller = new AdjustmentListener() {
-            @Override
-            public void adjustmentValueChanged(AdjustmentEvent e) {
-                Adjustable adjustable = e.getAdjustable();
-                adjustable.setValue(adjustable.getMaximum());
-                verticalBar.removeAdjustmentListener(this);
-            }
-        };
-        verticalBar.addAdjustmentListener(downScroller);
     }
 }

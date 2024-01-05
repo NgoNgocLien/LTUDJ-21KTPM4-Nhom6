@@ -6,6 +6,7 @@ import org.example.models.Profile;
 
 import java.sql.*;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 
 public class DatabaseHandler {
@@ -14,6 +15,8 @@ public class DatabaseHandler {
     private final String USER = "root";
     private final String PASS = "admin";
     private Connection conn = null;
+
+    private String loginedUsername;
 
     public DatabaseHandler() {
         try {
@@ -27,9 +30,39 @@ public class DatabaseHandler {
         }
     }
 
+    public void reportSpamMessage(int idMessage) throws SQLException {
+        String sql = "SELECT * FROM spam WHERE id_message = ?";
+        PreparedStatement stmt = conn.prepareStatement(sql);
+        stmt.setInt(1, idMessage);
+        ResultSet resultSet = stmt.executeQuery();
+        if (resultSet.next()) {
+            System.out.println("Spam reported1.");
+            sql = "UPDATE spam SET report_time = ? WHERE id_message = ?";
+            stmt = conn.prepareStatement(sql);
+            stmt.setTimestamp(1, Timestamp.valueOf(LocalDateTime.now()));
+            stmt.setInt(2, idMessage);
+            stmt.executeUpdate();
+        } else {
+            System.out.println("Spam reported2.");
+            sql = "INSERT INTO spam (id_message, report_time) VALUES (?, ?)";
+            stmt = conn.prepareStatement(sql);
+            stmt.setInt(1, idMessage);
+            stmt.setTimestamp(2, Timestamp.valueOf(LocalDateTime.now()));
+            stmt.executeUpdate();
+        }
+    }
+
     public void closeConnection() throws SQLException {
         System.out.println("Database closed.");
         if (conn != null) conn.close();
+    }
+
+    public String getLoginedUsername() {
+        return this.loginedUsername;
+    }
+
+    public void setLoginedUsername(String username) {
+        this.loginedUsername = username;
     }
 
     public Profile getProfilebyUsername(String username) throws SQLException {
@@ -101,7 +134,7 @@ public class DatabaseHandler {
                 "    FROM MESSAGE M " +
                 "    INNER JOIN FRIEND F ON ((M.sender = F.username1 AND M.to_user = F.username2) OR (M.sender = F.username2 AND M.to_user = F.username1)) " +
                 "    WHERE M.to_group IS NULL AND ((F.username1 = ? AND M.sent_time > F.user1_deleteChat) " +
-                "       \t\t\t\t\t\t   OR (F.username2 = ? AND M.sent_time > F.user2_deleteChat)) " +
+                "          OR (F.username2 = ? AND M.sent_time > F.user2_deleteChat)) " +
                 ") " +
                 " " +
                 "SELECT " +
@@ -207,6 +240,47 @@ public class DatabaseHandler {
             return -1;
         }
 
+    }
+
+    public void addFriend(String myUsername, String friendUsername) throws SQLException {
+        String sql = "INSERT INTO FRIEND (username1, username2, accepted, user1_deleteChat, user2_deleteChat) VALUES (?, ?, ?, ?, ?)";
+        PreparedStatement stmt = conn.prepareStatement(sql);
+        stmt.setString(1, myUsername);
+        stmt.setString(2, friendUsername);
+        stmt.setInt(3, 0);
+        stmt.setDate(4, Date.valueOf(LocalDate.now()));
+        stmt.setDate(5, Date.valueOf(LocalDate.now()));
+        stmt.executeUpdate();
+        stmt.close();
+    }
+
+    public void blockFriend(String myUsername, String friendUsername) throws SQLException {
+        String sql = "INSERT INTO block (username, block) VALUES (?, ?)";
+        PreparedStatement stmt = conn.prepareStatement(sql);
+        stmt.setString(1, myUsername);
+        stmt.setString(2, friendUsername);
+        stmt.executeUpdate();
+        stmt.close();
+    }
+
+    public void unFriend(String myUsername, String friendUsername) throws SQLException {
+        String sql = "DELETE FROM friend WHERE (username1 = ? AND username2 = ?) OR (username1 = ? AND username2 = ?)";
+        PreparedStatement stmt = conn.prepareStatement(sql);
+        stmt.setString(1, myUsername);
+        stmt.setString(2, friendUsername);
+        stmt.setString(3, friendUsername);
+        stmt.setString(4, myUsername);
+        stmt.executeUpdate();
+        stmt.close();
+    }
+
+    public void acceptFriend(String myUsername, String friendUsername) throws SQLException {
+        String sql = "UPDATE friend SET accepted = 1 WHERE username1 = ? AND username2 = ?";
+        PreparedStatement stmt = conn.prepareStatement(sql);
+        stmt.setString(1, friendUsername);
+        stmt.setString(2, myUsername);
+        stmt.executeUpdate();
+        stmt.close();
     }
 
     public boolean getIsOnline(String username) throws SQLException {
@@ -584,8 +658,7 @@ public class DatabaseHandler {
         stmt = conn.prepareStatement(sql);
         if (!newProfile.getPassword().isEmpty()) {
             stmt.setString(1, newProfile.getPassword());
-        }
-        else {
+        } else {
             stmt.setString(1, currentPass);
         }
         stmt.setString(2, newProfile.getFullname());
@@ -596,6 +669,96 @@ public class DatabaseHandler {
         stmt.setString(7, newProfile.getUsername());
         stmt.executeUpdate();
         stmt.close();
+    }
+
+    public void unblockFriend(String myUsername, String friendUsername) throws SQLException {
+        String sql = "DELETE FROM block WHERE username = ? AND block = ?";
+        PreparedStatement stmt = conn.prepareStatement(sql);
+        stmt.setString(1, myUsername);
+        stmt.setString(2, friendUsername);
+        stmt.executeUpdate();
+        stmt.close();
+    }
+
+    public void setLogoutTime(String username) {
+        String sql = "UPDATE history_login SET logout_time = ? WHERE username = ? ";
+        PreparedStatement stmt = null;
+        try {
+            stmt = conn.prepareStatement(sql);
+            stmt.setTimestamp(1, Timestamp.valueOf(LocalDateTime.now()));
+            stmt.setString(2, username);
+            stmt.executeUpdate();
+            stmt.close();
+        } catch (SQLException throwables) {
+            throwables.printStackTrace(System.out);
+        }
+    }
+
+    public void deleteChat(String deleteUsername, String username2) throws SQLException {
+        String sql = "SELECT * FROM friend WHERE username1 = ? AND username2 = ?";
+        PreparedStatement stmt = conn.prepareStatement(sql);
+        stmt.setString(1, deleteUsername);
+        stmt.setString(2, username2);
+        ResultSet rs = stmt.executeQuery();
+        if (rs.next()) {
+            sql = "UPDATE friend SET user1_deleteChat = ? WHERE username1 = ? AND username2 = ?";
+            stmt.setDate(1, Date.valueOf(LocalDate.now()));
+            stmt.setString(2, deleteUsername);
+            stmt.setString(3, username2);
+            stmt.executeUpdate();
+            stmt.close();
+        } else {
+            sql = "UPDATE friend SET user2_deleteChat = ? WHERE username1 = ? AND username2 = ?";
+            stmt.setDate(1, Date.valueOf(LocalDate.now()));
+            stmt.setString(2, username2);
+            stmt.setString(3, deleteUsername);
+            stmt.executeUpdate();
+            stmt.close();
+        }
+    }
+
+    public void setLoginTime(String username) {
+        String sql = "INSERT INTO history_login (username, login_time) VALUES (?, ?)";
+        PreparedStatement stmt = null;
+        try {
+            stmt = conn.prepareStatement(sql);
+            stmt.setString(1, username);
+            stmt.setTimestamp(2, Timestamp.valueOf(LocalDateTime.now()));
+            stmt.executeUpdate();
+            stmt.close();
+        } catch (SQLException throwables) {
+            throwables.printStackTrace(System.out);
+        }
+    }
+
+    public ArrayList<ChatInfo> searchFriends(String myUsername, String input) throws SQLException {
+        String sql = "SELECT friend.username2, user.fullname FROM friend " +
+                "JOIN user ON user.username = friend.username2 " +
+                "WHERE friend.accepted = 1 AND friend.username1 = ? AND friend.username2 LIKE ? " +
+                "UNION " +
+                "SELECT friend.username1, user.fullname FROM friend " +
+                "JOIN user ON user.username = friend.username1 " +
+                "WHERE friend.accepted = 1 AND friend.username2 = ? AND friend.username1 LIKE ?";
+        PreparedStatement stmt = conn.prepareStatement(sql);
+        stmt.setString(1, myUsername);
+        stmt.setString(2, "%" + input + "%");
+        stmt.setString(3, myUsername);
+        stmt.setString(4, "%" + input + "%");
+        ResultSet rs = stmt.executeQuery();
+        ArrayList<ChatInfo> friends = new ArrayList<>();
+        while (rs.next()) {
+            String friendUsername = "";
+            if (rs.getString("username2").isEmpty()) {
+                friendUsername = rs.getString("username1");
+            } else {
+                friendUsername = rs.getString("username2");
+            }
+            String friendFullname = rs.getString("fullname");
+            friends.add(new ChatInfo(friendFullname, friendUsername, friendUsername, false));
+        }
+        rs.close();
+        stmt.close();
+        return friends;
     }
 
 

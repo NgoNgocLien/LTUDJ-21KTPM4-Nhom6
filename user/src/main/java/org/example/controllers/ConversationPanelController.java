@@ -1,15 +1,15 @@
 package org.example.controllers;
 
-import org.example.Main;
+import org.example.models.ChatInfo;
 import org.example.models.Message;
 import org.example.utilities.Constants;
 import org.example.utilities.DatabaseHandler;
-import org.example.utilities.GetNewMessageWorker;
+import org.example.utilities.GetFriendMessageWorker;
+import org.example.utilities.GetGroupMessageWorker;
 import org.example.views.ConversationPanel;
 import org.example.views.MainFrame;
 
 import javax.swing.*;
-import java.awt.*;
 import java.awt.event.*;
 import java.io.IOException;
 import java.net.Socket;
@@ -39,21 +39,33 @@ public class ConversationPanelController {
             while (true) {
                 try {
                     Thread.sleep(1000);
-                    if (conversationPanel.getChatInfo() == null) {
+                    ChatInfo chatInfo = conversationPanel.getChatInfo();
+                    if (chatInfo == null) {
                         continue;
-                    }
-                    ArrayList<Message> messages = GetNewMessageWorker.request(socket, myUsername, conversationPanel.getChatInfo().getUsername(), conversationPanel.getLastMessage());
-                    if (messages.size() > 0) {
-                        for (Message message : messages) {
-                            conversationPanel.addMessage(message);
+                    } else if (chatInfo.isGroup()) {
+                        ArrayList<Message> messages = GetGroupMessageWorker.request(socket, myUsername, conversationPanel.getChatInfo().getGroupId(), conversationPanel.getLastMessage());
+                        if (messages == null) {
+                            continue;
                         }
-                        conversationPanel.scrollToBottom();
+                        else if (messages.size() > 0) {
+                            for (Message message : messages) {
+                                conversationPanel.addMessage(message);
+                            }
+                            conversationPanel.scrollToBottom();
+                        }
+                    } else if (chatInfo.isFriend()) {
+                        ArrayList<Message> messages = GetFriendMessageWorker.request(socket, myUsername, conversationPanel.getChatInfo().getUsername(), conversationPanel.getLastMessage());
+                        if (messages == null) {
+                            continue;
+                        }
+                        else if (messages.size() > 0) {
+                            for (Message message : messages) {
+                                conversationPanel.addMessage(message);
+                            }
+                            conversationPanel.scrollToBottom();
+                        }
                     }
-                } catch (InterruptedException e) {
-                    e.printStackTrace();
-                } catch (IOException e) {
-                    e.printStackTrace();
-                } catch (ClassNotFoundException e) {
+                } catch (InterruptedException | IOException | ClassNotFoundException e) {
                     e.printStackTrace();
                 }
             }
