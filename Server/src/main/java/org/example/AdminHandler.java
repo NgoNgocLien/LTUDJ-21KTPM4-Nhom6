@@ -610,6 +610,23 @@ public class AdminHandler implements Runnable {
                         break;
                     }
 
+                    case "getAllUserYear":{
+                        System.out.println("Admin get all user year");
+
+                        int[] data1 = dbcon.getAllUserYear();
+                        objectOutputStream.reset();
+                        objectOutputStream.writeObject(data1);
+                        objectOutputStream.flush();
+
+                        for (int row : data1) {
+                            System.out.println(row);
+                        }
+
+                        System.out.println("Data sent to client.");
+
+                        break;
+                    }
+
                 }
             }
         } catch (IOException e) {

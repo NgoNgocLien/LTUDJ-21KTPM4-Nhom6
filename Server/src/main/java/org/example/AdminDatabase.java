@@ -1387,4 +1387,37 @@ public class AdminDatabase {
         }
         return null;
     }
+
+    int[] getAllUserYear() {
+        try {
+            Statement stmt = connection.createStatement();
+            String sql;
+            sql = "SELECT DISTINCT YEAR(creation_time) as year FROM USER WHERE is_locked != 2 ORDER BY year DESC;";
+            ResultSet rs = stmt.executeQuery(sql);
+            List<Integer> rows = new ArrayList<>();
+
+            while (rs.next()) {
+                int year = rs.getInt("year");
+                rows.add(year);
+            }
+
+            rs.close();
+            stmt.close();
+
+            int[] data = new int[rows.size()];
+            for (int i = 0; i < rows.size(); i++) {
+                data[i] = rows.get(i);
+            }
+
+            return data;
+        } catch (SQLException se) {
+            // Handle errors for JDBC
+            se.printStackTrace();
+        } catch (Exception e) { // Handle errors for Class.forName
+            e.printStackTrace();
+        }
+        return null;
+    }
+
+
 }
