@@ -3400,7 +3400,6 @@ public class AdminApp extends javax.swing.JFrame {
             Boolean success = UpdatePassUser.request(username, new_pwd, socket);
             if (success) {
                 JOptionPane.showMessageDialog(null, "Update password successfully.");
-
                 Object[][] pass = GetAllPassRequest.request(socket);
                 for (Object[] row : pass) {
                     for (Object element : row) {
@@ -3413,19 +3412,11 @@ public class AdminApp extends javax.swing.JFrame {
                     model.addRow(row);
                 }
 
-                DefaultTableModel detailModel = (DefaultTableModel) userDetailTable.getModel();
-                String userName = detailModel.getValueAt(0, 0).toString();
-                if(userName.equals(username)){
-                    detailModel.setRowCount(0);
-                    Object[][] user = GetUserByUsername.request(username, socket);
+                Object[][] user = GetUserByUsername.request(username, socket);
+                String userEmail = user[0][5].toString();
 
-                    for (Object[] row : user) {
-                        detailModel.addRow(row);
-                    }
-                }
-
-                userDetailPanel.revalidate();
-                userDetailPanel.repaint();
+                Boolean send = SendMailUpdatePass.request(userEmail, socket);
+                System.out.println("send mail: " + send);
             } else {
                 JOptionPane.showMessageDialog(null, "Failed to update user password.");
             }

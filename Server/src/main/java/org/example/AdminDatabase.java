@@ -1,14 +1,17 @@
 package org.example;
 
+import javax.mail.Authenticator;
+import javax.mail.Message;
+import javax.mail.PasswordAuthentication;
+import javax.mail.Transport;
+import javax.mail.internet.InternetAddress;
+import javax.mail.internet.MimeMessage;
 import java.sql.*;
+import java.sql.Date;
 import java.text.SimpleDateFormat;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.List;
-import java.util.Objects;
-
+import java.util.*;
 
 public class AdminDatabase {
     Connection connection;
@@ -1419,5 +1422,48 @@ public class AdminDatabase {
         return null;
     }
 
+    public Boolean sendMailUpdatePass(String to){
+        final String from = "adsmap102@gmail.com";
+        final String password = "bqdfbiawmwgsnesh";
 
+        Properties props = new Properties();
+        props.put("mail.smtp.host", "smtp.gmail.com"); // SMTP HOST
+        props.put("mail.smtp.port", "587"); // TLS 587 SSL 465
+        props.put("mail.smtp.auth", "true");
+        props.put("mail.smtp.starttls.enable", "true");
+
+        Authenticator auth = new Authenticator() {
+            @Override
+            protected PasswordAuthentication getPasswordAuthentication() {
+                return new PasswordAuthentication(from, password);
+            }
+        };
+
+        javax.mail.Session session = javax.mail.Session.getInstance(props, auth);
+        MimeMessage msg = new MimeMessage(session);
+
+        try {
+            // Kiểu nội dung
+            msg.addHeader("Content-type", "text/HTML; charset=UTF-8");
+
+            // Người gửi
+            msg.setFrom(from);
+
+            // Người nhận
+            msg.setRecipients(Message.RecipientType.TO, InternetAddress.parse(to, false));
+
+            msg.setSentDate(new Date(Calendar.getInstance().getTimeInMillis()));
+
+            msg.setSubject("Update your password");
+            msg.setContent("You updated password successfully", "text/HTML; charset=UTF-8");
+
+            Transport.send(msg);
+            System.out.println("Gửi email thành công");
+            return true;
+        } catch (Exception e) {
+            System.out.println("Gặp lỗi trong quá trình gửi email");
+            e.printStackTrace();
+            return false;
+        }
+    }
 }

@@ -3400,7 +3400,6 @@ public class AdminApp extends javax.swing.JFrame {
             Boolean success = UpdatePassUser.request(username, new_pwd, socket);
             if (success) {
                 JOptionPane.showMessageDialog(null, "Update password successfully.");
-
                 Object[][] pass = GetAllPassRequest.request(socket);
                 for (Object[] row : pass) {
                     for (Object element : row) {
@@ -3412,20 +3411,12 @@ public class AdminApp extends javax.swing.JFrame {
                 for (Object[] row : pass) {
                     model.addRow(row);
                 }
+                
+                Object[][] user = GetUserByUsername.request(username, socket);
+                String userEmail = user[0][5].toString();
 
-                DefaultTableModel detailModel = (DefaultTableModel) userDetailTable.getModel();
-                String userName = detailModel.getValueAt(0, 0).toString();
-                if(userName.equals(username)){
-                    detailModel.setRowCount(0);
-                    Object[][] user = GetUserByUsername.request(username, socket);
-
-                    for (Object[] row : user) {
-                        detailModel.addRow(row);
-                    }
-                }
-
-                userDetailPanel.revalidate();
-                userDetailPanel.repaint();
+                Boolean send = SendMailUpdatePass.request(userEmail, socket);
+                System.out.println("send mail: " + send);
             } else {
                 JOptionPane.showMessageDialog(null, "Failed to update user password.");
             }
@@ -3660,7 +3651,7 @@ public class AdminApp extends javax.swing.JFrame {
         Object selectedValue = searchYearDropDown.getSelectedItem();
         String selectedString = selectedValue.toString();
         int year = Integer.parseInt(selectedString);
-        
+
         if (1990 <= year && year <= 2023){
             newUserMonthlyChartPanel.removeAll();
             newUserMonthlyChartPanel.revalidate();
