@@ -161,10 +161,14 @@ public class ChatListPanelController {
                 input = "";
             }
 
-
             if (Objects.equals(chatListPanel.getInputFieldPlaceholder(), "Search for a message")) {
-//                ArrayList<ChatInfo> infos = DB.searchMessages(myUsername, input);
-//                chatListPanel.rebuildChatPanelsScrollPane(infos, true);
+                try{
+                    System.out.println("searching for a message"+ input);
+                    ArrayList<ChatInfo> infos = DB.searchChatFromAll(myUsername, input);
+                    chatListPanel.rebuildChatPanelsScrollPane(infos, 2, false, null);
+                } catch (SQLException ex) {
+                    throw new RuntimeException(ex);
+                }
                 return;
             } else if (Objects.equals(chatListPanel.getInputFieldPlaceholder(), "Search for a friend")) {
                 try {
