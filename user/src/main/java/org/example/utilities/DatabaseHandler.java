@@ -65,6 +65,21 @@ public class DatabaseHandler {
         this.loginedUsername = username;
     }
 
+    public boolean checkValidAccountLogin(String username) throws SQLException {
+        String sql = "SELECT username FROM USER WHERE username = ? AND is_locked = 0";
+        PreparedStatement stmt = conn.prepareStatement(sql);
+        stmt.setString(1, username);
+        ResultSet rs = stmt.executeQuery();
+        if (rs.next()) {
+            rs.close();
+            stmt.close();
+            return true;
+        } else {
+            rs.close();
+            stmt.close();
+            return false;
+        }
+    }
     public Profile getProfilebyUsername(String username) throws SQLException {
         String sql = "SELECT username, fullname, address, birthdate, gender, email, creation_time, password FROM USER WHERE username = ?";
         PreparedStatement stmt = conn.prepareStatement(sql);

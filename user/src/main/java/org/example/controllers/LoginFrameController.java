@@ -124,11 +124,12 @@ public class LoginFrameController {
             // TODO: verify login info with database
             try {
                 Profile profile = DB.getProfilebyUsername(username);
-
                 if (profile == null) {
                     new ErrorMessage(LF, "Wrong username or password");
+                } else if (!DB.checkValidAccountLogin(profile.getUsername())) {
+                    new ErrorMessage(LF, "This account is locked or deleted");
                 } else if (!profile.getPassword().equals(password)) {
-                    new ErrorMessage(LF, "Wrong username or password");
+                    new ErrorMessage(LF, "Wrong password for this username");
                 } else {
                     JOptionPane.showMessageDialog(LF, "Login success");
                     ArrayList<ChatInfo> allChats = null;
