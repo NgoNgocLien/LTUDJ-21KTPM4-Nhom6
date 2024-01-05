@@ -121,9 +121,9 @@ public class DatabaseHandler {
 
     public ArrayList<ChatInfo> searchChatFromAll(String myUsername, String key) throws SQLException {
         String sql = "SELECT * FROM (" +
-                "  SELECT message.*, " +
+                "  SELECT MESSAGE.*, " +
                 "         ROW_NUMBER() OVER (PARTITION BY content, sender ORDER BY id_message) AS row_num " +
-                "  FROM message " +
+                "  FROM MESSAGE " +
                 "  WHERE (sender = ? OR to_user = ?) AND content LIKE ?" +
                 ") AS subquery " +
                 "WHERE row_num = 1";
@@ -630,7 +630,6 @@ public class DatabaseHandler {
     }
 
     public ArrayList<Message> getFriendMessagesWithKeyWord(String myUsername, String friendUsername, String keyword) {
-
         String sql = "SELECT M.id_message, M.sender, M.to_user, M.content, M.sent_time " +
                 "FROM MESSAGE M " +
                 "INNER JOIN FRIEND F ON (F.username1 = M.sender AND F.username2 = M.to_user) OR (F.username2 = M.sender AND F.username1 = M.to_user) " +
@@ -669,52 +668,47 @@ public class DatabaseHandler {
 
                 searchMessage = new Message(id, sender, to_user, -1, content, sent_time.toLocalDateTime(), sender.equals(myUsername));
                 System.out.println(searchMessage.getContent());
-            } else {
-                System.out.println("No message.");
+
+                String sql2 = "(SELECT M.id_message, M.sender, M.to_user, M.content, M.sent_time " +
+                        "FROM MESSAGE M " +
+                        "INNER JOIN FRIEND F ON (F.username1 = M.sender AND F.username2 = M.to_user) OR (F.username2 = M.sender AND F.username1 = M.to_user) " +
+                        "WHERE ((M.sender = ? AND M.to_user = ?) OR (M.sender = ? AND M.to_user = ?)) " +
+                        "   AND M.to_group IS NULL " +
+                        "   AND ((F.username1 = ? AND M.sent_time > F.user1_deleteChat) OR (F.username2 = ? AND M.sent_time > F.user2_deleteChat)) " +
+                        "   AND sent_time < ? " +
+                        "ORDER BY M.sent_time " +
+                        "LIMIT 10) ";
+                PreparedStatement stmt2 = conn.prepareStatement(sql2);
+                stmt2.setString(1, myUsername);
+                stmt2.setString(2, friendUsername);
+                stmt2.setString(3, friendUsername);
+                stmt2.setString(4, myUsername);
+                stmt2.setString(5, myUsername);
+                stmt2.setString(6, myUsername);
+                stmt2.setTimestamp(7, sentTime);
+
+                ResultSet rs2 = stmt2.executeQuery();
+                while (rs2.next()) {
+                    id = rs2.getInt("id_message");
+                    sender = rs2.getString("sender");
+                    to_user = rs2.getString("to_user");
+                    content = rs2.getString("content");
+                    sent_time = rs2.getTimestamp("sent_time");
+
+                    messages.add(new Message(id, sender, to_user, -1, content, sent_time.toLocalDateTime(), sender.equals(myUsername)));
+                }
+                messages.add(searchMessage);
+                rs2.close();
+                stmt2.close();
             }
-
-            String sql2 = "(SELECT M.id_message, M.sender, M.to_user, M.content, M.sent_time " +
-                    "FROM MESSAGE M " +
-                    "INNER JOIN FRIEND F ON (F.username1 = M.sender AND F.username2 = M.to_user) OR (F.username2 = M.sender AND F.username1 = M.to_user) " +
-                    "WHERE ((M.sender = ? AND M.to_user = ?) OR (M.sender = ? AND M.to_user = ?)) " +
-                    "   AND M.to_group IS NULL " +
-                    "   AND ((F.username1 = ? AND M.sent_time > F.user1_deleteChat) OR (F.username2 = ? AND M.sent_time > F.user2_deleteChat)) " +
-                    "   AND sent_time < ? " +
-                    "ORDER BY M.sent_time " +
-                    "LIMIT 10) ";
-            PreparedStatement stmt2 = conn.prepareStatement(sql2);
-            stmt2.setString(1, myUsername);
-            stmt2.setString(2, friendUsername);
-            stmt2.setString(3, friendUsername);
-            stmt2.setString(4, myUsername);
-            stmt2.setString(5, myUsername);
-            stmt2.setString(6, myUsername);
-            stmt2.setTimestamp(7, sentTime);
-
-            ResultSet rs2 = stmt2.executeQuery();
-            while (rs2.next()) {
-                int id;
-                String sender, to_user, content;
-                Timestamp sent_time;
-
-                id = rs2.getInt("id_message");
-                sender = rs2.getString("sender");
-                to_user = rs2.getString("to_user");
-                content = rs2.getString("content");
-                sent_time = rs2.getTimestamp("sent_time");
-
-                messages.add(new Message(id, sender, to_user, -1, content, sent_time.toLocalDateTime(), sender.equals(myUsername)));
-            }
-            messages.add(searchMessage);
             rs.close();
             stmt.close();
             return messages;
         } catch (SQLException throwables) {
             throwables.printStackTrace();
         }
-        return null;
+        return messages;
     }
-
     public ArrayList<Message> getGroupMessages(String myUsername, int idGroup) {
 //        SELECT delete_history
 //        FROM GROUP_MEMBER
@@ -759,6 +753,102 @@ public class DatabaseHandler {
                             sent_time = rs.getTimestamp("sent_time");
 
                             messages.add(new Message(id, sender, "", idGroup, content, sent_time.toLocalDateTime(), sender.equals(myUsername)));
+                        }
+                        rs.close();
+                        stmt.close();
+                        return messages;
+                    } catch (SQLException throwables) {
+                        throwables.printStackTrace();
+                    }
+                }
+            }
+        } catch (SQLException throwables) {
+            throwables.printStackTrace();
+        }
+        return messages;
+    }
+
+    public ArrayList<Message> getGroupMessagesWithKeyWord(String myUsername, int idGroup, String keyword) {
+//        SELECT delete_history
+//        FROM GROUP_MEMBER
+//        WHERE username = 'hlong' and id_group = 5;
+        ArrayList<Message> messages = new ArrayList<>();
+        Message searchMessage = null;
+        Timestamp sentTime = null;
+        String tempSql = "SELECT delete_history " +
+                "FROM GROUP_MEMBER " +
+                "WHERE username = ? and id_group = ?";
+        PreparedStatement tempStmt = null;
+        try {
+            tempStmt = conn.prepareStatement(tempSql);
+            tempStmt.setString(1, myUsername);
+            tempStmt.setInt(2, idGroup);
+            ResultSet tempRs = tempStmt.executeQuery();
+            if (tempRs.next()) {
+                Timestamp deleteHistory = tempRs.getTimestamp("delete_history");
+                tempRs.close();
+                tempStmt.close();
+                if (deleteHistory != null) {
+                    String sql = "WITH GroupMessage AS ( " +
+                            "SELECT M.sender, M.sent_time, M.content, M.id_message, " +
+                            "ROW_NUMBER() OVER (PARTITION BY M.sent_time) AS rnk " +
+                            "FROM MESSAGE M " +
+                            "WHERE M.to_group = ?) " +
+                            "SELECT sender, sent_time, content, id_message " +
+                            "FROM GroupMessage " +
+                            "WHERE rnk = 1 AND (sent_time > ?) AND content LIKE ?";
+                    PreparedStatement stmt = null;
+                    try {
+                        stmt = conn.prepareStatement(sql);
+                        stmt.setInt(1, idGroup);
+                        stmt.setTimestamp(2, deleteHistory);
+                        stmt.setString(3, "%" + keyword + "%");
+                        ResultSet rs = stmt.executeQuery();
+                        if (rs.next()) {
+                            int id;
+                            String sender, content;
+                            Timestamp sent_time;
+
+                            id = rs.getInt("id_message");
+                            sender = rs.getString("sender");
+                            content = rs.getString("content");
+                            sent_time = rs.getTimestamp("sent_time");
+                            sentTime = sent_time;
+
+                            searchMessage = new Message(id, sender, "", idGroup, content, sent_time.toLocalDateTime(), sender.equals(myUsername));
+
+                            String sql2 = "WITH GroupMessage AS ( " +
+                                    "SELECT M.sender, M.sent_time, M.content, M.id_message, " +
+                                    "ROW_NUMBER() OVER (PARTITION BY M.sent_time) AS rnk " +
+                                    "FROM MESSAGE M " +
+                                    "WHERE M.to_group = ?) " +
+                                    "SELECT sender, sent_time, content, id_message " +
+                                    "FROM GroupMessage " +
+                                    "WHERE rnk = 1 AND (sent_time > ?) AND sent_time < ? " +
+                                    "ORDER BY sent_time " +
+                                    "LIMIT 10";
+                            PreparedStatement stmt2 = null;
+                            try {
+                                stmt2 = conn.prepareStatement(sql2);
+                                stmt2.setInt(1, idGroup);
+                                stmt2.setTimestamp(2, deleteHistory);
+                                stmt2.setTimestamp(3, sentTime);
+                                ResultSet rs2 = stmt2.executeQuery();
+                                while (rs2.next()) {
+                                    id = rs2.getInt("id_message");
+                                    sender = rs2.getString("sender");
+                                    content = rs2.getString("content");
+                                    sent_time = rs2.getTimestamp("sent_time");
+
+                                    messages.add(new Message(id, sender, "", idGroup, content, sent_time.toLocalDateTime(), sender.equals(myUsername)));
+                                }
+                                messages.add(searchMessage);
+                                rs2.close();
+                                stmt2.close();
+                                return messages;
+                            } catch (SQLException throwables) {
+                                throwables.printStackTrace();
+                            }
                         }
                         rs.close();
                         stmt.close();
