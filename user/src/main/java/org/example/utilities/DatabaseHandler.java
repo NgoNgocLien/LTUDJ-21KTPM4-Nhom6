@@ -120,13 +120,6 @@ public class DatabaseHandler {
     }
 
     public ArrayList<ChatInfo> searchChatFromAll(String myUsername, String key) throws SQLException {
-//        String sql = "SELECT message.* FROM message " +
-//                "WHERE (sender = ? OR to_user = ?) AND content LIKE ?" +
-//                "AND (to_group IS NULL OR " +
-//                        "id_message = " +
-//                            "(SELECT id_message FROM message " +
-//                            "WHERE sender = ? AND to_group IS NOT NULL LIMIT 1)" +
-//                    ")";
         String sql = "SELECT * FROM (" +
                 "  SELECT message.*, " +
                 "         ROW_NUMBER() OVER (PARTITION BY content, sender ORDER BY id_message) AS row_num " +
@@ -144,19 +137,40 @@ public class DatabaseHandler {
         ArrayList<ChatInfo> chats = new ArrayList<>();
         while (rs.next()) {
             if (rs.getObject("to_group") != null) {
-                sql = "SELECT * FROM group_chat WHERE id_group = ?";
-                stmt = conn.prepareStatement(sql);
-                stmt.setInt(1, rs.getInt("to_group"));
-                ResultSet rs2 = stmt.executeQuery();
-                if (rs2.next())
-                    chats.add(new ChatInfo(rs2.getString("group_name"), rs.getString("sender"), rs.getString("content"), true));
+                if(rs.getString("sender").equals(myUsername)){
+                    sql = "SELECT * FROM group_chat WHERE id_group = ?";
+                    stmt = conn.prepareStatement(sql);
+                    stmt.setInt(1, rs.getInt("to_group"));
+                    ResultSet rs2 = stmt.executeQuery();
+                    if (rs2.next())
+                        chats.add(new ChatInfo(rs2.getString("group_name"), rs.getString("sender"), "You: " + rs.getString("content"), true));
+                }
+                else{
+                    sql = "SELECT * FROM group_chat WHERE id_group = ?";
+                    stmt = conn.prepareStatement(sql);
+                    stmt.setInt(1, rs.getInt("to_group"));
+                    ResultSet rs2 = stmt.executeQuery();
+                    if (rs2.next())
+                        chats.add(new ChatInfo(rs2.getString("group_name"), rs.getString("sender"), rs.getString("sender") + ":" + rs.getString("content"), true));
+                }
             } else {
-                sql = "SELECT * FROM user WHERE username = ?";
-                stmt = conn.prepareStatement(sql);
-                stmt.setString(1, rs.getString("sender"));
-                ResultSet rs2 = stmt.executeQuery();
-                if (rs2.next())
-                    chats.add(new ChatInfo(rs2.getString("fullname"), rs.getString("sender"), rs.getString("content"), true));
+                if(rs.getString("sender").equals(myUsername)){
+                    sql = "SELECT * FROM user WHERE username = ?";
+                    stmt = conn.prepareStatement(sql);
+                    stmt.setString(1, rs.getString("to_user"));
+                    ResultSet rs2 = stmt.executeQuery();
+                    if (rs2.next())
+                        chats.add(new ChatInfo(rs2.getString("fullname"), rs.getString("to_user"), "You: " + rs.getString("content"), true));
+                }
+                else{
+                    sql = "SELECT * FROM user WHERE username = ?";
+                    stmt = conn.prepareStatement(sql);
+                    stmt.setString(1, rs.getString("sender"));
+                    ResultSet rs2 = stmt.executeQuery();
+                    if (rs2.next())
+                        chats.add(new ChatInfo(rs2.getString("fullname"), rs.getString("sender"), rs.getString("sender") + ": " + rs.getString("content"), true));
+
+                }
             }
         }
         rs.close();
