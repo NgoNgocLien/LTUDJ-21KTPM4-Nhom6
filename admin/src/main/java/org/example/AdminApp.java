@@ -1,5 +1,6 @@
 package org.example;
 
+import javax.swing.border.EmptyBorder;
 import javax.swing.border.LineBorder;
 import javax.swing.table.*;
 import java.awt.*;
@@ -10,6 +11,8 @@ import java.net.Socket;
 import java.util.*;
 import java.text.*;
 
+import jiconfont.icons.font_awesome.FontAwesome;
+import jiconfont.swing.IconFontSwing;
 import org.example.utilities.*;
 import org.jfree.chart.*;
 import org.jfree.chart.plot.*;
@@ -17,199 +20,41 @@ import org.jfree.data.category.*;
 import org.jfree.chart.renderer.category.BarRenderer;
 
 public class AdminApp extends javax.swing.JFrame {
-
+    private JPanel welcomePanel;
     public AdminApp(Socket socket) throws UnsupportedLookAndFeelException, ClassNotFoundException, InstantiationException, IllegalAccessException {
         UIManager.setLookAndFeel("com.sun.java.swing.plaf.windows.WindowsLookAndFeel");
+        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
-        initComponents();
+        this.socket = socket;
+
+        init_navbar();
+        init_welcomeComponent();
+        init_userComponent();
+        init_loginSignupComponent();
+        init_groupComponent();
+        init_reportComponent();
+        init_activeUserComponent();
+        pack();
+
         customStyle();
         setExtendedState(JFrame.MAXIMIZED_BOTH);
 
         groupMainPanel.setVisible(false);
         reportMainPanel.setVisible(false);
         dataMainPanel.setVisible(false);
-        userMainPanel.setVisible(true);
         loginHistoryMainPanel.setVisible(false);
-        getContentPane().add(userMainPanel);
-        this.socket = socket;
+        userMainPanel.setVisible(false);
+        welcomePanel.setVisible(true);
+        getContentPane().add(welcomePanel, BorderLayout.CENTER);
     }
 
-    private void initComponents() {
-
+    private void init_navbar(){
         navbar = new javax.swing.JPanel();
-        groupNavButton = new javax.swing.JButton();
         userNavButton = new javax.swing.JButton();
-        dataNavButton = new javax.swing.JButton();
-        reportNavButton = new javax.swing.JButton();
-        reportMainPanel = new javax.swing.JPanel();
-        reportTitle = new javax.swing.JLabel();
-        searchReportTimeInput = new javax.swing.JTextField();
-        searchUsernameInput = new javax.swing.JTextField();
-        searchReportButton = new javax.swing.JButton();
-        viewAllReportButton = new javax.swing.JButton();
-        disableUserButton = new javax.swing.JButton();
-        reportScrollPane = new javax.swing.JScrollPane();
-        reportTable = new javax.swing.JTable();
-        reportTitle1 = new javax.swing.JLabel();
-        reportTitle2 = new javax.swing.JLabel();
-        groupMainPanel = new javax.swing.JPanel();
-        groupTitle = new javax.swing.JLabel();
-        searchInput = new javax.swing.JTextField();
-        searchButton = new javax.swing.JButton();
-        groupScrollPane = new javax.swing.JScrollPane();
-        groupTable = new javax.swing.JTable();
-        memberScrollPane = new javax.swing.JScrollPane();
-        memberTable = new javax.swing.JTable();
-        adminScrollPanel = new javax.swing.JScrollPane();
-        adminTable = new javax.swing.JTable();
-        adminTitle = new javax.swing.JLabel();
-        memberTitle = new javax.swing.JLabel();
-        viewAllGroupButton = new javax.swing.JButton();
-        groupTitle1 = new javax.swing.JLabel();
-        dataMainPanel = new javax.swing.JPanel();
-        dataTitlePanel = new javax.swing.JPanel();
-        ScrollPanel = new javax.swing.JScrollPane();
-        dataPanel = new javax.swing.JPanel();
-        activeUserMainPanel = new javax.swing.JPanel();
-        activeTitle = new javax.swing.JLabel();
-        startDateInput = new javax.swing.JTextField();
-        startHourInput = new javax.swing.JTextField();
-        startMinInput = new javax.swing.JTextField();
-        startSecInput = new javax.swing.JTextField();
-        activeTitle7 = new javax.swing.JLabel();
-        activeTitle8 = new javax.swing.JLabel();
-        endDateInput = new javax.swing.JTextField();
-        searchDateButton = new javax.swing.JButton();
-        resetButton1 = new javax.swing.JButton();
-        searchNameInput = new javax.swing.JTextField();
-        searchSessionInput = new javax.swing.JTextField();
-        activeUserScrollPane1 = new javax.swing.JScrollPane();
-        activeUserTable = new javax.swing.JTable();
-        sessionCountDropdown = new javax.swing.JComboBox<>();
-        searchNameSessionButton = new javax.swing.JButton();
-        resetButton2 = new javax.swing.JButton();
-        activeTitle3 = new javax.swing.JLabel();
-        activeTitle4 = new javax.swing.JLabel();
-        activeTitle5 = new javax.swing.JLabel();
-        activeTitle6 = new javax.swing.JLabel();
-        endHourInput = new javax.swing.JTextField();
-        endMinInput = new javax.swing.JTextField();
-        endSecInput = new javax.swing.JTextField();
-        activeTitle9 = new javax.swing.JLabel();
-        activeTitle10 = new javax.swing.JLabel();
-        activeUserMonthlyMainPanel = new javax.swing.JPanel();
-        chartActiveUserTitle = new javax.swing.JLabel();
-        yearTitle = new javax.swing.JLabel();
-        searchYearInput = new javax.swing.JTextField();
-        searchYearButton = new javax.swing.JButton();
-        activeUserMonthlyChartPanel = new javax.swing.JPanel();
-        resetButton3 = new javax.swing.JButton();
-        //user manage
-        userMainPanel = new javax.swing.JPanel();
-        userTableMainPanel = new javax.swing.JPanel();
-        userTableScrollPanel = new javax.swing.JScrollPane();
-        userDetailTableScrollPanel = new javax.swing.JScrollPane();
-        userScrollPanel = new javax.swing.JScrollPane();
-        userTitle = new javax.swing.JLabel();
-        userTitle1 = new javax.swing.JLabel();
-        userTitle2 = new javax.swing.JLabel();
-        userTitle3 = new javax.swing.JLabel();
-        searchFullNameInput = new javax.swing.JTextField();
-        searchUserNameInput = new javax.swing.JTextField();
-        searchActiveDropDown = new javax.swing.JComboBox<>();
-        searchUserButton = new javax.swing.JButton();
-        viewAllUserButton = new javax.swing.JButton();
-        addNewUserButton = new javax.swing.JButton();
-        userTable = new javax.swing.JTable();
-        userDetailTable = new javax.swing.JTable();
-        userTitle4 = new javax.swing.JLabel();
-        userTitle5 = new javax.swing.JLabel();
-        userTitle6 = new javax.swing.JLabel();
-        userTitle7 = new javax.swing.JLabel();
-        userTitle8 = new javax.swing.JLabel();
-        userTitle9 = new javax.swing.JLabel();
-        userTitle10 = new javax.swing.JLabel();
-        userTitle11 = new javax.swing.JLabel();
-        userTitle12 = new javax.swing.JLabel();
-        userTitle13 = new javax.swing.JLabel();
-        userTitle14 = new javax.swing.JLabel();
-        userTitle15 = new javax.swing.JLabel();
-        userTitle16 = new javax.swing.JLabel();
-        userNameInput = new javax.swing.JTextField();
-        fullNameInput = new javax.swing.JTextField();
-        pwdInput = new javax.swing.JTextField();
-        addressInput = new javax.swing.JTextField();
-        birthDateInput = new javax.swing.JTextField();
-        genderInput = new javax.swing.JTextField();
-        emailInput = new javax.swing.JTextField();
-        registrationTimeInput = new javax.swing.JTextField();
-        accountStatusInput = new javax.swing.JTextField();
-        updateUserButton = new javax.swing.JButton();
-        deleteUserButton = new javax.swing.JButton();
-        disableEnableUserButton = new javax.swing.JButton();
-        updatePasswordButton = new javax.swing.JButton();
-        userDetailPanel = new javax.swing.JPanel();
-        userPanel = new javax.swing.JPanel();
-        historyLoginTable = new javax.swing.JTable();
-        listFriendTable = new javax.swing.JTable();
-        historyLoginTableScrollPane = new javax.swing.JScrollPane();
-        listFriendTableScrollPane = new javax.swing.JScrollPane();
-        passRequestTable = new javax.swing.JTable();
-        passRequestTableScrollPane = new javax.swing.JScrollPane();
-        passRequestPanel = new javax.swing.JPanel();
-        loginHistoryMainPanel = new javax.swing.JPanel();
         loginHistoryNavButton = new javax.swing.JButton();
-        loginHistoryTitle = new javax.swing.JLabel();
-        loginHistoryTable = new javax.swing.JTable();
-        loginHistoryTableScrollPane = new javax.swing.JScrollPane();
-        userFriendPanel = new javax.swing.JPanel();
-        userTitle17 = new javax.swing.JLabel();
-        userTitle18 = new javax.swing.JLabel();
-        searchFriendFullNameInput = new javax.swing.JTextField();
-        searchFriendDropDown = new javax.swing.JComboBox<>();
-        searchFriendButton = new javax.swing.JButton();
-        resetButton = new javax.swing.JButton();
-        friendTable = new javax.swing.JTable();
-        friendTableScrollPane = new javax.swing.JScrollPane();
-        userTitle19 = new javax.swing.JLabel();
-        searchDirectFriendInput = new javax.swing.JTextField();
-        // Manage login history & new registered user
-        loginHistoryTableMainPanel = new javax.swing.JPanel();
-        loginHistoryScrollPanel = new javax.swing.JScrollPane();
-        loginHistoryPanel = new javax.swing.JPanel();
-        newUserMainPanel = new javax.swing.JPanel();
-        newUserMonthlyMainPanel = new javax.swing.JPanel();
-        newUserTitle = new javax.swing.JLabel();
-        startDateUserInput = new javax.swing.JTextField();
-        startHourUserInput = new javax.swing.JTextField();
-        startMinUserInput = new javax.swing.JTextField();
-        startSecUserInput = new javax.swing.JTextField();
-        newUserTitle7 = new javax.swing.JLabel();
-        newUserTitle8 = new javax.swing.JLabel();
-        endDateUserInput = new javax.swing.JTextField();
-        searchDateUserButton = new javax.swing.JButton();
-        resetUserButton = new javax.swing.JButton();
-        searchNameUserInput = new javax.swing.JTextField();
-        newUserTableScrollPane = new javax.swing.JScrollPane();
-        newUserTable = new javax.swing.JTable();
-        searchNewUserButton = new javax.swing.JButton();
-        resetUserButton1 = new javax.swing.JButton();
-        newUserTitle3 = new javax.swing.JLabel();
-        newUserTitle4 = new javax.swing.JLabel();
-        newUserTitle5 = new javax.swing.JLabel();
-        newUserTitle6 = new javax.swing.JLabel();
-        endHourUserInput = new javax.swing.JTextField();
-        endMinUserInput = new javax.swing.JTextField();
-        endSecUserInput = new javax.swing.JTextField();
-        newUserTitle9 = new javax.swing.JLabel();
-        chartNewUserTitle = new javax.swing.JLabel();
-        yearUserTitle = new javax.swing.JLabel();
-        searchYearDropDown = new javax.swing.JComboBox<>();
-        searchYearUserButton = new javax.swing.JButton();
-        newUserMonthlyChartPanel = new javax.swing.JPanel();
-        resetUserButton2 = new javax.swing.JButton();
-
-        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        groupNavButton = new javax.swing.JButton();
+        reportNavButton = new javax.swing.JButton();
+        dataNavButton = new javax.swing.JButton();
 
         navbar.setBackground(new java.awt.Color(23, 70, 162));
         navbar.setPreferredSize(new java.awt.Dimension(307, 50));
@@ -236,7 +81,6 @@ public class AdminApp extends javax.swing.JFrame {
         userNavButton.setBorderPainted(false);
         userNavButton.setFocusable(false);
         userNavButton.setPreferredSize(new java.awt.Dimension(50, 50));
-
         userNavButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 try {
@@ -328,418 +172,152 @@ public class AdminApp extends javax.swing.JFrame {
         );
 
         getContentPane().add(navbar, java.awt.BorderLayout.PAGE_START);
+    }
 
-        reportMainPanel.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
+    private void init_welcomeComponent(){
+        welcomePanel =  new JPanel();
 
-        reportTitle.setFont(new java.awt.Font("Arial", 1, 18)); // NOI18N
-        reportTitle.setForeground(new java.awt.Color(23, 70, 162));
-        reportTitle.setText("SPAM REPORT");
+        welcome = new JLabel("WELCOME TO ADMIN DASHBOARD");
+        welcome.setAlignmentX(Component.CENTER_ALIGNMENT);
+        welcome.setFont(new Font("Arial", Font.BOLD, 45));
+        welcome.setForeground(light_blue);
+        welcome.setBorder( new EmptyBorder(0, 0, 22, 0));
 
-        searchReportTimeInput.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
-        searchReportTimeInput.setText("( dd-mm-yyyy)");
-        searchReportTimeInput.setPreferredSize(new java.awt.Dimension(124, 35));
-//        searchReportTimeInput.addActionListener(new java.awt.event.ActionListener() {
-//            public void actionPerformed(java.awt.event.ActionEvent evt) {
-//                searchReportTimeInputActionPerformed(evt);
-//            }
-//        });
+        IconFontSwing.register(FontAwesome.getIconFont());
 
-        searchUsernameInput.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
-        searchUsernameInput.setPreferredSize(new java.awt.Dimension(124, 35));
-//        searchUsernameInput.addActionListener(new java.awt.event.ActionListener() {
-//            public void actionPerformed(java.awt.event.ActionEvent evt) {
-//                searchUsernameInputActionPerformed(evt);
-//            }
-//        });
+        int size = 25, bottomMargin = 18;
+        Icon userIcon = IconFontSwing.buildIcon(FontAwesome.USER, size, Color.LIGHT_GRAY);
+        JLabel userLabel = new JLabel(" Press icon to access 'Manage users' section");
+        userLabel.setFont(new Font("Arial", Font.BOLD, 20));
+        userLabel.setIcon(userIcon);
+        userLabel.setForeground(Color.LIGHT_GRAY);
+        userLabel.setAlignmentX(Component.CENTER_ALIGNMENT);
+        userLabel.setBorder( new EmptyBorder(0, 0, bottomMargin, 0));
 
-        searchReportButton.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
-        searchReportButton.setText("Search");
-        searchReportButton.setFocusable(false);
-        searchReportButton.setMargin(new java.awt.Insets(2, 5, 3, 5));
-        searchReportButton.setPreferredSize(new java.awt.Dimension(57, 35));
-        searchReportButton.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                try {
-                    searchReportButtonActionPerformed(evt);
-                } catch (IOException e) {
-                    throw new RuntimeException(e);
-                } catch (ClassNotFoundException e) {
-                    throw new RuntimeException(e);
-                }
-            }
-        });
+        Icon loginIcon = IconFontSwing.buildIcon(FontAwesome.HISTORY, size, Color.LIGHT_GRAY);
+        JLabel loginLabel = new JLabel(" Press icon to access 'Manage login and sign up activity' section");
+        loginLabel.setFont(new Font("Arial", Font.BOLD, 20));
+        loginLabel.setForeground(Color.LIGHT_GRAY);
+        loginLabel.setIcon(loginIcon);
+        loginLabel.setAlignmentX(Component.CENTER_ALIGNMENT);
+        loginLabel.setBorder( new EmptyBorder(0, 0, bottomMargin, 0));
 
-        viewAllReportButton.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
-        viewAllReportButton.setText("View all reports");
-        viewAllReportButton.setFocusable(false);
-        viewAllReportButton.setMargin(new java.awt.Insets(2, 5, 3, 5));
-        viewAllReportButton.setPreferredSize(new java.awt.Dimension(57, 35));
-        viewAllReportButton.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                try {
-                    viewAllReportButtonActionPerformed(evt);
-                } catch (IOException e) {
-                    throw new RuntimeException(e);
-                } catch (ClassNotFoundException e) {
-                    throw new RuntimeException(e);
-                }
-            }
-        });
+        Icon groupIcon = IconFontSwing.buildIcon(FontAwesome.USERS, size, Color.LIGHT_GRAY);
+        JLabel groupLabel = new JLabel(" Press icon to access 'Manage groups' section");
+        groupLabel.setFont(new Font("Arial", Font.BOLD, 20));
+        groupLabel.setForeground(Color.LIGHT_GRAY);
+        groupLabel.setAlignmentX(Component.CENTER_ALIGNMENT);
+        groupLabel.setIcon(groupIcon);
+        groupLabel.setBorder( new EmptyBorder(0, 0, bottomMargin, 0));
 
-        disableUserButton.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
-        disableUserButton.setText("Disable account");
-        disableUserButton.setFocusable(false);
-        disableUserButton.setMargin(new java.awt.Insets(2, 5, 3, 5));
-        disableUserButton.setPreferredSize(new java.awt.Dimension(57, 35));
-        disableUserButton.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                try {
-                    disableUserButtonActionPerformed(evt);
-                } catch (IOException | ClassNotFoundException e) {
-                    throw new RuntimeException(e);
-                }
-            }
-        });
+        Icon reportIcon = IconFontSwing.buildIcon(FontAwesome.FLAG_O, size, Color.LIGHT_GRAY);
+        JLabel reportLabel = new JLabel(" Press icon to access 'Manage reports' section");
+        reportLabel.setFont(new Font("Arial", Font.BOLD, 20));
+        reportLabel.setForeground(Color.LIGHT_GRAY);
+        reportLabel.setAlignmentX(Component.CENTER_ALIGNMENT);
+        reportLabel.setIcon(reportIcon);
+        reportLabel.setBorder( new EmptyBorder(0, 0, bottomMargin, 0));
 
-        reportTable.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
-        reportTable.setModel(new javax.swing.table.DefaultTableModel(
-                new Object [][] {
-                        {null, null, null, null},
-                        {null, null, null, null},
-                        {null, null, null, null},
-                        {null, null, null, null}
-                },
-                new String [] {
-                        "No", "Username", "Report time", "Account status"
-                }
-        ) {
-            Class[] types = new Class [] {
-                    java.lang.Integer.class, java.lang.Object.class, java.lang.Object.class, java.lang.Object.class
-            };
-            boolean[] canEdit = new boolean [] {
-                    false, false, false, false
-            };
+        Icon activeIcon = IconFontSwing.buildIcon(FontAwesome.DATABASE, size, Color.LIGHT_GRAY);
+        JLabel activeLabel = new JLabel(" Press icon to access 'Manage active users' section");
+        activeLabel.setFont(new Font("Arial", Font.BOLD, 20));
+        activeLabel.setForeground(Color.LIGHT_GRAY);
+        activeLabel.setAlignmentX(Component.CENTER_ALIGNMENT);
+        activeLabel.setIcon(activeIcon);
+        activeLabel.setBorder( new EmptyBorder(0, 0, bottomMargin, 0));
 
-            public Class getColumnClass(int columnIndex) {
-                return types [columnIndex];
-            }
+        welcomePanel.setLayout(new BoxLayout(welcomePanel, BoxLayout.Y_AXIS));
+        welcomePanel.setBorder(new EmptyBorder(200, 50, 100, 50));
+        welcomePanel.add(welcome);
+        welcomePanel.add(userLabel);
+        welcomePanel.add(loginLabel);
+        welcomePanel.add(groupLabel);
+        welcomePanel.add(reportLabel);
+        welcomePanel.add(activeLabel);
 
-            public boolean isCellEditable(int rowIndex, int columnIndex) {
-                return canEdit [columnIndex];
-            }
-        });
-        reportTable.setRowHeight(30);
-        reportTable.setSelectionMode(javax.swing.ListSelectionModel.SINGLE_SELECTION);
-        reportTable.setSelectionMode(javax.swing.ListSelectionModel.SINGLE_SELECTION);
-        reportTable.getTableHeader().setResizingAllowed(false);
-        reportTable.getTableHeader().setReorderingAllowed(false);
-        reportTable.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                reportTableMouseClicked(evt);
-            }
-        });
-        reportScrollPane.setViewportView(reportTable);
-        if (reportTable.getColumnModel().getColumnCount() > 0) {
-            reportTable.getColumnModel().getColumn(0).setResizable(false);
-            reportTable.getColumnModel().getColumn(0).setPreferredWidth(20);
-            reportTable.getColumnModel().getColumn(1).setResizable(false);
-            reportTable.getColumnModel().getColumn(1).setPreferredWidth(90);
-            reportTable.getColumnModel().getColumn(2).setResizable(false);
-            reportTable.getColumnModel().getColumn(2).setPreferredWidth(75);
-            reportTable.getColumnModel().getColumn(3).setResizable(false);
-            reportTable.getColumnModel().getColumn(3).setPreferredWidth(95);
-        }
-
-        reportTitle1.setFont(new java.awt.Font("Arial", 1, 14)); // NOI18N
-        reportTitle1.setText("Date");
-
-        reportTitle2.setFont(new java.awt.Font("Arial", 1, 14)); // NOI18N
-        reportTitle2.setText("Username");
-
-        javax.swing.GroupLayout reportMainPanelLayout = new javax.swing.GroupLayout(reportMainPanel);
-        reportMainPanel.setLayout(reportMainPanelLayout);
-        reportMainPanelLayout.setHorizontalGroup(
-                reportMainPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                        .addGroup(reportMainPanelLayout.createSequentialGroup()
-                                .addGap(66, 66, 66)
-                                .addGroup(reportMainPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                        .addComponent(reportTitle)
-                                        .addGroup(reportMainPanelLayout.createSequentialGroup()
-                                                .addGroup(reportMainPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                                                        .addComponent(reportScrollPane, javax.swing.GroupLayout.Alignment.LEADING)
-                                                        .addGroup(reportMainPanelLayout.createSequentialGroup()
-                                                                .addGroup(reportMainPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                                                        .addComponent(searchReportTimeInput, javax.swing.GroupLayout.PREFERRED_SIZE, 210, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                                                        .addComponent(reportTitle1))
-                                                                .addGap(12, 12, 12)
-                                                                .addGroup(reportMainPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                                                        .addComponent(reportTitle2)
-                                                                        .addGroup(reportMainPanelLayout.createSequentialGroup()
-                                                                                .addComponent(searchUsernameInput, javax.swing.GroupLayout.PREFERRED_SIZE, 246, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                                                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                                                                .addComponent(searchReportButton, javax.swing.GroupLayout.PREFERRED_SIZE, 75, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                                                                .addGap(98, 98, 98)
-                                                                                .addComponent(viewAllReportButton, javax.swing.GroupLayout.PREFERRED_SIZE, 123, javax.swing.GroupLayout.PREFERRED_SIZE)))))
-                                                .addGap(29, 29, 29)
-                                                .addComponent(disableUserButton, javax.swing.GroupLayout.PREFERRED_SIZE, 121, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-        );
-        reportMainPanelLayout.setVerticalGroup(
-                reportMainPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                        .addGroup(reportMainPanelLayout.createSequentialGroup()
-                                .addGap(31, 31, 31)
-                                .addComponent(reportTitle)
-                                .addGap(41, 41, 41)
-                                .addGroup(reportMainPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                                        .addComponent(reportTitle1)
-                                        .addComponent(reportTitle2))
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addGroup(reportMainPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                        .addComponent(searchUsernameInput, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                        .addGroup(reportMainPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                                                .addComponent(searchReportTimeInput, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                                .addComponent(searchReportButton, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                                .addComponent(viewAllReportButton, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                                .addComponent(disableUserButton, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                                .addGap(34, 34, 34)
-                                .addComponent(reportScrollPane, javax.swing.GroupLayout.PREFERRED_SIZE, 314, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-        );
-
-        getContentPane().add(reportMainPanel, java.awt.BorderLayout.CENTER);
-
-        groupTitle.setFont(new java.awt.Font("Arial", 1, 14)); // NOI18N
-        groupTitle.setText("Group name");
-
-        searchInput.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
-        searchInput.setPreferredSize(new java.awt.Dimension(124, 35));
-//        searchInput.addActionListener(new java.awt.event.ActionListener() {
-//            public void actionPerformed(java.awt.event.ActionEvent evt) {
-//                searchInputActionPerformed(evt);
-//            }
-//        });
-
-        searchButton.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
-        searchButton.setText("Search");
-        searchButton.setFocusable(false);
-        searchButton.setMargin(new java.awt.Insets(2, 5, 3, 5));
-        searchButton.setPreferredSize(new java.awt.Dimension(57, 35));
-        searchButton.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                try {
-                    searchButtonActionPerformed(evt);
-                } catch (IOException e) {
-                    throw new RuntimeException(e);
-                } catch (ClassNotFoundException e) {
-                    throw new RuntimeException(e);
-                }
-            }
-        });
-
-        groupTable.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
-        groupTable.setModel(new javax.swing.table.DefaultTableModel(
-                new Object [][] {
-                        {null, null, null},
-                        {null, null, null},
-                        {null, null, null},
-                        {null, null, null}
-                },
-                new String [] {
-                        "No", "Group name", "Registration time"
-                }
-        ) {
-            Class[] types = new Class [] {
-                    java.lang.Integer.class, java.lang.Object.class, java.lang.Object.class
-            };
-            boolean[] canEdit = new boolean [] {
-                    false, false, false
-            };
-
-            public Class getColumnClass(int columnIndex) {
-                return types [columnIndex];
-            }
-
-            public boolean isCellEditable(int rowIndex, int columnIndex) {
-                return canEdit [columnIndex];
-            }
-        });
-        groupTable.setRowHeight(30);
-        groupTable.setSelectionMode(javax.swing.ListSelectionModel.SINGLE_SELECTION);
-        groupTable.setSelectionMode(javax.swing.ListSelectionModel.SINGLE_SELECTION);
-        groupTable.getTableHeader().setResizingAllowed(false);
-        groupTable.getTableHeader().setReorderingAllowed(false);
-        groupTable.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                try {
-                    groupTableMouseClicked(evt);
-                } catch (IOException | ClassNotFoundException e) {
-                    throw new RuntimeException(e);
-                }
-            }
-        });
-        groupScrollPane.setViewportView(groupTable);
-        if (groupTable.getColumnModel().getColumnCount() > 0) {
-            groupTable.getColumnModel().getColumn(0).setResizable(false);
-            groupTable.getColumnModel().getColumn(0).setPreferredWidth(20);
-            groupTable.getColumnModel().getColumn(1).setResizable(false);
-            groupTable.getColumnModel().getColumn(1).setPreferredWidth(90);
-            groupTable.getColumnModel().getColumn(2).setResizable(false);
-            groupTable.getColumnModel().getColumn(2).setPreferredWidth(100);
-        }
-
-        memberScrollPane.setRowHeaderView(null);
-
-        memberTable.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
-        memberTable.setModel(new javax.swing.table.DefaultTableModel(
-                new Object [][] {
-
-                },
-                new String [] {
-                        "Username", "Full name"
-                }
-        ) {
-            boolean[] canEdit = new boolean [] {
-                    false, false
-            };
-
-            public boolean isCellEditable(int rowIndex, int columnIndex) {
-                return canEdit [columnIndex];
-            }
-        });
-        memberTable.setRowHeight(30);
-        memberScrollPane.setViewportView(memberTable);
-        if (memberTable.getColumnModel().getColumnCount() > 0) {
-            memberTable.getColumnModel().getColumn(0).setResizable(false);
-            memberTable.getColumnModel().getColumn(0).setPreferredWidth(70);
-            memberTable.getColumnModel().getColumn(1).setResizable(false);
-            memberTable.getColumnModel().getColumn(1).setPreferredWidth(130);
-        }
-
-        adminScrollPanel.setRowHeaderView(null);
-
-        adminTable.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
-        adminTable.setModel(new javax.swing.table.DefaultTableModel(
-                new Object [][] {
-
-                },
-                new String [] {
-                        "Username", "Full name"
-                }
-        ) {
-            boolean[] canEdit = new boolean [] {
-                    false, false
-            };
-
-            public boolean isCellEditable(int rowIndex, int columnIndex) {
-                return canEdit [columnIndex];
-            }
-        });
-        adminTable.setRowHeight(30);
-        adminScrollPanel.setViewportView(adminTable);
-        if (adminTable.getColumnModel().getColumnCount() > 0) {
-            adminTable.getColumnModel().getColumn(0).setResizable(false);
-            adminTable.getColumnModel().getColumn(0).setPreferredWidth(70);
-            adminTable.getColumnModel().getColumn(1).setResizable(false);
-            adminTable.getColumnModel().getColumn(1).setPreferredWidth(130);
-        }
-
-        adminTitle.setFont(new java.awt.Font("Arial", 1, 18)); // NOI18N
-        adminTitle.setForeground(new java.awt.Color(23, 70, 162));
-        adminTitle.setText("LIST OF ADMIN");
-
-        memberTitle.setFont(new java.awt.Font("Arial", 1, 18)); // NOI18N
-        memberTitle.setForeground(new java.awt.Color(23, 70, 162));
-        memberTitle.setText("LIST OF MEMBER");
-
-        viewAllGroupButton.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
-        viewAllGroupButton.setText("View all group");
-        viewAllGroupButton.setFocusable(false);
-        viewAllGroupButton.setMargin(new java.awt.Insets(2, 5, 3, 5));
-        viewAllGroupButton.setPreferredSize(new java.awt.Dimension(57, 35));
-        viewAllGroupButton.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                try {
-                    viewAllGroupButtonActionPerformed(evt);
-                } catch (IOException | ClassNotFoundException e) {
-                    throw new RuntimeException(e);
-                }
-            }
-        });
-
-        groupTitle1.setFont(new java.awt.Font("Arial", 1, 18)); // NOI18N
-        groupTitle1.setForeground(new java.awt.Color(23, 70, 162));
-        groupTitle1.setText("MANAGE GROUP");
-
-        javax.swing.GroupLayout groupMainPanelLayout = new javax.swing.GroupLayout(groupMainPanel);
-        groupMainPanel.setLayout(groupMainPanelLayout);
-        groupMainPanelLayout.setHorizontalGroup(
-                groupMainPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                        .addGroup(groupMainPanelLayout.createSequentialGroup()
-                                .addGap(71, 71, 71)
-                                .addGroup(groupMainPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                        .addComponent(groupTitle1)
-                                        .addGroup(groupMainPanelLayout.createSequentialGroup()
-                                                .addGroup(groupMainPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                                        .addGroup(groupMainPanelLayout.createSequentialGroup()
-                                                                .addComponent(searchInput, javax.swing.GroupLayout.PREFERRED_SIZE, 198, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                                                .addComponent(searchButton, javax.swing.GroupLayout.PREFERRED_SIZE, 75, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                                                .addComponent(viewAllGroupButton, javax.swing.GroupLayout.PREFERRED_SIZE, 123, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                                        .addComponent(groupTitle)
-                                                        .addComponent(groupScrollPane, javax.swing.GroupLayout.PREFERRED_SIZE, 490, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                                .addGap(85, 85, 85)
-                                                .addGroup(groupMainPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                                        .addGroup(groupMainPanelLayout.createSequentialGroup()
-                                                                .addGap(75, 75, 75)
-                                                                .addComponent(adminTitle)
-                                                                .addGap(270, 270, 270)
-                                                                .addComponent(memberTitle))
-                                                        .addGroup(groupMainPanelLayout.createSequentialGroup()
-                                                                .addGap(2, 2, 2)
-                                                                .addComponent(adminScrollPanel, javax.swing.GroupLayout.PREFERRED_SIZE, 300, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                                                .addGap(100, 100, 100)
-                                                                .addComponent(memberScrollPane, javax.swing.GroupLayout.PREFERRED_SIZE, 300, javax.swing.GroupLayout.PREFERRED_SIZE)))))
-                                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-        );
-        groupMainPanelLayout.setVerticalGroup(
-                groupMainPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                        .addGroup(groupMainPanelLayout.createSequentialGroup()
-                                .addGap(40, 40, 40)
-                                .addComponent(groupTitle1)
-                                .addGap(30, 30, 30)
-                                .addComponent(groupTitle)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addGroup(groupMainPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                        .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, groupMainPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                                                .addComponent(adminTitle)
-                                                .addComponent(memberTitle))
-                                        .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, groupMainPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                                                .addComponent(searchInput, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                                .addComponent(searchButton, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                                .addComponent(viewAllGroupButton, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                                .addGap(18, 18, 18)
-                                .addGroup(groupMainPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                        .addComponent(memberScrollPane, javax.swing.GroupLayout.PREFERRED_SIZE, 249, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                        .addComponent(groupScrollPane, javax.swing.GroupLayout.PREFERRED_SIZE, 249, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                        .addComponent(adminScrollPanel, javax.swing.GroupLayout.PREFERRED_SIZE, 249, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-        );
-
-        getContentPane().add(groupMainPanel, java.awt.BorderLayout.CENTER);
+    }
+    private void init_userComponent(){
+        //user manage
+        userMainPanel = new javax.swing.JPanel();
+        userTableMainPanel = new javax.swing.JPanel();
+        userTableScrollPanel = new javax.swing.JScrollPane();
+        userDetailTableScrollPanel = new javax.swing.JScrollPane();
+        userScrollPanel = new javax.swing.JScrollPane();
+        userTitle = new javax.swing.JLabel();
+        userTitle1 = new javax.swing.JLabel();
+        userTitle2 = new javax.swing.JLabel();
+        userTitle3 = new javax.swing.JLabel();
+        searchFullNameInput = new javax.swing.JTextField();
+        searchUserNameInput = new javax.swing.JTextField();
+        searchActiveDropDown = new javax.swing.JComboBox<>();
+        searchUserButton = new javax.swing.JButton();
+        viewAllUserButton = new javax.swing.JButton();
+        addNewUserButton = new javax.swing.JButton();
+        userTable = new javax.swing.JTable();
+        userDetailTable = new javax.swing.JTable();
+        userTitle4 = new javax.swing.JLabel();
+        userTitle5 = new javax.swing.JLabel();
+        userTitle6 = new javax.swing.JLabel();
+        userTitle7 = new javax.swing.JLabel();
+        userTitle8 = new javax.swing.JLabel();
+        userTitle9 = new javax.swing.JLabel();
+        userTitle10 = new javax.swing.JLabel();
+        userTitle11 = new javax.swing.JLabel();
+        userTitle12 = new javax.swing.JLabel();
+        userTitle13 = new javax.swing.JLabel();
+        userTitle14 = new javax.swing.JLabel();
+        userTitle15 = new javax.swing.JLabel();
+        userTitle16 = new javax.swing.JLabel();
+        userNameInput = new javax.swing.JTextField();
+        fullNameInput = new javax.swing.JTextField();
+        pwdInput = new javax.swing.JTextField();
+        addressInput = new javax.swing.JTextField();
+        birthDateInput = new javax.swing.JTextField();
+        genderInput = new javax.swing.JTextField();
+        emailInput = new javax.swing.JTextField();
+        registrationTimeInput = new javax.swing.JTextField();
+        accountStatusInput = new javax.swing.JTextField();
+        updateUserButton = new javax.swing.JButton();
+        deleteUserButton = new javax.swing.JButton();
+        disableEnableUserButton = new javax.swing.JButton();
+        updatePasswordButton = new javax.swing.JButton();
+        userDetailPanel = new javax.swing.JPanel();
+        userPanel = new javax.swing.JPanel();
+        historyLoginTable = new javax.swing.JTable();
+        listFriendTable = new javax.swing.JTable();
+        historyLoginTableScrollPane = new javax.swing.JScrollPane();
+        listFriendTableScrollPane = new javax.swing.JScrollPane();
+        passRequestTable = new javax.swing.JTable();
+        passRequestTableScrollPane = new javax.swing.JScrollPane();
+        passRequestPanel = new javax.swing.JPanel();
+        loginHistoryMainPanel = new javax.swing.JPanel();
+        loginHistoryTitle = new javax.swing.JLabel();
+        loginHistoryTable = new javax.swing.JTable();
+        loginHistoryTableScrollPane = new javax.swing.JScrollPane();
+        userFriendPanel = new javax.swing.JPanel();
+        userTitle17 = new javax.swing.JLabel();
+        userTitle18 = new javax.swing.JLabel();
+        searchFriendFullNameInput = new javax.swing.JTextField();
+        searchFriendDropDown = new javax.swing.JComboBox<>();
+        searchFriendButton = new javax.swing.JButton();
+        resetButton = new javax.swing.JButton();
+        friendTable = new javax.swing.JTable();
+        friendTableScrollPane = new javax.swing.JScrollPane();
+        userTitle19 = new javax.swing.JLabel();
+        searchDirectFriendInput = new javax.swing.JTextField();
 
         // MANAGE USER
-        userMainPanel.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
+        userMainPanel.setFont(new java.awt.Font("Arial", Font.PLAIN, 14)); // NOI18N
         userMainPanel.setPreferredSize(new java.awt.Dimension(1440, 2079));
         userMainPanel.setLayout(new java.awt.BorderLayout());
 
-        userTitle1.setFont(new java.awt.Font("Arial", 1, 14)); // NOI18N
+        userTitle1.setFont(new java.awt.Font("Arial", Font.BOLD, 14)); // NOI18N
         userTitle1.setText("Name");
 
-        userTitle2.setFont(new java.awt.Font("Arial", 1, 14)); // NOI18N
+        userTitle2.setFont(new java.awt.Font("Arial", Font.BOLD, 14)); // NOI18N
         userTitle2.setText("Username");
 
-        userTitle3.setFont(new java.awt.Font("Arial", 1, 14)); // NOI18N
+        userTitle3.setFont(new java.awt.Font("Arial", Font.BOLD, 14)); // NOI18N
         userTitle3.setText("Active Status");
 
         searchFullNameInput.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
@@ -1271,22 +849,22 @@ public class AdminApp extends javax.swing.JFrame {
                                                         .addComponent(listFriendTableScrollPane, javax.swing.GroupLayout.PREFERRED_SIZE, 365, javax.swing.GroupLayout.PREFERRED_SIZE))
                                                 .addComponent(userTitle14, javax.swing.GroupLayout.Alignment.LEADING)
                                                 .addComponent(passRequestTableScrollPane, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.PREFERRED_SIZE, 350, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                                .addComponent(userTitle19)
-                                                .addGroup(javax.swing.GroupLayout.Alignment.LEADING, userDetailPanelLayout.createSequentialGroup()
-                                                        .addComponent(searchFriendFullNameInput, javax.swing.GroupLayout.PREFERRED_SIZE, 160, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                                        .addGap(30, 30, 30)
-                                                        .addComponent(searchFriendDropDown, javax.swing.GroupLayout.PREFERRED_SIZE, 140, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                                        .addGap(30, 30, 30)
-                                                        .addComponent(searchDirectFriendInput, javax.swing.GroupLayout.PREFERRED_SIZE, 75, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                                        .addGap(30, 30, 30)
-                                                        .addComponent(searchFriendButton, javax.swing.GroupLayout.PREFERRED_SIZE, 75, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                                        .addGap(285, 285, 285)
-                                                        .addComponent(resetButton, javax.swing.GroupLayout.PREFERRED_SIZE, 75, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                                .addGroup(javax.swing.GroupLayout.Alignment.LEADING, userDetailPanelLayout.createSequentialGroup()
-                                                        .addComponent(userTitle17)
-                                                        .addGap(150, 150, 150)
-                                                        .addComponent(userTitle18))
-                                                .addComponent(friendTableScrollPane, javax.swing.GroupLayout.PREFERRED_SIZE, 900, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                        .addComponent(userTitle19)
+                                        .addGroup(javax.swing.GroupLayout.Alignment.LEADING, userDetailPanelLayout.createSequentialGroup()
+                                                .addComponent(searchFriendFullNameInput, javax.swing.GroupLayout.PREFERRED_SIZE, 160, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                                .addGap(30, 30, 30)
+                                                .addComponent(searchFriendDropDown, javax.swing.GroupLayout.PREFERRED_SIZE, 140, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                                .addGap(30, 30, 30)
+                                                .addComponent(searchDirectFriendInput, javax.swing.GroupLayout.PREFERRED_SIZE, 75, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                                .addGap(30, 30, 30)
+                                                .addComponent(searchFriendButton, javax.swing.GroupLayout.PREFERRED_SIZE, 75, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                                .addGap(285, 285, 285)
+                                                .addComponent(resetButton, javax.swing.GroupLayout.PREFERRED_SIZE, 75, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                        .addGroup(javax.swing.GroupLayout.Alignment.LEADING, userDetailPanelLayout.createSequentialGroup()
+                                                .addComponent(userTitle17)
+                                                .addGap(150, 150, 150)
+                                                .addComponent(userTitle18))
+                                        .addComponent(friendTableScrollPane, javax.swing.GroupLayout.PREFERRED_SIZE, 900, javax.swing.GroupLayout.PREFERRED_SIZE))
                                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
@@ -1362,7 +940,7 @@ public class AdminApp extends javax.swing.JFrame {
                                                                 .addGap(120, 120, 120)
                                                                 .addComponent(userTitle3))
                                                         .addComponent(userTableScrollPanel, javax.swing.GroupLayout.PREFERRED_SIZE, 1370, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                                        )
+                                                )
                                                 .addGap(0, 0, Short.MAX_VALUE)))
                                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
@@ -1388,7 +966,7 @@ public class AdminApp extends javax.swing.JFrame {
                                 .addGap(18, 18, 18)
                                 .addGroup(userTableMainPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                         .addComponent(userTableScrollPanel, javax.swing.GroupLayout.PREFERRED_SIZE, 330, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                        )
+                                )
                                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
@@ -1416,6 +994,44 @@ public class AdminApp extends javax.swing.JFrame {
         userScrollPanel.setViewportView(userPanel);
         userMainPanel.add(userScrollPanel, java.awt.BorderLayout.CENTER);
         getContentPane().add(userMainPanel, java.awt.BorderLayout.CENTER);
+    }
+
+    private void init_loginSignupComponent(){
+        // Manage login history & new registered user
+        loginHistoryTableMainPanel = new javax.swing.JPanel();
+        loginHistoryScrollPanel = new javax.swing.JScrollPane();
+        loginHistoryPanel = new javax.swing.JPanel();
+        newUserMainPanel = new javax.swing.JPanel();
+        newUserMonthlyMainPanel = new javax.swing.JPanel();
+        newUserTitle = new javax.swing.JLabel();
+        startDateUserInput = new javax.swing.JTextField();
+        startHourUserInput = new javax.swing.JTextField();
+        startMinUserInput = new javax.swing.JTextField();
+        startSecUserInput = new javax.swing.JTextField();
+        newUserTitle7 = new javax.swing.JLabel();
+        newUserTitle8 = new javax.swing.JLabel();
+        endDateUserInput = new javax.swing.JTextField();
+        searchDateUserButton = new javax.swing.JButton();
+        resetUserButton = new javax.swing.JButton();
+        searchNameUserInput = new javax.swing.JTextField();
+        newUserTableScrollPane = new javax.swing.JScrollPane();
+        newUserTable = new javax.swing.JTable();
+        searchNewUserButton = new javax.swing.JButton();
+        resetUserButton1 = new javax.swing.JButton();
+        newUserTitle3 = new javax.swing.JLabel();
+        newUserTitle4 = new javax.swing.JLabel();
+        newUserTitle5 = new javax.swing.JLabel();
+        newUserTitle6 = new javax.swing.JLabel();
+        endHourUserInput = new javax.swing.JTextField();
+        endMinUserInput = new javax.swing.JTextField();
+        endSecUserInput = new javax.swing.JTextField();
+        newUserTitle9 = new javax.swing.JLabel();
+        chartNewUserTitle = new javax.swing.JLabel();
+        yearUserTitle = new javax.swing.JLabel();
+        searchYearDropDown = new javax.swing.JComboBox<>();
+        searchYearUserButton = new javax.swing.JButton();
+        newUserMonthlyChartPanel = new javax.swing.JPanel();
+        resetUserButton2 = new javax.swing.JButton();
 
         // MANAGE LOGIN HISTORY
         loginHistoryMainPanel.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
@@ -1491,8 +1107,8 @@ public class AdminApp extends javax.swing.JFrame {
                                 .addGroup(loginHistoryTableMainPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                         .addComponent(loginHistoryTitle)
                                         .addComponent(loginHistoryTableScrollPane, javax.swing.GroupLayout.PREFERRED_SIZE, 800, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-);
+                                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+        );
 
         loginHistoryTableMainPanelLayout.setVerticalGroup(
                 loginHistoryTableMainPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -1701,7 +1317,7 @@ public class AdminApp extends javax.swing.JFrame {
                                 .addGroup(newUserMainPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                         .addGroup(newUserMainPanelLayout.createSequentialGroup()
                                                 .addComponent(newUserTitle))
-                                                //.addContainerGap(1203, Short.MAX_VALUE))
+                                        //.addContainerGap(1203, Short.MAX_VALUE))
                                         .addGroup(newUserMainPanelLayout.createSequentialGroup()
                                                 .addGroup(newUserMainPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                                                         .addComponent(newUserTitle3)
@@ -1899,6 +1515,456 @@ public class AdminApp extends javax.swing.JFrame {
         loginHistoryScrollPanel.setViewportView(loginHistoryPanel);
         loginHistoryMainPanel.add(loginHistoryScrollPanel, java.awt.BorderLayout.CENTER);
         getContentPane().add(loginHistoryMainPanel, java.awt.BorderLayout.CENTER);
+    }
+
+    private void init_groupComponent(){
+        groupMainPanel = new javax.swing.JPanel();
+        groupTitle = new javax.swing.JLabel();
+        searchInput = new javax.swing.JTextField();
+        searchButton = new javax.swing.JButton();
+        groupScrollPane = new javax.swing.JScrollPane();
+        groupTable = new javax.swing.JTable();
+        memberScrollPane = new javax.swing.JScrollPane();
+        memberTable = new javax.swing.JTable();
+        adminScrollPanel = new javax.swing.JScrollPane();
+        adminTable = new javax.swing.JTable();
+        adminTitle = new javax.swing.JLabel();
+        memberTitle = new javax.swing.JLabel();
+        viewAllGroupButton = new javax.swing.JButton();
+        groupTitle1 = new javax.swing.JLabel();
+
+        groupTitle.setFont(new java.awt.Font("Arial", 1, 14)); // NOI18N
+        groupTitle.setText("Group name");
+
+        searchInput.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
+        searchInput.setPreferredSize(new java.awt.Dimension(124, 35));
+
+        searchButton.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
+        searchButton.setText("Search");
+        searchButton.setFocusable(false);
+        searchButton.setMargin(new java.awt.Insets(2, 5, 3, 5));
+        searchButton.setPreferredSize(new java.awt.Dimension(57, 35));
+        searchButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                try {
+                    searchButtonActionPerformed(evt);
+                } catch (IOException | ClassNotFoundException e) {
+                    throw new RuntimeException(e);
+                }
+            }
+        });
+
+        groupTable.setFont(new java.awt.Font("Arial", Font.PLAIN, 14)); // NOI18N
+        groupTable.setModel(new javax.swing.table.DefaultTableModel(
+                new Object [][] {
+                        {null, null, null},
+                        {null, null, null},
+                        {null, null, null},
+                        {null, null, null}
+                },
+                new String [] {
+                        "No", "Group name", "Registration time"
+                }
+        ) {
+            Class[] types = new Class [] {
+                    java.lang.Integer.class, java.lang.Object.class, java.lang.Object.class
+            };
+            boolean[] canEdit = new boolean [] {
+                    false, false, false
+            };
+
+            public Class getColumnClass(int columnIndex) {
+                return types [columnIndex];
+            }
+
+            public boolean isCellEditable(int rowIndex, int columnIndex) {
+                return canEdit [columnIndex];
+            }
+        });
+        groupTable.setRowHeight(30);
+        groupTable.setSelectionMode(javax.swing.ListSelectionModel.SINGLE_SELECTION);
+        groupTable.setSelectionMode(javax.swing.ListSelectionModel.SINGLE_SELECTION);
+        groupTable.getTableHeader().setResizingAllowed(false);
+        groupTable.getTableHeader().setReorderingAllowed(false);
+        groupTable.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                try {
+                    groupTableMouseClicked(evt);
+                } catch (IOException | ClassNotFoundException e) {
+                    throw new RuntimeException(e);
+                }
+            }
+        });
+        groupScrollPane.setViewportView(groupTable);
+        if (groupTable.getColumnModel().getColumnCount() > 0) {
+            groupTable.getColumnModel().getColumn(0).setResizable(false);
+            groupTable.getColumnModel().getColumn(0).setPreferredWidth(20);
+            groupTable.getColumnModel().getColumn(1).setResizable(false);
+            groupTable.getColumnModel().getColumn(1).setPreferredWidth(90);
+            groupTable.getColumnModel().getColumn(2).setResizable(false);
+            groupTable.getColumnModel().getColumn(2).setPreferredWidth(100);
+        }
+
+        memberScrollPane.setRowHeaderView(null);
+
+        memberTable.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
+        memberTable.setModel(new javax.swing.table.DefaultTableModel(
+                new Object [][] {
+
+                },
+                new String [] {
+                        "Username", "Full name"
+                }
+        ) {
+            boolean[] canEdit = new boolean [] {
+                    false, false
+            };
+
+            public boolean isCellEditable(int rowIndex, int columnIndex) {
+                return canEdit [columnIndex];
+            }
+        });
+        memberTable.setRowHeight(30);
+        memberScrollPane.setViewportView(memberTable);
+        if (memberTable.getColumnModel().getColumnCount() > 0) {
+            memberTable.getColumnModel().getColumn(0).setResizable(false);
+            memberTable.getColumnModel().getColumn(0).setPreferredWidth(70);
+            memberTable.getColumnModel().getColumn(1).setResizable(false);
+            memberTable.getColumnModel().getColumn(1).setPreferredWidth(130);
+        }
+
+        adminScrollPanel.setRowHeaderView(null);
+
+        adminTable.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
+        adminTable.setModel(new javax.swing.table.DefaultTableModel(
+                new Object [][] {
+
+                },
+                new String [] {
+                        "Username", "Full name"
+                }
+        ) {
+            boolean[] canEdit = new boolean [] {
+                    false, false
+            };
+
+            public boolean isCellEditable(int rowIndex, int columnIndex) {
+                return canEdit [columnIndex];
+            }
+        });
+        adminTable.setRowHeight(30);
+        adminScrollPanel.setViewportView(adminTable);
+        if (adminTable.getColumnModel().getColumnCount() > 0) {
+            adminTable.getColumnModel().getColumn(0).setResizable(false);
+            adminTable.getColumnModel().getColumn(0).setPreferredWidth(70);
+            adminTable.getColumnModel().getColumn(1).setResizable(false);
+            adminTable.getColumnModel().getColumn(1).setPreferredWidth(130);
+        }
+
+        adminTitle.setFont(new java.awt.Font("Arial", 1, 18)); // NOI18N
+        adminTitle.setForeground(new java.awt.Color(23, 70, 162));
+        adminTitle.setText("LIST OF ADMIN");
+
+        memberTitle.setFont(new java.awt.Font("Arial", 1, 18)); // NOI18N
+        memberTitle.setForeground(new java.awt.Color(23, 70, 162));
+        memberTitle.setText("LIST OF MEMBER");
+
+        viewAllGroupButton.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
+        viewAllGroupButton.setText("View all group");
+        viewAllGroupButton.setFocusable(false);
+        viewAllGroupButton.setMargin(new java.awt.Insets(2, 5, 3, 5));
+        viewAllGroupButton.setPreferredSize(new java.awt.Dimension(57, 35));
+        viewAllGroupButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                try {
+                    viewAllGroupButtonActionPerformed(evt);
+                } catch (IOException | ClassNotFoundException e) {
+                    throw new RuntimeException(e);
+                }
+            }
+        });
+
+        groupTitle1.setFont(new java.awt.Font("Arial", 1, 18)); // NOI18N
+        groupTitle1.setForeground(new java.awt.Color(23, 70, 162));
+        groupTitle1.setText("MANAGE GROUP");
+
+        javax.swing.GroupLayout groupMainPanelLayout = new javax.swing.GroupLayout(groupMainPanel);
+        groupMainPanel.setLayout(groupMainPanelLayout);
+        groupMainPanelLayout.setHorizontalGroup(
+                groupMainPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGroup(groupMainPanelLayout.createSequentialGroup()
+                                .addGap(71, 71, 71)
+                                .addGroup(groupMainPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                        .addComponent(groupTitle1)
+                                        .addGroup(groupMainPanelLayout.createSequentialGroup()
+                                                .addGroup(groupMainPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                                        .addGroup(groupMainPanelLayout.createSequentialGroup()
+                                                                .addComponent(searchInput, javax.swing.GroupLayout.PREFERRED_SIZE, 198, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                                                .addComponent(searchButton, javax.swing.GroupLayout.PREFERRED_SIZE, 75, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                                                .addComponent(viewAllGroupButton, javax.swing.GroupLayout.PREFERRED_SIZE, 123, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                                        .addComponent(groupTitle)
+                                                        .addComponent(groupScrollPane, javax.swing.GroupLayout.PREFERRED_SIZE, 490, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                                .addGap(85, 85, 85)
+                                                .addGroup(groupMainPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                                        .addGroup(groupMainPanelLayout.createSequentialGroup()
+                                                                .addGap(75, 75, 75)
+                                                                .addComponent(adminTitle)
+                                                                .addGap(270, 270, 270)
+                                                                .addComponent(memberTitle))
+                                                        .addGroup(groupMainPanelLayout.createSequentialGroup()
+                                                                .addGap(2, 2, 2)
+                                                                .addComponent(adminScrollPanel, javax.swing.GroupLayout.PREFERRED_SIZE, 300, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                                                .addGap(100, 100, 100)
+                                                                .addComponent(memberScrollPane, javax.swing.GroupLayout.PREFERRED_SIZE, 300, javax.swing.GroupLayout.PREFERRED_SIZE)))))
+                                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+        );
+        groupMainPanelLayout.setVerticalGroup(
+                groupMainPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGroup(groupMainPanelLayout.createSequentialGroup()
+                                .addGap(40, 40, 40)
+                                .addComponent(groupTitle1)
+                                .addGap(30, 30, 30)
+                                .addComponent(groupTitle)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addGroup(groupMainPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                        .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, groupMainPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                                .addComponent(adminTitle)
+                                                .addComponent(memberTitle))
+                                        .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, groupMainPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                                .addComponent(searchInput, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                                .addComponent(searchButton, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                                .addComponent(viewAllGroupButton, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                                .addGap(18, 18, 18)
+                                .addGroup(groupMainPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                        .addComponent(memberScrollPane, javax.swing.GroupLayout.PREFERRED_SIZE, 249, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addComponent(groupScrollPane, javax.swing.GroupLayout.PREFERRED_SIZE, 249, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addComponent(adminScrollPanel, javax.swing.GroupLayout.PREFERRED_SIZE, 249, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+        );
+
+        getContentPane().add(groupMainPanel, java.awt.BorderLayout.CENTER);
+    }
+
+    private void init_reportComponent(){
+        reportMainPanel = new javax.swing.JPanel();
+        reportTitle = new javax.swing.JLabel();
+        reportTitle1 = new javax.swing.JLabel();
+        reportTitle2 = new javax.swing.JLabel();
+        searchReportTimeInput = new javax.swing.JTextField();
+        searchUsernameInput = new javax.swing.JTextField();
+        searchReportButton = new javax.swing.JButton();
+        viewAllReportButton = new javax.swing.JButton();
+        disableUserButton = new javax.swing.JButton();
+        reportScrollPane = new javax.swing.JScrollPane();
+        reportTable = new javax.swing.JTable();
+
+        reportMainPanel.setFont(new java.awt.Font("Arial", Font.PLAIN, 14)); // NOI18N
+
+        reportTitle.setFont(new java.awt.Font("Arial", Font.BOLD, 18)); // NOI18N
+        reportTitle.setForeground(new java.awt.Color(23, 70, 162));
+        reportTitle.setText("SPAM REPORT");
+
+        searchReportTimeInput.setFont(new java.awt.Font("Arial", Font.PLAIN, 14)); // NOI18N
+        searchReportTimeInput.setText("( dd-mm-yyyy)");
+        searchReportTimeInput.setPreferredSize(new java.awt.Dimension(124, 35));
+
+        searchUsernameInput.setFont(new java.awt.Font("Arial", Font.PLAIN, 14)); // NOI18N
+        searchUsernameInput.setPreferredSize(new java.awt.Dimension(124, 35));
+
+        searchReportButton.setFont(new java.awt.Font("Arial", Font.PLAIN, 14)); // NOI18N
+        searchReportButton.setText("Search");
+        searchReportButton.setFocusable(false);
+        searchReportButton.setMargin(new java.awt.Insets(2, 5, 3, 5));
+        searchReportButton.setPreferredSize(new java.awt.Dimension(57, 35));
+        searchReportButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                try {
+                    searchReportButtonActionPerformed(evt);
+                } catch (IOException | ClassNotFoundException e) {
+                    throw new RuntimeException(e);
+                }
+            }
+        });
+
+        viewAllReportButton.setFont(new java.awt.Font("Arial", Font.PLAIN, 14)); // NOI18N
+        viewAllReportButton.setText("View all reports");
+        viewAllReportButton.setFocusable(false);
+        viewAllReportButton.setMargin(new java.awt.Insets(2, 5, 3, 5));
+        viewAllReportButton.setPreferredSize(new java.awt.Dimension(57, 35));
+        viewAllReportButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                try {
+                    viewAllReportButtonActionPerformed(evt);
+                } catch (IOException | ClassNotFoundException e) {
+                    throw new RuntimeException(e);
+                }
+            }
+        });
+
+        disableUserButton.setFont(new java.awt.Font("Arial", Font.PLAIN, 14)); // NOI18N
+        disableUserButton.setText("Disable account");
+        disableUserButton.setFocusable(false);
+        disableUserButton.setMargin(new java.awt.Insets(2, 5, 3, 5));
+        disableUserButton.setPreferredSize(new java.awt.Dimension(57, 35));
+        disableUserButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                try {
+                    disableUserButtonActionPerformed(evt);
+                } catch (IOException | ClassNotFoundException e) {
+                    throw new RuntimeException(e);
+                }
+            }
+        });
+
+        reportTable.setFont(new java.awt.Font("Arial", Font.PLAIN, 14)); // NOI18N
+        reportTable.setModel(new javax.swing.table.DefaultTableModel(
+                new Object [][] {
+                        {null, null, null, null},
+                        {null, null, null, null},
+                        {null, null, null, null},
+                        {null, null, null, null}
+                },
+                new String [] {
+                        "No", "Username", "Report time", "Account status"
+                }
+        ) {
+            Class[] types = new Class [] {
+                    java.lang.Integer.class, java.lang.Object.class, java.lang.Object.class, java.lang.Object.class
+            };
+            final boolean[] canEdit = new boolean [] {
+                    false, false, false, false
+            };
+
+            public Class getColumnClass(int columnIndex) {
+                return types [columnIndex];
+            }
+
+            public boolean isCellEditable(int rowIndex, int columnIndex) {
+                return canEdit [columnIndex];
+            }
+        });
+        reportTable.setRowHeight(30);
+        reportTable.setSelectionMode(javax.swing.ListSelectionModel.SINGLE_SELECTION);
+        reportTable.setSelectionMode(javax.swing.ListSelectionModel.SINGLE_SELECTION);
+        reportTable.getTableHeader().setResizingAllowed(false);
+        reportTable.getTableHeader().setReorderingAllowed(false);
+        reportTable.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                reportTableMouseClicked(evt);
+            }
+        });
+        reportScrollPane.setViewportView(reportTable);
+        if (reportTable.getColumnModel().getColumnCount() > 0) {
+            reportTable.getColumnModel().getColumn(0).setResizable(false);
+            reportTable.getColumnModel().getColumn(0).setPreferredWidth(20);
+            reportTable.getColumnModel().getColumn(1).setResizable(false);
+            reportTable.getColumnModel().getColumn(1).setPreferredWidth(90);
+            reportTable.getColumnModel().getColumn(2).setResizable(false);
+            reportTable.getColumnModel().getColumn(2).setPreferredWidth(75);
+            reportTable.getColumnModel().getColumn(3).setResizable(false);
+            reportTable.getColumnModel().getColumn(3).setPreferredWidth(95);
+        }
+
+        reportTitle1.setFont(new java.awt.Font("Arial", Font.BOLD, 14)); // NOI18N
+        reportTitle1.setText("Date");
+
+        reportTitle2.setFont(new java.awt.Font("Arial", Font.BOLD, 14)); // NOI18N
+        reportTitle2.setText("Username");
+
+        javax.swing.GroupLayout reportMainPanelLayout = new javax.swing.GroupLayout(reportMainPanel);
+        reportMainPanel.setLayout(reportMainPanelLayout);
+        reportMainPanelLayout.setHorizontalGroup(
+                reportMainPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGroup(reportMainPanelLayout.createSequentialGroup()
+                                .addGap(66, 66, 66)
+                                .addGroup(reportMainPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                        .addComponent(reportTitle)
+                                        .addGroup(reportMainPanelLayout.createSequentialGroup()
+                                                .addGroup(reportMainPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                                                        .addComponent(reportScrollPane, javax.swing.GroupLayout.Alignment.LEADING)
+                                                        .addGroup(reportMainPanelLayout.createSequentialGroup()
+                                                                .addGroup(reportMainPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                                                        .addComponent(searchReportTimeInput, javax.swing.GroupLayout.PREFERRED_SIZE, 210, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                                                        .addComponent(reportTitle1))
+                                                                .addGap(12, 12, 12)
+                                                                .addGroup(reportMainPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                                                        .addComponent(reportTitle2)
+                                                                        .addGroup(reportMainPanelLayout.createSequentialGroup()
+                                                                                .addComponent(searchUsernameInput, javax.swing.GroupLayout.PREFERRED_SIZE, 246, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                                                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                                                                .addComponent(searchReportButton, javax.swing.GroupLayout.PREFERRED_SIZE, 75, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                                                                .addGap(98, 98, 98)
+                                                                                .addComponent(viewAllReportButton, javax.swing.GroupLayout.PREFERRED_SIZE, 123, javax.swing.GroupLayout.PREFERRED_SIZE)))))
+                                                .addGap(29, 29, 29)
+                                                .addComponent(disableUserButton, javax.swing.GroupLayout.PREFERRED_SIZE, 121, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+        );
+        reportMainPanelLayout.setVerticalGroup(
+                reportMainPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGroup(reportMainPanelLayout.createSequentialGroup()
+                                .addGap(31, 31, 31)
+                                .addComponent(reportTitle)
+                                .addGap(41, 41, 41)
+                                .addGroup(reportMainPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                        .addComponent(reportTitle1)
+                                        .addComponent(reportTitle2))
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addGroup(reportMainPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                        .addComponent(searchUsernameInput, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addGroup(reportMainPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                                .addComponent(searchReportTimeInput, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                                .addComponent(searchReportButton, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                                .addComponent(viewAllReportButton, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                                .addComponent(disableUserButton, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                                .addGap(34, 34, 34)
+                                .addComponent(reportScrollPane, javax.swing.GroupLayout.PREFERRED_SIZE, 314, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+        );
+
+        getContentPane().add(reportMainPanel, java.awt.BorderLayout.CENTER);
+    }
+
+    private void init_activeUserComponent(){
+        dataMainPanel = new javax.swing.JPanel();
+        dataTitlePanel = new javax.swing.JPanel();
+        ScrollPanel = new javax.swing.JScrollPane();
+        dataPanel = new javax.swing.JPanel();
+        activeUserMainPanel = new javax.swing.JPanel();
+        activeTitle = new javax.swing.JLabel();
+        startDateInput = new javax.swing.JTextField();
+        startHourInput = new javax.swing.JTextField();
+        startMinInput = new javax.swing.JTextField();
+        startSecInput = new javax.swing.JTextField();
+        activeTitle7 = new javax.swing.JLabel();
+        activeTitle8 = new javax.swing.JLabel();
+        endDateInput = new javax.swing.JTextField();
+        searchDateButton = new javax.swing.JButton();
+        resetButton1 = new javax.swing.JButton();
+        searchNameInput = new javax.swing.JTextField();
+        searchSessionInput = new javax.swing.JTextField();
+        activeUserScrollPane1 = new javax.swing.JScrollPane();
+        activeUserTable = new javax.swing.JTable();
+        sessionCountDropdown = new javax.swing.JComboBox<>();
+        searchNameSessionButton = new javax.swing.JButton();
+        resetButton2 = new javax.swing.JButton();
+        activeTitle3 = new javax.swing.JLabel();
+        activeTitle4 = new javax.swing.JLabel();
+        activeTitle5 = new javax.swing.JLabel();
+        activeTitle6 = new javax.swing.JLabel();
+        endHourInput = new javax.swing.JTextField();
+        endMinInput = new javax.swing.JTextField();
+        endSecInput = new javax.swing.JTextField();
+        activeTitle9 = new javax.swing.JLabel();
+        activeTitle10 = new javax.swing.JLabel();
+        activeUserMonthlyMainPanel = new javax.swing.JPanel();
+        chartActiveUserTitle = new javax.swing.JLabel();
+        yearTitle = new javax.swing.JLabel();
+        searchYearInput = new javax.swing.JTextField();
+        searchYearButton = new javax.swing.JButton();
+        activeUserMonthlyChartPanel = new javax.swing.JPanel();
+        resetButton3 = new javax.swing.JButton();
 
         // DATA MANAGEMENT
         dataMainPanel.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
@@ -1931,41 +1997,21 @@ public class AdminApp extends javax.swing.JFrame {
         startDateInput.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
         startDateInput.setText("(dd-mm-yyyy)");
         startDateInput.setPreferredSize(new java.awt.Dimension(124, 35));
-//        startDateInput.addActionListener(new java.awt.event.ActionListener() {
-//            public void actionPerformed(java.awt.event.ActionEvent evt) {
-//                startDateInputActionPerformed(evt);
-//            }
-//        });
 
         startHourInput.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
         startHourInput.setHorizontalAlignment(javax.swing.JTextField.CENTER);
         startHourInput.setText("00");
         startHourInput.setPreferredSize(new java.awt.Dimension(124, 35));
-//        startHourInput.addActionListener(new java.awt.event.ActionListener() {
-//            public void actionPerformed(java.awt.event.ActionEvent evt) {
-//                startHourInputActionPerformed(evt);
-//            }
-//        });
 
         startMinInput.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
         startMinInput.setHorizontalAlignment(javax.swing.JTextField.CENTER);
         startMinInput.setText("00");
         startMinInput.setPreferredSize(new java.awt.Dimension(124, 35));
-//        startMinInput.addActionListener(new java.awt.event.ActionListener() {
-//            public void actionPerformed(java.awt.event.ActionEvent evt) {
-//                startMinInputActionPerformed(evt);
-//            }
-//        });
 
         startSecInput.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
         startSecInput.setHorizontalAlignment(javax.swing.JTextField.CENTER);
         startSecInput.setText("00");
         startSecInput.setPreferredSize(new java.awt.Dimension(124, 35));
-//        startSecInput.addActionListener(new java.awt.event.ActionListener() {
-//            public void actionPerformed(java.awt.event.ActionEvent evt) {
-//                startSecInputActionPerformed(evt);
-//            }
-//        });
 
         activeTitle7.setFont(new java.awt.Font("Arial", 1, 14)); // NOI18N
         activeTitle7.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
@@ -1978,11 +2024,6 @@ public class AdminApp extends javax.swing.JFrame {
         endDateInput.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
         endDateInput.setText("(dd-mm-yyyy)");
         endDateInput.setPreferredSize(new java.awt.Dimension(124, 35));
-//        endDateInput.addActionListener(new java.awt.event.ActionListener() {
-//            public void actionPerformed(java.awt.event.ActionEvent evt) {
-//                endDateInputActionPerformed(evt);
-//            }
-//        });
 
         searchDateButton.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
         searchDateButton.setText("Search");
@@ -1999,7 +2040,7 @@ public class AdminApp extends javax.swing.JFrame {
             }
         });
 
-        resetButton1.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
+        resetButton1.setFont(new java.awt.Font("Arial", Font.PLAIN, 14)); // NOI18N
         resetButton1.setText("Reset");
         resetButton1.setFocusable(false);
         resetButton1.setMargin(new java.awt.Insets(2, 5, 3, 5));
@@ -2014,21 +2055,11 @@ public class AdminApp extends javax.swing.JFrame {
             }
         });
 
-        searchNameInput.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
+        searchNameInput.setFont(new java.awt.Font("Arial", Font.PLAIN, 14)); // NOI18N
         searchNameInput.setPreferredSize(new java.awt.Dimension(124, 35));
-//        searchNameInput.addActionListener(new java.awt.event.ActionListener() {
-//            public void actionPerformed(java.awt.event.ActionEvent evt) {
-//                searchNameInputActionPerformed(evt);
-//            }
-//        });
 
         searchSessionInput.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
         searchSessionInput.setPreferredSize(new java.awt.Dimension(124, 35));
-//        searchSessionInput.addActionListener(new java.awt.event.ActionListener() {
-//            public void actionPerformed(java.awt.event.ActionEvent evt) {
-//                searchSessionInputActionPerformed(evt);
-//            }
-//        });
 
         activeUserScrollPane1.setMaximumSize(new java.awt.Dimension(32767, 600));
         activeUserScrollPane1.setPreferredSize(new java.awt.Dimension(452, 500));
@@ -2064,11 +2095,7 @@ public class AdminApp extends javax.swing.JFrame {
         activeUserTable.getTableHeader().setResizingAllowed(false);
         activeUserTable.getTableHeader().setReorderingAllowed(false);
         activeUserTable.setUpdateSelectionOnSort(false);
-//        activeUserTable.addMouseListener(new java.awt.event.MouseAdapter() {
-//            public void mouseClicked(java.awt.event.MouseEvent evt) {
-//                activeUserTableMouseClicked(evt);
-//            }
-//        });
+
         activeUserScrollPane1.setViewportView(activeUserTable);
         if (activeUserTable.getColumnModel().getColumnCount() > 0) {
             activeUserTable.getColumnModel().getColumn(0).setResizable(false);
@@ -2132,31 +2159,16 @@ public class AdminApp extends javax.swing.JFrame {
         endHourInput.setHorizontalAlignment(javax.swing.JTextField.CENTER);
         endHourInput.setText("00");
         endHourInput.setPreferredSize(new java.awt.Dimension(124, 35));
-//        endHourInput.addActionListener(new java.awt.event.ActionListener() {
-//            public void actionPerformed(java.awt.event.ActionEvent evt) {
-//                endHourInputActionPerformed(evt);
-//            }
-//        });
 
         endMinInput.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
         endMinInput.setHorizontalAlignment(javax.swing.JTextField.CENTER);
         endMinInput.setText("00");
         endMinInput.setPreferredSize(new java.awt.Dimension(124, 35));
-//        endMinInput.addActionListener(new java.awt.event.ActionListener() {
-//            public void actionPerformed(java.awt.event.ActionEvent evt) {
-//                endMinInputActionPerformed(evt);
-//            }
-//        });
 
         endSecInput.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
         endSecInput.setHorizontalAlignment(javax.swing.JTextField.CENTER);
         endSecInput.setText("00");
         endSecInput.setPreferredSize(new java.awt.Dimension(124, 35));
-//        endSecInput.addActionListener(new java.awt.event.ActionListener() {
-//            public void actionPerformed(java.awt.event.ActionEvent evt) {
-//                endSecInputActionPerformed(evt);
-//            }
-//        });
 
         activeTitle9.setFont(new java.awt.Font("Arial", 1, 14)); // NOI18N
         activeTitle9.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
@@ -2289,11 +2301,6 @@ public class AdminApp extends javax.swing.JFrame {
 
         searchYearInput.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
         searchYearInput.setPreferredSize(new java.awt.Dimension(124, 35));
-//        searchYearInput.addActionListener(new java.awt.event.ActionListener() {
-//            public void actionPerformed(java.awt.event.ActionEvent evt) {
-//                searchYearInputActionPerformed(evt);
-//            }
-//        });
 
         searchYearButton.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
         searchYearButton.setText("Apply");
@@ -2375,10 +2382,10 @@ public class AdminApp extends javax.swing.JFrame {
         dataMainPanel.add(ScrollPanel, java.awt.BorderLayout.CENTER);
 
         getContentPane().add(dataMainPanel, java.awt.BorderLayout.CENTER);
+    }
 
-        pack();
-    }// </editor-fold>
 
+    // thêm style cho table
     private void customStyle(){
         DefaultTableCellRenderer centerHeaderRenderer = new DefaultTableCellRenderer();
 
@@ -2566,6 +2573,7 @@ public class AdminApp extends javax.swing.JFrame {
 
     }
 
+    // thêm style cho button
     private void customButton(JButton button){
         button.setBackground(blue);
         button.setForeground(Color.WHITE);
@@ -2591,7 +2599,7 @@ public class AdminApp extends javax.swing.JFrame {
         String text = searchInput.getText();
         System.out.println(text);
 
-        if (text.equals("") ){
+        if (text.isEmpty()){
             JOptionPane.showMessageDialog(null, "You have not entered anything to search", "Error", JOptionPane.ERROR_MESSAGE);
         }
         else{
@@ -2629,9 +2637,6 @@ public class AdminApp extends javax.swing.JFrame {
             model.addRow(row);
         }
 
-//        if (socket.isClosed())
-//            System.out.println("2");
-
         // sort
         TableRowSorter<DefaultTableModel> sorter = new TableRowSorter<>(model);
         groupTable.setRowSorter(sorter);
@@ -2663,7 +2668,8 @@ public class AdminApp extends javax.swing.JFrame {
         groupTable.setRowSorter(sorter);
 
 
-
+        welcomePanel.setVisible(false);
+        getContentPane().remove(welcomePanel);
         reportMainPanel.setVisible(false);
         getContentPane().remove(reportMainPanel);
         dataMainPanel.setVisible(false);
@@ -2800,6 +2806,8 @@ public class AdminApp extends javax.swing.JFrame {
         ((DefaultTableCellRenderer)friendTable.getDefaultRenderer(Integer.class)).setHorizontalAlignment(SwingConstants.CENTER);
         friendTable.setPreferredScrollableViewportSize(friendTable.getPreferredSize());
 
+        welcomePanel.setVisible(false);
+        getContentPane().remove(welcomePanel);
         groupMainPanel.setVisible(false);
         getContentPane().remove(groupMainPanel);
         reportMainPanel.setVisible(false);
@@ -2893,6 +2901,8 @@ public class AdminApp extends javax.swing.JFrame {
         searchYearDropDown.setSelectedItem("2023");
         createNewUsersChart("2023");
 
+        welcomePanel.setVisible(false);
+        getContentPane().remove(welcomePanel);
         reportMainPanel.setVisible(false);
         getContentPane().remove(reportMainPanel);
         dataMainPanel.setVisible(false);
@@ -2993,6 +3003,8 @@ public class AdminApp extends javax.swing.JFrame {
         searchYearInput.setText(Integer.toString(date.getYear() + 1900));
         createActiveUsersChart("2023");
 
+        welcomePanel.setVisible(false);
+        getContentPane().remove(welcomePanel);
         groupMainPanel.setVisible(false);
         getContentPane().remove(groupMainPanel);
         reportMainPanel.setVisible(false);
@@ -3056,6 +3068,8 @@ public class AdminApp extends javax.swing.JFrame {
 
         disableUserButton.setVisible(false);
 
+        welcomePanel.setVisible(false);
+        getContentPane().remove(welcomePanel);
         groupMainPanel.setVisible(false);
         getContentPane().remove(groupMainPanel);
         dataMainPanel.setVisible(false);
@@ -3879,6 +3893,7 @@ public class AdminApp extends javax.swing.JFrame {
     Color light_blue = new Color(92, 124, 208);
     private String originalEmail;
     // Variables declaration - do not modify
+    private JLabel welcome;
     private javax.swing.JScrollPane ScrollPanel;
     private javax.swing.JLabel activeTitle;
     private javax.swing.JLabel activeTitle10;

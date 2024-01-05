@@ -16,7 +16,7 @@ import java.util.Date;
 
 public class AdminController {
     private Connection conn;
-    static final String DB_URL = "jdbc:mysql://localhost:3306/db_chat?user=root&password=1234";
+    static final String DB_URL = "jdbc:mysql://localhost:3306/db_chat?user=root&password=admin";
 
     AdminController(){
         try {
