@@ -43,6 +43,8 @@
       <change beforePath="$PROJECT_DIR$/admin/target/classes/org/example/AdminApp$54.class" beforeDir="false" afterPath="$PROJECT_DIR$/admin/target/classes/org/example/AdminApp$54.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/admin/target/classes/org/example/AdminApp.class" beforeDir="false" afterPath="$PROJECT_DIR$/admin/target/classes/org/example/AdminApp.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/admin/target/classes/org/example/AdminApp.java" beforeDir="false" afterPath="$PROJECT_DIR$/admin/target/classes/org/example/AdminApp.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/user/src/main/java/org/example/controllers/MyProfileFrameController.java" beforeDir="false" afterPath="$PROJECT_DIR$/user/src/main/java/org/example/controllers/MyProfileFrameController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/user/src/main/java/org/example/controllers/RegisterFrameController.java" beforeDir="false" afterPath="$PROJECT_DIR$/user/src/main/java/org/example/controllers/RegisterFrameController.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/user/target/classes/org/example/Main.class" beforeDir="false" afterPath="$PROJECT_DIR$/user/target/classes/org/example/Main.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/user/target/classes/org/example/controllers/ChatListPanelController$ChatPanelMouseListener.class" beforeDir="false" afterPath="$PROJECT_DIR$/user/target/classes/org/example/controllers/ChatListPanelController$ChatPanelMouseListener.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/user/target/classes/org/example/controllers/ChatListPanelController$SearchButtonListener.class" beforeDir="false" afterPath="$PROJECT_DIR$/user/target/classes/org/example/controllers/ChatListPanelController$SearchButtonListener.class" afterDir="false" />
@@ -100,9 +102,6 @@
       <change beforePath="$PROJECT_DIR$/user/target/classes/org/example/views/MainFrame$MainFrameComponentListener.class" beforeDir="false" afterPath="$PROJECT_DIR$/user/target/classes/org/example/views/MainFrame$MainFrameComponentListener.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/user/target/classes/org/example/views/MainFrame.class" beforeDir="false" afterPath="$PROJECT_DIR$/user/target/classes/org/example/views/MainFrame.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/user/target/classes/org/example/views/ProfileFrame.class" beforeDir="false" afterPath="$PROJECT_DIR$/user/target/classes/org/example/views/ProfileFrame.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/user/src/main/java/org/example/controllers/MyProfileFrameController.java" beforeDir="false" afterPath="$PROJECT_DIR$/user/src/main/java/org/example/controllers/MyProfileFrameController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/user/src/main/java/org/example/controllers/RegisterFrameController.java" beforeDir="false" afterPath="$PROJECT_DIR$/user/src/main/java/org/example/controllers/RegisterFrameController.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -176,7 +175,7 @@
     &quot;project.structure.last.edited&quot;: &quot;Modules&quot;,
     &quot;project.structure.proportion&quot;: &quot;0.15&quot;,
     &quot;project.structure.side.proportion&quot;: &quot;0.46896553&quot;,
-    &quot;settings.editor.selected.configurable&quot;: &quot;Errors&quot;,
+    &quot;settings.editor.selected.configurable&quot;: &quot;project.propCompiler&quot;,
     &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
   }
 }</component>
@@ -195,7 +194,7 @@
       <recent name="org.example" />
     </key>
   </component>
-  <component name="RunManager" selected="Application.Main Admin">
+  <component name="RunManager" selected="Application.Main">
     <configuration name="Main Admin" type="Application" factoryName="Application" singleton="false" temporary="true">
       <option name="MAIN_CLASS_NAME" value="org.example.Main" />
       <module name="admin" />
@@ -300,9 +299,9 @@
     </list>
     <recent_temporary>
       <list>
-        <item itemvalue="Application.Main Admin" />
-        <item itemvalue="Application.Main Server" />
         <item itemvalue="Application.Main" />
+        <item itemvalue="Application.Main Server" />
+        <item itemvalue="Application.Main Admin" />
         <item itemvalue="Application.Main User" />
         <item itemvalue="Application.Main User" />
       </list>
