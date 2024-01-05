@@ -109,7 +109,7 @@ public class ChatListPanel extends JPanel {
         chatPanelsPanel.add(sentencePanel);
     }
 
-    public void rebuildChatPanelsScrollPane(ArrayList<ChatInfo> infos, int mode, boolean suggestedSentence) {
+    public void rebuildChatPanelsScrollPane(ArrayList<ChatInfo> infos, int mode, boolean suggestedSentence, ChatInfo currentChatInfo) {
         chatPanelsPanel.removeAll();
         if (infos == null || infos.isEmpty()) {
             SentencePanel noChatPanel = new SentencePanel("Empty");
@@ -120,6 +120,9 @@ public class ChatListPanel extends JPanel {
             }
             for (ChatInfo info : infos) {
                 AChatPanel chatPanel = new AChatPanel(info, mode);
+                if (info.equals(currentChatInfo)) {
+                    chatPanel.setHighlighted();
+                }
                 chatPanels.add(chatPanel);
                 chatPanelsPanel.add(chatPanel);
                 if (info.isUnread()) {

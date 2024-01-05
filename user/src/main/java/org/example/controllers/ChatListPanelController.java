@@ -16,12 +16,14 @@ import org.example.views.ProfileFrame;
 import javax.swing.*;
 import java.awt.event.*;
 import java.net.Socket;
+import java.sql.SQLException;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Objects;
 
 public class ChatListPanelController {
-    String myUsername;
+    private String myUsername;
+    private ChatInfo currentConversation;
     private Socket socket;
     private MainFrameController MFC;
     private MainFrame MF;
@@ -31,6 +33,31 @@ public class ChatListPanelController {
     private JTextField inputField;
     private JButton searchButton;
     private JLabel titleLabel;
+
+    private class ReloadChatList implements Runnable {
+        Thread t;
+        public ReloadChatList() {
+            t = new Thread(this, "ReloadChatList");
+            t.start();
+        }
+        @Override
+        public void run() {
+            while (true) {
+                try {
+                    Thread.sleep(1000);
+                    if (chatListPanel.getTitleLabel().getText().equals("Chats")) {
+                        ArrayList<ChatInfo> chats = DB.getAllChats(myUsername);
+                        chatListPanel.rebuildChatPanelsScrollPane(chats, 2, false, currentConversation);
+                        renewListener();
+                    }
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                } catch (SQLException e) {
+
+                }
+            }
+        }
+    }
 
     public ChatListPanelController(Socket socket, MainFrameController mfc) {
         this.socket = socket;
@@ -51,6 +78,8 @@ public class ChatListPanelController {
         searchButton.addActionListener(new SearchButtonListener());
 
         titleLabel = chatListPanel.getTitleLabel();
+
+        new ReloadChatList();
     }
 
     public void setPlusIconListener() {
@@ -133,14 +162,18 @@ public class ChatListPanelController {
             }
             System.out.println("Search for: " + input);
 
+
             if (Objects.equals(chatListPanel.getInputFieldPlaceholder(), "Search for a message")) {
 //                ArrayList<ChatInfo> infos = DB.searchMessages(myUsername, input);
 //                chatListPanel.rebuildChatPanelsScrollPane(infos, true);
                 return;
             } else if (Objects.equals(chatListPanel.getInputFieldPlaceholder(), "Search for a friend")) {
-//                ArrayList<ChatInfo> infos = DB.searchFriends(myUsername, input);
-//                chatListPanel.rebuildChatPanelsScrollPane(infos, true);
-                return;
+                try {
+                    ArrayList<ChatInfo> infos = DB.searchFriends(myUsername, input);
+                    chatListPanel.rebuildChatPanelsScrollPane(infos, 2, false, null);
+                } catch (SQLException ex) {
+                    throw new RuntimeException(ex);
+                }
             } else if (Objects.equals(chatListPanel.getInputFieldPlaceholder(), "Search for a group")) {
 //                ArrayList<ChatInfo> infos = DB.searchGroups(myUsername, input);
 //                chatListPanel.rebuildChatPanelsScrollPane(infos, true);
@@ -171,14 +204,14 @@ public class ChatListPanelController {
         @Override
         public void mouseClicked(MouseEvent e) {
             chatListPanel.setFocusChatPanel(chatPanel);
-            ChatInfo chatInfo = chatPanel.getInfo();
+            currentConversation = chatPanel.getInfo();
 
-            String chatName = chatInfo.getChatName();
-            boolean isOnline = chatInfo.isOnline();
+            String chatName = currentConversation.getChatName();
+            boolean isOnline = currentConversation.isOnline();
             MF.getConversationPanel().setChatName(chatName, isOnline);
-            boolean isGroup = chatInfo.isGroup();
+            boolean isGroup = currentConversation.isGroup();
             if (isGroup) {
-                int groupId = chatInfo.getGroupId();
+                int groupId = currentConversation.getGroupId();
                 ArrayList<Message> messages = null;
                 try {
 //                    messages = DB.getGroupMessages(myUsername, groupId);
@@ -186,10 +219,10 @@ public class ChatListPanelController {
                 } catch (Exception exception) {
                     exception.printStackTrace();
                 }
-                MF.getConversationPanel().rebuildConversationPanel(chatInfo, messages);
+                MF.getConversationPanel().rebuildConversationPanel(currentConversation, messages);
                 MF.getConversationPanel().scrollToBottom();
             } else {
-                String username = chatInfo.getUsername();
+                String username = currentConversation.getUsername();
                 ArrayList<Message> messages = null;
                 try {
 //                    messages = DB.getFriendMessages(myUsername, username, LocalDate.of(1990, 1, 1));
@@ -197,25 +230,24 @@ public class ChatListPanelController {
                 } catch (Exception exception) {
                     exception.printStackTrace(System.out);
                 }
-                MF.getConversationPanel().rebuildConversationPanel(chatInfo, messages);
+                MF.getConversationPanel().rebuildConversationPanel(currentConversation, messages);
                 MF.getConversationPanel().scrollToBottom();
             }
             if (chatPanel.getMode() == 1) {
                 // open profile
                 Profile profile = null;
                 try {
-                    profile = DB.getProfilebyUsername(chatInfo.getUsername());
+                    profile = DB.getProfilebyUsername(currentConversation.getUsername());
                 } catch (Exception exception) {
                     exception.printStackTrace(System.out);
                 }
                 ProfileFrame PF = new ProfileFrame(profile, chatPanel.getMode());
                 ProfileFrameController PFC = new ProfileFrameController(socket, PF, DB);
-            }
-            else if(chatPanel.getMode() == 3){
+            } else if (chatPanel.getMode() == 3) {
                 // open profile
                 Profile profile = null;
                 try {
-                    profile = DB.getProfilebyUsername(chatInfo.getUsername());
+                    profile = DB.getProfilebyUsername(currentConversation.getUsername());
                 } catch (Exception exception) {
                     exception.printStackTrace(System.out);
                 }
@@ -224,7 +256,7 @@ public class ChatListPanelController {
             } else if (chatPanel.getMode() == 4) {
                 Profile profile = null;
                 try {
-                    profile = DB.getProfilebyUsername(chatInfo.getUsername());
+                    profile = DB.getProfilebyUsername(currentConversation.getUsername());
                     ProfileFrame PF = new ProfileFrame(profile, chatPanel.getMode());
                     ProfileFrameController PFC = new ProfileFrameController(socket, PF, DB);
                 } catch (Exception exception) {
