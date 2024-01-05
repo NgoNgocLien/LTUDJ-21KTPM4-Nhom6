@@ -125,7 +125,7 @@ public class LoginFrameController {
             try {
                 Profile profile = DB.getProfilebyUsername(username);
 
-                if (profile.getUsername() == null) {
+                if (profile == null) {
                     new ErrorMessage(LF, "Wrong username or password");
                 } else if (!profile.getPassword().equals(password)) {
                     new ErrorMessage(LF, "Wrong username or password");
@@ -135,7 +135,7 @@ public class LoginFrameController {
                     try {
                         allChats = DB.getAllChats(username);
                     } catch (SQLException se) {
-                        se.printStackTrace();
+                        se.printStackTrace(System.out);
                     }
                     DB.setLoginedUsername(username);
                     DB.setLoginTime(username);

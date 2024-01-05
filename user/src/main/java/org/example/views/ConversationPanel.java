@@ -12,10 +12,7 @@ import org.example.utilities.DatabaseHandler;
 import javax.swing.*;
 import javax.swing.border.EmptyBorder;
 import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import java.awt.event.AdjustmentEvent;
-import java.awt.event.AdjustmentListener;
+import java.awt.event.*;
 import java.sql.SQLException;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
@@ -504,8 +501,40 @@ public class ConversationPanel extends JPanel {
                 mPanel.add(backgroundPanel);
 
                 add(mPanel);
+                mPanel.addMouseListener(new MouseAdapter() {
+                    @Override
+                    public void mouseClicked(MouseEvent e) {
+                        if(e.getButton() == MouseEvent.BUTTON3){
+                            showContextMenu(e.getX(), e.getY());
+                        }
+                    }
+                });
             }
 
+        }
+        private void showContextMenu(int x, int y) {
+            JPopupMenu contextMenu = new JPopupMenu();
+
+            // Add menu items to the context menu
+            JMenuItem reportSpam = new JMenuItem("Report this message as spam");
+
+            // Add your custom action listeners to the menu items
+            contextMenu.add(reportSpam);
+
+            reportSpam.addActionListener(new ActionListener() {
+                @Override
+                public void actionPerformed(ActionEvent e) {
+                    try {
+                        DB.reportSpamMessage(msg.getId());
+                        JOptionPane.showMessageDialog(null, "Report successfully!", "Success", JOptionPane.INFORMATION_MESSAGE);
+                    } catch (SQLException ex) {
+                        throw new RuntimeException(ex);
+                    }
+                }
+            });
+
+            // Show the context menu at the specified location
+            contextMenu.show(mPanel, x, y);
         }
     }
 

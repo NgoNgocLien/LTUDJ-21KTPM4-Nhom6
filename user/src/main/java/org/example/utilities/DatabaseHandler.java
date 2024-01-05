@@ -30,6 +30,28 @@ public class DatabaseHandler {
         }
     }
 
+    public void reportSpamMessage(int idMessage) throws SQLException {
+        String sql = "SELECT * FROM spam WHERE id_message = ?";
+        PreparedStatement stmt = conn.prepareStatement(sql);
+        stmt.setInt(1, idMessage);
+        ResultSet resultSet = stmt.executeQuery();
+        if (resultSet.next()) {
+            System.out.println("Spam reported1.");
+            sql = "UPDATE spam SET report_time = ? WHERE id_message = ?";
+            stmt = conn.prepareStatement(sql);
+            stmt.setTimestamp(1, Timestamp.valueOf(LocalDateTime.now()));
+            stmt.setInt(2, idMessage);
+            stmt.executeUpdate();
+        } else {
+            System.out.println("Spam reported2.");
+            sql = "INSERT INTO spam (id_message, report_time) VALUES (?, ?)";
+            stmt = conn.prepareStatement(sql);
+            stmt.setInt(1, idMessage);
+            stmt.setTimestamp(2, Timestamp.valueOf(LocalDateTime.now()));
+            stmt.executeUpdate();
+        }
+    }
+
     public void closeConnection() throws SQLException {
         System.out.println("Database closed.");
         if (conn != null) conn.close();
@@ -658,7 +680,7 @@ public class DatabaseHandler {
         stmt.close();
     }
 
-    public void setLogoutTime(String username){
+    public void setLogoutTime(String username) {
         String sql = "UPDATE history_login SET logout_time = ? WHERE username = ? ";
         PreparedStatement stmt = null;
         try {
@@ -695,7 +717,7 @@ public class DatabaseHandler {
         }
     }
 
-    public void setLoginTime(String username){
+    public void setLoginTime(String username) {
         String sql = "INSERT INTO history_login (username, login_time) VALUES (?, ?)";
         PreparedStatement stmt = null;
         try {
