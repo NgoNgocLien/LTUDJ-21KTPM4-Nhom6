@@ -2999,7 +2999,7 @@ public class AdminApp extends javax.swing.JFrame {
 
         Date date = new Date();
         searchYearInput.setText(Integer.toString(date.getYear() + 1900));
-        createActiveUsersChart("2023");
+        createActiveUsersChart("2024");
 
         welcomePanel.setVisible(false);
         getContentPane().remove(welcomePanel);

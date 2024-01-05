@@ -19,7 +19,9 @@ public class SearchReport extends SwingWorker<Void, Void> {
     public static Object[][] request(String username, String date , Socket socket) throws IOException, ClassNotFoundException {
 
         OutputStream outputStream = socket.getOutputStream();
-        String msg = "searchReport" + "\n" + username + "\n" + date;
+        if (date.isEmpty())
+            date = "(dd-mm-yyyy)";
+        String msg = "searchReport" + "\n" + username + "\n" + date ;
 
         outputStream.write(msg.getBytes());
         System.out.println(msg);
