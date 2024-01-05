@@ -13,6 +13,7 @@ import javax.swing.*;
 import java.awt.event.*;
 import java.io.IOException;
 import java.net.Socket;
+import java.sql.SQLException;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 
@@ -27,6 +28,8 @@ public class ConversationPanelController {
     private JButton sendButton;
     private JButton moreButton;
     private JScrollBar messagesScrollBar;
+    private ArrayList<JMenuItem> moreMenuItems;
+    private JMenuItem searchMessage;
 
     private class ListenToNewMessage implements Runnable {
         Thread t;
@@ -39,6 +42,10 @@ public class ConversationPanelController {
             while (true) {
                 try {
                     Thread.sleep(1000);
+
+                    if (conversationPanel.isSearching()) {
+                        continue;
+                    }
                     ChatInfo chatInfo = conversationPanel.getChatInfo();
                     if (chatInfo == null) {
                         continue;
@@ -72,6 +79,34 @@ public class ConversationPanelController {
         }
     }
 
+    private class ListenToOnlineStatus implements Runnable {
+        Thread t;
+        public ListenToOnlineStatus() {
+            t = new Thread(this, "ListenToOnlineStatus");
+            t.start();
+        }
+        @Override
+        public void run() {
+            while (true) {
+                try {
+                    Thread.sleep(1000);
+                    ChatInfo chatInfo = conversationPanel.getChatInfo();
+                    if (chatInfo == null) {
+                        continue;
+                    }
+                    boolean isOnline = DB.getIsOnline(chatInfo.getUsername());
+                    if (isOnline != chatInfo.isOnline()) {
+                        conversationPanel.setChatName(chatInfo.getChatName(), isOnline);
+                    }
+
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                } catch (SQLException e) {
+                    throw new RuntimeException(e);
+                }
+            }
+        }
+    }
     public ConversationPanelController(Socket socket, MainFrameController mfc) {
         this.socket = socket;
         this.MFC = mfc;
@@ -85,11 +120,52 @@ public class ConversationPanelController {
         this.moreButton = conversationPanel.getMoreButton();
         this.messagesScrollBar = conversationPanel.getMessagesScrollBar();
 
+        this.moreMenuItems = conversationPanel.getMoreOptions();
+        this.searchMessage = conversationPanel.getSearchMessage();
+
         inputField.addFocusListener(new InputFieldListener());
         inputField.addKeyListener(new InputFieldListener());
         sendButton.addActionListener(new SendButtonActionListener());
 
         new ListenToNewMessage();
+        new ListenToOnlineStatus();
+    }
+
+    private class SearchMessageActionListener implements ActionListener {
+        @Override
+        public void actionPerformed(ActionEvent e) {
+            System.out.println("Search message");
+            String keyword = JOptionPane.showInputDialog(MF, "Enter keyword to search");
+            if (keyword == null || keyword.isEmpty()) {
+                return;
+            }
+            if (conversationPanel.getChatInfo().isFriend()) {
+                ArrayList<Message> messages = DB.getFriendMessagesWithKeyWord(myUsername, conversationPanel.getChatInfo().getUsername(), keyword);
+                if (messages == null || messages.size() == 0) {
+                    JOptionPane.showMessageDialog(MF, "No message found");
+                } else {
+                    conversationPanel.rebuildConversationPanel(conversationPanel.getChatInfo(), messages);
+                    conversationPanel.scrollToBottom();
+                }
+            } else if (conversationPanel.getChatInfo().isGroup()) {
+//                ArrayList<Message> messages = DB.getGroupMessagesWithKeyWord(myUsername, conversationPanel.getChatInfo().getGroupId(), keyword);
+//                if (messages == null || messages.size() == 0) {
+//                    JOptionPane.showMessageDialog(MF, "No message found");
+//                } else {
+//                    conversationPanel.setMessages(messages);
+//                    conversationPanel.scrollToBottom();
+//                }
+            }
+        }
+    }
+
+    private class MoreMenuItemActionListener implements ActionListener {
+        @Override
+        public void actionPerformed(ActionEvent e) {
+            if (e.getSource() == moreMenuItems.get(0)) {
+//                if (moreMenuItems.get(0))
+            }
+        }
     }
 
     private class InputFieldListener implements FocusListener, KeyListener {

@@ -32,9 +32,10 @@ public class ConversationPanel extends JPanel {
     private JPopupMenu moreMenu;
     private JButton moreButton;
 
-    private JMenuItem viewMembers, addMember, leaveGroup, viewProfile, deleteChat;
+    private JMenuItem viewMembers, addMember, leaveGroup, viewProfile, deleteChat, searchMessage;
     private ArrayList<AMessagePanel> messagePanelList;
     private ArrayList<JMenuItem> moreOptions;
+    private boolean searching = false;
 
     public ConversationPanel() {
         this.lastMessage = LocalDateTime.of(1990, 1, 1, 0, 0, 0);
@@ -47,6 +48,7 @@ public class ConversationPanel extends JPanel {
         buildChatNamePanel();
         buildMessagesPanel();
         buildInputPanel();
+        buildMoreMenu();
 
         add(chatNamePanel, BorderLayout.NORTH);
         add(messagesScrollPane, BorderLayout.CENTER);
@@ -68,7 +70,14 @@ public class ConversationPanel extends JPanel {
     public JMenuItem getDeleteChat() {
         return deleteChat;
     }
+    public JMenuItem getSearchMessage() { return searchMessage; }
 
+    public boolean isSearching() {
+        return searching;
+    }
+    public void setSearching(boolean searching) {
+        this.searching = searching;
+    }
     private void buildChatNamePanel() {
         chatNamePanel = new JPanel();
         chatNamePanel.setBackground(Constants.COLOR_BACKGROUND);
@@ -101,41 +110,40 @@ public class ConversationPanel extends JPanel {
         moreMenu.setPreferredSize(new Dimension(160, 160));
     }
 
-    private void buildMoreMenu(boolean isGroup) {
-        if (isGroup) {
+    private void buildMoreMenu() {
+        searchMessage = new JMenuItem("Search message");
+        searchMessage.setFont(Constants.FONT_NORMAL);
+        viewMembers = new JMenuItem("View members");
+        viewMembers.setFont(Constants.FONT_NORMAL);
+        addMember = new JMenuItem("Add a member");
+        addMember.setFont(Constants.FONT_NORMAL);
+        deleteChat = new JMenuItem("Delete chat");
+        deleteChat.setFont(Constants.FONT_NORMAL);
+        leaveGroup = new JMenuItem("Leave group");
+        leaveGroup.setFont(Constants.FONT_NORMAL);
+
+        viewProfile = new JMenuItem("View profile");
+        viewProfile.setFont(Constants.FONT_NORMAL);
+        if (chatInfo == null) {
+            return;
+        }
+        if (chatInfo.isGroup()) {
             moreMenu.removeAll();
             moreMenu.setBackground(Constants.COLOR_BACKGROUND);
             moreMenu.setPreferredSize(new Dimension(180, 160));
 
-            // Create JMenuItems
-            JMenuItem deleteChat, viewMembers, addMember, leaveGroup;
-            viewMembers = new JMenuItem("View members");
-            viewMembers.setFont(Constants.FONT_NORMAL);
-            addMember = new JMenuItem("Add a member");
-            addMember.setFont(Constants.FONT_NORMAL);
-            deleteChat = new JMenuItem("Delete chat");
-            deleteChat.setFont(Constants.FONT_NORMAL);
-            leaveGroup = new JMenuItem("Leave group");
-            leaveGroup.setFont(Constants.FONT_NORMAL);
-
-            moreOptions.add(viewMembers);
-            moreOptions.add(addMember);
-            moreOptions.add(deleteChat);
-            moreOptions.add(leaveGroup);
-
             // Add JMenuItems to JPopupMenu
+            moreMenu.add(searchMessage);
             moreMenu.add(viewMembers);
             moreMenu.add(addMember);
             moreMenu.add(deleteChat);
             moreMenu.add(leaveGroup);
-        } else {
+        } else if (chatInfo.isFriend()) {
             moreMenu.removeAll();
             moreMenu.setBackground(Constants.COLOR_BACKGROUND);
-            moreMenu.setPreferredSize(new Dimension(180, 80));
+            moreMenu.setPreferredSize(new Dimension(180, 120));
 
             // Create JMenuItems
-            viewProfile = new JMenuItem("View profile");
-            viewProfile.setFont(Constants.FONT_NORMAL);
             viewProfile.addActionListener(e -> {
                 try {
                     Profile profile = DB.getProfilebyUsername(chatInfo.getUsername());
@@ -146,7 +154,33 @@ public class ConversationPanel extends JPanel {
                 }
 
             });
-            deleteChat = new JMenuItem("Delete chat");
+
+            searchMessage.addActionListener(e -> {
+                String keyword = JOptionPane.showInputDialog(null, "Enter keyword to search");
+                if (keyword == null || keyword.isEmpty()) {
+                    return;
+                }
+                if (chatInfo.isFriend()) {
+                    System.out.println(keyword);
+                    ArrayList<Message> messages = DB.getFriendMessagesWithKeyWord(DB.getLoginedUsername(), chatInfo.getUsername(), keyword);
+                    if (messages == null || messages.size() == 0) {
+                        JOptionPane.showMessageDialog(null, "No message found");
+                    } else {
+                        rebuildConversationPanel(chatInfo, messages);
+                        scrollToBottom();
+                        searching = true;
+                    }
+                } else if (chatInfo.isGroup()) {
+//                ArrayList<Message> messages = DB.getGroupMessagesWithKeyWord(myUsername, getChatInfo().getGroupId(), keyword);
+//                if (messages == null || messages.size() == 0) {
+//                    JOptionPane.showMessageDialog(MF, "No message found");
+//                } else {
+//                    setMessages(messages);
+//                    scrollToBottom();
+//                }
+                }
+            });
+
             deleteChat.addActionListener(e -> {
                 int dialogResult = JOptionPane.showConfirmDialog(null, "Are you sure you want to delete the chat?", "Confirmation", JOptionPane.YES_NO_OPTION);
                 if (dialogResult == JOptionPane.YES_OPTION) {
@@ -155,11 +189,10 @@ public class ConversationPanel extends JPanel {
                     System.out.println("Deletion canceled");
                 }
             });
-            deleteChat.setFont(Constants.FONT_NORMAL);
-
 
             // Add JMenuItems to JPopupMenu
             moreMenu.add(viewProfile);
+            moreMenu.add(searchMessage);
             moreMenu.add(deleteChat);
         }
 
@@ -295,7 +328,7 @@ public class ConversationPanel extends JPanel {
                 }
                 addMessage(message);
             }
-            buildMoreMenu(true);
+            buildMoreMenu();
             lastMessage = messages.get(messages.size() - 1).getSentTime();
         } else {
             String statement;
@@ -312,7 +345,7 @@ public class ConversationPanel extends JPanel {
 //                return;
 //            }
 
-            if(messages != null && !messages.isEmpty()) {
+            if(messages != null && !messages.isEmpty() && messages.get(0) != null) {
                 LocalDateTime lastTime = messages.get(0).getSentTime();
                 addTime(lastTime);
 
@@ -324,9 +357,11 @@ public class ConversationPanel extends JPanel {
                     addMessage(message);
                 }
                 lastMessage = messages.get(messages.size() - 1).getSentTime();
+            } else {
+                lastMessage = LocalDateTime.of(1990, 1, 1, 0, 0, 0);
             }
 
-            buildMoreMenu(false);
+            buildMoreMenu();
         }
     }
 
@@ -341,6 +376,8 @@ public class ConversationPanel extends JPanel {
     public JButton getMoreButton() {
         return moreButton;
     }
+    public JPopupMenu getMoreMenu() { return moreMenu; }
+    public ArrayList<JMenuItem> getMoreOptions() { return moreOptions; }
 
     public ChatInfo getChatInfo() {
         return chatInfo;
@@ -348,29 +385,6 @@ public class ConversationPanel extends JPanel {
 
     public LocalDateTime getLastMessage() {
         return lastMessage;
-    }
-
-    public void buildMoreOptions() {
-        moreMenu.removeAll();
-        moreMenu.setBackground(Constants.COLOR_BACKGROUND);
-        moreMenu.setPreferredSize(new Dimension(160, 160));
-
-        // Create JMenuItems
-//        JMenuItem deleteChat, clearChat, viewProfile, blockUser;
-//        deleteChat = new JMenuItem("Delete Chat");
-//        deleteChat.setFont(Constants.FONT_NORMAL);
-//        clearChat = new JMenuItem("Clear Chat");
-//        clearChat.setFont(Constants.FONT_NORMAL);
-//        viewProfile = new JMenuItem("View Profile");
-//        viewProfile.setFont(Constants.FONT_NORMAL);
-//        blockUser = new JMenuItem("Block User");
-//        blockUser.setFont(Constants.FONT_NORMAL);
-//
-//        // Add JMenuItems to JPopupMenu
-//        moreMenu.add(deleteChat);
-//        moreMenu.add(clearChat);
-//        moreMenu.add(viewProfile);
-//        moreMenu.add(blockUser);
     }
 
     public void disableInput() {

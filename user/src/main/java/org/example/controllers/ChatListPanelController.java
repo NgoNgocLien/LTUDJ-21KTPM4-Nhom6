@@ -221,6 +221,7 @@ public class ChatListPanelController {
                 }
                 MF.getConversationPanel().rebuildConversationPanel(currentConversation, messages);
                 MF.getConversationPanel().scrollToBottom();
+                MF.getConversationPanel().setSearching(false);
             } else {
                 String username = currentConversation.getUsername();
                 ArrayList<Message> messages = null;
@@ -232,6 +233,7 @@ public class ChatListPanelController {
                 }
                 MF.getConversationPanel().rebuildConversationPanel(currentConversation, messages);
                 MF.getConversationPanel().scrollToBottom();
+                MF.getConversationPanel().setSearching(false);
             }
             if (chatPanel.getMode() == 1) {
                 // open profile
