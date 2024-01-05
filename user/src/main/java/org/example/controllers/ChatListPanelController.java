@@ -33,6 +33,7 @@ public class ChatListPanelController {
     private JTextField inputField;
     private JButton searchButton;
     private JLabel titleLabel;
+    private boolean searching = false;
 
     private class ReloadChatList implements Runnable {
         Thread t;
@@ -45,6 +46,9 @@ public class ChatListPanelController {
             while (true) {
                 try {
                     Thread.sleep(1000);
+                    if (searching) {
+                        continue;
+                    }
                     if (chatListPanel.getTitleLabel().getText().equals("Chats")) {
                         ArrayList<ChatInfo> chats = DB.getAllChats(myUsername);
                         chatListPanel.rebuildChatPanelsScrollPane(chats, 2, false, currentConversation);
@@ -134,6 +138,7 @@ public class ChatListPanelController {
             if (inputField.getText().isEmpty()) {
                 inputField.setForeground(Constants.COLOR_TEXT_SECONDARY);
                 inputField.setText(chatListPanel.getInputFieldPlaceholder());
+                searching = false;
             }
         }
 
@@ -165,7 +170,9 @@ public class ChatListPanelController {
                 try{
                     System.out.println("searching for a message"+ input);
                     ArrayList<ChatInfo> infos = DB.searchChatFromAll(myUsername, input);
+                    searching = true;
                     chatListPanel.rebuildChatPanelsScrollPane(infos, 2, false, null);
+                    renewListener();
                 } catch (SQLException ex) {
                     throw new RuntimeException(ex);
                 }
@@ -174,6 +181,7 @@ public class ChatListPanelController {
                 try {
                     ArrayList<ChatInfo> infos = DB.searchFriends(myUsername, input);
                     chatListPanel.rebuildChatPanelsScrollPane(infos, 2, false, null);
+                    renewListener();
                 } catch (SQLException ex) {
                     throw new RuntimeException(ex);
                 }
@@ -190,6 +198,7 @@ public class ChatListPanelController {
                     }
                 }
                 chatListPanel.rebuildChatPanelsScrollPane(infos, 1, true, null);
+                renewListener();
 
             } else if (Objects.equals(chatListPanel.getInputFieldPlaceholder(), "Search for a friend request")) {
                 try {
@@ -201,6 +210,7 @@ public class ChatListPanelController {
                         }
                     }
                     chatListPanel.rebuildChatPanelsScrollPane(infos, 3, false, null);
+                    renewListener();
                 } catch (SQLException ex) {
                     throw new RuntimeException(ex);
                 }
