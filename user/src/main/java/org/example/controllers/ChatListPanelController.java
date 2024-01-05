@@ -45,13 +45,17 @@ public class ChatListPanelController {
         public void run() {
             while (true) {
                 try {
-                    Thread.sleep(1000);
+                    Thread.sleep(2000);
                     if (searching) {
                         continue;
                     }
                     if (chatListPanel.getTitleLabel().getText().equals("Chats")) {
                         ArrayList<ChatInfo> chats = DB.getAllChats(myUsername);
                         chatListPanel.rebuildChatPanelsScrollPane(chats, 2, false, currentConversation);
+                        renewListener();
+                    } else if (chatListPanel.getTitleLabel().getText().equals("Friends")) {
+                        ArrayList<ChatInfo> friends = DB.getAllFriends(myUsername);
+                        chatListPanel.rebuildChatPanelsScrollPane(friends, 1, false, currentConversation);
                         renewListener();
                     }
                 } catch (InterruptedException e) {
