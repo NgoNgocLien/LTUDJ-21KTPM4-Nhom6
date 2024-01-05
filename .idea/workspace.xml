@@ -5,26 +5,11 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="ffaf42bc-6bfe-4d2e-bcc5-9de6824c0e6b" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/user/src/main/java/org/example/controllers/ProfileFrameController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Update_at_07_12_2023_08_27__Changes_.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Update_at_07_12_2023_08_27__Changes_.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Server/src/main/java/org/example/MainDatabase.java" beforeDir="false" afterPath="$PROJECT_DIR$/Server/src/main/java/org/example/MainDatabase.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Server/src/main/java/org/example/UserServer.java" beforeDir="false" afterPath="$PROJECT_DIR$/Server/src/main/java/org/example/UserServer.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Server/target/classes/org/example/MainDatabase.class" beforeDir="false" afterPath="$PROJECT_DIR$/Server/target/classes/org/example/MainDatabase.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Server/target/classes/org/example/UserServer.class" beforeDir="false" afterPath="$PROJECT_DIR$/Server/target/classes/org/example/UserServer.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/admin/src/main/java/org/example/AdminApp.java" beforeDir="false" afterPath="$PROJECT_DIR$/admin/src/main/java/org/example/AdminApp.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/admin/target/classes/org/example/AdminApp$34.class" beforeDir="false" afterPath="$PROJECT_DIR$/admin/target/classes/org/example/AdminApp$34.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/admin/target/classes/org/example/AdminApp.class" beforeDir="false" afterPath="$PROJECT_DIR$/admin/target/classes/org/example/AdminApp.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/admin/target/classes/org/example/AdminApp.java" beforeDir="false" afterPath="$PROJECT_DIR$/admin/target/classes/org/example/AdminApp.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/user/src/main/java/org/example/controllers/ConversationPanelController.java" beforeDir="false" afterPath="$PROJECT_DIR$/user/src/main/java/org/example/controllers/ConversationPanelController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/user/src/main/java/org/example/controllers/LoginFrameController.java" beforeDir="false" afterPath="$PROJECT_DIR$/user/src/main/java/org/example/controllers/LoginFrameController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/user/src/main/java/org/example/models/Message.java" beforeDir="false" afterPath="$PROJECT_DIR$/user/src/main/java/org/example/models/Message.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/user/src/main/java/org/example/utilities/DatabaseHandler.java" beforeDir="false" afterPath="$PROJECT_DIR$/user/src/main/java/org/example/utilities/DatabaseHandler.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/user/src/main/java/org/example/views/ConversationPanel.java" beforeDir="false" afterPath="$PROJECT_DIR$/user/src/main/java/org/example/views/ConversationPanel.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/user/src/main/java/org/example/views/LoginFrame.java" beforeDir="false" afterPath="$PROJECT_DIR$/user/src/main/java/org/example/views/LoginFrame.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/user/target/classes/org/example/controllers/LoginFrameController$LoginButtonListener.class" beforeDir="false" afterPath="$PROJECT_DIR$/user/target/classes/org/example/controllers/LoginFrameController$LoginButtonListener.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/user/target/classes/org/example/utilities/DatabaseHandler.class" beforeDir="false" afterPath="$PROJECT_DIR$/user/target/classes/org/example/utilities/DatabaseHandler.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/user/target/classes/org/example/views/LoginFrame.class" beforeDir="false" afterPath="$PROJECT_DIR$/user/target/classes/org/example/views/LoginFrame.class" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -80,28 +65,28 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent"><![CDATA[{
-  "keyToString": {
-    "Application.Main Server.executor": "Run",
-    "Application.Main.executor": "Run",
-    "RunOnceActivity.OpenProjectViewOnStart": "true",
-    "RunOnceActivity.ShowReadmeOnStart": "true",
-    "WebServerToolWindowFactoryState": "false",
-    "git-widget-placeholder": "Merging main",
-    "ignore.virus.scanning.warn.message": "true",
-    "kotlin-language-version-configured": "true",
-    "last_opened_file_path": "D:/jiconfont-swing-1.0.1.jar",
-    "node.js.detected.package.eslint": "true",
-    "node.js.selected.package.eslint": "(autodetect)",
-    "node.js.selected.package.tslint": "(autodetect)",
-    "nodejs_package_manager_path": "npm",
-    "project.structure.last.edited": "Modules",
-    "project.structure.proportion": "0.15",
-    "project.structure.side.proportion": "0.46896553",
-    "settings.editor.selected.configurable": "preferences.pluginManager",
-    "vue.rearranger.settings.migration": "true"
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;Application.Main Server.executor&quot;: &quot;Run&quot;,
+    &quot;Application.Main.executor&quot;: &quot;Run&quot;,
+    &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;WebServerToolWindowFactoryState&quot;: &quot;false&quot;,
+    &quot;git-widget-placeholder&quot;: &quot;main&quot;,
+    &quot;ignore.virus.scanning.warn.message&quot;: &quot;true&quot;,
+    &quot;kotlin-language-version-configured&quot;: &quot;true&quot;,
+    &quot;last_opened_file_path&quot;: &quot;D:/jiconfont-swing-1.0.1.jar&quot;,
+    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
+    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
+    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
+    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
+    &quot;project.structure.last.edited&quot;: &quot;Modules&quot;,
+    &quot;project.structure.proportion&quot;: &quot;0.15&quot;,
+    &quot;project.structure.side.proportion&quot;: &quot;0.46896553&quot;,
+    &quot;settings.editor.selected.configurable&quot;: &quot;preferences.pluginManager&quot;,
+    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
   }
-}]]></component>
+}</component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
       <recent name="D:\THIRD-SEM1\JAVA\LTUDJ-21KTPM4-Nhom6\Client\src" />
@@ -117,7 +102,7 @@
       <recent name="org.example" />
     </key>
   </component>
-  <component name="RunManager" selected="Application.Main Server">
+  <component name="RunManager" selected="Application.Main Admin">
     <configuration name="Main Admin" type="Application" factoryName="Application" temporary="true">
       <option name="MAIN_CLASS_NAME" value="org.example.Main" />
       <module name="admin" />
@@ -236,9 +221,9 @@
     </list>
     <recent_temporary>
       <list>
+        <item itemvalue="Application.Main Admin" />
         <item itemvalue="Application.Main Server" />
         <item itemvalue="Application.Main" />
-        <item itemvalue="Application.Main Admin" />
         <item itemvalue="Application.Main User" />
         <item itemvalue="Application.Main User" />
       </list>
@@ -322,11 +307,19 @@
       <workItem from="1704248708005" duration="1234000" />
       <workItem from="1704341194035" duration="822000" />
       <workItem from="1704343832849" duration="3184000" />
+      <workItem from="1704399419434" duration="1865000" />
+      <workItem from="1704455531228" duration="46000" />
+      <workItem from="1704455729952" duration="599000" />
     </task>
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
     <option name="version" value="3" />
+  </component>
+  <component name="UnknownFeatures">
+    <option featureType="dependencySupport" implementationName="executable:docker" />
+    <option featureType="dependencySupport" implementationName="java:com.google.protobuf:protobuf-java" />
+    <option featureType="dependencySupport" implementationName="executable:kubectl" />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
     <option name="TAB_STATES">

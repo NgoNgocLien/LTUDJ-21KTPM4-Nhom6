@@ -1357,7 +1357,7 @@ public class AdminApp extends javax.swing.JFrame {
                                                                 .addComponent(addNewUserButton, javax.swing.GroupLayout.PREFERRED_SIZE, 123, javax.swing.GroupLayout.PREFERRED_SIZE))
                                                         .addGroup(userTableMainPanelLayout.createSequentialGroup()
                                                                 .addComponent(userTitle1)
-                                                                .addGap(120, 120, 120)
+                                                                .addGap(150, 150, 150)
                                                                 .addComponent(userTitle2)
                                                                 .addGap(120, 120, 120)
                                                                 .addComponent(userTitle3))
@@ -1557,7 +1557,7 @@ public class AdminApp extends javax.swing.JFrame {
         searchDateUserButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 try {
-                    searchDateButtonActionPerformed(evt);
+                    searchDateUserButtonActionPerformed(evt);
                 } catch (IOException | ClassNotFoundException e) {
                     throw new RuntimeException(e);
                 }
@@ -3500,6 +3500,70 @@ public class AdminApp extends javax.swing.JFrame {
         }
 
         newUserMonthlyChartPanel.add(chartPanel, BorderLayout.NORTH);
+    }
+
+    private void searchDateUserButtonActionPerformed(java.awt.event.ActionEvent evt) throws IOException, ClassNotFoundException {
+        String start_date = startDateUserInput.getText();
+        String start_hour = startHourUserInput.getText();
+        String start_min = startMinUserInput.getText();
+        String start_sec = startSecUserInput.getText();
+
+        String end_date = endDateUserInput.getText();
+        String end_hour = endHourUserInput.getText();
+        String end_min = endMinUserInput.getText();
+        String end_sec = endSecUserInput.getText();
+
+
+        if ((!start_date.equals("(dd-mm-yyyy)") && !start_date.isEmpty()) && !isValidDate(start_date)){
+            JOptionPane.showMessageDialog(null, "Invalid start date", "Error", JOptionPane.ERROR_MESSAGE);
+        }
+        else if ((!end_date.equals("(dd-mm-yyyy)") && !end_date.isEmpty()) && !isValidDate(end_date)){
+            JOptionPane.showMessageDialog(null, "Invalid end date", "Error", JOptionPane.ERROR_MESSAGE);
+        } else{
+            if (start_date.equals("(dd-mm-yyyy)") || start_date.isEmpty() ){
+                start_date = "01-01-1990";
+                startDateUserInput.setText(start_date);
+            }
+
+            if (end_date.equals("(dd-mm-yyyy)") || end_date.isEmpty()){
+                Date date = new Date();
+                SimpleDateFormat sdf = new SimpleDateFormat("dd-MM-yyyy");
+                end_date = sdf.format(date);
+                endDateUserInput.setText(end_date);
+            }
+
+            String startHour = formatTime(start_hour, "hour");
+            String startMin = formatTime(start_min, "min");
+            String startSec = formatTime(start_sec, "sec");
+
+            String endHour = formatTime(end_hour, "hour");
+            String endMin = formatTime(end_min, "min");
+            String endSec = formatTime(end_sec, "sec");
+
+            startHourUserInput.setText(startHour);
+            startMinUserInput.setText(startMin);
+            startSecUserInput.setText(startSec);
+
+            endHourUserInput.setText(endHour);
+            endMinUserInput.setText(endMin);
+            endSecUserInput.setText(endSec);
+
+            searchNameUserInput.setText("");
+
+            String[] startDateArray = start_date.split("-");
+            String[] endDateArray = end_date.split("-");
+
+            start_date = startDateArray[2] + "-" + startDateArray[1] + "-" + startDateArray[0] + " " + startHour + ":" + startMin + ":" + startSec;
+            end_date = endDateArray[2] + "-" + endDateArray[1] + "-" + endDateArray[0] + " " + endHour + ":" + endMin + ":" + endSec;
+
+            DefaultTableModel model = (DefaultTableModel) activeUserTable.getModel();
+            model.setRowCount(0);
+
+            currentActiveUserList = SearchActiveUser.request( start_date, end_date, socket);
+            for (Object[] row : currentActiveUserList) {
+                model.addRow(row);
+            }
+        }
     }
 
     private void reportTableMouseClicked(java.awt.event.MouseEvent evt) {
