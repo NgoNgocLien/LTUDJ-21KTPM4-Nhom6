@@ -718,8 +718,6 @@ public class AdminApp extends javax.swing.JFrame {
             }
         });
 
-        //userFriendPanel.setPreferredSize(new java.awt.Dimension(2276, 500));
-
         userTitle17.setFont(new java.awt.Font("Arial", 1, 14)); // NOI18N
         userTitle17.setText("Name");
 
@@ -1188,7 +1186,7 @@ public class AdminApp extends javax.swing.JFrame {
         resetUserButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 try {
-                    resetButton1ActionPerformed(evt);
+                    resetUserButtonActionPerformed(evt);
                 } catch (IOException | ClassNotFoundException e) {
                     throw new RuntimeException(e);
                 }
@@ -3570,14 +3568,38 @@ public class AdminApp extends javax.swing.JFrame {
             start_date = startDateArray[2] + "-" + startDateArray[1] + "-" + startDateArray[0] + " " + startHour + ":" + startMin + ":" + startSec;
             end_date = endDateArray[2] + "-" + endDateArray[1] + "-" + endDateArray[0] + " " + endHour + ":" + endMin + ":" + endSec;
 
-            DefaultTableModel model = (DefaultTableModel) activeUserTable.getModel();
+            DefaultTableModel model = (DefaultTableModel) newUserTable.getModel();
             model.setRowCount(0);
 
-            currentActiveUserList = SearchActiveUser.request( start_date, end_date, socket);
-            for (Object[] row : currentActiveUserList) {
+            newUserList = SearchNewUser.request( start_date, end_date, socket);
+            for (Object[] row : newUserList) {
                 model.addRow(row);
             }
         }
+    }
+
+    private void resetUserButtonActionPerformed(java.awt.event.ActionEvent evt) throws IOException, ClassNotFoundException {
+        startDateUserInput.setText("(dd-mm-yyyy)");
+        endDateUserInput.setText("(dd-mm-yyyy)");
+
+        startHourUserInput.setText("00");
+        startMinUserInput.setText("00");
+        startSecUserInput.setText("00");
+
+        endHourUserInput.setText("00");
+        endMinUserInput.setText("00");
+        endSecUserInput.setText("00");
+
+        searchNameUserInput.setText("");
+
+        DefaultTableModel model = (DefaultTableModel) newUserTable.getModel();
+        model.setRowCount(0);
+
+        Object[][] data = GetAllUser.request(socket);
+        for (Object[] row : data) {
+            model.addRow(row);
+        }
+
     }
 
     private void reportTableMouseClicked(java.awt.event.MouseEvent evt) {
@@ -3953,6 +3975,7 @@ public class AdminApp extends javax.swing.JFrame {
 
     private Socket socket;
     private Object[][] currentActiveUserList;
+    private Object[][] newUserList;
     Color blue = new Color (23, 70, 162);
     Color light_blue = new Color(92, 124, 208);
     private String originalEmail;

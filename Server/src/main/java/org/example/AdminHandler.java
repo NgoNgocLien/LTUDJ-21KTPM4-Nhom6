@@ -586,6 +586,30 @@ public class AdminHandler implements Runnable {
                         break;
                     }
 
+                    case "searchNewUser":{
+                        System.out.println("Admin search new user");
+
+                        String start_date = msgArr[1];
+                        String end_date = msgArr[2];
+
+                        System.out.println(start_date + " & " + end_date);
+                        Object[][] data1 = dbcon.searchNewUser(start_date, end_date);
+                        objectOutputStream.reset();
+                        objectOutputStream.writeObject(data1);
+                        objectOutputStream.flush();
+
+                        for (Object[] row : data1) {
+                            for (Object element : row) {
+                                System.out.print(element + " ");
+                            }
+                            System.out.println();
+                        }
+
+                        System.out.println("Data sent to client.");
+
+                        break;
+                    }
+
                 }
             }
         } catch (IOException e) {
