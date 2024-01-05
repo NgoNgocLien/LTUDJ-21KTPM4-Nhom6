@@ -192,10 +192,10 @@ public class MyProfileFrameController {
                 new ErrorMessage(MPF, "Current password is required if you want to change password");
                 currentPasswordField.requestFocus();
                 return;
-            } else if (!currentPassword.isEmpty() && newPassword.isEmpty()) {
-                new ErrorMessage(MPF, "New password is required if you want to change password");
-                newPasswordField.requestFocus();
-                return;
+//            } else if (!currentPassword.isEmpty() && newPassword.isEmpty()) {
+//                new ErrorMessage(MPF, "New password is required if you want to change password");
+//                newPasswordField.requestFocus();
+//                return;
             } else if (email.isEmpty()) {
                 new ErrorMessage(MPF, "Email is required");
                 emailField.requestFocus();
@@ -228,7 +228,7 @@ public class MyProfileFrameController {
                 new ErrorMessage(MPF, "Current password is invalid");
                 currentPasswordField.requestFocus();
                 return;
-            } else if (!checkPassword(newPassword)) {
+            } else if (!newPassword.isEmpty() && !checkPassword(newPassword)) {
                 new ErrorMessage(MPF, "New password is invalid");
                 newPasswordField.requestFocus();
                 return;
@@ -263,11 +263,11 @@ public class MyProfileFrameController {
             DateTimeFormatter formatters = DateTimeFormatter.ofPattern("dd-MM-yyyy");
 
             Profile newProfile = new Profile(myProfile.getDateJoined(), fullname, myProfile.getUsername(), (gender.equals("Male")) ? 1 : 0, LocalDate.parse(dateString, formatters), email, address, newPassword);
-//            try {
-//                DB.updateMyProfile(newProfile, myProfile.getPassword());
-//            } catch (SQLException ex) {
-//                throw new RuntimeException(ex);
-//            }
+            try {
+                DB.updateMyProfile(newProfile, myProfile.getPassword());
+            } catch (SQLException ex) {
+                throw new RuntimeException(ex);
+            }
 
             // close register frame, open login frame
             MPF.dispose();

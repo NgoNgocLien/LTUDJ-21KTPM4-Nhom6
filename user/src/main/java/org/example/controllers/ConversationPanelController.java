@@ -65,11 +65,7 @@ public class ConversationPanelController {
                             conversationPanel.scrollToBottom();
                         }
                     }
-                } catch (InterruptedException e) {
-                    e.printStackTrace();
-                } catch (IOException e) {
-                    e.printStackTrace();
-                } catch (ClassNotFoundException e) {
+                } catch (InterruptedException | IOException | ClassNotFoundException e) {
                     e.printStackTrace();
                 }
             }

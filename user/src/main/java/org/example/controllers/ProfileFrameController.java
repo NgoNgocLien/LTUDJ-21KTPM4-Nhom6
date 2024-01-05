@@ -1,6 +1,7 @@
 package org.example.controllers;
 
 import org.example.utilities.DatabaseHandler;
+import org.example.views.MainFrame;
 import org.example.views.ProfileFrame;
 
 import javax.swing.*;
@@ -34,6 +35,8 @@ public class ProfileFrameController {
         } else if (mode == 3) {
             leftButton.addActionListener(new acceptButtonListener());
             rightButton.addActionListener(new removeButtonListener());
+        } else if (mode == 4) {
+            leftButton.addActionListener(new unblockButtonListener());
         }
     }
 
@@ -78,19 +81,32 @@ public class ProfileFrameController {
     private class acceptButtonListener implements ActionListener {
         @Override
         public void actionPerformed(ActionEvent e) {
-            try {
-                DB.acceptFriend(DB.getLoginedUsername(), PF.getProfile().getUsername());
+//            try {
+//                DB.acceptFriend(DB.getLoginedUsername(), PF.getProfile().getUsername());
                 JOptionPane.showMessageDialog(null, "Friend request accepted successfully!", "Success", JOptionPane.INFORMATION_MESSAGE);
                 PF.dispose();
-            }catch (SQLException ex) {
-                throw new RuntimeException(ex);
-            }
+//            }catch (SQLException ex) {
+//                throw new RuntimeException(ex);
+//            }
         }
     }
     private static class removeButtonListener implements ActionListener {
         @Override
         public void actionPerformed(ActionEvent e) {
 
+        }
+    }
+
+    private class unblockButtonListener implements ActionListener {
+        @Override
+        public void actionPerformed(ActionEvent e) {
+            try {
+                DB.unblockFriend(DB.getLoginedUsername(), PF.getProfile().getUsername());
+                JOptionPane.showMessageDialog(null, "Friend unblocked successfully!", "Success", JOptionPane.INFORMATION_MESSAGE);
+                PF.dispose();
+            } catch (SQLException ex) {
+                throw new RuntimeException(ex);
+            }
         }
     }
 }

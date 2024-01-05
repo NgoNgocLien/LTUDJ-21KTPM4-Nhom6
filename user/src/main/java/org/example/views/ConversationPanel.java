@@ -311,22 +311,25 @@ public class ConversationPanel extends JPanel {
             }
             addStartConversationPanel(info.getChatName(), info.getUsername(), statement);
 
-            if (messages == null || messages.isEmpty()) {
-                return;
-            }
+//            if (messages == null || messages.isEmpty()) {
+//                return;
+//            }
 
-            LocalDateTime lastTime = messages.get(0).getSentTime();
-            addTime(lastTime);
+            if(messages != null && !messages.isEmpty()) {
+                LocalDateTime lastTime = messages.get(0).getSentTime();
+                addTime(lastTime);
 
-            for (Message message : messages) {
-                if (message.getSentTime().getDayOfYear() != lastTime.getDayOfYear() || message.getSentTime().getHour() != lastTime.getHour()) {
-                    addTime(message.getSentTime());
-                    lastTime = message.getSentTime();
+                for (Message message : messages) {
+                    if (message.getSentTime().getDayOfYear() != lastTime.getDayOfYear() || message.getSentTime().getHour() != lastTime.getHour()) {
+                        addTime(message.getSentTime());
+                        lastTime = message.getSentTime();
+                    }
+                    addMessage(message);
                 }
-                addMessage(message);
+                lastMessage = messages.get(messages.size() - 1).getSentTime();
             }
+
             buildMoreMenu(false);
-            lastMessage = messages.get(messages.size() - 1).getSentTime();
         }
     }
 

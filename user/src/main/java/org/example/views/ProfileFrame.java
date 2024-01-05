@@ -8,7 +8,7 @@ import java.awt.*;
 import java.time.format.DateTimeFormatter;
 
 public class ProfileFrame extends JFrame {
-    int mode; //1: not a friend //2: is a friend //3: request
+    int mode; //1: not a friend //2: is a friend //3: request //4: blocked
     private Profile profile;
     private JButton leftButton;
     private JButton rightButton;
@@ -161,13 +161,21 @@ public class ProfileFrame extends JFrame {
             rightButton.setAlignmentX(Component.CENTER_ALIGNMENT);
             rightButton.setMaximumSize(new Dimension(140, 40));
             rightButton.setBorder(BorderFactory.createEmptyBorder(10, 0, 10, 0));
+        } else if (mode == 4) {
+            leftButton = new JButton("Unblock");
+            leftButton.setFont(Constants.FONT_NORMAL);
+            leftButton.setAlignmentX(Component.CENTER_ALIGNMENT);
+            leftButton.setMaximumSize(new Dimension(140, 40));
+            leftButton.setBorder(BorderFactory.createEmptyBorder(10, 0, 10, 0));
         }
 
 
         buttonContainer.add(leftButton);
         buttonContainer.add(Box.createRigidArea(new Dimension(20, 0)));
-        buttonContainer.add(rightButton);
+        if (rightButton != null) {
+            buttonContainer.add(rightButton);
 
+        }
         add(fullnameTitleLabel);
         add(usernameTitleLabel);
 

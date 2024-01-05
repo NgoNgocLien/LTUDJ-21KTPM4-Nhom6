@@ -6,24 +6,23 @@
   <component name="ChangeListManager">
     <list default="true" id="ffaf42bc-6bfe-4d2e-bcc5-9de6824c0e6b" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/user/src/main/java/org/example/controllers/ChatListPanelController.java" beforeDir="false" afterPath="$PROJECT_DIR$/user/src/main/java/org/example/controllers/ChatListPanelController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/user/src/main/java/org/example/controllers/ConversationPanelController.java" beforeDir="false" afterPath="$PROJECT_DIR$/user/src/main/java/org/example/controllers/ConversationPanelController.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/user/src/main/java/org/example/controllers/IconPanelController.java" beforeDir="false" afterPath="$PROJECT_DIR$/user/src/main/java/org/example/controllers/IconPanelController.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/user/src/main/java/org/example/controllers/LoginFrameController.java" beforeDir="false" afterPath="$PROJECT_DIR$/user/src/main/java/org/example/controllers/LoginFrameController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/user/src/main/java/org/example/controllers/MainFrameController.java" beforeDir="false" afterPath="$PROJECT_DIR$/user/src/main/java/org/example/controllers/MainFrameController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/user/src/main/java/org/example/controllers/MyProfileFrameController.java" beforeDir="false" afterPath="$PROJECT_DIR$/user/src/main/java/org/example/controllers/MyProfileFrameController.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/user/src/main/java/org/example/controllers/ProfileFrameController.java" beforeDir="false" afterPath="$PROJECT_DIR$/user/src/main/java/org/example/controllers/ProfileFrameController.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/user/src/main/java/org/example/utilities/DatabaseHandler.java" beforeDir="false" afterPath="$PROJECT_DIR$/user/src/main/java/org/example/utilities/DatabaseHandler.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/user/src/main/java/org/example/views/ConversationPanel.java" beforeDir="false" afterPath="$PROJECT_DIR$/user/src/main/java/org/example/views/ConversationPanel.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/user/src/main/java/org/example/views/MainFrame.java" beforeDir="false" afterPath="$PROJECT_DIR$/user/src/main/java/org/example/views/MainFrame.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/user/target/classes/org/example/controllers/IconPanelController$IconMouseListener.class" beforeDir="false" afterPath="$PROJECT_DIR$/user/target/classes/org/example/controllers/IconPanelController$IconMouseListener.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/user/target/classes/org/example/utilities/DatabaseHandler.class" beforeDir="false" afterPath="$PROJECT_DIR$/user/target/classes/org/example/utilities/DatabaseHandler.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/user/target/classes/org/example/views/ConversationPanel$1.class" beforeDir="false" afterPath="$PROJECT_DIR$/user/target/classes/org/example/views/ConversationPanel$1.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/user/target/classes/org/example/views/ConversationPanel$2.class" beforeDir="false" afterPath="$PROJECT_DIR$/user/target/classes/org/example/views/ConversationPanel$2.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/user/target/classes/org/example/views/ConversationPanel$AMessagePanel.class" beforeDir="false" afterPath="$PROJECT_DIR$/user/target/classes/org/example/views/ConversationPanel$AMessagePanel.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/user/target/classes/org/example/views/ConversationPanel$MemberNamePanel.class" beforeDir="false" afterPath="$PROJECT_DIR$/user/target/classes/org/example/views/ConversationPanel$MemberNamePanel.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/user/target/classes/org/example/views/ConversationPanel$MessageTimePanel.class" beforeDir="false" afterPath="$PROJECT_DIR$/user/target/classes/org/example/views/ConversationPanel$MessageTimePanel.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/user/target/classes/org/example/views/ConversationPanel$RoundedPanel.class" beforeDir="false" afterPath="$PROJECT_DIR$/user/target/classes/org/example/views/ConversationPanel$RoundedPanel.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/user/target/classes/org/example/views/ConversationPanel$StartConversationPanel.class" beforeDir="false" afterPath="$PROJECT_DIR$/user/target/classes/org/example/views/ConversationPanel$StartConversationPanel.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/user/target/classes/org/example/views/ConversationPanel.class" beforeDir="false" afterPath="$PROJECT_DIR$/user/target/classes/org/example/views/ConversationPanel.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/user/target/classes/org/example/views/MainFrame$MainFrameComponentListener.class" beforeDir="false" afterPath="$PROJECT_DIR$/user/target/classes/org/example/views/MainFrame$MainFrameComponentListener.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/user/target/classes/org/example/views/MainFrame.class" beforeDir="false" afterPath="$PROJECT_DIR$/user/target/classes/org/example/views/MainFrame.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/user/src/main/java/org/example/views/ProfileFrame.java" beforeDir="false" afterPath="$PROJECT_DIR$/user/src/main/java/org/example/views/ProfileFrame.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/user/target/classes/org/example/controllers/ChatListPanelController$ChatPanelMouseListener.class" beforeDir="false" afterPath="$PROJECT_DIR$/user/target/classes/org/example/controllers/ChatListPanelController$ChatPanelMouseListener.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/user/target/classes/org/example/controllers/ProfileFrameController$acceptButtonListener.class" beforeDir="false" afterPath="$PROJECT_DIR$/user/target/classes/org/example/controllers/ProfileFrameController$acceptButtonListener.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/user/target/classes/org/example/controllers/ProfileFrameController$addFriendButtonListener.class" beforeDir="false" afterPath="$PROJECT_DIR$/user/target/classes/org/example/controllers/ProfileFrameController$addFriendButtonListener.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/user/target/classes/org/example/controllers/ProfileFrameController$blockButtonListener.class" beforeDir="false" afterPath="$PROJECT_DIR$/user/target/classes/org/example/controllers/ProfileFrameController$blockButtonListener.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/user/target/classes/org/example/controllers/ProfileFrameController$removeButtonListener.class" beforeDir="false" afterPath="$PROJECT_DIR$/user/target/classes/org/example/controllers/ProfileFrameController$removeButtonListener.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/user/target/classes/org/example/controllers/ProfileFrameController$unfriendButtonListener.class" beforeDir="false" afterPath="$PROJECT_DIR$/user/target/classes/org/example/controllers/ProfileFrameController$unfriendButtonListener.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/user/target/classes/org/example/controllers/ProfileFrameController.class" beforeDir="false" afterPath="$PROJECT_DIR$/user/target/classes/org/example/controllers/ProfileFrameController.class" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -116,7 +115,7 @@
       <recent name="org.example" />
     </key>
   </component>
-  <component name="RunManager" selected="Application.Main Server">
+  <component name="RunManager" selected="Application.Main">
     <configuration name="Main Admin" type="Application" factoryName="Application" temporary="true">
       <option name="MAIN_CLASS_NAME" value="org.example.Main" />
       <module name="admin" />

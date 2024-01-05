@@ -6,6 +6,7 @@ import org.example.models.Profile;
 
 import java.sql.*;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 
 public class DatabaseHandler {
@@ -648,6 +649,29 @@ public class DatabaseHandler {
         stmt.close();
     }
 
+    public void unblockFriend(String myUsername, String friendUsername) throws SQLException {
+        String sql = "DELETE FROM block WHERE username = ? AND block = ?";
+        PreparedStatement stmt = conn.prepareStatement(sql);
+        stmt.setString(1, myUsername);
+        stmt.setString(2, friendUsername);
+        stmt.executeUpdate();
+        stmt.close();
+    }
+
+    public void setLogoutTime(String username){
+        String sql = "UPDATE history_login SET logout_time = ? WHERE username = ? ";
+        PreparedStatement stmt = null;
+        try {
+            stmt = conn.prepareStatement(sql);
+            stmt.setTimestamp(1, Timestamp.valueOf(LocalDateTime.now()));
+            stmt.setString(2, username);
+            stmt.executeUpdate();
+            stmt.close();
+        } catch (SQLException throwables) {
+            throwables.printStackTrace(System.out);
+        }
+    }
+
     public void deleteChat(String deleteUsername, String username2) throws SQLException {
         String sql = "SELECT * FROM friend WHERE username1 = ? AND username2 = ?";
         PreparedStatement stmt = conn.prepareStatement(sql);
@@ -668,6 +692,20 @@ public class DatabaseHandler {
             stmt.setString(3, deleteUsername);
             stmt.executeUpdate();
             stmt.close();
+        }
+    }
+
+    public void setLoginTime(String username){
+        String sql = "INSERT INTO history_login (username, login_time) VALUES (?, ?)";
+        PreparedStatement stmt = null;
+        try {
+            stmt = conn.prepareStatement(sql);
+            stmt.setString(1, username);
+            stmt.setTimestamp(2, Timestamp.valueOf(LocalDateTime.now()));
+            stmt.executeUpdate();
+            stmt.close();
+        } catch (SQLException throwables) {
+            throwables.printStackTrace(System.out);
         }
     }
 

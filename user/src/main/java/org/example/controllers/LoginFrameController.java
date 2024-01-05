@@ -138,6 +138,7 @@ public class LoginFrameController {
                         se.printStackTrace();
                     }
                     DB.setLoginedUsername(username);
+                    DB.setLoginTime(username);
                     MainFrame mainFrame = new MainFrame(allChats);
                     MainFrameController mainFrameController = new MainFrameController(socket, mainFrame, DB, username);
                     LF.dispose();

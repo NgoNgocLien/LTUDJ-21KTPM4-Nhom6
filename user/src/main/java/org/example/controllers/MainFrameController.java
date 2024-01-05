@@ -24,8 +24,7 @@ public class MainFrameController {
             public void windowClosing(java.awt.event.WindowEvent windowEvent) {
                 try {
                     // TODO: update status to offline
-
-
+                    DB.setLogoutTime(myUsername);
                     socket.close();
                     DB.closeConnection();
                 } catch (Exception e) {

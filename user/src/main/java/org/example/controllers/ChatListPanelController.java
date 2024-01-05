@@ -195,7 +195,7 @@ public class ChatListPanelController {
 //                    messages = DB.getFriendMessages(myUsername, username, LocalDate.of(1990, 1, 1));
                     messages = GetFriendMessageWorker.request(socket, myUsername, username, LocalDate.of(1990, 1, 1).atStartOfDay());
                 } catch (Exception exception) {
-                    exception.printStackTrace();
+                    exception.printStackTrace(System.out);
                 }
                 MF.getConversationPanel().rebuildConversationPanel(chatInfo, messages);
                 MF.getConversationPanel().scrollToBottom();
@@ -206,11 +206,10 @@ public class ChatListPanelController {
                 try {
                     profile = DB.getProfilebyUsername(chatInfo.getUsername());
                 } catch (Exception exception) {
-                    exception.printStackTrace();
+                    exception.printStackTrace(System.out);
                 }
                 ProfileFrame PF = new ProfileFrame(profile, chatPanel.getMode());
                 ProfileFrameController PFC = new ProfileFrameController(socket, PF, DB);
-                chatPanel.repaint();
             }
             else if(chatPanel.getMode() == 3){
                 // open profile
@@ -218,10 +217,19 @@ public class ChatListPanelController {
                 try {
                     profile = DB.getProfilebyUsername(chatInfo.getUsername());
                 } catch (Exception exception) {
-                    exception.printStackTrace();
+                    exception.printStackTrace(System.out);
                 }
                 ProfileFrame PF = new ProfileFrame(profile, chatPanel.getMode());
                 ProfileFrameController PFC = new ProfileFrameController(socket, PF, DB);
+            } else if (chatPanel.getMode() == 4) {
+                Profile profile = null;
+                try {
+                    profile = DB.getProfilebyUsername(chatInfo.getUsername());
+                    ProfileFrame PF = new ProfileFrame(profile, chatPanel.getMode());
+                    ProfileFrameController PFC = new ProfileFrameController(socket, PF, DB);
+                } catch (Exception exception) {
+                    exception.printStackTrace(System.out);
+                }
             }
         }
     }

@@ -139,7 +139,7 @@ public class IconPanelController {
                 iconPanel.setFocusLabel(blockIconLabel);
                 try {
                     ArrayList<ChatInfo> blocks = DB.getAllBlocks(myUsername);
-                    MF.getChatListPanel().rebuildChatPanelsScrollPane(blocks, 1, false);
+                    MF.getChatListPanel().rebuildChatPanelsScrollPane(blocks, 4, false);
                     MF.getChatListPanel().setTitleLabel("Blocked Users", false);
                     MF.getChatListPanel().setInputFieldPlaceholder("Search for a blocked user");
                     MFC.getChatListPanelController().renewListener();
@@ -152,7 +152,7 @@ public class IconPanelController {
                 if (confirm == JOptionPane.YES_OPTION) {
                     try {
                         // TODO: set user status to offline
-
+                        DB.setLogoutTime(myUsername);
                     } catch (Exception ex) {
                         System.out.println("Error closing window: " + ex);
                     }
