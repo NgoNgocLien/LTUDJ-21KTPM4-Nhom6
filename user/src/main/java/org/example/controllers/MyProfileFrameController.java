@@ -268,11 +268,8 @@ public class MyProfileFrameController {
             } catch (SQLException ex) {
                 throw new RuntimeException(ex);
             }
-
             // close register frame, open login frame
             MPF.dispose();
-            MPF = new MyProfileFrame(newProfile);
-            MyProfileFrameController MPFC = new MyProfileFrameController(MPF, DB);
         }
     }
 }

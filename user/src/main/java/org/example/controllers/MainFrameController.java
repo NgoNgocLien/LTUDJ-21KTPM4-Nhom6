@@ -57,4 +57,5 @@ public class MainFrameController {
     public ChatListPanelController getChatListPanelController() {
         return chatListPanelController;
     }
+    public ConversationPanelController getConversationPanelController() { return conversationPanelController; }
 }
