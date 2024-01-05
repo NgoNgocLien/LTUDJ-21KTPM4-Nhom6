@@ -121,6 +121,7 @@ public class ChatListPanel extends JPanel {
             for (ChatInfo info : infos) {
                 AChatPanel chatPanel = new AChatPanel(info, mode);
                 if (info.equals(currentChatInfo)) {
+                    System.out.println("equal");
                     chatPanel.setHighlighted();
                 }
                 chatPanels.add(chatPanel);

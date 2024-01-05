@@ -51,6 +51,22 @@ public class ChatInfo {
         this.isFriend = false;
     }
 
+    // 2 object equal
+    @Override
+    public boolean equals(Object obj) {
+        if (obj instanceof ChatInfo) {
+            ChatInfo chatInfo = (ChatInfo) obj;
+            if (this.isGroup == chatInfo.isGroup) {
+                if (this.isGroup) {
+                    return this.groupId == chatInfo.groupId;
+                } else {
+                    return this.username.equals(chatInfo.username);
+                }
+            }
+        }
+        return false;
+    }
+
     public String getChatName() {
         return chatName;
     }
