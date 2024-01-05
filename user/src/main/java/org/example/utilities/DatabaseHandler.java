@@ -31,20 +31,20 @@ public class DatabaseHandler {
     }
 
     public void reportSpamMessage(int idMessage) throws SQLException {
-        String sql = "SELECT * FROM spam WHERE id_message = ?";
+        String sql = "SELECT * FROM SPAM WHERE id_message = ?";
         PreparedStatement stmt = conn.prepareStatement(sql);
         stmt.setInt(1, idMessage);
         ResultSet resultSet = stmt.executeQuery();
         if (resultSet.next()) {
             System.out.println("Spam reported1.");
-            String sql2 = "UPDATE spam SET report_time = ? WHERE id_message = ?";
+            String sql2 = "UPDATE SPAM SET report_time = ? WHERE id_message = ?";
             stmt = conn.prepareStatement(sql2);
             stmt.setTimestamp(1, Timestamp.valueOf(LocalDateTime.now()));
             stmt.setInt(2, idMessage);
             stmt.executeUpdate();
         } else {
             System.out.println("Spam reported2.");
-            String sql2 = "INSERT INTO spam (id_message, report_time) VALUES (?, ?)";
+            String sql2 = "INSERT INTO SPAM (id_message, report_time) VALUES (?, ?)";
             stmt = conn.prepareStatement(sql2);
             stmt.setInt(1, idMessage);
             stmt.setTimestamp(2, Timestamp.valueOf(LocalDateTime.now()));
@@ -104,7 +104,7 @@ public class DatabaseHandler {
     }
 
     public void saveRegisteredAccount(String username, String password, String fullname, String address, LocalDate birthdate, boolean gender, String email) throws SQLException {
-        String sql = "INSERT INTO user (username, password, fullname, address, birthdate, gender, email, creation_time, is_locked) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)";
+        String sql = "INSERT INTO USER (username, password, fullname, address, birthdate, gender, email, creation_time, is_locked) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)";
         PreparedStatement stmt = conn.prepareStatement(sql);
         stmt.setString(1, username);
         stmt.setString(2, password);
@@ -121,9 +121,9 @@ public class DatabaseHandler {
 
     public ArrayList<ChatInfo> searchChatFromAll(String myUsername, String key) throws SQLException {
         String sql = "SELECT * FROM (" +
-                "  SELECT message.*, " +
+                "  SELECT MESSAGE.*, " +
                 "         ROW_NUMBER() OVER (PARTITION BY content, sender ORDER BY id_message) AS row_num " +
-                "  FROM message " +
+                "  FROM MESSAGE " +
                 "  WHERE (sender = ? OR to_user = ?) AND content LIKE ?" +
                 ") AS subquery " +
                 "WHERE row_num = 1";
@@ -138,7 +138,7 @@ public class DatabaseHandler {
         while (rs.next()) {
             if (rs.getObject("to_group") != null) {
                 if(rs.getString("sender").equals(myUsername)){
-                    sql = "SELECT * FROM group_chat WHERE id_group = ?";
+                    sql = "SELECT * FROM GROUP_CHAT WHERE id_group = ?";
                     stmt = conn.prepareStatement(sql);
                     stmt.setInt(1, rs.getInt("to_group"));
                     ResultSet rs2 = stmt.executeQuery();
@@ -146,7 +146,7 @@ public class DatabaseHandler {
                         chats.add(new ChatInfo(rs2.getString("group_name"), rs.getString("sender"), "You: " + rs.getString("content"), true));
                 }
                 else{
-                    sql = "SELECT * FROM group_chat WHERE id_group = ?";
+                    sql = "SELECT * FROM GROUP_CHAT WHERE id_group = ?";
                     stmt = conn.prepareStatement(sql);
                     stmt.setInt(1, rs.getInt("to_group"));
                     ResultSet rs2 = stmt.executeQuery();
@@ -155,7 +155,7 @@ public class DatabaseHandler {
                 }
             } else {
                 if(rs.getString("sender").equals(myUsername)){
-                    sql = "SELECT * FROM user WHERE username = ?";
+                    sql = "SELECT * FROM USER WHERE username = ?";
                     stmt = conn.prepareStatement(sql);
                     stmt.setString(1, rs.getString("to_user"));
                     ResultSet rs2 = stmt.executeQuery();
@@ -163,7 +163,7 @@ public class DatabaseHandler {
                         chats.add(new ChatInfo(rs2.getString("fullname"), rs.getString("to_user"), "You: " + rs.getString("content"), true));
                 }
                 else{
-                    sql = "SELECT * FROM user WHERE username = ?";
+                    sql = "SELECT * FROM USER WHERE username = ?";
                     stmt = conn.prepareStatement(sql);
                     stmt.setString(1, rs.getString("sender"));
                     ResultSet rs2 = stmt.executeQuery();
@@ -314,7 +314,7 @@ public class DatabaseHandler {
     }
 
     public void blockFriend(String myUsername, String friendUsername) throws SQLException {
-        String sql = "INSERT INTO block (username, block) VALUES (?, ?)";
+        String sql = "INSERT INTO BLOCK (username, block) VALUES (?, ?)";
         PreparedStatement stmt = conn.prepareStatement(sql);
         stmt.setString(1, myUsername);
         stmt.setString(2, friendUsername);
@@ -323,7 +323,7 @@ public class DatabaseHandler {
     }
 
     public void unFriend(String myUsername, String friendUsername) throws SQLException {
-        String sql = "DELETE FROM friend WHERE (username1 = ? AND username2 = ?) OR (username1 = ? AND username2 = ?)";
+        String sql = "DELETE FROM FRIEND WHERE (username1 = ? AND username2 = ?) OR (username1 = ? AND username2 = ?)";
         PreparedStatement stmt = conn.prepareStatement(sql);
         stmt.setString(1, myUsername);
         stmt.setString(2, friendUsername);
@@ -334,7 +334,7 @@ public class DatabaseHandler {
     }
 
     public void acceptFriend(String myUsername, String friendUsername) throws SQLException {
-        String sql = "UPDATE friend SET accepted = 1 WHERE username1 = ? AND username2 = ?";
+        String sql = "UPDATE FRIEND SET accepted = 1 WHERE username1 = ? AND username2 = ?";
         PreparedStatement stmt = conn.prepareStatement(sql);
         stmt.setString(1, friendUsername);
         stmt.setString(2, myUsername);
@@ -835,7 +835,7 @@ public class DatabaseHandler {
     }
 
     public void updateMyProfile(Profile newProfile, String currentPass) throws SQLException {
-        String sql = "UPDATE user SET password = ?, fullname = ?, address = ?, birthdate = ?, gender = ?, email = ? WHERE username = ?";
+        String sql = "UPDATE USER SET password = ?, fullname = ?, address = ?, birthdate = ?, gender = ?, email = ? WHERE username = ?";
         PreparedStatement stmt = null;
         stmt = conn.prepareStatement(sql);
         if (!newProfile.getPassword().isEmpty()) {
@@ -854,7 +854,7 @@ public class DatabaseHandler {
     }
 
     public void unblockFriend(String myUsername, String friendUsername) throws SQLException {
-        String sql = "DELETE FROM block WHERE username = ? AND block = ?";
+        String sql = "DELETE FROM BLOCK WHERE username = ? AND block = ?";
         PreparedStatement stmt = conn.prepareStatement(sql);
         stmt.setString(1, myUsername);
         stmt.setString(2, friendUsername);
@@ -877,13 +877,13 @@ public class DatabaseHandler {
     }
 
     public void deleteChat(String deleteUsername, String username2) throws SQLException {
-        String sql = "SELECT * FROM friend WHERE username1 = ? AND username2 = ?";
+        String sql = "SELECT * FROM FRIEND WHERE username1 = ? AND username2 = ?";
         PreparedStatement stmt = conn.prepareStatement(sql);
         stmt.setString(1, deleteUsername);
         stmt.setString(2, username2);
         ResultSet rs = stmt.executeQuery();
         if (rs.next()) {
-            String sql2 = "UPDATE friend SET user1_deleteChat = ? WHERE username1 = ? AND username2 = ?";
+            String sql2 = "UPDATE FRIEND SET user1_deleteChat = ? WHERE username1 = ? AND username2 = ?";
             PreparedStatement stmt2 = conn.prepareStatement(sql2);
             stmt2.setDate(1, Date.valueOf(LocalDate.now()));
             stmt2.setString(2, deleteUsername);
@@ -891,7 +891,7 @@ public class DatabaseHandler {
             stmt2.executeUpdate();
             stmt2.close();
         } else {
-            String sql2 = "UPDATE friend SET user2_deleteChat = ? WHERE username1 = ? AND username2 = ?";
+            String sql2 = "UPDATE FRIEND SET user2_deleteChat = ? WHERE username1 = ? AND username2 = ?";
             PreparedStatement stmt2 = conn.prepareStatement(sql2);
             stmt2.setDate(1, Date.valueOf(LocalDate.now()));
             stmt2.setString(2, username2);
@@ -916,12 +916,12 @@ public class DatabaseHandler {
     }
 
     public ArrayList<ChatInfo> searchFriends(String myUsername, String input) throws SQLException {
-        String sql = "SELECT friend.username2, user.fullname FROM friend " +
-                "JOIN user ON user.username = friend.username2 " +
+        String sql = "SELECT friend.username2, USER.fullname FROM FRIEND " +
+                "JOIN USER ON USER.username = friend.username2 " +
                 "WHERE friend.accepted = 1 AND friend.username1 = ? AND friend.username2 LIKE ? " +
                 "UNION " +
-                "SELECT friend.username1, user.fullname FROM friend " +
-                "JOIN user ON user.username = friend.username1 " +
+                "SELECT friend.username1, USER.fullname FROM FRIEND " +
+                "JOIN USER ON USER.username = friend.username1 " +
                 "WHERE friend.accepted = 1 AND friend.username2 = ? AND friend.username1 LIKE ?";
         PreparedStatement stmt = conn.prepareStatement(sql);
         stmt.setString(1, myUsername);
