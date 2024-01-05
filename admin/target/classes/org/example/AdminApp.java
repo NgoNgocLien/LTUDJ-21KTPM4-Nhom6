@@ -1259,7 +1259,7 @@ public class AdminApp extends javax.swing.JFrame {
         searchNewUserButton.setPreferredSize(new java.awt.Dimension(57, 35));
         searchNewUserButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                searchNameSessionButtonActionPerformed(evt);
+                searchNameNewUserButtonActionPerformed(evt);
             }
         });
 
@@ -1270,7 +1270,7 @@ public class AdminApp extends javax.swing.JFrame {
         resetUserButton1.setPreferredSize(new java.awt.Dimension(57, 35));
         resetUserButton1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                resetButton2ActionPerformed(evt);
+                resetUserButton1ActionPerformed(evt);
             }
         });
 
@@ -1415,9 +1415,10 @@ public class AdminApp extends javax.swing.JFrame {
         yearUserTitle.setFont(new java.awt.Font("Arial", 1, 14)); // NOI18N
         yearUserTitle.setText("Year");
 
+
         searchYearDropDown.setBackground(new java.awt.Color(255, 255, 254));
         searchYearDropDown.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
-        searchYearDropDown.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "2017", "2018", "2019", "2020", "2021", "2022", "2023", "2024" }));
+        searchYearDropDown.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "2017", "2018", "2019", "2020", "2021", "2022", "2023" }));
         searchYearDropDown.setToolTipText("");
         searchYearDropDown.setFocusable(false);
         searchYearDropDown.setPreferredSize(new java.awt.Dimension(88, 35));
@@ -1429,7 +1430,7 @@ public class AdminApp extends javax.swing.JFrame {
         searchYearUserButton.setPreferredSize(new java.awt.Dimension(57, 35));
         searchYearUserButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                searchYearButtonActionPerformed(evt);
+                searchYearUserButtonActionPerformed(evt);
             }
         });
 
@@ -1446,7 +1447,7 @@ public class AdminApp extends javax.swing.JFrame {
         resetUserButton2.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 try {
-                    resetButton3ActionPerformed(evt);
+                    resetUserButton2ActionPerformed(evt);
                 } catch (IOException | ClassNotFoundException e) {
                     throw new RuntimeException(e);
                 }
@@ -2848,14 +2849,8 @@ public class AdminApp extends javax.swing.JFrame {
         DefaultTableModel model1 = (DefaultTableModel) newUserTable.getModel();
         model1.setRowCount(0);
 
-        Object[][] data1 = GetAllUser.request(socket);
-        for (Object[] row : data1) {
-            for (Object element : row) {
-                System.out.print(element + " ");
-            }
-            System.out.println();
-        }
-        for (Object[] row : data1) {
+        newUserList = GetAllUser.request(socket);
+        for (Object[] row : newUserList) {
             model1.addRow(row);
         }
 
@@ -2896,8 +2891,10 @@ public class AdminApp extends javax.swing.JFrame {
         ((DefaultTableCellRenderer)newUserTable.getDefaultRenderer(Integer.class)).setHorizontalAlignment(SwingConstants.CENTER);
         newUserTable.setPreferredScrollableViewportSize(newUserTable.getPreferredSize());
 
-        searchYearDropDown.setSelectedItem("2023");
-        createNewUsersChart("2023");
+        int[] years = GetAllUserYear.request(socket);
+        int selectedYear = years[0];
+        searchYearDropDown.setSelectedItem(String.valueOf(selectedYear));
+        createNewUsersChart(String.valueOf(selectedYear));
 
         welcomePanel.setVisible(false);
         getContentPane().remove(welcomePanel);
@@ -3578,6 +3575,52 @@ public class AdminApp extends javax.swing.JFrame {
         }
     }
 
+    private void searchNameNewUserButtonActionPerformed(java.awt.event.ActionEvent evt) {
+        String name = searchNameUserInput.getText();
+
+        if (name.isEmpty()){
+            JOptionPane.showMessageDialog(null, "Empty name", "Error", JOptionPane.ERROR_MESSAGE);
+        }
+        else{
+            String start_date = startDateUserInput.getText();
+            String end_date = endDateUserInput.getText();
+
+            if (start_date.equals("(dd-mm-yyyy)") || start_date.isEmpty() ){
+                start_date = "01-01-1990";
+                startDateUserInput.setText(start_date);
+            }
+
+            if (end_date.equals("(dd-mm-yyyy)") || end_date.isEmpty()){
+                Date date = new Date();
+                SimpleDateFormat sdf = new SimpleDateFormat("dd-MM-yyyy");
+                end_date = sdf.format(date);
+                endDateUserInput.setText(end_date);
+            }
+
+            ArrayList<Object[]> tmp = new ArrayList<>();
+            for (Object[] row : newUserList) {
+                tmp.add(row);
+            }
+
+            if (!name.isEmpty()){
+                System.out.println(name);
+                for (int i = 0; i < tmp.size(); i++) {
+                    if (!Arrays.equals(tmp.get(i), null) && !tmp.get(i)[2].toString().toLowerCase().contains(name.toLowerCase())){
+                        tmp.set(i, null);
+                    }
+                }
+            }
+
+            DefaultTableModel model = (DefaultTableModel) newUserTable.getModel();
+            model.setRowCount(0);
+
+            for (Object[] row : tmp) {
+                if (!Arrays.equals(row, null))
+                    model.addRow(row);
+            }
+        }
+    }
+
     private void resetUserButtonActionPerformed(java.awt.event.ActionEvent evt) throws IOException, ClassNotFoundException {
         startDateUserInput.setText("(dd-mm-yyyy)");
         endDateUserInput.setText("(dd-mm-yyyy)");
@@ -3600,6 +3643,49 @@ public class AdminApp extends javax.swing.JFrame {
             model.addRow(row);
         }
 
+    }
+
+    private void resetUserButton1ActionPerformed(java.awt.event.ActionEvent evt) {
+        searchNameUserInput.setText("");
+
+        DefaultTableModel model = (DefaultTableModel) newUserTable.getModel();
+        model.setRowCount(0);
+
+        for (Object[] row : newUserList) {
+            model.addRow(row);
+        }
+    }
+
+    private void searchYearUserButtonActionPerformed(java.awt.event.ActionEvent evt) {
+        Object selectedValue = searchYearDropDown.getSelectedItem();
+        String selectedString = selectedValue.toString();
+        int year = Integer.parseInt(selectedString);
+        
+        if (1990 <= year && year <= 2023){
+            newUserMonthlyChartPanel.removeAll();
+            newUserMonthlyChartPanel.revalidate();
+            newUserMonthlyChartPanel.repaint();
+            try {
+                createNewUsersChart(Integer.toString(year));
+            } catch (IOException e) {
+                throw new RuntimeException(e);
+            } catch (ClassNotFoundException e) {
+                throw new RuntimeException(e);
+            }
+        } else{
+            JOptionPane.showMessageDialog(null, "Year must be between 1990 and 2023", "Error", JOptionPane.ERROR_MESSAGE);
+        }
+    }
+
+    private void resetUserButton2ActionPerformed(java.awt.event.ActionEvent evt) throws IOException, ClassNotFoundException {
+        int[] years = GetAllUserYear.request(socket);
+        int selectedYear = years[0];
+        searchYearDropDown.setSelectedItem(String.valueOf(selectedYear));
+
+        newUserMonthlyChartPanel.removeAll();
+        newUserMonthlyChartPanel.revalidate();
+        newUserMonthlyChartPanel.repaint();
+        createNewUsersChart(String.valueOf(selectedYear));
     }
 
     private void reportTableMouseClicked(java.awt.event.MouseEvent evt) {

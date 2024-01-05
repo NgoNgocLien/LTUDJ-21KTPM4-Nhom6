@@ -124,13 +124,41 @@ public class ConversationPanel extends JPanel {
 
         viewProfile = new JMenuItem("View profile");
         viewProfile.setFont(Constants.FONT_NORMAL);
+
+        searchMessage.addActionListener(e -> {
+            String keyword = JOptionPane.showInputDialog(null, "Enter keyword to search");
+            if (keyword == null || keyword.isEmpty()) {
+                return;
+            }
+            if (chatInfo.isFriend()) {
+                System.out.println(keyword);
+                ArrayList<Message> messages = DB.getFriendMessagesWithKeyWord(DB.getLoginedUsername(), chatInfo.getUsername(), keyword);
+                if (messages == null || messages.isEmpty()) {
+                    JOptionPane.showMessageDialog(null, "No message found");
+                } else {
+                    rebuildConversationPanel(chatInfo, messages);
+                    scrollToBottom();
+                    searching = true;
+                }
+            } else if (chatInfo.isGroup()) {
+                ArrayList<Message> messages = DB.getGroupMessagesWithKeyWord(DB.getLoginedUsername(), getChatInfo().getGroupId(), keyword);
+                if (messages == null || messages.isEmpty()) {
+                    JOptionPane.showMessageDialog(null, "No message found");
+                } else {
+                    rebuildConversationPanel(chatInfo, messages);
+                    scrollToBottom();
+                    searching = true;
+                }
+            }
+        });
+
         if (chatInfo == null) {
             return;
         }
         if (chatInfo.isGroup()) {
             moreMenu.removeAll();
             moreMenu.setBackground(Constants.COLOR_BACKGROUND);
-            moreMenu.setPreferredSize(new Dimension(180, 160));
+            moreMenu.setPreferredSize(new Dimension(180, 200));
 
             // Add JMenuItems to JPopupMenu
             moreMenu.add(searchMessage);
@@ -153,32 +181,6 @@ public class ConversationPanel extends JPanel {
                     throw new RuntimeException(ex);
                 }
 
-            });
-
-            searchMessage.addActionListener(e -> {
-                String keyword = JOptionPane.showInputDialog(null, "Enter keyword to search");
-                if (keyword == null || keyword.isEmpty()) {
-                    return;
-                }
-                if (chatInfo.isFriend()) {
-                    System.out.println(keyword);
-                    ArrayList<Message> messages = DB.getFriendMessagesWithKeyWord(DB.getLoginedUsername(), chatInfo.getUsername(), keyword);
-                    if (messages == null || messages.size() == 0) {
-                        JOptionPane.showMessageDialog(null, "No message found");
-                    } else {
-                        rebuildConversationPanel(chatInfo, messages);
-                        scrollToBottom();
-                        searching = true;
-                    }
-                } else if (chatInfo.isGroup()) {
-//                ArrayList<Message> messages = DB.getGroupMessagesWithKeyWord(myUsername, getChatInfo().getGroupId(), keyword);
-//                if (messages == null || messages.size() == 0) {
-//                    JOptionPane.showMessageDialog(MF, "No message found");
-//                } else {
-//                    setMessages(messages);
-//                    scrollToBottom();
-//                }
-                }
             });
 
             deleteChat.addActionListener(e -> {

@@ -166,6 +166,7 @@ public class ChatListPanelController {
                     System.out.println("searching for a message"+ input);
                     ArrayList<ChatInfo> infos = DB.searchChatFromAll(myUsername, input);
                     chatListPanel.rebuildChatPanelsScrollPane(infos, 2, false, null);
+                    renewListener();
                 } catch (SQLException ex) {
                     throw new RuntimeException(ex);
                 }
@@ -174,6 +175,7 @@ public class ChatListPanelController {
                 try {
                     ArrayList<ChatInfo> infos = DB.searchFriends(myUsername, input);
                     chatListPanel.rebuildChatPanelsScrollPane(infos, 2, false, null);
+                    renewListener();
                 } catch (SQLException ex) {
                     throw new RuntimeException(ex);
                 }
@@ -190,6 +192,7 @@ public class ChatListPanelController {
                     }
                 }
                 chatListPanel.rebuildChatPanelsScrollPane(infos, 1, true, null);
+                renewListener();
 
             } else if (Objects.equals(chatListPanel.getInputFieldPlaceholder(), "Search for a friend request")) {
                 try {
@@ -201,6 +204,7 @@ public class ChatListPanelController {
                         }
                     }
                     chatListPanel.rebuildChatPanelsScrollPane(infos, 3, false, null);
+                    renewListener();
                 } catch (SQLException ex) {
                     throw new RuntimeException(ex);
                 }

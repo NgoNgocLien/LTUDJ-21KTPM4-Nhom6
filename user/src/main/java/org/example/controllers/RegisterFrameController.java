@@ -286,7 +286,7 @@ public class RegisterFrameController {
             new SuccessMessage(RF, "Register successfully! Please login to continue");
 
             // TEST & DELETE AFTER: show all info
-            JOptionPane.showMessageDialog(RF, "Fullname: " + fullname + "\nUsername: " + username + "\nPassword: " + password + "\nEmail: " + email + "\nAddress: " + address + "\nGender: " + gender + "\nDate of birth: " + day + "/" + month + "/" + year);
+//            JOptionPane.showMessageDialog(RF, "Fullname: " + fullname + "\nUsername: " + username + "\nPassword: " + password + "\nEmail: " + email + "\nAddress: " + address + "\nGender: " + gender + "\nDate of birth: " + day + "/" + month + "/" + year);
 
 
             try {
