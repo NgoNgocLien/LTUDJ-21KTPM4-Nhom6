@@ -627,6 +627,18 @@ public class AdminHandler implements Runnable {
                         break;
                     }
 
+                    case "sendMailUpdatePass":{
+                        System.out.println("Admin send mail update user pass");
+                        String email = msgArr[1];
+                        Boolean success = dbcon.sendMailUpdatePass(email);
+                        objectOutputStream.reset();
+                        objectOutputStream.writeObject(success);
+                        objectOutputStream.flush();
+
+                        System.out.println("Data sent to client.");
+
+                        break;
+                    }
                 }
             }
         } catch (IOException e) {
