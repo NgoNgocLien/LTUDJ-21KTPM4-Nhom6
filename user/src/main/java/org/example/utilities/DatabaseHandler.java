@@ -134,7 +134,7 @@ public class DatabaseHandler {
                 "    FROM MESSAGE M " +
                 "    INNER JOIN FRIEND F ON ((M.sender = F.username1 AND M.to_user = F.username2) OR (M.sender = F.username2 AND M.to_user = F.username1)) " +
                 "    WHERE M.to_group IS NULL AND ((F.username1 = ? AND M.sent_time > F.user1_deleteChat) " +
-                "       \t\t\t\t\t\t   OR (F.username2 = ? AND M.sent_time > F.user2_deleteChat)) " +
+                "          OR (F.username2 = ? AND M.sent_time > F.user2_deleteChat)) " +
                 ") " +
                 " " +
                 "SELECT " +
