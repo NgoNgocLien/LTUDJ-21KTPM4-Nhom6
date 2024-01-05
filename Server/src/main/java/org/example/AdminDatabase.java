@@ -29,7 +29,7 @@ public class AdminDatabase {
                 //Retrieve by column name
                 int id_group = rs.getInt("id_group");
                 String group_name = rs.getString("group_name");
-                Date create_time = rs.getDate("create_time");
+                Date create_time = rs.getTimestamp("create_time");
                 Timestamp timestamp = new Timestamp(create_time.getTime());
 
                 LocalDateTime localDateTime = timestamp.toLocalDateTime();
@@ -154,7 +154,7 @@ public class AdminDatabase {
             while(rs.next()){
                 int id_group = rs.getInt("id_group");
                 String group_name = rs.getString("group_name");
-                Date create_time = rs.getDate("create_time");
+                Date create_time = rs.getTimestamp("create_time");
                 Timestamp timestamp = new Timestamp(create_time.getTime());
 
                 LocalDateTime localDateTime = timestamp.toLocalDateTime();
@@ -196,7 +196,7 @@ public class AdminDatabase {
             while(rs.next()){
                 //Retrieve by column name
                 String username = rs.getString("username");
-                Date report_time = rs.getDate("report_time");
+                Date report_time = rs.getTimestamp("report_time");
                 Timestamp timestamp = new Timestamp(report_time.getTime());
 
                 LocalDateTime localDateTime = timestamp.toLocalDateTime();
@@ -233,19 +233,19 @@ public class AdminDatabase {
             String sql = "SELECT u.username, s.report_time, u.is_locked "
                     + "FROM SPAM s "
                     + "INNER JOIN MESSAGE m ON m.id_message = s.id_message "
-                    + "INNER JOIN USER u ON u.username = m.sender AND u.is_locked != 2";
+                    + "INNER JOIN USER u ON u.username = m.sender AND u.is_locked != 2 ";
             PreparedStatement stmt;
             if (text.isEmpty()){
                 sql += "WHERE DAY(s.report_time) = ? "
                         + "AND MONTH(s.report_time) = ? "
-                        + "AND YEAR(s.report_time) = ?;";
+                        + "AND YEAR(s.report_time) = ? ;";
                 stmt = connection.prepareStatement(sql);
                 stmt.setString(1, date[0]);
                 stmt.setString(2, date[1]);
                 stmt.setString(3, date[2]);
             }
             else if (date.length != 3){
-                sql += "WHERE u.username LIKE ?";
+                sql += "WHERE u.username LIKE ? ";
                 stmt = connection.prepareStatement(sql);
                 stmt.setString(1, "%" + text + "%");
             }
@@ -268,7 +268,7 @@ public class AdminDatabase {
             while(rs.next()){
                 //Retrieve by column name
                 String username = rs.getString("username");
-                Date report_time = rs.getDate("report_time");
+                Date report_time = rs.getTimestamp("report_time");
                 Timestamp timestamp = new Timestamp(report_time.getTime());
 
                 LocalDateTime localDateTime = timestamp.toLocalDateTime();
@@ -319,7 +319,7 @@ public class AdminDatabase {
             while(rs.next()){
                 //Retrieve by column name
                 String username1 = rs.getString("username");
-                Date report_time = rs.getDate("report_time");
+                Date report_time = rs.getTimestamp("report_time");
                 Timestamp timestamp = new Timestamp(report_time.getTime());
 
                 LocalDateTime localDateTime = timestamp.toLocalDateTime();
@@ -372,12 +372,12 @@ public class AdminDatabase {
                 //Retrieve by column name
                 String username = rs.getString("username");
                 String fullname = rs.getString("fullname");
-                Date create_time = rs.getDate("creation_time");
+                Date create_time = rs.getTimestamp("creation_time");
                 Timestamp timestamp = new Timestamp(create_time.getTime());
 
                 LocalDateTime localDateTime = timestamp.toLocalDateTime();
 //                LocalDate localDate = ((java.sql.Date) create_time).toLocalDate();
-                DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-MM-yyyy H:m:s");
+                DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-MM-yyyy HH:mm:ss");
                 String format_time = localDateTime.format(formatter);
 
                 int session_count = rs.getInt("session_count");
@@ -456,7 +456,7 @@ public class AdminDatabase {
                 //Retrieve by column name
                 String username = rs.getString("username");
                 String fullname = rs.getString("fullname");
-                Date create_time = rs.getDate("creation_time");
+                Date create_time = rs.getTimestamp("creation_time");
                 Timestamp timestamp = new Timestamp(create_time.getTime());
 
                 LocalDateTime localDateTime = timestamp.toLocalDateTime();
