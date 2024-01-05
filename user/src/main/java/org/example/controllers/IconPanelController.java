@@ -92,7 +92,7 @@ public class IconPanelController {
                     ArrayList<ChatInfo> friends = DB.getAllFriends(myUsername);
                     MF.getChatListPanel().rebuildChatPanelsScrollPane(friends, 2, false);
                     MF.getChatListPanel().setTitleLabel("Friends", false);
-                    MF.getChatListPanel().setInputFieldPlaceholder("Search for a user");
+                    MF.getChatListPanel().setInputFieldPlaceholder("Search for a friend");
                     MFC.getChatListPanelController().renewListener();
                 }
                 catch (Exception ex) {

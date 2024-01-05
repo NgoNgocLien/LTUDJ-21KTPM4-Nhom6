@@ -16,6 +16,7 @@ import org.example.views.ProfileFrame;
 import javax.swing.*;
 import java.awt.event.*;
 import java.net.Socket;
+import java.sql.SQLException;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Objects;
@@ -133,14 +134,18 @@ public class ChatListPanelController {
             }
             System.out.println("Search for: " + input);
 
+
             if (Objects.equals(chatListPanel.getInputFieldPlaceholder(), "Search for a message")) {
 //                ArrayList<ChatInfo> infos = DB.searchMessages(myUsername, input);
 //                chatListPanel.rebuildChatPanelsScrollPane(infos, true);
                 return;
             } else if (Objects.equals(chatListPanel.getInputFieldPlaceholder(), "Search for a friend")) {
-//                ArrayList<ChatInfo> infos = DB.searchFriends(myUsername, input);
-//                chatListPanel.rebuildChatPanelsScrollPane(infos, true);
-                return;
+                try {
+                    ArrayList<ChatInfo> infos = DB.searchFriends(myUsername, input);
+                    chatListPanel.rebuildChatPanelsScrollPane(infos, 2, false);
+                } catch (SQLException ex) {
+                    throw new RuntimeException(ex);
+                }
             } else if (Objects.equals(chatListPanel.getInputFieldPlaceholder(), "Search for a group")) {
 //                ArrayList<ChatInfo> infos = DB.searchGroups(myUsername, input);
 //                chatListPanel.rebuildChatPanelsScrollPane(infos, true);
@@ -210,8 +215,7 @@ public class ChatListPanelController {
                 }
                 ProfileFrame PF = new ProfileFrame(profile, chatPanel.getMode());
                 ProfileFrameController PFC = new ProfileFrameController(socket, PF, DB);
-            }
-            else if(chatPanel.getMode() == 3){
+            } else if (chatPanel.getMode() == 3) {
                 // open profile
                 Profile profile = null;
                 try {

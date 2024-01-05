@@ -731,6 +731,36 @@ public class DatabaseHandler {
         }
     }
 
+    public ArrayList<ChatInfo> searchFriends(String myUsername, String input) throws SQLException {
+        String sql = "SELECT friend.username2, user.fullname FROM friend " +
+                "JOIN user ON user.username = friend.username2 " +
+                "WHERE friend.accepted = 1 AND friend.username1 = ? AND friend.username2 LIKE ? " +
+                "UNION " +
+                "SELECT friend.username1, user.fullname FROM friend " +
+                "JOIN user ON user.username = friend.username1 " +
+                "WHERE friend.accepted = 1 AND friend.username2 = ? AND friend.username1 LIKE ?";
+        PreparedStatement stmt = conn.prepareStatement(sql);
+        stmt.setString(1, myUsername);
+        stmt.setString(2, "%" + input + "%");
+        stmt.setString(3, myUsername);
+        stmt.setString(4, "%" + input + "%");
+        ResultSet rs = stmt.executeQuery();
+        ArrayList<ChatInfo> friends = new ArrayList<>();
+        while (rs.next()) {
+            String friendUsername = "";
+            if (rs.getString("username2").isEmpty()) {
+                friendUsername = rs.getString("username1");
+            } else {
+                friendUsername = rs.getString("username2");
+            }
+            String friendFullname = rs.getString("fullname");
+            friends.add(new ChatInfo(friendFullname, friendUsername, friendUsername, false));
+        }
+        rs.close();
+        stmt.close();
+        return friends;
+    }
+
 
 //    public static void main(String[] args) {
 //        DatabaseHandler DB = new DatabaseHandler();
