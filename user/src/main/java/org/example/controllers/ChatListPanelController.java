@@ -160,7 +160,6 @@ public class ChatListPanelController {
             if (input.equals(chatListPanel.getInputFieldPlaceholder())) {
                 input = "";
             }
-            System.out.println("Search for: " + input);
 
 
             if (Objects.equals(chatListPanel.getInputFieldPlaceholder(), "Search for a message")) {
@@ -179,14 +178,42 @@ public class ChatListPanelController {
 //                chatListPanel.rebuildChatPanelsScrollPane(infos, true);
                 return;
             } else if (Objects.equals(chatListPanel.getInputFieldPlaceholder(), "Search for a user")) {
-//                ArrayList<ChatInfo> infos = DB.searchUsers(myUsername, input);
-//                chatListPanel.rebuildChatPanelsScrollPane(infos, true);
-                return;
+                ArrayList<ChatInfo> infos = DB.getAllSuggests(myUsername);
+                for(int i = 0; i < infos.size(); i++) {
+                    if(!infos.get(i).getUsername().contains(input)) {
+                        infos.remove(i);
+                        i--;
+                    }
+                }
+                chatListPanel.rebuildChatPanelsScrollPane(infos, 1, true, null);
+
             } else if (Objects.equals(chatListPanel.getInputFieldPlaceholder(), "Search for a friend request")) {
-//                ArrayList<ChatInfo> infos = DB.searchRequests(myUsername, input);
-//                chatListPanel.rebuildChatPanelsScrollPane(infos, true);
-                return;
+                try {
+                    ArrayList<ChatInfo> infos = DB.getAllRequests(myUsername);
+                    for (int i = 0; i < infos.size(); i++) {
+                        if (!infos.get(i).getUsername().contains(input)) {
+                            infos.remove(i);
+                            i--;
+                        }
+                    }
+                    chatListPanel.rebuildChatPanelsScrollPane(infos, 3, false, null);
+                } catch (SQLException ex) {
+                    throw new RuntimeException(ex);
+                }
+
             } else if (Objects.equals(chatListPanel.getInputFieldPlaceholder(), "Search for a blocked user")) {
+                try {
+                    ArrayList<ChatInfo> infos = DB.getAllBlocks(myUsername);
+                    for (int i = 0; i < infos.size(); i++) {
+                        if (!infos.get(i).getUsername().contains(input)) {
+                            infos.remove(i);
+                            i--;
+                        }
+                    }
+                    chatListPanel.rebuildChatPanelsScrollPane(infos, 4, false, null);
+                } catch (SQLException ex) {
+                    throw new RuntimeException(ex);
+                }
 //                ArrayList<ChatInfo> infos = DB.searchBlockedUsers(myUsername, input);
 //                chatListPanel.rebuildChatPanelsScrollPane(infos, true);
                 return;
@@ -217,7 +244,7 @@ public class ChatListPanelController {
 //                    messages = DB.getGroupMessages(myUsername, groupId);
                     messages = GetGroupMessageWorker.request(socket, myUsername, groupId, LocalDate.of(1990, 1, 1).atStartOfDay());
                 } catch (Exception exception) {
-                    exception.printStackTrace();
+                    exception.printStackTrace(System.out);
                 }
                 MF.getConversationPanel().rebuildConversationPanel(currentConversation, messages);
                 MF.getConversationPanel().scrollToBottom();
