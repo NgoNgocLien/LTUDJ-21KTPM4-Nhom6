@@ -1331,4 +1331,60 @@ public class AdminDatabase {
         }
         return null;
     }
+
+    Object[][] searchNewUser(String start_date, String end_date){
+        try{
+            String sql = "SELECT username, fullname, address, birthdate, gender, email, creation_time FROM USER WHERE is_locked != 2" +
+                    " AND creation_time BETWEEN ? AND ?";
+            PreparedStatement stmt;
+            stmt = connection.prepareStatement(sql);
+            stmt.setString(1, start_date);
+            stmt.setString(2, end_date);
+            ResultSet rs = stmt.executeQuery();
+            List<Object[]> rows = new ArrayList<>();
+            int serialNum = 1;
+
+            while(rs.next()){
+                //Retrieve by column name
+                String username = rs.getString("username");
+                String fullname = rs.getString("fullname");
+                String address = rs.getString("address");
+                Date birthdate = rs.getDate("birthdate");
+                Boolean gender = rs.getBoolean("gender");
+                String email = rs.getString("email");
+                Date creation_time = rs.getDate("creation_time");
+                Timestamp timestamp = new Timestamp(birthdate.getTime());
+                Timestamp timestamp1 = new Timestamp(creation_time.getTime());
+
+                LocalDateTime localDateTime = timestamp.toLocalDateTime();
+                DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-MM-yyyy");
+                String format_time = localDateTime.format(formatter);
+
+                LocalDateTime localDateTime1 = timestamp1.toLocalDateTime();
+                DateTimeFormatter formatter1 = DateTimeFormatter.ofPattern("dd-MM-yyyy HH:mm:ss");
+                String format_time1 = localDateTime1.format(formatter1);
+
+                String genderString = gender ? "Female" : "Male";
+
+                Object[] row = { serialNum, username, fullname, address, format_time, genderString, email, format_time1 };
+                serialNum++;
+
+                rows.add(row);
+            }
+
+            rs.close();
+            stmt.close();
+
+            Object[][] data = new Object[rows.size()][];
+            rows.toArray(data);
+
+            return data;
+        }catch(SQLException se){
+            //Handle errors for JDBC
+            se.printStackTrace();
+        }catch(Exception e){ //Handle errors for Class.forName
+            e.printStackTrace();
+        }
+        return null;
+    }
 }
