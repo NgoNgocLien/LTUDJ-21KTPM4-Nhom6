@@ -97,11 +97,6 @@ public class MyProfileFrameController {
         return isChanged;
     }
 
-    private boolean checkFullName(String fullname) {
-        String regex = "^[a-zA-Z\\s]+";
-        return fullname.matches(regex);
-    }
-
     private boolean checkUsername(String username) {
         String regex = "^[a-z0-9._-]{1,}$";
         return username.matches(regex);
@@ -192,10 +187,6 @@ public class MyProfileFrameController {
                 new ErrorMessage(MPF, "Current password is required if you want to change password");
                 currentPasswordField.requestFocus();
                 return;
-//            } else if (!currentPassword.isEmpty() && newPassword.isEmpty()) {
-//                new ErrorMessage(MPF, "New password is required if you want to change password");
-//                newPasswordField.requestFocus();
-//                return;
             } else if (email.isEmpty()) {
                 new ErrorMessage(MPF, "Email is required");
                 emailField.requestFocus();
@@ -220,10 +211,6 @@ public class MyProfileFrameController {
                 new ErrorMessage(MPF, "Year is required");
                 yearComboBox.requestFocus();
                 return;
-//            } else if (!checkFullName(fullname)) {
-//                new ErrorMessage(MPF, "Fullname is invalid");
-//                fullnameField.requestFocus();
-//                return;
             } else if (!checkPassword(currentPassword)) {
                 new ErrorMessage(MPF, "Current password is invalid");
                 currentPasswordField.requestFocus();
@@ -265,11 +252,10 @@ public class MyProfileFrameController {
             Profile newProfile = new Profile(myProfile.getDateJoined(), fullname, myProfile.getUsername(), (gender.equals("Male")) ? 1 : 0, LocalDate.parse(dateString, formatters), email, address, newPassword);
             try {
                 DB.updateMyProfile(newProfile, myProfile.getPassword());
+                MPF.dispose();
             } catch (SQLException ex) {
                 throw new RuntimeException(ex);
             }
-            // close register frame, open login frame
-            MPF.dispose();
         }
     }
 }

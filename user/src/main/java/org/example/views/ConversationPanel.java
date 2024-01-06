@@ -197,6 +197,7 @@ public class ConversationPanel extends JPanel {
             moreMenu.add(searchMessage);
             moreMenu.add(viewMembers);
             moreMenu.add(addMember);
+            moreMenu.add(changeGroupName);
             moreMenu.add(deleteChat);
             moreMenu.add(leaveGroup);
 
