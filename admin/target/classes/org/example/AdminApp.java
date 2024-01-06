@@ -17,9 +17,11 @@ import jiconfont.icons.font_awesome.FontAwesome;
 import jiconfont.swing.IconFontSwing;
 import org.example.utilities.*;
 import org.jfree.chart.*;
+import org.jfree.chart.axis.NumberAxis;
 import org.jfree.chart.plot.*;
 import org.jfree.data.category.*;
 import org.jfree.chart.renderer.category.BarRenderer;
+import org.jfree.ui.RectangleInsets;
 
 public class AdminApp extends javax.swing.JFrame {
     private JPanel welcomePanel;
@@ -1419,7 +1421,7 @@ public class AdminApp extends javax.swing.JFrame {
 
         searchYearDropDown.setBackground(new java.awt.Color(255, 255, 254));
         searchYearDropDown.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
-        searchYearDropDown.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "2017", "2018", "2019", "2020", "2021", "2022", "2023" }));
+        searchYearDropDown.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "2017", "2018", "2019", "2020", "2021", "2022", "2023", "2024" }));
         searchYearDropDown.setToolTipText("");
         searchYearDropDown.setFocusable(false);
         searchYearDropDown.setPreferredSize(new java.awt.Dimension(88, 35));
@@ -2944,7 +2946,7 @@ public class AdminApp extends javax.swing.JFrame {
             }
         });
 
-        sorter1.setComparator(7, new Comparator<String>()
+        sorter1.setComparator(6, new Comparator<String>()
         {
             @Override
             public int compare(String o1, String o2)
@@ -3089,9 +3091,9 @@ public class AdminApp extends javax.swing.JFrame {
         DefaultTableModel model = (DefaultTableModel) reportTable.getModel();
         model.setRowCount(0);
 
-        Object[][] data = GetAllReport.request(socket);
+        allReport = GetAllReport.request(socket);
 
-        for (Object[] row : data) {
+        for (Object[] row : allReport) {
             model.addRow(row);
         }
 
@@ -3547,7 +3549,16 @@ public class AdminApp extends javax.swing.JFrame {
         chartPanel.setPreferredSize(new Dimension(200, 400));
 
         CategoryPlot plot = (CategoryPlot) chart.getPlot();
+        NumberAxis rangeAxis = (NumberAxis) plot.getRangeAxis();
+        rangeAxis.setStandardTickUnits(NumberAxis.createIntegerTickUnits());
+        rangeAxis.setUpperMargin(0.15);
+        rangeAxis.setLowerMargin(0.15);
 
+        // Adjust the range axis label position
+        rangeAxis.setLabelInsets(new RectangleInsets(5, 0, 0, 0));
+
+        // Adjust the range axis tick label position
+        rangeAxis.setTickLabelInsets(new RectangleInsets(5, 5, 5, 5));
         BarRenderer renderer = (BarRenderer) plot.getRenderer();
 
         for (int i = 0; i < 12; i++) {
@@ -3707,7 +3718,7 @@ public class AdminApp extends javax.swing.JFrame {
         String selectedString = selectedValue.toString();
         int year = Integer.parseInt(selectedString);
 
-        if (1990 <= year && year <= 2023){
+        if (1990 <= year && year <= 2024){
             newUserMonthlyChartPanel.removeAll();
             newUserMonthlyChartPanel.revalidate();
             newUserMonthlyChartPanel.repaint();
@@ -3719,7 +3730,7 @@ public class AdminApp extends javax.swing.JFrame {
                 throw new RuntimeException(e);
             }
         } else{
-            JOptionPane.showMessageDialog(null, "Year must be between 1990 and 2023", "Error", JOptionPane.ERROR_MESSAGE);
+            JOptionPane.showMessageDialog(null, "Year must be between 1990 and 2024", "Error", JOptionPane.ERROR_MESSAGE);
         }
     }
 
@@ -3740,6 +3751,9 @@ public class AdminApp extends javax.swing.JFrame {
 
         String status = model.getValueAt(index, 3).toString();
 
+        System.out.println(index);
+
+        JOptionPane.showMessageDialog(null, allReport[index][4], "Report content", JOptionPane.INFORMATION_MESSAGE);
         disableUserButton.setVisible(status.equals("Enabled"));
 
     }
@@ -3748,8 +3762,8 @@ public class AdminApp extends javax.swing.JFrame {
         DefaultTableModel model = (DefaultTableModel) reportTable.getModel();
         model.setRowCount(0);
 
-        Object[][] data = GetAllReport.request(socket);
-        for (Object[] row : data) {
+        allReport = GetAllReport.request(socket);
+        for (Object[] row : allReport) {
             model.addRow(row);
         }
 
@@ -3772,8 +3786,8 @@ public class AdminApp extends javax.swing.JFrame {
             DefaultTableModel model = (DefaultTableModel) reportTable.getModel();
             model.setRowCount(0);
 
-            Object[][] data = SearchReport.request(username, date, socket);
-            for (Object[] row : data) {
+            allReport = SearchReport.request(username, date, socket);
+            for (Object[] row : allReport) {
                 model.addRow(row);
             }
         }
@@ -3784,12 +3798,12 @@ public class AdminApp extends javax.swing.JFrame {
         TableModel model = reportTable.getModel();
         String selected_username = model.getValueAt(index, 1).toString();
 
-        Object[][] data = DisableUser.request(selected_username, socket);
+        allReport = DisableUser.request(selected_username, socket);
 
         DefaultTableModel reportModel = (DefaultTableModel) reportTable.getModel();
         reportModel.setRowCount(0);
 
-        for (Object[] row : data) {
+        for (Object[] row : allReport) {
             reportModel.addRow(row);
         }
 
@@ -4005,13 +4019,13 @@ public class AdminApp extends javax.swing.JFrame {
                 JOptionPane.showMessageDialog(null, "Empty year", "Error", JOptionPane.ERROR_MESSAGE);
             int year = Integer.parseInt(text);
 
-            if (1990 <= year && year <= 2023){
+            if (1990 <= year && year <= 2024){
                 activeUserMonthlyChartPanel.removeAll();
                 activeUserMonthlyChartPanel.revalidate();
                 activeUserMonthlyChartPanel.repaint();
                 createActiveUsersChart(Integer.toString(year));
             } else{
-                JOptionPane.showMessageDialog(null, "Year must be between 1990 and 2023", "Error", JOptionPane.ERROR_MESSAGE);
+                JOptionPane.showMessageDialog(null, "Year must be between 1990 and 2024", "Error", JOptionPane.ERROR_MESSAGE);
             }
         } catch (NumberFormatException | IOException | ClassNotFoundException e) {
             if (!searchYearInput.getText().isEmpty())
@@ -4027,7 +4041,7 @@ public class AdminApp extends javax.swing.JFrame {
         activeUserMonthlyChartPanel.removeAll();
         activeUserMonthlyChartPanel.revalidate();
         activeUserMonthlyChartPanel.repaint();
-        createActiveUsersChart("2023");
+        createActiveUsersChart("2024");
     }
 
     public static boolean isValidDate(String dateStr) {
@@ -4108,6 +4122,7 @@ public class AdminApp extends javax.swing.JFrame {
     private Socket socket;
     private Object[][] currentActiveUserList;
     private Object[][] newUserList;
+    private Object[][] allReport;
     Color blue = new Color (23, 70, 162);
     Color light_blue = new Color(92, 124, 208);
     private String originalEmail;
