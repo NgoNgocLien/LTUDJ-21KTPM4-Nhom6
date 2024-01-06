@@ -1340,4 +1340,18 @@ public class DatabaseHandler {
         }
         return false;
     }
+
+    public void removeFriendRequest(String loginedUsername, String username) {
+        String sql = "DELETE FROM FRIEND WHERE username1 = ? AND username2 = ?";
+        PreparedStatement stmt = null;
+        try {
+            stmt = conn.prepareStatement(sql);
+            stmt.setString(1, username);
+            stmt.setString(2, loginedUsername);
+            stmt.executeUpdate();
+            stmt.close();
+        } catch (SQLException throwables) {
+            throwables.printStackTrace(System.out);
+        }
+    }
 }

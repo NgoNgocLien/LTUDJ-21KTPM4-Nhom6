@@ -5,7 +5,9 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="ffaf42bc-6bfe-4d2e-bcc5-9de6824c0e6b" name="Changes" comment="">
-      <change beforePath="$PROJECT_DIR$/user/src/main/java/org/example/views/ConversationPanel.java" beforeDir="false" afterPath="$PROJECT_DIR$/user/src/main/java/org/example/views/ConversationPanel.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/user/src/main/java/org/example/controllers/ProfileFrameController.java" beforeDir="false" afterPath="$PROJECT_DIR$/user/src/main/java/org/example/controllers/ProfileFrameController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/user/src/main/java/org/example/utilities/DatabaseHandler.java" beforeDir="false" afterPath="$PROJECT_DIR$/user/src/main/java/org/example/utilities/DatabaseHandler.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -63,6 +65,7 @@
   </component>
   <component name="PropertiesComponent">{
   &quot;keyToString&quot;: {
+    &quot;Application.Main Admin.executor&quot;: &quot;Run&quot;,
     &quot;Application.Main Server.executor&quot;: &quot;Run&quot;,
     &quot;Application.Main.executor&quot;: &quot;Run&quot;,
     &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
@@ -98,7 +101,7 @@
       <recent name="org.example" />
     </key>
   </component>
-  <component name="RunManager" selected="Application.Main Admin">
+  <component name="RunManager" selected="Application.Main">
     <configuration default="true" type="Application" factoryName="Application" singleton="false">
       <method v="2">
         <option name="Make" enabled="true" />
@@ -260,9 +263,9 @@
     </list>
     <recent_temporary>
       <list>
-        <item itemvalue="Application.Main Admin" />
-        <item itemvalue="Application.Main Server" />
         <item itemvalue="Application.Main" />
+        <item itemvalue="Application.Main Server" />
+        <item itemvalue="Application.Main Admin" />
         <item itemvalue="Application.Main User" />
         <item itemvalue="Application.Main" />
       </list>
