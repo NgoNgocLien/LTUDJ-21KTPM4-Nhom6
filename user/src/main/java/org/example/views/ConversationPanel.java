@@ -176,11 +176,21 @@ public class ConversationPanel extends JPanel {
             }
         });
 
+        viewMembers.addActionListener(e -> {
+            ArrayList<ChatInfo> members = DB.viewGroupChatMembers(chatInfo.getGroupId());
+            String memberList = "";
+            for (ChatInfo member : members) {
+                memberList += member.getUsername() + "\n";
+            }
+            JOptionPane.showMessageDialog(null, memberList, "Members", JOptionPane.INFORMATION_MESSAGE);
+        });
+
         changeGroupName.addActionListener(e -> {
             String newGroupName = JOptionPane.showInputDialog(null, "Enter new group name");
             if (newGroupName == null || newGroupName.isEmpty()) {
                 return;
             }
+            JOptionPane.showMessageDialog(null, "Change group name successfully!");
             DB.changeGroupName(chatInfo.getGroupId(), newGroupName);
             rebuildConversationPanel(chatInfo, null);
         });

@@ -385,6 +385,31 @@ public class DatabaseHandler {
         }
     }
 
+    public ArrayList<ChatInfo> viewGroupChatMembers(int id_group){
+        ArrayList<ChatInfo> members = new ArrayList<>();
+        String sql = "SELECT U.username, U.fullname " +
+                "FROM GROUP_MEMBER M " +
+                "INNER JOIN USER U ON U.username = M.username " +
+                "WHERE M.id_group = ?";
+        PreparedStatement stmt = null;
+        try {
+            stmt = conn.prepareStatement(sql);
+            stmt.setInt(1, id_group);
+            ResultSet rs = stmt.executeQuery();
+            while (rs.next()) {
+                String memberUsername = rs.getString("username");
+                String memberFullname = rs.getString("fullname");
+                members.add(new ChatInfo(memberFullname, memberUsername, memberUsername, false));
+            }
+            rs.close();
+            stmt.close();
+            return members;
+        } catch (SQLException throwables) {
+            throwables.printStackTrace(System.out);
+        }
+        return null;
+    }
+
     public ArrayList<Message> searchMessage(ChatInfo info, String keyword) {
 //        ArrayList<Message> messages = new ArrayList<>();
 //        String sql = "SELECT M.id_message, M.sender, M.to_user, M.to_group, M.content, M.sent_time " +

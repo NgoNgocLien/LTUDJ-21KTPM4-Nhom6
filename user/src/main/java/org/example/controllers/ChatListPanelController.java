@@ -201,7 +201,7 @@ public class ChatListPanelController {
                         i--;
                     }
                 }
-                chatListPanel.rebuildChatPanelsScrollPane(infos, 1, true, null);
+                chatListPanel.rebuildChatPanelsScrollPane(infos, 1, false, null);
                 renewListener();
 
             } else if (Objects.equals(chatListPanel.getInputFieldPlaceholder(), "Search for a friend request")) {
