@@ -31,16 +31,19 @@ public class CreateGroupFrameController {
         public void actionPerformed(ActionEvent e) {
             String groupName = CGF.getGroupNameTextField().getText();
             ArrayList<String> members = new ArrayList<>();
+            members.add(DB.getLoginedUsername());
             for (JCheckBox checkBox : CGF.getMemberCheckBoxes()) {
                 if (checkBox.isSelected()) {
                     members.add(checkBox.getActionCommand());
                 }
             }
-//            try {
-//                DB.createGroup(groupName, members);
-//            } catch (SQLException throwables) {
-//                throwables.printStackTrace();
-//            }
+            if(members.size() < 2) {
+                JOptionPane.showMessageDialog(CGF, "Group must have at least 2 members!");
+                return;
+            }
+            DB.createGroup(DB.getLoginedUsername(), groupName, members);
+            JOptionPane.showMessageDialog(CGF, "Group created successfully!");
+            CGF.dispose();
         }
     }
 
