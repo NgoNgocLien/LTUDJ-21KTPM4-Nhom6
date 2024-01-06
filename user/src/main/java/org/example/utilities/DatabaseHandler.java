@@ -1150,4 +1150,18 @@ public class DatabaseHandler {
         }
         return null;
     }
+
+    public void leaveGroup(String loginedUsername, int groupId) {
+        String sql = "DELETE FROM GROUP_MEMBER WHERE username = ? AND id_group = ?";
+        PreparedStatement stmt = null;
+        try {
+            stmt = conn.prepareStatement(sql);
+            stmt.setString(1, loginedUsername);
+            stmt.setInt(2, groupId);
+            stmt.executeUpdate();
+            stmt.close();
+        } catch (SQLException throwables) {
+            throwables.printStackTrace(System.out);
+        }
+    }
 }
