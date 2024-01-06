@@ -86,7 +86,7 @@ public class ChatListPanel extends JPanel {
             chatPanelsPanel.add(noChatPanel);
         } else {
             for (ChatInfo info : infos) {
-                AChatPanel chatPanel = new AChatPanel(info, 2);
+                AChatPanel chatPanel = new AChatPanel(info, 0);
                 chatPanels.add(chatPanel);
                 chatPanelsPanel.add(chatPanel);
                 if (info.isUnread()) {

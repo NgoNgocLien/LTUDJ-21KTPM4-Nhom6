@@ -78,7 +78,7 @@ public class IconPanelController {
                 iconPanel.setFocusLabel(chatIconLabel);
                 try {
                     ArrayList<ChatInfo> chats = DB.getAllChats(myUsername);
-                    MF.getChatListPanel().rebuildChatPanelsScrollPane(chats, 2, false, null);
+                    MF.getChatListPanel().rebuildChatPanelsScrollPane(chats, 0, false, null);
                     MF.getChatListPanel().setTitleLabel("Chats", false);
                     MF.getChatListPanel().setInputFieldPlaceholder("Search for a message");
                     MFC.getChatListPanelController().renewListener();
