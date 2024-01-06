@@ -195,16 +195,19 @@ public class ChatListPanelController {
             } else if (Objects.equals(chatListPanel.getInputFieldPlaceholder(), "Search for a friend")) {
                 try {
                     ArrayList<ChatInfo> infos = DB.searchFriends(myUsername, input);
+                    searching = true;
                     chatListPanel.rebuildChatPanelsScrollPane(infos, 2, false, null);
                     renewListener();
                 } catch (SQLException ex) {
                     throw new RuntimeException(ex);
                 }
             } else if (Objects.equals(chatListPanel.getInputFieldPlaceholder(), "Search for a group")) {
+                searching = true;
 //                ArrayList<ChatInfo> infos = DB.searchGroups(myUsername, input);
 //                chatListPanel.rebuildChatPanelsScrollPane(infos, true);
                 return;
             } else if (Objects.equals(chatListPanel.getInputFieldPlaceholder(), "Search for a user")) {
+                searching = true;
                 ArrayList<ChatInfo> infos = DB.getAllStrangers();
                 for (int i = 0; i < infos.size(); i++) {
                     if (!infos.get(i).getUsername().contains(input)) {
@@ -216,6 +219,7 @@ public class ChatListPanelController {
                 renewListener();
 
             } else if (Objects.equals(chatListPanel.getInputFieldPlaceholder(), "Search for a friend request")) {
+                searching = true;
                 try {
                     ArrayList<ChatInfo> infos = DB.getAllRequests(myUsername);
                     for (int i = 0; i < infos.size(); i++) {
@@ -232,6 +236,7 @@ public class ChatListPanelController {
 
             } else if (Objects.equals(chatListPanel.getInputFieldPlaceholder(), "Search for a blocked user")) {
                 try {
+                    searching = true;
                     ArrayList<ChatInfo> infos = DB.getAllBlocks(myUsername);
                     for (int i = 0; i < infos.size(); i++) {
                         if (!infos.get(i).getUsername().contains(input)) {

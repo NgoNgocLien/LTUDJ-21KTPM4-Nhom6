@@ -1129,13 +1129,13 @@ public class DatabaseHandler {
     }
 
     public ArrayList<ChatInfo> searchFriends(String myUsername, String input) throws SQLException {
-        String sql = "SELECT friend.username2, USER.fullname FROM FRIEND " +
-                "JOIN USER ON USER.username = friend.username2 " +
-                "WHERE friend.accepted = 1 AND friend.username1 = ? AND friend.username2 LIKE ? " +
+        String sql = "SELECT FRIEND.username2, USER.fullname FROM FRIEND " +
+                "JOIN USER ON USER.username = FRIEND.username2 " +
+                "WHERE FRIEND.accepted = 1 AND FRIEND.username1 = ? AND FRIEND.username2 LIKE ? " +
                 "UNION " +
-                "SELECT friend.username1, USER.fullname FROM FRIEND " +
-                "JOIN USER ON USER.username = friend.username1 " +
-                "WHERE friend.accepted = 1 AND friend.username2 = ? AND friend.username1 LIKE ?";
+                "SELECT FRIEND.username1, USER.fullname FROM FRIEND " +
+                "JOIN USER ON USER.username = FRIEND.username1 " +
+                "WHERE FRIEND.accepted = 1 AND FRIEND.username2 = ? AND FRIEND.username1 LIKE ?";
         PreparedStatement stmt = conn.prepareStatement(sql);
         stmt.setString(1, myUsername);
         stmt.setString(2, "%" + input + "%");
