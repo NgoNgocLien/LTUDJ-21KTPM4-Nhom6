@@ -969,6 +969,47 @@ public class DatabaseHandler {
         return null;
     }
 
+    public ArrayList<ChatInfo> getAllFriendNotMember(String myUsername, int idGroup) {
+        String sql = "(SELECT F.username2 AS username, U.fullname " +
+                "FROM FRIEND F " +
+                "INNER JOIN USER U ON U.username = F.username2 " +
+                "WHERE F.username1 = ? AND F.username2 NOT IN ( " +
+                "    SELECT username " +
+                "    FROM GROUP_MEMBER " +
+                "    WHERE id_group = ? " +
+                ")) " +
+                "UNION " +
+                "(SELECT F.username1 AS username, U.fullname " +
+                "FROM FRIEND F " +
+                "INNER JOIN USER U ON U.username = F.username1 " +
+                "WHERE F.username2 = ? AND F.username1 NOT IN ( " +
+                "    SELECT username " +
+                "    FROM GROUP_MEMBER " +
+                "    WHERE id_group = ? " +
+                ")) ";
+        PreparedStatement stmt = null;
+        try {
+            stmt = conn.prepareStatement(sql);
+            stmt.setString(1, myUsername);
+            stmt.setInt(2, idGroup);
+            stmt.setString(3, myUsername);
+            stmt.setInt(4, idGroup);
+            ResultSet rs = stmt.executeQuery();
+            ArrayList<ChatInfo> members = new ArrayList<>();
+            while (rs.next()) {
+                String username = rs.getString("username");
+                String fullname = rs.getString("fullname");
+                members.add(new ChatInfo(fullname, username, username, false));
+            }
+            rs.close();
+            stmt.close();
+            return members;
+        } catch (SQLException throwables) {
+            throwables.printStackTrace();
+        }
+        return null;
+    }
+
     public void addMyMessage(Message message) {
         String sql = "INSERT INTO MESSAGE (sender, to_user, to_group, content, sent_time, seen_time) " +
                 "VALUES (?, ?, ?, ?, ?, ?)";
