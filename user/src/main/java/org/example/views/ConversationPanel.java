@@ -176,13 +176,31 @@ public class ConversationPanel extends JPanel {
             }
         });
 
+        viewMembers.addActionListener(e -> {
+            ArrayList<ChatInfo> members = DB.viewGroupChatMembers(chatInfo.getGroupId());
+            StringBuilder memberList = new StringBuilder();
+            for (ChatInfo member : members) {
+                memberList.append(member.getUsername()).append("\n");
+            }
+            JOptionPane.showMessageDialog(null, memberList.toString(), "Members", JOptionPane.INFORMATION_MESSAGE);
+        });
+
         changeGroupName.addActionListener(e -> {
             String newGroupName = JOptionPane.showInputDialog(null, "Enter new group name");
             if (newGroupName == null || newGroupName.isEmpty()) {
                 return;
             }
+            JOptionPane.showMessageDialog(null, "Change group name successfully!");
             DB.changeGroupName(chatInfo.getGroupId(), newGroupName);
             rebuildConversationPanel(chatInfo, null);
+        });
+
+        leaveGroup.addActionListener(e -> {
+            int dialogResult = JOptionPane.showConfirmDialog(null, "Are you sure you want to leave the group?", "Confirmation", JOptionPane.YES_NO_OPTION);
+            if (dialogResult == JOptionPane.YES_OPTION) {
+                DB.leaveGroup(DB.getLoginedUsername(), chatInfo.getGroupId());
+                rebuildConversationPanel(chatInfo, null);
+            }
         });
 
         if (chatInfo == null) {
@@ -197,6 +215,7 @@ public class ConversationPanel extends JPanel {
             moreMenu.add(searchMessage);
             moreMenu.add(viewMembers);
             moreMenu.add(addMember);
+            moreMenu.add(changeGroupName);
             moreMenu.add(deleteChat);
             moreMenu.add(leaveGroup);
 
@@ -223,7 +242,6 @@ public class ConversationPanel extends JPanel {
         }
 
 //         Create an ActionListener
-
 
         moreButton.addActionListener(new ActionListener() {
             @Override

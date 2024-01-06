@@ -1,14 +1,10 @@
 package org.example.views;
 
-import jiconfont.icons.font_awesome.FontAwesome;
-import jiconfont.swing.IconFontSwing;
 import org.example.models.Profile;
 import org.example.utilities.Constants;
 
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 
@@ -43,7 +39,7 @@ public class MyProfileFrame extends JFrame {
         setResizable(true);
         // center the frame on screen
         Dimension dim = Toolkit.getDefaultToolkit().getScreenSize();
-        setLocation(dim.width/2 - 240, dim.height/2 - 400);
+        setLocation(dim.width / 2 - 240, dim.height / 2 - 400);
 
         // title
         fullnameTitleLabel = new JLabel(myProfile.getFullname());
@@ -270,15 +266,48 @@ public class MyProfileFrame extends JFrame {
         pack();
         setVisible(true);
     }
-    public Profile getMyProfile() { return myProfile; }
-    public JTextField getFullnameField() { return fullnameField; }
-    public JComboBox<String> getGenderComboBox() { return genderComboBox; }
-    public JComboBox<String> getDayComboBox() { return dayComboBox; }
-    public JComboBox<String> getMonthComboBox() { return monthComboBox; }
-    public JComboBox<String> getYearComboBox() { return yearComboBox; }
-    public JTextField getEmailField() { return emailField; }
-    public JTextField getAddressField() { return addressField; }
-    public JPasswordField getCurrentPasswordField() { return currentPasswordField; }
-    public JPasswordField getNewPasswordField() { return newPasswordField; }
-    public JButton getEditProfileButton() { return editProfileButton; }
+
+    public Profile getMyProfile() {
+        return myProfile;
+    }
+
+    public JTextField getFullnameField() {
+        return fullnameField;
+    }
+
+    public JComboBox<String> getGenderComboBox() {
+        return genderComboBox;
+    }
+
+    public JComboBox<String> getDayComboBox() {
+        return dayComboBox;
+    }
+
+    public JComboBox<String> getMonthComboBox() {
+        return monthComboBox;
+    }
+
+    public JComboBox<String> getYearComboBox() {
+        return yearComboBox;
+    }
+
+    public JTextField getEmailField() {
+        return emailField;
+    }
+
+    public JTextField getAddressField() {
+        return addressField;
+    }
+
+    public JPasswordField getCurrentPasswordField() {
+        return currentPasswordField;
+    }
+
+    public JPasswordField getNewPasswordField() {
+        return newPasswordField;
+    }
+
+    public JButton getEditProfileButton() {
+        return editProfileButton;
+    }
 }
