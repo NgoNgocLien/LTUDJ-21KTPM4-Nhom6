@@ -189,7 +189,7 @@ public class AdminDatabase {
         try{
             Statement stmt = connection.createStatement();
             String sql;
-            sql = "SELECT u.username, s.report_time, u.is_locked "
+            sql = "SELECT u.username, s.report_time, u.is_locked, m.content "
                     + "FROM SPAM s "
                     + "INNER JOIN MESSAGE m ON m.id_message = s.id_message "
                     + "INNER JOIN USER u ON u.username = m.sender AND u.is_locked != 2";
@@ -208,8 +208,9 @@ public class AdminDatabase {
 
                 int is_lock = rs.getInt("is_locked");
                 String lock_text = (is_lock == 1) ? "Disabled" : "Enabled";
+                String content = rs.getString("content");
 
-                Object[] row = {i, username, format_time, lock_text};
+                Object[] row = {i, username, format_time, lock_text, content};
                 // Add the row to the list
                 rows.add(row);
                 i++;
@@ -233,7 +234,7 @@ public class AdminDatabase {
 
     Object[][] searchReport(String text, String[] date){
         try{
-            String sql = "SELECT u.username, s.report_time, u.is_locked "
+            String sql = "SELECT u.username, s.report_time, u.is_locked, m.content  "
                     + "FROM SPAM s "
                     + "INNER JOIN MESSAGE m ON m.id_message = s.id_message "
                     + "INNER JOIN USER u ON u.username = m.sender AND u.is_locked != 2 ";
@@ -280,8 +281,9 @@ public class AdminDatabase {
 
                 int is_lock = rs.getInt("is_locked");
                 String lock_text = (is_lock == 1) ? "Disabled" : "Enabled";
+                String content = rs.getString("content");
 
-                Object[] row = {i, username, format_time, lock_text};
+                Object[] row = {i, username, format_time, lock_text, content};
                 // Add the row to the list
                 rows.add(row);
                 i++;
@@ -654,22 +656,22 @@ public class AdminDatabase {
                 else {
                     System.out.println("search by username + fullname + active status");
                     // search by username + fullname + active status
-                    sql += "WHERE s.fullname LIKE ? " + "AND s.username LIKE ? ;";
+                    sql += "WHERE s.fullname LIKE ? " + "AND s.username LIKE ? ";
                     if(Objects.equals(text3, "All")){
-                        sql += "WHERE s.is_locked != 2 ";
+                        sql += "AND s.is_locked != 2 ";
                         stmt = connection.prepareStatement(sql);
                         stmt.setString(1, "%" + text2 + "%");
                         stmt.setString(2, "%" + text1 + "%");
                     }
                     else if(Objects.equals(text3, "Online")){
-                        sql += "WHERE s.is_locked != 2 AND h.login_time IS NOT NULL AND h.logout_time IS NULL ";
+                        sql += "AND s.is_locked != 2 AND h.login_time IS NOT NULL AND h.logout_time IS NULL ";
 
                         stmt = connection.prepareStatement(sql);
                         stmt.setString(1, "%" + text2 + "%");
                         stmt.setString(2, "%" + text1 + "%");
                     }
                     else{
-                        sql += "WHERE s.is_locked != 2 AND NOT EXISTS (SELECT 1 FROM HISTORY_LOGIN h2 WHERE s.username = h2.username AND h2.logout_time IS NULL) ";
+                        sql += "AND s.is_locked != 2 AND NOT EXISTS (SELECT 1 FROM HISTORY_LOGIN h2 WHERE s.username = h2.username AND h2.logout_time IS NULL) ";
 
                         stmt = connection.prepareStatement(sql);
                         stmt.setString(1, "%" + text2 + "%");
