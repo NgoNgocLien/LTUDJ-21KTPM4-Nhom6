@@ -329,7 +329,7 @@ public class AdminApp extends javax.swing.JFrame {
 
         searchActiveDropDown.setBackground(new java.awt.Color(255, 255, 254));
         searchActiveDropDown.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
-        searchActiveDropDown.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "All", "Active", "Inactive" }));
+        searchActiveDropDown.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "All", "Online", "Offline" }));
         searchActiveDropDown.setToolTipText("");
         searchActiveDropDown.setFocusable(false);
         searchActiveDropDown.setPreferredSize(new java.awt.Dimension(88, 35));
@@ -1203,20 +1203,20 @@ public class AdminApp extends javax.swing.JFrame {
         newUserTable.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
         newUserTable.setModel(new javax.swing.table.DefaultTableModel(
                 new Object [][] {
-                        {null, null, null, null, null, null, null, null},
-                        {null, null, null, null, null, null, null, null},
-                        {null, null, null, null, null, null, null, null},
-                        {null, null, null, null, null, null, null, null}
+                        {null, null, null, null, null, null, null},
+                        {null, null, null, null, null, null, null},
+                        {null, null, null, null, null, null, null},
+                        {null, null, null, null, null, null, null}
                 },
                 new String [] {
-                        "No", "Username", "Full name", "Address", "Birth date", "Gender", "Email", "Registration time"
+                        "No", "Username", "Full name", "Birth date", "Gender", "Email", "Registration time"
                 }
         ) {
             Class[] types = new Class [] {
-                    java.lang.Integer.class, java.lang.Object.class, java.lang.Object.class, java.lang.Object.class, java.lang.Object.class, java.lang.Object.class, java.lang.Object.class, java.lang.Object.class
+                    java.lang.Integer.class, java.lang.Object.class, java.lang.Object.class, java.lang.Object.class, java.lang.Object.class, java.lang.Object.class, java.lang.Object.class
             };
             boolean[] canEdit = new boolean [] {
-                    false, false, false, false, false, false, false, false
+                    false, false, false, false, false, false, false
             };
 
             public Class getColumnClass(int columnIndex) {
@@ -1242,15 +1242,13 @@ public class AdminApp extends javax.swing.JFrame {
             newUserTable.getColumnModel().getColumn(2).setResizable(false);
             newUserTable.getColumnModel().getColumn(2).setPreferredWidth(170);
             newUserTable.getColumnModel().getColumn(3).setResizable(false);
-            newUserTable.getColumnModel().getColumn(3).setPreferredWidth(420);
+            newUserTable.getColumnModel().getColumn(3).setPreferredWidth(105);
             newUserTable.getColumnModel().getColumn(4).setResizable(false);
-            newUserTable.getColumnModel().getColumn(4).setPreferredWidth(105);
+            newUserTable.getColumnModel().getColumn(4).setPreferredWidth(95);
             newUserTable.getColumnModel().getColumn(5).setResizable(false);
-            newUserTable.getColumnModel().getColumn(5).setPreferredWidth(95);
+            newUserTable.getColumnModel().getColumn(5).setPreferredWidth(215);
             newUserTable.getColumnModel().getColumn(6).setResizable(false);
-            newUserTable.getColumnModel().getColumn(6).setPreferredWidth(215);
-            newUserTable.getColumnModel().getColumn(7).setResizable(false);
-            newUserTable.getColumnModel().getColumn(7).setPreferredWidth(160);
+            newUserTable.getColumnModel().getColumn(6).setPreferredWidth(160);
         }
 
         searchNewUserButton.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
@@ -2915,7 +2913,7 @@ public class AdminApp extends javax.swing.JFrame {
         DefaultTableModel model1 = (DefaultTableModel) newUserTable.getModel();
         model1.setRowCount(0);
 
-        newUserList = GetAllUser.request(socket);
+        newUserList = GetAllNewUser.request(socket);
         for (Object[] row : newUserList) {
             model1.addRow(row);
         }
@@ -2941,14 +2939,14 @@ public class AdminApp extends javax.swing.JFrame {
 
         sorter1.setSortKeys(
                 java.util.Collections.singletonList(
-                        new javax.swing.RowSorter.SortKey(7, SortOrder.ASCENDING)
+                        new javax.swing.RowSorter.SortKey(6, SortOrder.ASCENDING)
                 )
         );
 
         sorter1 = new TableRowSorter<DefaultTableModel>(model1) {
             @Override
             public boolean isSortable(int column) {
-                return (column == 0) || (column == 2) || (column == 7);
+                return (column == 0) || (column == 2) || (column == 6);
             }
         };
         newUserTable.setRowSorter(sorter1);
@@ -3451,6 +3449,11 @@ public class AdminApp extends javax.swing.JFrame {
             String new_pwd = model.getValueAt(index, 2).toString();
             Boolean success = UpdatePassUser.request(username, new_pwd, socket);
             if (success) {
+                Object[][] user = GetUserByUsername.request(username, socket);
+                String userEmail = user[0][5].toString();
+
+                Boolean send = SendMailUpdatePass.request(userEmail, socket);
+                System.out.println("send mail: " + send);
                 JOptionPane.showMessageDialog(null, "Update password successfully.");
                 Object[][] pass = GetAllPassRequest.request(socket);
                 for (Object[] row : pass) {
@@ -3463,12 +3466,6 @@ public class AdminApp extends javax.swing.JFrame {
                 for (Object[] row : pass) {
                     model.addRow(row);
                 }
-
-                Object[][] user = GetUserByUsername.request(username, socket);
-                String userEmail = user[0][5].toString();
-
-                Boolean send = SendMailUpdatePass.request(userEmail, socket);
-                System.out.println("send mail: " + send);
             } else {
                 JOptionPane.showMessageDialog(null, "Failed to update user password.");
             }
@@ -3681,7 +3678,7 @@ public class AdminApp extends javax.swing.JFrame {
         DefaultTableModel model = (DefaultTableModel) newUserTable.getModel();
         model.setRowCount(0);
 
-        Object[][] data = GetAllUser.request(socket);
+        Object[][] data = GetAllNewUser.request(socket);
         for (Object[] row : data) {
             model.addRow(row);
         }
