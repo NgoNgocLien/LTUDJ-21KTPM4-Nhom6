@@ -6,10 +6,6 @@
   <component name="ChangeListManager">
     <list default="true" id="ffaf42bc-6bfe-4d2e-bcc5-9de6824c0e6b" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/user/src/main/java/org/example/controllers/ChatListPanelController.java" beforeDir="false" afterPath="$PROJECT_DIR$/user/src/main/java/org/example/controllers/ChatListPanelController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/user/src/main/java/org/example/controllers/IconPanelController.java" beforeDir="false" afterPath="$PROJECT_DIR$/user/src/main/java/org/example/controllers/IconPanelController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/user/src/main/java/org/example/views/ChatListPanel.java" beforeDir="false" afterPath="$PROJECT_DIR$/user/src/main/java/org/example/views/ChatListPanel.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/user/src/main/java/org/example/views/ProfileFrame.java" beforeDir="false" afterPath="$PROJECT_DIR$/user/src/main/java/org/example/views/ProfileFrame.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -266,8 +262,8 @@
     <recent_temporary>
       <list>
         <item itemvalue="Application.Main" />
-        <item itemvalue="Application.Main Server" />
         <item itemvalue="Application.Main Admin" />
+        <item itemvalue="Application.Main Server" />
         <item itemvalue="Application.Main User" />
         <item itemvalue="Application.Main" />
       </list>

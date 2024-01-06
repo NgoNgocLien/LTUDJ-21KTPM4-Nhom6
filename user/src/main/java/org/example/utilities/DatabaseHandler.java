@@ -345,6 +345,14 @@ public class DatabaseHandler {
         stmt.setString(1, myUsername);
         stmt.setString(2, friendUsername);
         stmt.executeUpdate();
+
+        sql = "DELETE FROM FRIEND WHERE (username1 = ? AND username2 = ?) OR (username1 = ? AND username2 = ?)";
+        stmt = conn.prepareStatement(sql);
+        stmt.setString(1, myUsername);
+        stmt.setString(2, friendUsername);
+        stmt.setString(3, friendUsername);
+        stmt.setString(4, myUsername);
+        stmt.executeUpdate();
         stmt.close();
     }
 
