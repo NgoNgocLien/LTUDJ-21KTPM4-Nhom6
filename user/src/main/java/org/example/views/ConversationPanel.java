@@ -184,7 +184,12 @@ public class ConversationPanel extends JPanel {
             ArrayList<ChatInfo> members = DB.viewGroupChatMembers(chatInfo.getGroupId());
             StringBuilder memberList = new StringBuilder();
             for (ChatInfo member : members) {
-                memberList.append(member.getUsername()).append("\n");
+                if (DB.isAdmin(member.getUsername(), chatInfo.getGroupId())) {
+                    memberList.append(member.getUsername()).append(" (admin)").append("\n");
+                    continue;
+                } else {
+                    memberList.append(member.getUsername()).append("\n");
+                }
             }
             JOptionPane.showMessageDialog(null, memberList.toString(), "Members", JOptionPane.INFORMATION_MESSAGE);
         });
