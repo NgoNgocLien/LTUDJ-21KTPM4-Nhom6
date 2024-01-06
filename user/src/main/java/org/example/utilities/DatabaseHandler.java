@@ -1282,4 +1282,44 @@ public class DatabaseHandler {
             throwables.printStackTrace(System.out);
         }
     }
+
+    public void removeMember(int groupId, ArrayList<String> removeMembers) {
+        String sql = "DELETE FROM GROUP_MEMBER WHERE id_group = ? AND username = ?";
+        PreparedStatement stmt = null;
+        try {
+            for (String member : removeMembers) {
+                stmt = conn.prepareStatement(sql);
+                stmt.setInt(1, groupId);
+                stmt.setString(2, member);
+                stmt.executeUpdate();
+                stmt.close();
+            }
+        } catch (SQLException throwables) {
+            throwables.printStackTrace(System.out);
+        }
+    }
+
+    public boolean isAdmin(String username, int idGroup) {
+        String sql = "SELECT is_admin FROM GROUP_MEMBER WHERE username = ? AND id_group = ?";
+        PreparedStatement stmt = null;
+        try {
+            stmt = conn.prepareStatement(sql);
+            stmt.setString(1, username);
+            stmt.setInt(2, idGroup);
+            ResultSet rs = stmt.executeQuery();
+            if (rs.next()) {
+                int isAdmin = rs.getInt("is_admin");
+                if (isAdmin == 1) {
+                    rs.close();
+                    stmt.close();
+                    return true;
+                }
+            }
+            rs.close();
+            stmt.close();
+        } catch (SQLException throwables) {
+            throwables.printStackTrace(System.out);
+        }
+        return false;
+    }
 }

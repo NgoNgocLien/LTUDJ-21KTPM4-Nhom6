@@ -258,6 +258,7 @@ public class ChatListPanelController {
 
         @Override
         public void mouseClicked(MouseEvent e) {
+            System.out.println(chatPanel.getInfo().isGroup());
             chatListPanel.setFocusChatPanel(chatPanel);
             currentConversation = chatPanel.getInfo();
 
