@@ -15,6 +15,7 @@ public class ProfileFrame extends JFrame {
 
 
     public ProfileFrame(Profile profile, int mode) {
+        System.out.println("ProfileFrame" + mode);
         this.mode = mode;
         try {
             UIManager.setLookAndFeel("com.sun.java.swing.plaf.windows.WindowsLookAndFeel");

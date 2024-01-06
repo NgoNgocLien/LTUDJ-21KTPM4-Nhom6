@@ -345,6 +345,14 @@ public class DatabaseHandler {
         stmt.setString(1, myUsername);
         stmt.setString(2, friendUsername);
         stmt.executeUpdate();
+
+        sql = "DELETE FROM FRIEND WHERE (username1 = ? AND username2 = ?) OR (username1 = ? AND username2 = ?)";
+        stmt = conn.prepareStatement(sql);
+        stmt.setString(1, myUsername);
+        stmt.setString(2, friendUsername);
+        stmt.setString(3, friendUsername);
+        stmt.setString(4, myUsername);
+        stmt.executeUpdate();
         stmt.close();
     }
 
@@ -1129,13 +1137,13 @@ public class DatabaseHandler {
     }
 
     public ArrayList<ChatInfo> searchFriends(String myUsername, String input) throws SQLException {
-        String sql = "SELECT friend.username2, USER.fullname FROM FRIEND " +
-                "JOIN USER ON USER.username = friend.username2 " +
-                "WHERE friend.accepted = 1 AND friend.username1 = ? AND friend.username2 LIKE ? " +
+        String sql = "SELECT FRIEND.username2, USER.fullname FROM FRIEND " +
+                "JOIN USER ON USER.username = FRIEND.username2 " +
+                "WHERE FRIEND.accepted = 1 AND FRIEND.username1 = ? AND FRIEND.username2 LIKE ? " +
                 "UNION " +
-                "SELECT friend.username1, USER.fullname FROM FRIEND " +
-                "JOIN USER ON USER.username = friend.username1 " +
-                "WHERE friend.accepted = 1 AND friend.username2 = ? AND friend.username1 LIKE ?";
+                "SELECT FRIEND.username1, USER.fullname FROM FRIEND " +
+                "JOIN USER ON USER.username = FRIEND.username1 " +
+                "WHERE FRIEND.accepted = 1 AND FRIEND.username2 = ? AND FRIEND.username1 LIKE ?";
         PreparedStatement stmt = conn.prepareStatement(sql);
         stmt.setString(1, myUsername);
         stmt.setString(2, "%" + input + "%");
@@ -1278,6 +1286,78 @@ public class DatabaseHandler {
                 stmt3.executeUpdate();
                 stmt3.close();
             }
+        } catch (SQLException throwables) {
+            throwables.printStackTrace(System.out);
+        }
+    }
+
+    public void addMember(int groupId, ArrayList<String> addMembers) {
+        String sql = "INSERT INTO GROUP_MEMBER (username, id_group, is_admin, delete_history) VALUES (?, ?, ?, ?)";
+        PreparedStatement stmt = null;
+        try {
+            for (String member : addMembers) {
+                stmt = conn.prepareStatement(sql);
+                stmt.setString(1, member);
+                stmt.setInt(2, groupId);
+                stmt.setInt(3, 0);
+                stmt.setTimestamp(4, Timestamp.valueOf("1990-01-01 00:00:00")); // 1990-01-01 00:00:00
+                stmt.executeUpdate();
+                stmt.close();
+            }
+        } catch (SQLException throwables) {
+            throwables.printStackTrace(System.out);
+        }
+    }
+
+    public void removeMember(int groupId, ArrayList<String> removeMembers) {
+        String sql = "DELETE FROM GROUP_MEMBER WHERE id_group = ? AND username = ?";
+        PreparedStatement stmt = null;
+        try {
+            for (String member : removeMembers) {
+                stmt = conn.prepareStatement(sql);
+                stmt.setInt(1, groupId);
+                stmt.setString(2, member);
+                stmt.executeUpdate();
+                stmt.close();
+            }
+        } catch (SQLException throwables) {
+            throwables.printStackTrace(System.out);
+        }
+    }
+
+    public boolean isAdmin(String username, int idGroup) {
+        String sql = "SELECT is_admin FROM GROUP_MEMBER WHERE username = ? AND id_group = ?";
+        PreparedStatement stmt = null;
+        try {
+            stmt = conn.prepareStatement(sql);
+            stmt.setString(1, username);
+            stmt.setInt(2, idGroup);
+            ResultSet rs = stmt.executeQuery();
+            if (rs.next()) {
+                int isAdmin = rs.getInt("is_admin");
+                if (isAdmin == 1) {
+                    rs.close();
+                    stmt.close();
+                    return true;
+                }
+            }
+            rs.close();
+            stmt.close();
+        } catch (SQLException throwables) {
+            throwables.printStackTrace(System.out);
+        }
+        return false;
+    }
+
+    public void removeFriendRequest(String loginedUsername, String username) {
+        String sql = "DELETE FROM FRIEND WHERE username1 = ? AND username2 = ?";
+        PreparedStatement stmt = null;
+        try {
+            stmt = conn.prepareStatement(sql);
+            stmt.setString(1, username);
+            stmt.setString(2, loginedUsername);
+            stmt.executeUpdate();
+            stmt.close();
         } catch (SQLException throwables) {
             throwables.printStackTrace(System.out);
         }

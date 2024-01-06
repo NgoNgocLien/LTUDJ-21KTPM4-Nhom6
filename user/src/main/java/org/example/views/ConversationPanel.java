@@ -112,6 +112,7 @@ public class ConversationPanel extends JPanel {
     }
 
     private void buildMoreMenu() {
+        System.out.println("Building more menu constructor");
         searchMessage = new JMenuItem("Search message");
         searchMessage.setFont(Constants.FONT_NORMAL);
         viewMembers = new JMenuItem("View members");
@@ -209,25 +210,31 @@ public class ConversationPanel extends JPanel {
 
         removeMember.addActionListener(e -> {
             if (chatInfo.isGroup()) {
+                if(!DB.isAdmin(DB.getLoginedUsername(), chatInfo.getGroupId())) {
+                    JOptionPane.showMessageDialog(null, "You are not admin of this group, you can't remove others!");
+                    return;
+                }
                 ArrayList<ChatInfo> members = DB.getAllMembersNotAdmin(chatInfo.getGroupId());
                 try {
-                    RemoveMemberFrame RMF = new RemoveMemberFrame(members);
-                    RMF.getRemoveMemberButton().addActionListener(new ActionListener() {
+                    RemoveMemberFrame AMF = new RemoveMemberFrame(members);
+                    AMF.getRemoveMemberButton().addActionListener(new ActionListener() {
                         @Override
                         public void actionPerformed(ActionEvent e) {
-                            ArrayList<String> removeMembers = new ArrayList<>();
-                            ArrayList<JCheckBox> removeMemberBoxes = RMF.getMemberCheckBoxes();
+                            ArrayList<String> addMembers = new ArrayList<>();
+                            ArrayList<JCheckBox> removeMemberBoxes = AMF.getMemberCheckBoxes();
 
                             for (JCheckBox box : removeMemberBoxes) {
                                 if (box.isSelected()) {
-                                    removeMembers.add(box.getActionCommand());
+                                    addMembers.add(box.getActionCommand());
                                 }
                             }
 
                             int dialogResult = JOptionPane.showConfirmDialog(null, "Are you sure you want to remove these members?", "Confirmation", JOptionPane.YES_NO_OPTION);
                             if (dialogResult == JOptionPane.YES_OPTION) {
-//                                DB.removeMember(chatInfo.getGroupId(), username);
-                                rebuildConversationPanel(chatInfo, null);
+                                DB.removeMember(chatInfo.getGroupId(), addMembers);
+                                AMF.dispose();
+                                ArrayList<Message> messages = DB.getGroupMessages(DB.getLoginedUsername(), chatInfo.getGroupId());
+                                rebuildConversationPanel(chatInfo, messages);
                             }
                         }
                     });
@@ -241,6 +248,10 @@ public class ConversationPanel extends JPanel {
 
         addMember.addActionListener(e -> {
             if (chatInfo.isGroup()) {
+                if(!DB.isAdmin(DB.getLoginedUsername(), chatInfo.getGroupId())) {
+                    JOptionPane.showMessageDialog(null, "You are not admin of this group, you can't add others!");
+                    return;
+                }
                 ArrayList<ChatInfo> members = DB.getAllFriendNotMember(DB.getLoginedUsername(), chatInfo.getGroupId());
                 try {
                     AddMemberFrame AMF = new AddMemberFrame(members);
@@ -248,9 +259,9 @@ public class ConversationPanel extends JPanel {
                         @Override
                         public void actionPerformed(ActionEvent e) {
                             ArrayList<String> addMembers = new ArrayList<>();
-                            ArrayList<JCheckBox> addMemberBoxes = AMF.getMemberCheckBoxes();
+                            ArrayList<JCheckBox> removeMemberBoxes = AMF.getMemberCheckBoxes();
 
-                            for (JCheckBox box : addMemberBoxes) {
+                            for (JCheckBox box : removeMemberBoxes) {
                                 if (box.isSelected()) {
                                     addMembers.add(box.getActionCommand());
                                 }
@@ -258,15 +269,15 @@ public class ConversationPanel extends JPanel {
 
                             int dialogResult = JOptionPane.showConfirmDialog(null, "Are you sure you want to add these members?", "Confirmation", JOptionPane.YES_NO_OPTION);
                             if (dialogResult == JOptionPane.YES_OPTION) {
-//                                try {
-//                                    DB.addMember(chatInfo.getGroupId(), addMembers);
-//                                    rebuildConversationPanel(chatInfo, null);
-//                                } catch (SQLException ex) {
-//                                    throw new RuntimeException(ex);
-//                                }
+                                DB.addMember(chatInfo.getGroupId(), addMembers);
+                                AMF.dispose();
+                                ArrayList<Message> messages = DB.getGroupMessages(DB.getLoginedUsername(), chatInfo.getGroupId());
+                                rebuildConversationPanel(chatInfo, messages);
+
                             }
                         }
                     });
+
                 } catch (SQLException ex) {
                     throw new RuntimeException(ex);
                 }
@@ -317,6 +328,7 @@ public class ConversationPanel extends JPanel {
         moreButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
+                System.out.println("More button clicked");
                 Component b = (Component) e.getSource();
 
                 // Get the location of the point 'on the screen'
@@ -423,6 +435,7 @@ public class ConversationPanel extends JPanel {
 
         this.messagesPanel.removeAll();
         if (info.isGroup()) {
+            buildMoreMenu();
             addStartConversationPanel(info.getChatName(), info.getQuantity() + " members", "You are a member of this group. Let start chatting!");
             enableInput();
 
@@ -445,9 +458,10 @@ public class ConversationPanel extends JPanel {
                 }
                 addMessage(message);
             }
-            buildMoreMenu();
+
             lastMessage = messages.get(messages.size() - 1).getSentTime();
         } else {
+            buildMoreMenu();
             String statement;
             if (info.isFriend()) {
                 statement = "You are friend with this user. You can now chat with your friend.";
@@ -479,8 +493,6 @@ public class ConversationPanel extends JPanel {
             } else {
                 lastMessage = LocalDateTime.of(1990, 1, 1, 0, 0, 0);
             }
-
-            buildMoreMenu();
         }
     }
 

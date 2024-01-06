@@ -27,6 +27,7 @@ public class ForgetPwd extends SwingWorker<Void, Void> {
         byte[] buffer = new byte[1024];
 //        inputStream.read(buffer);
         int bytesRead = inputStream.read(buffer);
+        bytesRead = inputStream.read(buffer);
         String response = new String(buffer, 0, bytesRead, StandardCharsets.UTF_8);
         System.out.println(response);
         return response.contains("true");

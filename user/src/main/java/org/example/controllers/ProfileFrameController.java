@@ -12,7 +12,7 @@ import java.sql.SQLException;
 
 public class ProfileFrameController {
     private ProfileFrame PF;
-    private DatabaseHandler DB;
+    private static DatabaseHandler DB;
     private JButton leftButton;
     private JButton rightButton;
 
@@ -81,19 +81,21 @@ public class ProfileFrameController {
     private class acceptButtonListener implements ActionListener {
         @Override
         public void actionPerformed(ActionEvent e) {
-//            try {
-//                DB.acceptFriend(DB.getLoginedUsername(), PF.getProfile().getUsername());
+            try {
+                DB.acceptFriend(DB.getLoginedUsername(), PF.getProfile().getUsername());
                 JOptionPane.showMessageDialog(null, "Friend request accepted successfully!", "Success", JOptionPane.INFORMATION_MESSAGE);
                 PF.dispose();
-//            }catch (SQLException ex) {
-//                throw new RuntimeException(ex);
-//            }
+            }catch (SQLException ex) {
+                throw new RuntimeException(ex);
+            }
         }
     }
-    private static class removeButtonListener implements ActionListener {
+    private class removeButtonListener implements ActionListener {
         @Override
         public void actionPerformed(ActionEvent e) {
-
+            DB.removeFriendRequest(DB.getLoginedUsername(), PF.getProfile().getUsername());
+            JOptionPane.showMessageDialog(null, "Friend request removed successfully!", "Success", JOptionPane.INFORMATION_MESSAGE);
+            PF.dispose();
         }
     }
 

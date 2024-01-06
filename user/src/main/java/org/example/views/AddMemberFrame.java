@@ -28,7 +28,6 @@ public class AddMemberFrame extends JFrame {
 
         Dimension dim = Toolkit.getDefaultToolkit().getScreenSize();
         setLocation(dim.width / 2 - 240, dim.height / 2 - 250);
-        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
         JLabel titleLabel = new JLabel("Add Member");
         titleLabel.setFont(Constants.FONT_TITLE);
