@@ -57,7 +57,7 @@ public class LoginFrameController {
     }
 
     private boolean checkUsername(String username) {
-        String regex = "^[a-z0-9._-]{1,}$";
+        String regex = "^[a-zA-Z0-9._-]{1,}$";
         return username.matches(regex);
     }
 

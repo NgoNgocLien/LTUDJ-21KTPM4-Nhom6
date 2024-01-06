@@ -68,6 +68,9 @@
       <change beforePath="$PROJECT_DIR$/admin/target/classes/org/example/AdminApp$9.class" beforeDir="false" afterPath="$PROJECT_DIR$/admin/target/classes/org/example/AdminApp$9.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/admin/target/classes/org/example/AdminApp.class" beforeDir="false" afterPath="$PROJECT_DIR$/admin/target/classes/org/example/AdminApp.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/admin/target/classes/org/example/AdminApp.java" beforeDir="false" afterPath="$PROJECT_DIR$/admin/target/classes/org/example/AdminApp.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Server/src/main/java/org/example/AdminDatabase.java" beforeDir="false" afterPath="$PROJECT_DIR$/Server/src/main/java/org/example/AdminDatabase.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Server/target/classes/org/example/AdminDatabase$1.class" beforeDir="false" afterPath="$PROJECT_DIR$/Server/target/classes/org/example/AdminDatabase$1.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Server/target/classes/org/example/AdminDatabase.class" beforeDir="false" afterPath="$PROJECT_DIR$/Server/target/classes/org/example/AdminDatabase.class" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -269,6 +272,7 @@
         <item itemvalue="Application.Main Server" />
         <item itemvalue="Application.Main" />
         <item itemvalue="Application.Main User" />
+        <item itemvalue="Application.Main" />
         <item itemvalue="Application.Main User" />
       </list>
     </recent_temporary>
@@ -360,6 +364,7 @@
       <workItem from="1704487760580" duration="5233000" />
       <workItem from="1704524075027" duration="5131000" />
       <workItem from="1704531134165" duration="1820000" />
+      <workItem from="1704523868898" duration="4500000" />
     </task>
     <servers />
   </component>
@@ -396,6 +401,11 @@
           <url>file://$PROJECT_DIR$/user/src/main/java/org/example/controllers/LoginFrameController.java</url>
           <line>64</line>
           <option name="timeStamp" value="6" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/user/src/main/java/org/example/views/ChatListPanel.java</url>
+          <line>120</line>
+          <option name="timeStamp" value="7" />
         </line-breakpoint>
       </breakpoints>
     </breakpoint-manager>

@@ -130,14 +130,6 @@ public class ConversationPanelController {
         new ListenToNewMessage();
         new ListenToOnlineStatus();
     }
-    private class MoreMenuItemActionListener implements ActionListener {
-        @Override
-        public void actionPerformed(ActionEvent e) {
-            if (e.getSource() == moreMenuItems.get(0)) {
-//                if (moreMenuItems.get(0))
-            }
-        }
-    }
 
     private class InputFieldListener implements FocusListener, KeyListener {
         @Override

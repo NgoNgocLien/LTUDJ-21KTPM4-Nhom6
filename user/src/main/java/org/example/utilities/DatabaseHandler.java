@@ -10,13 +10,12 @@ import java.time.LocalDateTime;
 import java.util.ArrayList;
 
 public class DatabaseHandler {
+    public static String loginedUsername;
     private final String JDBC_DRIVER = "com.mysql.cj.jdbc.Driver";
     private final String DB_URL = "jdbc:mysql://localhost:3306/db_chat?allowPublicKeyRetrieval=true&useSSL=false";
     private final String USER = "root";
     private final String PASS = "admin";
     private Connection conn = null;
-
-    public static String loginedUsername;
 
     public DatabaseHandler() {
         try {
@@ -27,7 +26,6 @@ public class DatabaseHandler {
             e.printStackTrace(System.out);
         }
     }
-
 
 
     public void reportSpamMessage(int idMessage) throws SQLException {
@@ -80,6 +78,7 @@ public class DatabaseHandler {
             return false;
         }
     }
+
     public Profile getProfilebyUsername(String username) throws SQLException {
         String sql = "SELECT username, fullname, address, birthdate, gender, email, creation_time, password FROM USER WHERE username = ?";
         PreparedStatement stmt = conn.prepareStatement(sql);
@@ -98,7 +97,6 @@ public class DatabaseHandler {
         }
         return profile;
     }
-
 
 
     public Profile getProfilebyEmail(String email) throws SQLException {
@@ -154,15 +152,14 @@ public class DatabaseHandler {
         ArrayList<ChatInfo> chats = new ArrayList<>();
         while (rs.next()) {
             if (rs.getObject("to_group") != null) {
-                if(rs.getString("sender").equals(myUsername)){
+                if (rs.getString("sender").equals(myUsername)) {
                     sql = "SELECT * FROM GROUP_CHAT WHERE id_group = ?";
                     stmt = conn.prepareStatement(sql);
                     stmt.setInt(1, rs.getInt("to_group"));
                     ResultSet rs2 = stmt.executeQuery();
                     if (rs2.next())
                         chats.add(new ChatInfo(rs2.getString("group_name"), rs.getString("sender"), "You: " + rs.getString("content"), true));
-                }
-                else{
+                } else {
                     sql = "SELECT * FROM GROUP_CHAT WHERE id_group = ?";
                     stmt = conn.prepareStatement(sql);
                     stmt.setInt(1, rs.getInt("to_group"));
@@ -171,15 +168,14 @@ public class DatabaseHandler {
                         chats.add(new ChatInfo(rs2.getString("group_name"), rs.getString("sender"), rs.getString("sender") + ":" + rs.getString("content"), true));
                 }
             } else {
-                if(rs.getString("sender").equals(myUsername)){
+                if (rs.getString("sender").equals(myUsername)) {
                     sql = "SELECT * FROM USER WHERE username = ?";
                     stmt = conn.prepareStatement(sql);
                     stmt.setString(1, rs.getString("to_user"));
                     ResultSet rs2 = stmt.executeQuery();
                     if (rs2.next())
                         chats.add(new ChatInfo(rs2.getString("fullname"), rs.getString("to_user"), "You: " + rs.getString("content"), true));
-                }
-                else{
+                } else {
                     sql = "SELECT * FROM USER WHERE username = ?";
                     stmt = conn.prepareStatement(sql);
                     stmt.setString(1, rs.getString("sender"));
@@ -195,7 +191,7 @@ public class DatabaseHandler {
         return chats;
     }
 
-    public void changeGroupName(int idGroup, String newName){
+    public void changeGroupName(int idGroup, String newName) {
         String sql = "UPDATE GROUP_CHAT SET group_name = ? WHERE id_group = ?";
         PreparedStatement stmt = null;
         try {
@@ -388,6 +384,31 @@ public class DatabaseHandler {
             stmt.close();
             return false;
         }
+    }
+
+    public ArrayList<ChatInfo> viewGroupChatMembers(int id_group) {
+        ArrayList<ChatInfo> members = new ArrayList<>();
+        String sql = "SELECT U.username, U.fullname " +
+                "FROM GROUP_MEMBER M " +
+                "INNER JOIN USER U ON U.username = M.username " +
+                "WHERE M.id_group = ?";
+        PreparedStatement stmt = null;
+        try {
+            stmt = conn.prepareStatement(sql);
+            stmt.setInt(1, id_group);
+            ResultSet rs = stmt.executeQuery();
+            while (rs.next()) {
+                String memberUsername = rs.getString("username");
+                String memberFullname = rs.getString("fullname");
+                members.add(new ChatInfo(memberFullname, memberUsername, memberUsername, false));
+            }
+            rs.close();
+            stmt.close();
+            return members;
+        } catch (SQLException throwables) {
+            throwables.printStackTrace(System.out);
+        }
+        return null;
     }
 
     public ArrayList<Message> searchMessage(ChatInfo info, String keyword) {
@@ -739,6 +760,7 @@ public class DatabaseHandler {
         }
         return messages;
     }
+
     public ArrayList<Message> getGroupMessages(String myUsername, int idGroup) {
 //        SELECT delete_history
 //        FROM GROUP_MEMBER
@@ -907,6 +929,36 @@ public class DatabaseHandler {
             while (rs.next()) {
                 String member = rs.getString("username");
                 members.add(member);
+            }
+            rs.close();
+            stmt.close();
+            return members;
+        } catch (SQLException throwables) {
+            throwables.printStackTrace();
+        }
+        return null;
+    }
+
+    public ArrayList<ChatInfo> getAllMembersNotAdmin(int idGroup) {
+
+//        SELECT M.username, U.fullname
+//        FROM GROUP_MEMBER M
+//        INNER JOIN USER U ON U.username = M.username
+//        WHERE id_group = 2
+        String sql = "SELECT M.username, U.fullname " +
+                "FROM GROUP_MEMBER M " +
+                "INNER JOIN USER U ON U.username = M.username " +
+                "WHERE id_group = ? AND is_admin = 0";
+        PreparedStatement stmt = null;
+        try {
+            stmt = conn.prepareStatement(sql);
+            stmt.setInt(1, idGroup);
+            ResultSet rs = stmt.executeQuery();
+            ArrayList<ChatInfo> members = new ArrayList<>();
+            while (rs.next()) {
+                String username = rs.getString("username");
+                String fullname = rs.getString("fullname");
+                members.add(new ChatInfo(fullname, username, username, false));
             }
             rs.close();
             stmt.close();
@@ -1128,5 +1180,65 @@ public class DatabaseHandler {
             throwables.printStackTrace(System.out);
         }
         return null;
+    }
+
+    public void leaveGroup(String loginedUsername, int groupId) {
+        String sql = "DELETE FROM GROUP_MEMBER WHERE username = ? AND id_group = ?";
+        PreparedStatement stmt = null;
+        try {
+            stmt = conn.prepareStatement(sql);
+            stmt.setString(1, loginedUsername);
+            stmt.setInt(2, groupId);
+            stmt.executeUpdate();
+            stmt.close();
+        } catch (SQLException throwables) {
+            throwables.printStackTrace(System.out);
+        }
+    }
+
+    public void createGroup(String admin, String groupName, ArrayList<String> members) {
+        String sql = "INSERT INTO GROUP_CHAT (group_name, create_time) VALUES (?, ?)";
+        PreparedStatement stmt = null;
+        try {
+            stmt = conn.prepareStatement(sql);
+            stmt.setString(1, groupName);
+            stmt.setTimestamp(2, Timestamp.valueOf(LocalDateTime.now()));
+            stmt.executeUpdate();
+            stmt.close();
+        } catch (SQLException throwables) {
+            throwables.printStackTrace(System.out);
+        }
+
+        String sql2 = "SELECT id_group FROM GROUP_CHAT WHERE group_name = ?";
+        PreparedStatement stmt2 = null;
+        try {
+            stmt2 = conn.prepareStatement(sql2);
+            stmt2.setString(1, groupName);
+            ResultSet rs = stmt2.executeQuery();
+            int idGroup = -1;
+            if (rs.next()) {
+                idGroup = rs.getInt("id_group");
+            }
+            rs.close();
+            stmt2.close();
+
+            String sql3 = "INSERT INTO GROUP_MEMBER (username, id_group, is_admin, delete_history) VALUES (?, ?, ?, ?)";
+            PreparedStatement stmt3 = null;
+            for (String member : members) {
+                stmt3 = conn.prepareStatement(sql3);
+                stmt3.setString(1, member);
+                stmt3.setInt(2, idGroup);
+                if(member.equals(admin)) {
+                    stmt3.setInt(3, 1);
+                } else {
+                    stmt3.setInt(3, 0);
+                }
+                stmt3.setTimestamp(4, Timestamp.valueOf("1990-01-01 00:00:00")); // 1990-01-01 00:00:00
+                stmt3.executeUpdate();
+                stmt3.close();
+            }
+        } catch (SQLException throwables) {
+            throwables.printStackTrace(System.out);
+        }
     }
 }

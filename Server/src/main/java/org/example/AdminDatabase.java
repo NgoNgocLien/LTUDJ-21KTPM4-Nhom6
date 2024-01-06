@@ -544,7 +544,8 @@ public class AdminDatabase {
                 Date birthdate = rs.getDate("birthdate");
                 Boolean gender = rs.getBoolean("gender");
                 String email = rs.getString("email");
-                Date creation_time = rs.getDate("creation_time");
+                Timestamp creation_time = rs.getTimestamp("creation_time");
+
                 Timestamp timestamp = new Timestamp(birthdate.getTime());
                 Timestamp timestamp1 = new Timestamp(creation_time.getTime());
 
@@ -560,7 +561,7 @@ public class AdminDatabase {
 
                 Object[] row = { serialNum, username, fullname, address, format_time, genderString, email, format_time1 };
                 serialNum++;
-                // Add the row to the list
+
                 rows.add(row);
             }
 
@@ -593,12 +594,12 @@ public class AdminDatabase {
                         sql += "WHERE s.is_locked != 2 ";
                         stmt = connection.prepareStatement(sql);
                     }
-                    else if(Objects.equals(text3, "Active")){
+                    else if(Objects.equals(text3, "Online")){
                         sql += "WHERE s.is_locked != 2 AND h.login_time IS NOT NULL AND h.logout_time IS NULL ";
                         stmt = connection.prepareStatement(sql);
                     }
                     else{
-                        sql += "WHERE s.is_locked != 2 AND h.login_time IS NOT NULL AND h.logout_time IS NOT NULL ";
+                        sql += "WHERE s.is_locked != 2 AND NOT EXISTS (SELECT 1 FROM HISTORY_LOGIN h2 WHERE s.username = h2.username AND h2.logout_time IS NULL) ";
                         stmt = connection.prepareStatement(sql);
                     }
                 }
@@ -610,7 +611,7 @@ public class AdminDatabase {
                         stmt = connection.prepareStatement(sql);
                         stmt.setString(1, "%" + text2 + "%");
                     }
-                    else if(Objects.equals(text3, "Active")){
+                    else if(Objects.equals(text3, "Online")){
                         sql += "WHERE s.fullname LIKE ? ";
                         sql += "AND s.is_locked != 2 AND h.login_time IS NOT NULL AND h.logout_time IS NULL ";
 
@@ -619,7 +620,7 @@ public class AdminDatabase {
                     }
                     else{
                         sql += "WHERE s.fullname LIKE ? ";
-                        sql += "AND s.is_locked != 2 AND h.login_time IS NOT NULL AND h.logout_time IS NOT NULL ";
+                        sql += "AND s.is_locked != 2 AND NOT EXISTS (SELECT 1 FROM HISTORY_LOGIN h2 WHERE s.username = h2.username AND h2.logout_time IS NULL) ";
 
                         stmt = connection.prepareStatement(sql);
                         stmt.setString(1, "%" + text2 + "%");
@@ -635,7 +636,7 @@ public class AdminDatabase {
                         stmt = connection.prepareStatement(sql);
                         stmt.setString(1, "%" + text1 + "%");
                     }
-                    else if(Objects.equals(text3, "Active")){
+                    else if(Objects.equals(text3, "Online")){
                         sql += "WHERE s.username LIKE ? ";
                         sql += "AND s.is_locked != 2 AND h.login_time IS NOT NULL AND h.logout_time IS NULL ";
 
@@ -644,7 +645,7 @@ public class AdminDatabase {
                     }
                     else{
                         sql += "WHERE s.username LIKE ? ";
-                        sql += "AND s.is_locked != 2 AND h.login_time IS NOT NULL AND h.logout_time IS NOT NULL ";
+                        sql += "AND s.is_locked != 2 AND NOT EXISTS (SELECT 1 FROM HISTORY_LOGIN h2 WHERE s.username = h2.username AND h2.logout_time IS NULL) ";
 
                         stmt = connection.prepareStatement(sql);
                         stmt.setString(1, "%" + text1 + "%");
@@ -660,7 +661,7 @@ public class AdminDatabase {
                         stmt.setString(1, "%" + text2 + "%");
                         stmt.setString(2, "%" + text1 + "%");
                     }
-                    else if(Objects.equals(text3, "Active")){
+                    else if(Objects.equals(text3, "Online")){
                         sql += "WHERE s.is_locked != 2 AND h.login_time IS NOT NULL AND h.logout_time IS NULL ";
 
                         stmt = connection.prepareStatement(sql);
@@ -668,7 +669,7 @@ public class AdminDatabase {
                         stmt.setString(2, "%" + text1 + "%");
                     }
                     else{
-                        sql += "WHERE s.is_locked != 2 AND h.login_time IS NOT NULL AND h.logout_time IS NOT NULL ";
+                        sql += "WHERE s.is_locked != 2 AND NOT EXISTS (SELECT 1 FROM HISTORY_LOGIN h2 WHERE s.username = h2.username AND h2.logout_time IS NULL) ";
 
                         stmt = connection.prepareStatement(sql);
                         stmt.setString(1, "%" + text2 + "%");
@@ -689,7 +690,7 @@ public class AdminDatabase {
                 Date birthdate = rs.getDate("birthdate");
                 Boolean gender = rs.getBoolean("gender");
                 String email = rs.getString("email");
-                Date creation_time = rs.getDate("creation_time");
+                Timestamp creation_time = rs.getTimestamp("creation_time");
                 Timestamp timestamp = new Timestamp(birthdate.getTime());
                 Timestamp timestamp1 = new Timestamp(creation_time.getTime());
 
@@ -777,7 +778,7 @@ public class AdminDatabase {
                 Date birthdate = rs.getDate("birthdate");
                 Boolean gender = rs.getBoolean("gender");
                 String email = rs.getString("email");
-                Date creation_time = rs.getDate("creation_time");
+                Timestamp creation_time = rs.getTimestamp("creation_time");
                 int is_locked = rs.getInt("is_locked");
                 Timestamp timestamp = new Timestamp(birthdate.getTime());
                 Timestamp timestamp1 = new Timestamp(creation_time.getTime());
@@ -823,8 +824,8 @@ public class AdminDatabase {
 
             int i = 1;
             while(rs.next()){
-                Date login_time = rs.getDate("login_time");
-                Date logout_time = rs.getDate("logout_time");
+                Timestamp login_time = rs.getTimestamp("login_time");
+                Timestamp logout_time = rs.getTimestamp("logout_time");
 
                 Timestamp timestamp = new Timestamp(login_time.getTime());
                 LocalDateTime localDateTime = timestamp.toLocalDateTime();
@@ -838,7 +839,7 @@ public class AdminDatabase {
                     DateTimeFormatter formatter1 = DateTimeFormatter.ofPattern("dd-MM-yyyy HH:mm:ss");
                     format_time1 = localDateTime1.format(formatter1);
                 } else {
-                    format_time1 = "Active";
+                    format_time1 = "---";
                 }
 
                 Object[] row = {i, format_time,  format_time1};
@@ -1122,7 +1123,7 @@ public class AdminDatabase {
                 int id = rs.getInt("h.id");
                 String username = rs.getString("h.username");
                 String fullname = rs.getString("u.fullname");
-                Date login_time = rs.getDate("h.login_time");
+                Timestamp login_time = rs.getTimestamp("h.login_time");
                 Timestamp timestamp = new Timestamp(login_time.getTime());
 
                 LocalDateTime localDateTime = timestamp.toLocalDateTime();
@@ -1152,16 +1153,16 @@ public class AdminDatabase {
     Object[][] getAllUserFriend(){
         try{
             String sql = "WITH DirectFriends AS (SELECT U.username, CASE WHEN U.username = F1.username1 THEN F1.username2 ELSE F1.username1 END AS friend_username " +
-                            "FROM USER U LEFT JOIN FRIEND F1 ON (U.username = F1.username1 OR U.username = F1.username2) AND F1.accepted = 1 WHERE U.is_locked != 2) " +
+                            "FROM USER U INNER JOIN FRIEND F1 ON (U.username = F1.username1 OR U.username = F1.username2) AND F1.accepted = 1 JOIN USER U1 ON U1.username = F1.username1 OR U1.username = F1.username2 WHERE U.is_locked != 2 AND U1.is_locked != 2 AND U.username != U1.username) " +
                             "SELECT U.username, U.fullname, U.creation_time, COUNT(DISTINCT DF.friend_username) AS direct_friends_count, " +
                             "COUNT(DISTINCT FF.friend_of_friend_username) AS friends_of_friends_count FROM USER U LEFT JOIN DirectFriends DF ON U.username = DF.username " +
                             "LEFT JOIN ((SELECT U.username AS user_username, F2.username2 AS friend_of_friend_username FROM USER U " +
                             "LEFT JOIN DirectFriends DF ON U.username = DF.username " +
-                            "LEFT JOIN FRIEND F2 ON DF.friend_username = F2.username1 AND F2.accepted = 1 " +
-                            "WHERE U.is_locked != 2 GROUP BY U.username, F2.username2) " +
+                            "LEFT JOIN FRIEND F2 ON DF.friend_username = F2.username1 AND F2.accepted = 1 JOIN USER U1 ON U1.username = F2.username1 " +
+                            "WHERE U.is_locked != 2 AND U1.is_locked != 2 AND U.username != U1.username GROUP BY U.username, F2.username2) " +
                             "UNION " +
                             "(SELECT U.username AS user_username, F3.username1 AS friend_of_friend_username FROM USER U LEFT JOIN DirectFriends DF ON U.username = DF.username " +
-                            "LEFT JOIN FRIEND F3 ON DF.friend_username = F3.username2 AND F3.accepted = 1 WHERE U.is_locked != 2 GROUP BY U.username, F3.username1) " +
+                            "LEFT JOIN FRIEND F3 ON DF.friend_username = F3.username2 AND F3.accepted = 1 JOIN USER U2 ON U2.username = F3.username2 WHERE U.is_locked != 2 AND U2.is_locked != 2 AND U.username != U2.username GROUP BY U.username, F3.username1) " +
                             ") FF ON U.username = FF.user_username WHERE U.is_locked != 2 GROUP BY U.username, U.fullname, U.creation_time";
             PreparedStatement stmt;
             stmt = connection.prepareStatement(sql);
@@ -1171,7 +1172,7 @@ public class AdminDatabase {
             while(rs.next()){
                 String username = rs.getString("U.username");
                 String fullname = rs.getString("U.fullname");
-                Date registration_time = rs.getDate("U.creation_time");
+                Timestamp registration_time = rs.getTimestamp("U.creation_time");
                 int direct_friend_count = rs.getInt("direct_friends_count");
                 int friends_of_friends_count = rs.getInt("friends_of_friends_count");
                 Timestamp timestamp = new Timestamp(registration_time.getTime());
@@ -1273,7 +1274,7 @@ public class AdminDatabase {
             while(rs.next()){
                 String username = rs.getString("U.username");
                 String fullname = rs.getString("U.fullname");
-                Date registration_time = rs.getDate("U.creation_time");
+                Timestamp registration_time = rs.getTimestamp("U.creation_time");
                 int direct_friend_count = rs.getInt("direct_friends_count");
                 int friends_of_friends_count = rs.getInt("friends_of_friends_count");
                 Timestamp timestamp = new Timestamp(registration_time.getTime());
@@ -1351,11 +1352,10 @@ public class AdminDatabase {
                 //Retrieve by column name
                 String username = rs.getString("username");
                 String fullname = rs.getString("fullname");
-                String address = rs.getString("address");
                 Date birthdate = rs.getDate("birthdate");
                 Boolean gender = rs.getBoolean("gender");
                 String email = rs.getString("email");
-                Date creation_time = rs.getDate("creation_time");
+                Timestamp creation_time = rs.getTimestamp("creation_time");
                 Timestamp timestamp = new Timestamp(birthdate.getTime());
                 Timestamp timestamp1 = new Timestamp(creation_time.getTime());
 
@@ -1369,7 +1369,7 @@ public class AdminDatabase {
 
                 String genderString = gender ? "Female" : "Male";
 
-                Object[] row = { serialNum, username, fullname, address, format_time, genderString, email, format_time1 };
+                Object[] row = { serialNum, username, fullname, format_time, genderString, email, format_time1 };
                 serialNum++;
 
                 rows.add(row);
@@ -1417,6 +1417,56 @@ public class AdminDatabase {
             // Handle errors for JDBC
             se.printStackTrace();
         } catch (Exception e) { // Handle errors for Class.forName
+            e.printStackTrace();
+        }
+        return null;
+    }
+
+    Object[][] getAllNewUser(){
+        try{
+            Statement stmt = connection.createStatement();
+            String sql;
+            sql = "SELECT username, fullname, birthdate, gender, email, creation_time FROM USER WHERE is_locked != 2";
+            ResultSet rs = stmt.executeQuery(sql);
+            List<Object[]> rows = new ArrayList<>();
+            int serialNum = 1;
+
+            while(rs.next()){
+                //Retrieve by column name
+                String username = rs.getString("username");
+                String fullname = rs.getString("fullname");
+                Date birthdate = rs.getDate("birthdate");
+                Boolean gender = rs.getBoolean("gender");
+                String email = rs.getString("email");
+                Timestamp creation_time = rs.getTimestamp("creation_time");
+                Timestamp timestamp = new Timestamp(birthdate.getTime());
+                Timestamp timestamp1 = new Timestamp(creation_time.getTime());
+
+                LocalDateTime localDateTime = timestamp.toLocalDateTime();
+                DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-MM-yyyy");
+                String format_time = localDateTime.format(formatter);
+
+                LocalDateTime localDateTime1 = timestamp1.toLocalDateTime();
+                DateTimeFormatter formatter1 = DateTimeFormatter.ofPattern("dd-MM-yyyy HH:mm:ss");
+                String format_time1 = localDateTime1.format(formatter1);
+
+                String genderString = gender ? "Female" : "Male";
+
+                Object[] row = { serialNum, username, fullname, format_time, genderString, email, format_time1 };
+                serialNum++;
+                rows.add(row);
+            }
+
+            rs.close();
+            stmt.close();
+
+            Object[][] data = new Object[rows.size()][];
+            rows.toArray(data);
+
+            return data;
+        }catch(SQLException se){
+            se.printStackTrace();
+        }catch(Exception e){
             e.printStackTrace();
         }
         return null;
