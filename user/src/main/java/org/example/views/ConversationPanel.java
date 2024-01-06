@@ -210,6 +210,10 @@ public class ConversationPanel extends JPanel {
 
         removeMember.addActionListener(e -> {
             if (chatInfo.isGroup()) {
+                if(!DB.isAdmin(DB.getLoginedUsername(), chatInfo.getGroupId())) {
+                    JOptionPane.showMessageDialog(null, "You are not admin of this group, you can't remove others!");
+                    return;
+                }
                 ArrayList<ChatInfo> members = DB.getAllMembersNotAdmin(chatInfo.getGroupId());
                 try {
                     RemoveMemberFrame RMF = new RemoveMemberFrame(members);
