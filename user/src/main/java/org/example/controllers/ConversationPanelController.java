@@ -130,35 +130,6 @@ public class ConversationPanelController {
         new ListenToNewMessage();
         new ListenToOnlineStatus();
     }
-
-    private class SearchMessageActionListener implements ActionListener {
-        @Override
-        public void actionPerformed(ActionEvent e) {
-            System.out.println("Search message");
-            String keyword = JOptionPane.showInputDialog(MF, "Enter keyword to search");
-            if (keyword == null || keyword.isEmpty()) {
-                return;
-            }
-            if (conversationPanel.getChatInfo().isFriend()) {
-                ArrayList<Message> messages = DB.getFriendMessagesWithKeyWord(myUsername, conversationPanel.getChatInfo().getUsername(), keyword);
-                if (messages == null || messages.size() == 0) {
-                    JOptionPane.showMessageDialog(MF, "No message found");
-                } else {
-                    conversationPanel.rebuildConversationPanel(conversationPanel.getChatInfo(), messages);
-                    conversationPanel.scrollToBottom();
-                }
-            } else if (conversationPanel.getChatInfo().isGroup()) {
-//                ArrayList<Message> messages = DB.getGroupMessagesWithKeyWord(myUsername, conversationPanel.getChatInfo().getGroupId(), keyword);
-//                if (messages == null || messages.size() == 0) {
-//                    JOptionPane.showMessageDialog(MF, "No message found");
-//                } else {
-//                    conversationPanel.setMessages(messages);
-//                    conversationPanel.scrollToBottom();
-//                }
-            }
-        }
-    }
-
     private class MoreMenuItemActionListener implements ActionListener {
         @Override
         public void actionPerformed(ActionEvent e) {

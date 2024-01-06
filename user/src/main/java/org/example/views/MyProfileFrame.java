@@ -179,6 +179,7 @@ public class MyProfileFrame extends JFrame {
         emailField.setMaximumSize(new Dimension(300, 40));
         emailField.setBorder(BorderFactory.createEmptyBorder(5, 0, 5, 0));
         emailField.setText(myProfile.getEmail());
+        emailField.setEditable(false);
 
         JLabel addressLabel = new JLabel("Address");
         addressLabel.setFont(Constants.FONT_SMALL);

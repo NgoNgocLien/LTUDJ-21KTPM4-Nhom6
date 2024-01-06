@@ -32,8 +32,8 @@ public class AdminDatabase {
                 //Retrieve by column name
                 int id_group = rs.getInt("id_group");
                 String group_name = rs.getString("group_name");
-                Date create_time = rs.getTimestamp("create_time");
-                Timestamp timestamp = new Timestamp(create_time.getTime());
+                Timestamp timestamp = rs.getTimestamp("create_time");
+//                Timestamp timestamp = new Timestamp(create_time.getTime());
 
                 LocalDateTime localDateTime = timestamp.toLocalDateTime();
 //                LocalDate localDate = ((java.sql.Date) create_time).toLocalDate();
@@ -157,10 +157,10 @@ public class AdminDatabase {
             while(rs.next()){
                 int id_group = rs.getInt("id_group");
                 String group_name = rs.getString("group_name");
-                Date create_time = rs.getTimestamp("create_time");
-                Timestamp timestamp = new Timestamp(create_time.getTime());
+                Timestamp create_time = rs.getTimestamp("create_time");
+//                Timestamp timestamp = new Timestamp(create_time.getTime());
 
-                LocalDateTime localDateTime = timestamp.toLocalDateTime();
+                LocalDateTime localDateTime = create_time.toLocalDateTime();
 //                LocalDate localDate = ((java.sql.Date) create_time).toLocalDate();
                 DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-MM-yyyy H:m:s");
                 String format_time = localDateTime.format(formatter);
@@ -199,10 +199,10 @@ public class AdminDatabase {
             while(rs.next()){
                 //Retrieve by column name
                 String username = rs.getString("username");
-                Date report_time = rs.getTimestamp("report_time");
-                Timestamp timestamp = new Timestamp(report_time.getTime());
+                Timestamp report_time = rs.getTimestamp("report_time");
+//                Timestamp timestamp = new Timestamp(report_time.getTime());
 
-                LocalDateTime localDateTime = timestamp.toLocalDateTime();
+                LocalDateTime localDateTime = report_time.toLocalDateTime();
                 DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-MM-yyyy HH:mm:ss");
                 String format_time = localDateTime.format(formatter);
 
@@ -271,10 +271,10 @@ public class AdminDatabase {
             while(rs.next()){
                 //Retrieve by column name
                 String username = rs.getString("username");
-                Date report_time = rs.getTimestamp("report_time");
-                Timestamp timestamp = new Timestamp(report_time.getTime());
+                Timestamp report_time = rs.getTimestamp("report_time");
+//                Timestamp timestamp = new Timestamp(report_time.getTime());
 
-                LocalDateTime localDateTime = timestamp.toLocalDateTime();
+                LocalDateTime localDateTime = report_time.toLocalDateTime();
                 DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-MM-yyyy HH:mm:ss");
                 String format_time = localDateTime.format(formatter);
 
@@ -322,10 +322,10 @@ public class AdminDatabase {
             while(rs.next()){
                 //Retrieve by column name
                 String username1 = rs.getString("username");
-                Date report_time = rs.getTimestamp("report_time");
-                Timestamp timestamp = new Timestamp(report_time.getTime());
+                Timestamp report_time = rs.getTimestamp("report_time");
+//                Timestamp timestamp = new Timestamp(report_time.getTime());
 
-                LocalDateTime localDateTime = timestamp.toLocalDateTime();
+                LocalDateTime localDateTime = report_time.toLocalDateTime();
                 DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-MM-yyyy HH:mm:ss");
                 String format_time = localDateTime.format(formatter);
 
@@ -375,10 +375,10 @@ public class AdminDatabase {
                 //Retrieve by column name
                 String username = rs.getString("username");
                 String fullname = rs.getString("fullname");
-                Date create_time = rs.getTimestamp("creation_time");
-                Timestamp timestamp = new Timestamp(create_time.getTime());
+                Timestamp create_time = rs.getTimestamp("creation_time");
+//                Timestamp timestamp = new Timestamp(create_time.getTime());
 
-                LocalDateTime localDateTime = timestamp.toLocalDateTime();
+                LocalDateTime localDateTime = create_time.toLocalDateTime();
 //                LocalDate localDate = ((java.sql.Date) create_time).toLocalDate();
                 DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-MM-yyyy HH:mm:ss");
                 String format_time = localDateTime.format(formatter);
@@ -459,10 +459,10 @@ public class AdminDatabase {
                 //Retrieve by column name
                 String username = rs.getString("username");
                 String fullname = rs.getString("fullname");
-                Date create_time = rs.getTimestamp("creation_time");
-                Timestamp timestamp = new Timestamp(create_time.getTime());
+                Timestamp create_time = rs.getTimestamp("creation_time");
+//                Timestamp timestamp = new Timestamp(create_time.getTime());
 
-                LocalDateTime localDateTime = timestamp.toLocalDateTime();
+                LocalDateTime localDateTime = create_time.toLocalDateTime();
 //                LocalDate localDate = ((java.sql.Date) create_time).toLocalDate();
                 DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-MM-yyyy HH:mm:ss");
                 String format_time = localDateTime.format(formatter);

@@ -23,12 +23,12 @@ public class DatabaseHandler {
             Class.forName(JDBC_DRIVER); // Register JDBC driver
             System.out.println("Connecting to database...");
             conn = DriverManager.getConnection(DB_URL, USER, PASS); // Open a connection
-        } catch (SQLException se) {
-            se.printStackTrace();
         } catch (Exception e) {
-            e.printStackTrace();
+            e.printStackTrace(System.out);
         }
     }
+
+
 
     public void reportSpamMessage(int idMessage) throws SQLException {
         String sql = "SELECT * FROM SPAM WHERE id_message = ?";
@@ -58,11 +58,11 @@ public class DatabaseHandler {
     }
 
     public String getLoginedUsername() {
-        return this.loginedUsername;
+        return loginedUsername;
     }
 
     public void setLoginedUsername(String username) {
-        this.loginedUsername = username;
+        loginedUsername = username;
     }
 
     public boolean checkValidAccountLogin(String username) throws SQLException {
@@ -98,6 +98,8 @@ public class DatabaseHandler {
         }
         return profile;
     }
+
+
 
     public Profile getProfilebyEmail(String email) throws SQLException {
         String sql = "SELECT username, fullname, address, birthdate, gender, email, creation_time, password FROM USER WHERE email = ?";
@@ -191,6 +193,19 @@ public class DatabaseHandler {
         rs.close();
         stmt.close();
         return chats;
+    }
+
+    public void changeGroupName(int idGroup, String newName){
+        String sql = "UPDATE GROUP_CHAT SET group_name = ? WHERE id_group = ?";
+        PreparedStatement stmt = null;
+        try {
+            stmt = conn.prepareStatement(sql);
+            stmt.setString(1, newName);
+            stmt.setInt(2, idGroup);
+            stmt.executeUpdate();
+        } catch (SQLException throwables) {
+            throwables.printStackTrace(System.out);
+        }
     }
 
     public ArrayList<ChatInfo> getAllChats(String myUsername) throws SQLException {
@@ -1048,5 +1063,70 @@ public class DatabaseHandler {
         rs.close();
         stmt.close();
         return friends;
+    }
+
+    public void deleteFriendChat(String myUsername, String friendUsername) throws SQLException {
+        String sql = "UPDATE FRIEND SET user1_deleteChat = ? WHERE (username1 = ? AND username2 = ?)";
+        PreparedStatement stmt = conn.prepareStatement(sql);
+        stmt.setTimestamp(1, Timestamp.valueOf(LocalDateTime.now()));
+        stmt.setString(2, myUsername);
+        stmt.setString(3, friendUsername);
+        int row = stmt.executeUpdate();
+        stmt.close();
+        System.out.println("delete friend chat 1");
+
+        if (row != 1) {
+            String sql2 = "UPDATE FRIEND SET user2_deleteChat = ? WHERE (username1 = ? AND username2 = ?)";
+            PreparedStatement stmt2 = conn.prepareStatement(sql2);
+            stmt2.setTimestamp(1, Timestamp.valueOf(LocalDateTime.now()));
+            stmt2.setString(2, friendUsername);
+            stmt2.setString(3, myUsername);
+            stmt2.executeUpdate();
+            stmt2.close();
+            System.out.println("delete friend chat 2");
+        }
+    }
+
+    public void deleteGroupChat(String myUsername, int idGroup) throws SQLException {
+        String sql = "UPDATE GROUP_MEMBER SET delete_history = ? WHERE (username = ? AND id_group = ?)";
+        PreparedStatement stmt = conn.prepareStatement(sql);
+        stmt.setTimestamp(1, Timestamp.valueOf(LocalDateTime.now()));
+        stmt.setString(2, myUsername);
+        stmt.setInt(3, idGroup);
+        stmt.executeUpdate();
+        stmt.close();
+    }
+
+    public ArrayList<ChatInfo> getAllStrangers() {
+        String sql = "SELECT username, fullname FROM USER WHERE is_locked = 0 AND username NOT IN (SELECT username1 FROM FRIEND WHERE username2 = ?" +
+                "UNION " +
+                "SELECT username2 FROM FRIEND WHERE username1 = ? " +
+                "UNION " +
+                "SELECT block FROM BLOCK WHERE username = ?" +
+                "UNION " +
+                "SELECT username FROM BLOCK WHERE block = ?" +
+                ") AND username != ?";
+        PreparedStatement stmt = null;
+        try {
+            stmt = conn.prepareStatement(sql);
+            stmt.setString(1, loginedUsername);
+            stmt.setString(2, loginedUsername);
+            stmt.setString(3, loginedUsername);
+            stmt.setString(4, loginedUsername);
+            stmt.setString(5, loginedUsername);
+            ResultSet rs = stmt.executeQuery();
+            ArrayList<ChatInfo> users = new ArrayList<>();
+            while (rs.next()) {
+                String username = rs.getString("username");
+                String fullname = rs.getString("fullname");
+                users.add(new ChatInfo(fullname, username, username, false));
+            }
+            rs.close();
+            stmt.close();
+            return users;
+        } catch (SQLException throwables) {
+            throwables.printStackTrace(System.out);
+        }
+        return null;
     }
 }

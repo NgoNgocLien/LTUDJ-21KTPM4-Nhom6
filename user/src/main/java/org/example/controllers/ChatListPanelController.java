@@ -45,13 +45,17 @@ public class ChatListPanelController {
         public void run() {
             while (true) {
                 try {
-                    Thread.sleep(1000);
+                    Thread.sleep(2000);
                     if (searching) {
                         continue;
                     }
                     if (chatListPanel.getTitleLabel().getText().equals("Chats")) {
                         ArrayList<ChatInfo> chats = DB.getAllChats(myUsername);
                         chatListPanel.rebuildChatPanelsScrollPane(chats, 2, false, currentConversation);
+                        renewListener();
+                    } else if (chatListPanel.getTitleLabel().getText().equals("Friends")) {
+                        ArrayList<ChatInfo> friends = DB.getAllFriends(myUsername);
+                        chatListPanel.rebuildChatPanelsScrollPane(friends, 1, false, currentConversation);
                         renewListener();
                     }
                 } catch (InterruptedException e) {
@@ -190,7 +194,7 @@ public class ChatListPanelController {
 //                chatListPanel.rebuildChatPanelsScrollPane(infos, true);
                 return;
             } else if (Objects.equals(chatListPanel.getInputFieldPlaceholder(), "Search for a user")) {
-                ArrayList<ChatInfo> infos = DB.getAllSuggests(myUsername);
+                ArrayList<ChatInfo> infos = DB.getAllStrangers();
                 for(int i = 0; i < infos.size(); i++) {
                     if(!infos.get(i).getUsername().contains(input)) {
                         infos.remove(i);

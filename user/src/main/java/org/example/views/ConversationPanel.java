@@ -32,7 +32,7 @@ public class ConversationPanel extends JPanel {
     private JPopupMenu moreMenu;
     private JButton moreButton;
 
-    private JMenuItem viewMembers, addMember, leaveGroup, viewProfile, deleteChat, searchMessage;
+    private JMenuItem viewMembers, addMember, leaveGroup, viewProfile, deleteChat, searchMessage, changeGroupName;
     private ArrayList<AMessagePanel> messagePanelList;
     private ArrayList<JMenuItem> moreOptions;
     private boolean searching = false;
@@ -115,12 +115,15 @@ public class ConversationPanel extends JPanel {
         searchMessage.setFont(Constants.FONT_NORMAL);
         viewMembers = new JMenuItem("View members");
         viewMembers.setFont(Constants.FONT_NORMAL);
+        changeGroupName = new JMenuItem("Change group name");
+        changeGroupName.setFont(Constants.FONT_NORMAL);
         addMember = new JMenuItem("Add a member");
         addMember.setFont(Constants.FONT_NORMAL);
         deleteChat = new JMenuItem("Delete chat");
         deleteChat.setFont(Constants.FONT_NORMAL);
         leaveGroup = new JMenuItem("Leave group");
         leaveGroup.setFont(Constants.FONT_NORMAL);
+
 
         viewProfile = new JMenuItem("View profile");
         viewProfile.setFont(Constants.FONT_NORMAL);
@@ -152,6 +155,36 @@ public class ConversationPanel extends JPanel {
             }
         });
 
+        deleteChat.addActionListener(e -> {
+            int dialogResult = JOptionPane.showConfirmDialog(null, "Are you sure you want to delete the chat?", "Confirmation", JOptionPane.YES_NO_OPTION);
+            if (dialogResult == JOptionPane.YES_OPTION) {
+                if (chatInfo.isGroup()) {
+                    try {
+                        DB.deleteGroupChat(DB.getLoginedUsername(), chatInfo.getGroupId());
+                        rebuildConversationPanel(chatInfo, null);
+                    } catch (SQLException ex) {
+                        throw new RuntimeException(ex);
+                    }
+                } else if (chatInfo.isFriend()) {
+                    try {
+                        DB.deleteFriendChat(DB.getLoginedUsername(), chatInfo.getUsername());
+                        rebuildConversationPanel(chatInfo, null);
+                    } catch (SQLException ex) {
+                        throw new RuntimeException(ex);
+                    }
+                }
+            }
+        });
+
+        changeGroupName.addActionListener(e -> {
+            String newGroupName = JOptionPane.showInputDialog(null, "Enter new group name");
+            if (newGroupName == null || newGroupName.isEmpty()) {
+                return;
+            }
+            DB.changeGroupName(chatInfo.getGroupId(), newGroupName);
+            rebuildConversationPanel(chatInfo, null);
+        });
+
         if (chatInfo == null) {
             return;
         }
@@ -166,6 +199,7 @@ public class ConversationPanel extends JPanel {
             moreMenu.add(addMember);
             moreMenu.add(deleteChat);
             moreMenu.add(leaveGroup);
+
         } else if (chatInfo.isFriend()) {
             moreMenu.removeAll();
             moreMenu.setBackground(Constants.COLOR_BACKGROUND);
@@ -179,16 +213,6 @@ public class ConversationPanel extends JPanel {
                     ProfileFrameController PFC = new ProfileFrameController(null, PF, DB);
                 } catch (SQLException ex) {
                     throw new RuntimeException(ex);
-                }
-
-            });
-
-            deleteChat.addActionListener(e -> {
-                int dialogResult = JOptionPane.showConfirmDialog(null, "Are you sure you want to delete the chat?", "Confirmation", JOptionPane.YES_NO_OPTION);
-                if (dialogResult == JOptionPane.YES_OPTION) {
-                    System.out.println("Chat deleted!");
-                } else {
-                    System.out.println("Deletion canceled");
                 }
             });
 
@@ -314,6 +338,8 @@ public class ConversationPanel extends JPanel {
             enableInput();
 
             if (messages == null || messages.isEmpty()) {
+                repaint();
+                revalidate();
                 return;
             }
 
@@ -343,9 +369,11 @@ public class ConversationPanel extends JPanel {
             }
             addStartConversationPanel(info.getChatName(), info.getUsername(), statement);
 
-//            if (messages == null || messages.isEmpty()) {
-//                return;
-//            }
+            if (messages == null || messages.isEmpty()) {
+                repaint();
+                revalidate();
+                return;
+            }
 
             if(messages != null && !messages.isEmpty() && messages.get(0) != null) {
                 LocalDateTime lastTime = messages.get(0).getSentTime();

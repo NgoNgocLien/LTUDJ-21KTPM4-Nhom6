@@ -236,6 +236,7 @@ public class AdminApp extends javax.swing.JFrame {
         welcomePanel.add(activeLabel);
 
     }
+
     private void init_userComponent(){
         //user manage
         userMainPanel = new javax.swing.JPanel();
@@ -2383,89 +2384,57 @@ public class AdminApp extends javax.swing.JFrame {
         getContentPane().add(dataMainPanel, java.awt.BorderLayout.CENTER);
     }
 
-
     // thêm style cho table
     private void customStyle(){
-        DefaultTableCellRenderer centerHeaderRenderer = new DefaultTableCellRenderer();
+//        chỉnh header height
+        customTableHeaderHeight(userTable);
+        customTableHeaderHeight(userDetailTable);
+        customTableHeaderHeight(listFriendTable);
+        customTableHeaderHeight(historyLoginTable);
+        customTableHeaderHeight(passRequestTable);
+        customTableHeaderHeight(friendTable);
+        customTableHeaderHeight(loginHistoryTable);
+        customTableHeaderHeight(newUserTable);
 
-        // căn giữa
-        centerHeaderRenderer.setHorizontalAlignment(SwingConstants.CENTER);
+        customTableHeaderHeight(groupTable);
+        customTableHeaderHeight(adminTable);
+        customTableHeaderHeight(memberTable);
+        customTableHeaderHeight(reportTable);
+        customTableHeaderHeight(activeUserTable);
 
-        // chỉnh màu
-        centerHeaderRenderer.setForeground(Color.WHITE);
-        centerHeaderRenderer.setBackground(blue);
 
-        // chỉnh header height
-        Dimension headerPreferredSize;
+        // chỉnh header của những table không có sorting
+        customTableHeader(userDetailTable);
+        customTableHeader(historyLoginTable);
+        customTableHeader(listFriendTable);
+        customTableHeader(passRequestTable);
+        customTableHeader(loginHistoryTable);
 
-        groupTable.getTableHeader().setDefaultRenderer(centerHeaderRenderer);
-        headerPreferredSize = groupTable.getTableHeader().getPreferredSize();
-        headerPreferredSize.height = 30;
-        groupTable.getTableHeader().setPreferredSize(headerPreferredSize);
+        customTableHeader(adminTable);
+        customTableHeader(memberTable);
 
-        adminTable.getTableHeader().setDefaultRenderer(centerHeaderRenderer);
-        headerPreferredSize = adminTable.getTableHeader().getPreferredSize();
-        headerPreferredSize.height = 30;
-        adminTable.getTableHeader().setPreferredSize(headerPreferredSize);
-
-        memberTable.getTableHeader().setDefaultRenderer(centerHeaderRenderer);
-        headerPreferredSize = memberTable.getTableHeader().getPreferredSize();
-        headerPreferredSize.height = 30;
-        memberTable.getTableHeader().setPreferredSize(headerPreferredSize);
-
-        reportTable.getTableHeader().setDefaultRenderer(centerHeaderRenderer);
-        headerPreferredSize = reportTable.getTableHeader().getPreferredSize();
-        headerPreferredSize.height = 30;
-        reportTable.getTableHeader().setPreferredSize(headerPreferredSize);
-
-        activeUserTable.getTableHeader().setDefaultRenderer(centerHeaderRenderer);
-        headerPreferredSize = activeUserTable.getTableHeader().getPreferredSize();
-        headerPreferredSize.height = 30;
-        activeUserTable.getTableHeader().setPreferredSize(headerPreferredSize);
-
-        userTable.getTableHeader().setDefaultRenderer(centerHeaderRenderer);
-        headerPreferredSize = userTable.getTableHeader().getPreferredSize();
-        headerPreferredSize.height = 30;
-        userTable.getTableHeader().setPreferredSize(headerPreferredSize);
-
-        userDetailTable.getTableHeader().setDefaultRenderer(centerHeaderRenderer);
-        headerPreferredSize = userDetailTable.getTableHeader().getPreferredSize();
-        headerPreferredSize.height = 30;
-        userDetailTable.getTableHeader().setPreferredSize(headerPreferredSize);
-
-        listFriendTable.getTableHeader().setDefaultRenderer(centerHeaderRenderer);
-        headerPreferredSize = listFriendTable.getTableHeader().getPreferredSize();
-        headerPreferredSize.height = 30;
-        listFriendTable.getTableHeader().setPreferredSize(headerPreferredSize);
-
-        historyLoginTable.getTableHeader().setDefaultRenderer(centerHeaderRenderer);
-        headerPreferredSize = historyLoginTable.getTableHeader().getPreferredSize();
-        headerPreferredSize.height = 30;
-        historyLoginTable.getTableHeader().setPreferredSize(headerPreferredSize);
-
-        passRequestTable.getTableHeader().setDefaultRenderer(centerHeaderRenderer);
-        headerPreferredSize = passRequestTable.getTableHeader().getPreferredSize();
-        headerPreferredSize.height = 30;
-        passRequestTable.getTableHeader().setPreferredSize(headerPreferredSize);
-
-        friendTable.getTableHeader().setDefaultRenderer(centerHeaderRenderer);
-        headerPreferredSize = friendTable.getTableHeader().getPreferredSize();
-        headerPreferredSize.height = 30;
-        friendTable.getTableHeader().setPreferredSize(headerPreferredSize);
-
-        loginHistoryTable.getTableHeader().setDefaultRenderer(centerHeaderRenderer);
-        headerPreferredSize = loginHistoryTable.getTableHeader().getPreferredSize();
-        headerPreferredSize.height = 30;
-        loginHistoryTable.getTableHeader().setPreferredSize(headerPreferredSize);
-
-        newUserTable.getTableHeader().setDefaultRenderer(centerHeaderRenderer);
-        headerPreferredSize = newUserTable.getTableHeader().getPreferredSize();
-        headerPreferredSize.height = 30;
-        newUserTable.getTableHeader().setPreferredSize(headerPreferredSize);
 
         // chỉnh center row
         DefaultTableCellRenderer centerDataRenderer = new DefaultTableCellRenderer();
         centerDataRenderer.setHorizontalAlignment(SwingConstants.CENTER);
+        userTable.setDefaultRenderer(Object.class, centerDataRenderer);
+        userTable.setDefaultRenderer(Integer.class, centerDataRenderer);
+        userDetailTable.setDefaultRenderer(Object.class, centerDataRenderer);
+        userDetailTable.setDefaultRenderer(Integer.class, centerDataRenderer);
+        historyLoginTable.setDefaultRenderer(Object.class, centerDataRenderer);
+        historyLoginTable.setDefaultRenderer(Integer.class, centerDataRenderer);
+        listFriendTable.setDefaultRenderer(Object.class, centerDataRenderer);
+        listFriendTable.setDefaultRenderer(Integer.class, centerDataRenderer);
+        passRequestTable.setDefaultRenderer(Object.class, centerDataRenderer);
+        passRequestTable.setDefaultRenderer(Integer.class, centerDataRenderer);
+        friendTable.setDefaultRenderer(Object.class, centerDataRenderer);
+        friendTable.setDefaultRenderer(Integer.class, centerDataRenderer);
+
+        loginHistoryTable.setDefaultRenderer(Object.class, centerDataRenderer);
+        loginHistoryTable.setDefaultRenderer(Integer.class, centerDataRenderer);
+        newUserTable.setDefaultRenderer(Object.class, centerDataRenderer);
+        newUserTable.setDefaultRenderer(Integer.class, centerDataRenderer);
+
         groupTable.setDefaultRenderer(Object.class, centerDataRenderer);
         groupTable.setDefaultRenderer(Integer.class, centerDataRenderer);
         adminTable.setDefaultRenderer(Object.class, centerDataRenderer);
@@ -2477,22 +2446,7 @@ public class AdminApp extends javax.swing.JFrame {
         activeUserTable.setDefaultRenderer(Object.class, centerDataRenderer);
         activeUserTable.setDefaultRenderer(Integer.class, centerDataRenderer);
 
-        userTable.setDefaultRenderer(Object.class, centerDataRenderer);
-        userTable.setDefaultRenderer(Integer.class, centerDataRenderer);
-        passRequestTable.setDefaultRenderer(Object.class, centerDataRenderer);
-        passRequestTable.setDefaultRenderer(Integer.class, centerDataRenderer);
-        friendTable.setDefaultRenderer(Object.class, centerDataRenderer);
-        friendTable.setDefaultRenderer(Integer.class, centerDataRenderer);
-
-        newUserTable.setDefaultRenderer(Object.class, centerDataRenderer);
-        newUserTable.setDefaultRenderer(Integer.class, centerDataRenderer);
-
         // chỉnh selection color
-        groupTable.setSelectionForeground(Color.WHITE);
-        groupTable.setSelectionBackground(Color.LIGHT_GRAY);
-        reportTable.setSelectionForeground(Color.WHITE);
-        reportTable.setSelectionBackground(Color.LIGHT_GRAY);
-
         userTable.setSelectionForeground(Color.WHITE);
         userTable.setSelectionBackground(Color.LIGHT_GRAY);
         passRequestTable.setSelectionForeground(Color.WHITE);
@@ -2503,23 +2457,14 @@ public class AdminApp extends javax.swing.JFrame {
         newUserTable.setSelectionForeground(Color.WHITE);
         newUserTable.setSelectionBackground(Color.LIGHT_GRAY);
 
+        groupTable.setSelectionForeground(Color.WHITE);
+        groupTable.setSelectionBackground(Color.LIGHT_GRAY);
+        reportTable.setSelectionForeground(Color.WHITE);
+        reportTable.setSelectionBackground(Color.LIGHT_GRAY);
+
+
+
         // disable selection
-        memberTable.setRowSelectionAllowed(false);
-        memberTable.setColumnSelectionAllowed(false);
-        memberTable.setIntercellSpacing(new Dimension(0, 0));
-
-        adminTable.setRowSelectionAllowed(false);
-        adminTable.setColumnSelectionAllowed(false);
-        adminTable.setIntercellSpacing(new Dimension(0, 0));
-
-        activeUserTable.setRowSelectionAllowed(false);
-        activeUserTable.setColumnSelectionAllowed(false);
-        activeUserTable.setIntercellSpacing(new Dimension(0, 0));
-
-        loginHistoryTable.setRowSelectionAllowed(false);
-        loginHistoryTable.setColumnSelectionAllowed(false);
-        loginHistoryTable.setIntercellSpacing(new Dimension(0, 0));
-
         historyLoginTable.setRowSelectionAllowed(false);
         historyLoginTable.setColumnSelectionAllowed(false);
         historyLoginTable.setIntercellSpacing(new Dimension(0, 0));
@@ -2536,9 +2481,26 @@ public class AdminApp extends javax.swing.JFrame {
         friendTable.setColumnSelectionAllowed(false);
         friendTable.setIntercellSpacing(new Dimension(0, 0));
 
+        loginHistoryTable.setRowSelectionAllowed(false);
+        loginHistoryTable.setColumnSelectionAllowed(false);
+        loginHistoryTable.setIntercellSpacing(new Dimension(0, 0));
+
         newUserTable.setRowSelectionAllowed(false);
         newUserTable.setColumnSelectionAllowed(false);
         newUserTable.setIntercellSpacing(new Dimension(0, 0));
+
+        memberTable.setRowSelectionAllowed(false);
+        memberTable.setColumnSelectionAllowed(false);
+        memberTable.setIntercellSpacing(new Dimension(0, 0));
+
+        adminTable.setRowSelectionAllowed(false);
+        adminTable.setColumnSelectionAllowed(false);
+        adminTable.setIntercellSpacing(new Dimension(0, 0));
+
+        activeUserTable.setRowSelectionAllowed(false);
+        activeUserTable.setColumnSelectionAllowed(false);
+        activeUserTable.setIntercellSpacing(new Dimension(0, 0));
+
 
         //user + login
         customButton(searchUserButton);
@@ -2571,8 +2533,6 @@ public class AdminApp extends javax.swing.JFrame {
         customButton(resetButton3);
 
     }
-
-    // thêm style cho button
     private void customButton(JButton button){
         button.setBackground(blue);
         button.setForeground(Color.WHITE);
@@ -2592,6 +2552,119 @@ public class AdminApp extends javax.swing.JFrame {
                 button.setBackground(blue);
             }
         });
+    }
+    private void customTableSorting(JTable table){
+        DefaultTableCellRenderer headerRenderer = new DefaultTableCellRenderer() {
+            {
+                setHorizontalAlignment(SwingConstants.CENTER);
+                setForeground(Color.WHITE);
+                setBackground(blue);
+            }
+
+            @Override
+            public Component getTableCellRendererComponent(JTable table, Object value, boolean isSelected, boolean hasFocus, int row, int column) {
+                JLabel label = (JLabel) super.getTableCellRendererComponent(table, value, isSelected, hasFocus, row, column);
+
+                // Get the sort keys
+                java.util.List<? extends RowSorter.SortKey> sortKeys = table.getRowSorter().getSortKeys();
+
+                // Check if the current column is being sorted
+                if (sortKeys.size() > 0 && sortKeys.get(0).getColumn() == column) {
+                    // Determine the sort order
+                    SortOrder sortOrder = sortKeys.get(0).getSortOrder();
+
+                    // Set the appropriate sorting arrow
+                    Icon sortingIcon;
+                    if (sortOrder == SortOrder.ASCENDING) {
+                        sortingIcon = new Icon() {
+                            private final int iconWidth = 8;
+                            private final int iconHeight = 8;
+
+                            @Override
+                            public void paintIcon(Component c, Graphics g, int x, int y) {
+                                Graphics2D g2d = (Graphics2D) g.create();
+                                g2d.translate(x, y);
+
+                                // Set the desired color for the sorting arrow
+                                g2d.setColor(Color.WHITE);
+
+                                // Draw the ascending sorting arrow
+                                int[] ascendingXPoints = {0, iconWidth / 2, iconWidth};
+                                int[] ascendingYPoints = {iconHeight, 0, iconHeight};
+                                g2d.fillPolygon(ascendingXPoints, ascendingYPoints, 3);
+
+                                g2d.dispose();
+                            }
+
+                            @Override
+                            public int getIconWidth() {
+                                return iconWidth;
+                            }
+
+                            @Override
+                            public int getIconHeight() {
+                                return iconHeight;
+                            }
+                        };
+                    }
+                    else if (sortOrder == SortOrder.DESCENDING) {
+                        sortingIcon = new Icon() {
+                            private final int iconWidth = 8;
+                            private final int iconHeight = 8;
+
+                            @Override
+                            public void paintIcon(Component c, Graphics g, int x, int y) {
+                                Graphics2D g2d = (Graphics2D) g.create();
+                                g2d.translate(x, y);
+
+                                // Set the desired color for the sorting arrow
+                                g2d.setColor(Color.WHITE);
+
+                                // Draw the descending sorting arrow
+                                int[] descendingXPoints = {0, iconWidth / 2, iconWidth};
+                                int[] descendingYPoints = {0, iconHeight, 0};
+                                g2d.fillPolygon(descendingXPoints, descendingYPoints, 3);
+
+                                g2d.dispose();
+                            }
+
+                            @Override
+                            public int getIconWidth() {
+                                return iconWidth;
+                            }
+
+                            @Override
+                            public int getIconHeight() {
+                                return iconHeight;
+                            }
+                        };
+                    } else {
+                        sortingIcon = null;
+                    }
+
+                    label.setIcon(sortingIcon);
+                } else {
+                    // No sorting arrow for other columns
+                    label.setIcon(null);
+                }
+
+                return label;
+            }
+        };
+
+        table.getTableHeader().setDefaultRenderer(headerRenderer);
+    }
+    private void customTableHeader(JTable table){
+        DefaultTableCellRenderer centerHeaderRenderer = new DefaultTableCellRenderer();
+        centerHeaderRenderer.setHorizontalAlignment(SwingConstants.CENTER);
+        centerHeaderRenderer.setForeground(Color.WHITE);
+        centerHeaderRenderer.setBackground(blue);
+        table.getTableHeader().setDefaultRenderer(centerHeaderRenderer);
+    }
+    private void customTableHeaderHeight(JTable table){
+        Dimension headerPreferredSize = table.getTableHeader().getPreferredSize();
+        headerPreferredSize.height = 30;
+        table.getTableHeader().setPreferredSize(headerPreferredSize);
     }
 
     private void searchButtonActionPerformed(java.awt.event.ActionEvent evt) throws IOException, ClassNotFoundException {
@@ -2665,7 +2738,7 @@ public class AdminApp extends javax.swing.JFrame {
             }
         };
         groupTable.setRowSorter(sorter);
-
+        customTableSorting(groupTable);
 
         welcomePanel.setVisible(false);
         getContentPane().remove(welcomePanel);
@@ -2703,6 +2776,7 @@ public class AdminApp extends javax.swing.JFrame {
         // sort
         TableRowSorter<DefaultTableModel> sorter = new TableRowSorter<>(model);
         userTable.setRowSorter(sorter);
+        customTableSorting(userTable);
 
         Comparator<Integer> integerComparator = Comparator.comparing(Integer::valueOf);
         sorter.setComparator(0, integerComparator);
@@ -2736,10 +2810,8 @@ public class AdminApp extends javax.swing.JFrame {
             }
         };
         userTable.setRowSorter(sorter);
+        customTableSorting(userTable);
 
-        // chỉnh center
-        ((DefaultTableCellRenderer)userTable.getDefaultRenderer(String.class)).setHorizontalAlignment(SwingConstants.CENTER);
-        ((DefaultTableCellRenderer)userTable.getDefaultRenderer(Integer.class)).setHorizontalAlignment(SwingConstants.CENTER);
         userTable.setPreferredScrollableViewportSize(userTable.getPreferredSize());
 
         DefaultTableModel passModel = (DefaultTableModel) passRequestTable.getModel();
@@ -2756,8 +2828,6 @@ public class AdminApp extends javax.swing.JFrame {
             passModel.addRow(row);
         }
 
-        ((DefaultTableCellRenderer)passRequestTable.getDefaultRenderer(String.class)).setHorizontalAlignment(SwingConstants.CENTER);
-        ((DefaultTableCellRenderer)passRequestTable.getDefaultRenderer(Integer.class)).setHorizontalAlignment(SwingConstants.CENTER);
         passRequestTable.setPreferredScrollableViewportSize(passRequestTable.getPreferredSize());
 
         searchFriendFullNameInput.setText("");
@@ -2799,10 +2869,8 @@ public class AdminApp extends javax.swing.JFrame {
             }
         };
         friendTable.setRowSorter(sorter1);
+        customTableSorting(friendTable);
 
-        // chỉnh center
-        ((DefaultTableCellRenderer)friendTable.getDefaultRenderer(String.class)).setHorizontalAlignment(SwingConstants.CENTER);
-        ((DefaultTableCellRenderer)friendTable.getDefaultRenderer(Integer.class)).setHorizontalAlignment(SwingConstants.CENTER);
         friendTable.setPreferredScrollableViewportSize(friendTable.getPreferredSize());
 
         welcomePanel.setVisible(false);
@@ -2829,8 +2897,6 @@ public class AdminApp extends javax.swing.JFrame {
             model.addRow(row);
         }
 
-        ((DefaultTableCellRenderer)loginHistoryTable.getDefaultRenderer(String.class)).setHorizontalAlignment(SwingConstants.CENTER);
-        ((DefaultTableCellRenderer)loginHistoryTable.getDefaultRenderer(Integer.class)).setHorizontalAlignment(SwingConstants.CENTER);
         loginHistoryTable.setPreferredScrollableViewportSize(loginHistoryTable.getPreferredSize());
 
         startDateUserInput.setText("(dd-mm-yyyy)");
@@ -2886,9 +2952,8 @@ public class AdminApp extends javax.swing.JFrame {
             }
         };
         newUserTable.setRowSorter(sorter1);
+        customTableSorting(newUserTable);
 
-        ((DefaultTableCellRenderer)newUserTable.getDefaultRenderer(String.class)).setHorizontalAlignment(SwingConstants.CENTER);
-        ((DefaultTableCellRenderer)newUserTable.getDefaultRenderer(Integer.class)).setHorizontalAlignment(SwingConstants.CENTER);
         newUserTable.setPreferredScrollableViewportSize(newUserTable.getPreferredSize());
 
         int[] years = GetAllUserYear.request(socket);
@@ -2989,9 +3054,8 @@ public class AdminApp extends javax.swing.JFrame {
             }
         };
         activeUserTable.setRowSorter(sorter);
+        customTableSorting(activeUserTable);
 
-        ((DefaultTableCellRenderer)activeUserTable.getDefaultRenderer(String.class)).setHorizontalAlignment(SwingConstants.CENTER);
-        ((DefaultTableCellRenderer)activeUserTable.getDefaultRenderer(Integer.class)).setHorizontalAlignment(SwingConstants.CENTER);
         activeUserTable.setPreferredScrollableViewportSize(activeUserTable.getPreferredSize());
 
         Date date = new Date();
@@ -3055,10 +3119,8 @@ public class AdminApp extends javax.swing.JFrame {
             }
         };
         reportTable.setRowSorter(sorter);
+        customTableSorting(reportTable);
 
-        // chỉnh center
-        ((DefaultTableCellRenderer)reportTable.getDefaultRenderer(String.class)).setHorizontalAlignment(SwingConstants.CENTER);
-        ((DefaultTableCellRenderer)reportTable.getDefaultRenderer(Integer.class)).setHorizontalAlignment(SwingConstants.CENTER);
         groupTable.setPreferredScrollableViewportSize(reportTable.getPreferredSize());
 
         disableUserButton.setVisible(false);
@@ -3085,15 +3147,11 @@ public class AdminApp extends javax.swing.JFrame {
         DefaultTableModel adminModel = (DefaultTableModel) adminTable.getModel();
         adminModel.setRowCount(0);
 
-//        System.out.println("*");
-//        if (socket.isClosed())
-//            System.out.println("Close");
         Object[][] admin = GetAllAdmin.request(Integer.toString(selected_id), socket);
         for (Object[] row : admin) {
             adminModel.addRow(row);
         }
 
-        ((DefaultTableCellRenderer)adminTable.getDefaultRenderer(String.class)).setHorizontalAlignment(SwingConstants.CENTER);
         adminTable.setPreferredScrollableViewportSize(adminTable.getPreferredSize());
 
         DefaultTableModel memberModel = (DefaultTableModel) memberTable.getModel();
@@ -3104,7 +3162,6 @@ public class AdminApp extends javax.swing.JFrame {
             memberModel.addRow(row);
         }
 
-        ((DefaultTableCellRenderer)memberTable.getDefaultRenderer(String.class)).setHorizontalAlignment(SwingConstants.CENTER);
         memberTable.setPreferredScrollableViewportSize(memberTable.getPreferredSize());
     }
 
@@ -3202,7 +3259,6 @@ public class AdminApp extends javax.swing.JFrame {
         headerDetail.setBackground(blue);
         headerDetail.setForeground(Color.WHITE);
 
-        ((DefaultTableCellRenderer)userDetailTable.getDefaultRenderer(String.class)).setHorizontalAlignment(SwingConstants.CENTER);
         userDetailTable.setPreferredScrollableViewportSize(userDetailTable.getPreferredSize());
 
         originalEmail = model.getValueAt(0, 5).toString();
@@ -3219,8 +3275,6 @@ public class AdminApp extends javax.swing.JFrame {
         headerHistory.setBackground(blue);
         headerHistory.setForeground(Color.WHITE);
 
-        ((DefaultTableCellRenderer)historyLoginTable.getDefaultRenderer(String.class)).setHorizontalAlignment(SwingConstants.CENTER);
-        ((DefaultTableCellRenderer)historyLoginTable.getDefaultRenderer(Integer.class)).setHorizontalAlignment(SwingConstants.CENTER);
         historyLoginTable.setPreferredScrollableViewportSize(historyLoginTable.getPreferredSize());
 
         DefaultTableModel friendModel = (DefaultTableModel) listFriendTable.getModel();
@@ -3239,8 +3293,6 @@ public class AdminApp extends javax.swing.JFrame {
         headerFriend.setBackground(blue);
         headerFriend.setForeground(Color.WHITE);
 
-        ((DefaultTableCellRenderer)listFriendTable.getDefaultRenderer(String.class)).setHorizontalAlignment(SwingConstants.CENTER);
-        ((DefaultTableCellRenderer)listFriendTable.getDefaultRenderer(Integer.class)).setHorizontalAlignment(SwingConstants.CENTER);
         listFriendTable.setPreferredScrollableViewportSize(listFriendTable.getPreferredSize());
     }
 
