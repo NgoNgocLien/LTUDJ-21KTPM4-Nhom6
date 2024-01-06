@@ -544,7 +544,8 @@ public class AdminDatabase {
                 Date birthdate = rs.getDate("birthdate");
                 Boolean gender = rs.getBoolean("gender");
                 String email = rs.getString("email");
-                Date creation_time = rs.getDate("creation_time");
+                Timestamp creation_time = rs.getTimestamp("creation_time");
+
                 Timestamp timestamp = new Timestamp(birthdate.getTime());
                 Timestamp timestamp1 = new Timestamp(creation_time.getTime());
 
@@ -560,7 +561,7 @@ public class AdminDatabase {
 
                 Object[] row = { serialNum, username, fullname, address, format_time, genderString, email, format_time1 };
                 serialNum++;
-                // Add the row to the list
+
                 rows.add(row);
             }
 
@@ -689,7 +690,7 @@ public class AdminDatabase {
                 Date birthdate = rs.getDate("birthdate");
                 Boolean gender = rs.getBoolean("gender");
                 String email = rs.getString("email");
-                Date creation_time = rs.getDate("creation_time");
+                Timestamp creation_time = rs.getTimestamp("creation_time");
                 Timestamp timestamp = new Timestamp(birthdate.getTime());
                 Timestamp timestamp1 = new Timestamp(creation_time.getTime());
 
@@ -777,7 +778,7 @@ public class AdminDatabase {
                 Date birthdate = rs.getDate("birthdate");
                 Boolean gender = rs.getBoolean("gender");
                 String email = rs.getString("email");
-                Date creation_time = rs.getDate("creation_time");
+                Timestamp creation_time = rs.getTimestamp("creation_time");
                 int is_locked = rs.getInt("is_locked");
                 Timestamp timestamp = new Timestamp(birthdate.getTime());
                 Timestamp timestamp1 = new Timestamp(creation_time.getTime());
@@ -823,8 +824,8 @@ public class AdminDatabase {
 
             int i = 1;
             while(rs.next()){
-                Date login_time = rs.getDate("login_time");
-                Date logout_time = rs.getDate("logout_time");
+                Timestamp login_time = rs.getTimestamp("login_time");
+                Timestamp logout_time = rs.getTimestamp("logout_time");
 
                 Timestamp timestamp = new Timestamp(login_time.getTime());
                 LocalDateTime localDateTime = timestamp.toLocalDateTime();
@@ -1122,7 +1123,7 @@ public class AdminDatabase {
                 int id = rs.getInt("h.id");
                 String username = rs.getString("h.username");
                 String fullname = rs.getString("u.fullname");
-                Date login_time = rs.getDate("h.login_time");
+                Timestamp login_time = rs.getTimestamp("h.login_time");
                 Timestamp timestamp = new Timestamp(login_time.getTime());
 
                 LocalDateTime localDateTime = timestamp.toLocalDateTime();
@@ -1171,7 +1172,7 @@ public class AdminDatabase {
             while(rs.next()){
                 String username = rs.getString("U.username");
                 String fullname = rs.getString("U.fullname");
-                Date registration_time = rs.getDate("U.creation_time");
+                Timestamp registration_time = rs.getTimestamp("U.creation_time");
                 int direct_friend_count = rs.getInt("direct_friends_count");
                 int friends_of_friends_count = rs.getInt("friends_of_friends_count");
                 Timestamp timestamp = new Timestamp(registration_time.getTime());
@@ -1273,7 +1274,7 @@ public class AdminDatabase {
             while(rs.next()){
                 String username = rs.getString("U.username");
                 String fullname = rs.getString("U.fullname");
-                Date registration_time = rs.getDate("U.creation_time");
+                Timestamp registration_time = rs.getTimestamp("U.creation_time");
                 int direct_friend_count = rs.getInt("direct_friends_count");
                 int friends_of_friends_count = rs.getInt("friends_of_friends_count");
                 Timestamp timestamp = new Timestamp(registration_time.getTime());
@@ -1351,11 +1352,10 @@ public class AdminDatabase {
                 //Retrieve by column name
                 String username = rs.getString("username");
                 String fullname = rs.getString("fullname");
-                String address = rs.getString("address");
                 Date birthdate = rs.getDate("birthdate");
                 Boolean gender = rs.getBoolean("gender");
                 String email = rs.getString("email");
-                Date creation_time = rs.getDate("creation_time");
+                Timestamp creation_time = rs.getTimestamp("creation_time");
                 Timestamp timestamp = new Timestamp(birthdate.getTime());
                 Timestamp timestamp1 = new Timestamp(creation_time.getTime());
 
@@ -1369,7 +1369,7 @@ public class AdminDatabase {
 
                 String genderString = gender ? "Female" : "Male";
 
-                Object[] row = { serialNum, username, fullname, address, format_time, genderString, email, format_time1 };
+                Object[] row = { serialNum, username, fullname, format_time, genderString, email, format_time1 };
                 serialNum++;
 
                 rows.add(row);
@@ -1438,7 +1438,7 @@ public class AdminDatabase {
                 Date birthdate = rs.getDate("birthdate");
                 Boolean gender = rs.getBoolean("gender");
                 String email = rs.getString("email");
-                Date creation_time = rs.getDate("creation_time");
+                Timestamp creation_time = rs.getTimestamp("creation_time");
                 Timestamp timestamp = new Timestamp(birthdate.getTime());
                 Timestamp timestamp1 = new Timestamp(creation_time.getTime());
 
