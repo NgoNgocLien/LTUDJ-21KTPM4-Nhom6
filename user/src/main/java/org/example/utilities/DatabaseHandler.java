@@ -1283,6 +1283,24 @@ public class DatabaseHandler {
         }
     }
 
+    public void addMember(int groupId, ArrayList<String> addMembers) {
+        String sql = "INSERT INTO GROUP_MEMBER (username, id_group, is_admin, delete_history) VALUES (?, ?, ?, ?)";
+        PreparedStatement stmt = null;
+        try {
+            for (String member : addMembers) {
+                stmt = conn.prepareStatement(sql);
+                stmt.setString(1, member);
+                stmt.setInt(2, groupId);
+                stmt.setInt(3, 0);
+                stmt.setTimestamp(4, Timestamp.valueOf("1990-01-01 00:00:00")); // 1990-01-01 00:00:00
+                stmt.executeUpdate();
+                stmt.close();
+            }
+        } catch (SQLException throwables) {
+            throwables.printStackTrace(System.out);
+        }
+    }
+
     public void removeMember(int groupId, ArrayList<String> removeMembers) {
         String sql = "DELETE FROM GROUP_MEMBER WHERE id_group = ? AND username = ?";
         PreparedStatement stmt = null;
