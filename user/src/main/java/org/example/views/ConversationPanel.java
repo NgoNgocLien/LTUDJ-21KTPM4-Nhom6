@@ -195,7 +195,8 @@ public class ConversationPanel extends JPanel {
             }
             JOptionPane.showMessageDialog(null, "Change group name successfully!");
             DB.changeGroupName(chatInfo.getGroupId(), newGroupName);
-            rebuildConversationPanel(chatInfo, null);
+            ArrayList<Message> messages = DB.getGroupMessages(DB.getLoginedUsername(), chatInfo.getGroupId());
+            rebuildConversationPanel(chatInfo, messages);
         });
 
         leaveGroup.addActionListener(e -> {
