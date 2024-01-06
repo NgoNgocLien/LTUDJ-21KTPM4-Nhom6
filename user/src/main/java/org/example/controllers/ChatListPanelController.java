@@ -10,12 +10,14 @@ import org.example.utilities.DatabaseHandler;
 import org.example.utilities.GetFriendMessageWorker;
 import org.example.utilities.GetGroupMessageWorker;
 import org.example.views.ChatListPanel;
+import org.example.views.CreateGroupFrame;
 import org.example.views.MainFrame;
 import org.example.views.ProfileFrame;
 
 import javax.swing.*;
 import java.awt.event.*;
 import java.net.Socket;
+import java.sql.Array;
 import java.sql.SQLException;
 import java.time.LocalDate;
 import java.util.ArrayList;
@@ -103,6 +105,14 @@ public class ChatListPanelController {
         @Override
         public void mouseClicked(MouseEvent e) {
             // open add group frame
+            ArrayList<ChatInfo> friends = null;
+            try {
+                friends = DB.getAllFriends(MFC.getMyUsername());
+                CreateGroupFrame CGF = new CreateGroupFrame(friends);
+                CreateGroupFrameController CGFC = new CreateGroupFrameController(socket, CGF, DB);
+            } catch (SQLException ex) {
+                throw new RuntimeException(ex);
+            }
         }
 
         @Override
