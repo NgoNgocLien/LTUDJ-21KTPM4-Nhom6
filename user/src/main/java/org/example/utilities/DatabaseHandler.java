@@ -27,6 +27,7 @@ public class DatabaseHandler {
         }
     }
 
+
     public void reportSpamMessage(int idMessage) throws SQLException {
         String sql = "SELECT * FROM SPAM WHERE id_message = ?";
         PreparedStatement stmt = conn.prepareStatement(sql);
@@ -385,7 +386,7 @@ public class DatabaseHandler {
         }
     }
 
-    public ArrayList<ChatInfo> viewGroupChatMembers(int id_group){
+    public ArrayList<ChatInfo> viewGroupChatMembers(int id_group) {
         ArrayList<ChatInfo> members = new ArrayList<>();
         String sql = "SELECT U.username, U.fullname " +
                 "FROM GROUP_MEMBER M " +
@@ -1190,6 +1191,52 @@ public class DatabaseHandler {
             stmt.setInt(2, groupId);
             stmt.executeUpdate();
             stmt.close();
+        } catch (SQLException throwables) {
+            throwables.printStackTrace(System.out);
+        }
+    }
+
+    public void createGroup(String admin, String groupName, ArrayList<String> members) {
+        String sql = "INSERT INTO GROUP_CHAT (group_name, create_time) VALUES (?, ?)";
+        PreparedStatement stmt = null;
+        try {
+            stmt = conn.prepareStatement(sql);
+            stmt.setString(1, groupName);
+            stmt.setTimestamp(2, Timestamp.valueOf(LocalDateTime.now()));
+            stmt.executeUpdate();
+            stmt.close();
+        } catch (SQLException throwables) {
+            throwables.printStackTrace(System.out);
+        }
+
+        String sql2 = "SELECT id_group FROM GROUP_CHAT WHERE group_name = ?";
+        PreparedStatement stmt2 = null;
+        try {
+            stmt2 = conn.prepareStatement(sql2);
+            stmt2.setString(1, groupName);
+            ResultSet rs = stmt2.executeQuery();
+            int idGroup = -1;
+            if (rs.next()) {
+                idGroup = rs.getInt("id_group");
+            }
+            rs.close();
+            stmt2.close();
+
+            String sql3 = "INSERT INTO GROUP_MEMBER (username, id_group, is_admin, delete_history) VALUES (?, ?, ?, ?)";
+            PreparedStatement stmt3 = null;
+            for (String member : members) {
+                stmt3 = conn.prepareStatement(sql3);
+                stmt3.setString(1, member);
+                stmt3.setInt(2, idGroup);
+                if(member.equals(admin)) {
+                    stmt3.setInt(3, 1);
+                } else {
+                    stmt3.setInt(3, 0);
+                }
+                stmt3.setTimestamp(4, Timestamp.valueOf("1990-01-01 00:00:00")); // 1990-01-01 00:00:00
+                stmt3.executeUpdate();
+                stmt3.close();
+            }
         } catch (SQLException throwables) {
             throwables.printStackTrace(System.out);
         }
