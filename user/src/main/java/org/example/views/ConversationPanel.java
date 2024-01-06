@@ -239,6 +239,40 @@ public class ConversationPanel extends JPanel {
 
         });
 
+        addMember.addActionListener(e -> {
+            if (chatInfo.isGroup()) {
+                ArrayList<ChatInfo> members = DB.getAllFriendNotMember(DB.getLoginedUsername(), chatInfo.getGroupId());
+                try {
+                    AddMemberFrame AMF = new AddMemberFrame(members);
+                    AMF.getAddMemberButton().addActionListener(new ActionListener() {
+                        @Override
+                        public void actionPerformed(ActionEvent e) {
+                            ArrayList<String> addMembers = new ArrayList<>();
+                            ArrayList<JCheckBox> addMemberBoxes = AMF.getMemberCheckBoxes();
+
+                            for (JCheckBox box : addMemberBoxes) {
+                                if (box.isSelected()) {
+                                    addMembers.add(box.getActionCommand());
+                                }
+                            }
+
+                            int dialogResult = JOptionPane.showConfirmDialog(null, "Are you sure you want to add these members?", "Confirmation", JOptionPane.YES_NO_OPTION);
+                            if (dialogResult == JOptionPane.YES_OPTION) {
+//                                try {
+//                                    DB.addMember(chatInfo.getGroupId(), addMembers);
+//                                    rebuildConversationPanel(chatInfo, null);
+//                                } catch (SQLException ex) {
+//                                    throw new RuntimeException(ex);
+//                                }
+                            }
+                        }
+                    });
+                } catch (SQLException ex) {
+                    throw new RuntimeException(ex);
+                }
+            }
+        });
+
         if (chatInfo == null) {
             return;
         }

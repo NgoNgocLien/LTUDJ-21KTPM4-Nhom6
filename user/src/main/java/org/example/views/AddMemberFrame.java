@@ -9,18 +9,18 @@ import java.awt.*;
 import java.sql.SQLException;
 import java.util.ArrayList;
 
-public class RemoveMemberFrame extends JFrame {
+public class AddMemberFrame extends JFrame {
     private ArrayList<JCheckBox> memberCheckBoxes;
-    private JButton removeMemberButton;
+    private JButton addMemberButton;
 
-    public RemoveMemberFrame(ArrayList<ChatInfo> allFriends) throws SQLException {
+    public AddMemberFrame(ArrayList<ChatInfo> allFriendsNotMember) throws SQLException {
         try {
             UIManager.setLookAndFeel("com.sun.java.swing.plaf.windows.WindowsLookAndFeel");
         } catch (Exception e) {
             System.out.println("Error setting Windows look and feel: " + e);
         }
 
-        setTitle("Remove Member");
+        setTitle("Add Member");
         setSize(480, 500);
         setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
         setVisible(true);
@@ -30,7 +30,7 @@ public class RemoveMemberFrame extends JFrame {
         setLocation(dim.width / 2 - 240, dim.height / 2 - 250);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
-        JLabel titleLabel = new JLabel("Remove Member");
+        JLabel titleLabel = new JLabel("Add Member");
         titleLabel.setFont(Constants.FONT_TITLE);
         titleLabel.setForeground(Constants.COLOR_PRIMARY);
         titleLabel.setAlignmentX(Component.CENTER_ALIGNMENT);
@@ -41,7 +41,7 @@ public class RemoveMemberFrame extends JFrame {
 
         DatabaseHandler DB = new DatabaseHandler();
         memberCheckBoxes = new ArrayList<>();
-        for (ChatInfo chatInfo : allFriends) {
+        for (ChatInfo chatInfo : allFriendsNotMember) {
             JCheckBox checkBox = new JCheckBox(chatInfo.getChatName());
             checkBox.setActionCommand(chatInfo.getUsername());
             checkBox.setFont(Constants.FONT_NORMAL);
@@ -53,15 +53,15 @@ public class RemoveMemberFrame extends JFrame {
             System.out.println(checkBox.getActionCommand());
         }
 
-        removeMemberButton = new JButton("Remove");
-        removeMemberButton.setFont(Constants.FONT_NORMAL);
-        removeMemberButton.setAlignmentX(Component.CENTER_ALIGNMENT);
-        removeMemberButton.setBorder(BorderFactory.createEmptyBorder(5, 0, 5, 0));
-        removeMemberButton.setMaximumSize(new Dimension(100, 40));
+        addMemberButton = new JButton("Add");
+        addMemberButton.setFont(Constants.FONT_NORMAL);
+        addMemberButton.setAlignmentX(Component.CENTER_ALIGNMENT);
+        addMemberButton.setBorder(BorderFactory.createEmptyBorder(5, 0, 5, 0));
+        addMemberButton.setMaximumSize(new Dimension(100, 40));
 
         JScrollPane scrollPane = new JScrollPane(chooseMemberPanel);
         scrollPane.setAlignmentX(Component.CENTER_ALIGNMENT);
-        scrollPane.setPreferredSize(new Dimension(300, 40 * allFriends.size()));
+        scrollPane.setPreferredSize(new Dimension(300, 40 * allFriendsNotMember.size()));
         scrollPane.setMaximumSize(new Dimension(300, 300));
         scrollPane.setBorder(BorderFactory.createEmptyBorder(5, 0, 5, 0));
 
@@ -71,7 +71,7 @@ public class RemoveMemberFrame extends JFrame {
         add(scrollPane);
 
         add(Box.createRigidArea(new Dimension(0, 20)));
-        add(removeMemberButton);
+        add(addMemberButton);
         add(Box.createRigidArea(new Dimension(0, 20)));
 
         setVisible(true);
@@ -81,7 +81,7 @@ public class RemoveMemberFrame extends JFrame {
         return memberCheckBoxes;
     }
 
-    public JButton getRemoveMemberButton() {
-        return removeMemberButton;
+    public JButton getAddMemberButton() {
+        return addMemberButton;
     }
 }
