@@ -194,7 +194,7 @@ public class ChatListPanelController {
 //                chatListPanel.rebuildChatPanelsScrollPane(infos, true);
                 return;
             } else if (Objects.equals(chatListPanel.getInputFieldPlaceholder(), "Search for a user")) {
-                ArrayList<ChatInfo> infos = DB.getAllSuggests(myUsername);
+                ArrayList<ChatInfo> infos = DB.getAllStrangers();
                 for(int i = 0; i < infos.size(); i++) {
                     if(!infos.get(i).getUsername().contains(input)) {
                         infos.remove(i);

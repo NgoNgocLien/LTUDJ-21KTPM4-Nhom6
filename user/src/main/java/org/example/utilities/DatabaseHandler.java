@@ -23,12 +23,12 @@ public class DatabaseHandler {
             Class.forName(JDBC_DRIVER); // Register JDBC driver
             System.out.println("Connecting to database...");
             conn = DriverManager.getConnection(DB_URL, USER, PASS); // Open a connection
-        } catch (SQLException se) {
-            se.printStackTrace();
         } catch (Exception e) {
-            e.printStackTrace();
+            e.printStackTrace(System.out);
         }
     }
+
+
 
     public void reportSpamMessage(int idMessage) throws SQLException {
         String sql = "SELECT * FROM SPAM WHERE id_message = ?";
@@ -58,11 +58,11 @@ public class DatabaseHandler {
     }
 
     public String getLoginedUsername() {
-        return this.loginedUsername;
+        return loginedUsername;
     }
 
     public void setLoginedUsername(String username) {
-        this.loginedUsername = username;
+        loginedUsername = username;
     }
 
     public boolean checkValidAccountLogin(String username) throws SQLException {
@@ -98,6 +98,8 @@ public class DatabaseHandler {
         }
         return profile;
     }
+
+
 
     public Profile getProfilebyEmail(String email) throws SQLException {
         String sql = "SELECT username, fullname, address, birthdate, gender, email, creation_time, password FROM USER WHERE email = ?";
@@ -1080,5 +1082,38 @@ public class DatabaseHandler {
         stmt.setInt(3, idGroup);
         stmt.executeUpdate();
         stmt.close();
+    }
+
+    public ArrayList<ChatInfo> getAllStrangers() {
+        String sql = "SELECT username, fullname FROM USER WHERE is_locked = 0 AND username NOT IN (SELECT username1 FROM FRIEND WHERE username2 = ? AND accepted = 1 " +
+                "UNION " +
+                "SELECT username2 FROM FRIEND WHERE username1 = ? AND accepted = 1 " +
+                "UNION " +
+                "SELECT block FROM BLOCK WHERE username = ?" +
+                "UNION " +
+                "SELECT username FROM BLOCK WHERE block = ?" +
+                ")";
+        PreparedStatement stmt = null;
+        try {
+            stmt = conn.prepareStatement(sql);
+            stmt.setString(1, loginedUsername);
+            stmt.setString(2, loginedUsername);
+            stmt.setString(3, loginedUsername);
+            stmt.setString(4, loginedUsername);
+            ResultSet rs = stmt.executeQuery();
+            ArrayList<ChatInfo> users = new ArrayList<>();
+            while (rs.next()) {
+                String username = rs.getString("username");
+                String fullname = rs.getString("fullname");
+                users.add(new ChatInfo(fullname, username, username, false));
+                System.out.println(username);
+            }
+            rs.close();
+            stmt.close();
+            return users;
+        } catch (SQLException throwables) {
+            throwables.printStackTrace();
+        }
+        return null;
     }
 }
