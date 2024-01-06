@@ -938,6 +938,36 @@ public class DatabaseHandler {
         return null;
     }
 
+    public ArrayList<ChatInfo> getAllMembersNotAdmin(int idGroup) {
+
+//        SELECT M.username, U.fullname
+//        FROM GROUP_MEMBER M
+//        INNER JOIN USER U ON U.username = M.username
+//        WHERE id_group = 2
+        String sql = "SELECT M.username, U.fullname " +
+                "FROM GROUP_MEMBER M " +
+                "INNER JOIN USER U ON U.username = M.username " +
+                "WHERE id_group = ? AND is_admin = 0";
+        PreparedStatement stmt = null;
+        try {
+            stmt = conn.prepareStatement(sql);
+            stmt.setInt(1, idGroup);
+            ResultSet rs = stmt.executeQuery();
+            ArrayList<ChatInfo> members = new ArrayList<>();
+            while (rs.next()) {
+                String username = rs.getString("username");
+                String fullname = rs.getString("fullname");
+                members.add(new ChatInfo(fullname, username, username, false));
+            }
+            rs.close();
+            stmt.close();
+            return members;
+        } catch (SQLException throwables) {
+            throwables.printStackTrace();
+        }
+        return null;
+    }
+
     public void addMyMessage(Message message) {
         String sql = "INSERT INTO MESSAGE (sender, to_user, to_group, content, sent_time, seen_time) " +
                 "VALUES (?, ?, ?, ?, ?, ?)";

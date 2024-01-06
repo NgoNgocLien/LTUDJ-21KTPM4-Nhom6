@@ -13,6 +13,7 @@ import javax.swing.*;
 import javax.swing.border.EmptyBorder;
 import java.awt.*;
 import java.awt.event.*;
+import java.sql.Array;
 import java.sql.SQLException;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
@@ -32,7 +33,7 @@ public class ConversationPanel extends JPanel {
     private JPopupMenu moreMenu;
     private JButton moreButton;
 
-    private JMenuItem viewMembers, addMember, leaveGroup, viewProfile, deleteChat, searchMessage, changeGroupName;
+    private JMenuItem viewMembers, addMember, leaveGroup, viewProfile, deleteChat, searchMessage, changeGroupName, removeMember;
     private ArrayList<AMessagePanel> messagePanelList;
     private ArrayList<JMenuItem> moreOptions;
     private boolean searching = false;
@@ -119,6 +120,8 @@ public class ConversationPanel extends JPanel {
         changeGroupName.setFont(Constants.FONT_NORMAL);
         addMember = new JMenuItem("Add a member");
         addMember.setFont(Constants.FONT_NORMAL);
+        removeMember = new JMenuItem("Remove a member");
+        removeMember.setFont(Constants.FONT_NORMAL);
         deleteChat = new JMenuItem("Delete chat");
         deleteChat.setFont(Constants.FONT_NORMAL);
         leaveGroup = new JMenuItem("Leave group");
@@ -203,18 +206,51 @@ public class ConversationPanel extends JPanel {
             }
         });
 
+        removeMember.addActionListener(e -> {
+            if (chatInfo.isGroup()) {
+                ArrayList<ChatInfo> members = DB.getAllMembersNotAdmin(chatInfo.getGroupId());
+                try {
+                    RemoveMemberFrame RMF = new RemoveMemberFrame(members);
+                    RMF.getRemoveMemberButton().addActionListener(new ActionListener() {
+                        @Override
+                        public void actionPerformed(ActionEvent e) {
+                            ArrayList<String> removeMembers = new ArrayList<>();
+                            ArrayList<JCheckBox> removeMemberBoxes = RMF.getMemberCheckBoxes();
+
+                            for (JCheckBox box : removeMemberBoxes) {
+                                if (box.isSelected()) {
+                                    removeMembers.add(box.getActionCommand());
+                                }
+                            }
+
+                            int dialogResult = JOptionPane.showConfirmDialog(null, "Are you sure you want to remove these members?", "Confirmation", JOptionPane.YES_NO_OPTION);
+                            if (dialogResult == JOptionPane.YES_OPTION) {
+//                                DB.removeMember(chatInfo.getGroupId(), username);
+                                rebuildConversationPanel(chatInfo, null);
+                            }
+                        }
+                    });
+
+                } catch (SQLException ex) {
+                    throw new RuntimeException(ex);
+                }
+            }
+
+        });
+
         if (chatInfo == null) {
             return;
         }
         if (chatInfo.isGroup()) {
             moreMenu.removeAll();
             moreMenu.setBackground(Constants.COLOR_BACKGROUND);
-            moreMenu.setPreferredSize(new Dimension(180, 200));
+            moreMenu.setPreferredSize(new Dimension(240, 280));
 
             // Add JMenuItems to JPopupMenu
             moreMenu.add(searchMessage);
             moreMenu.add(viewMembers);
             moreMenu.add(addMember);
+            moreMenu.add(removeMember);
             moreMenu.add(changeGroupName);
             moreMenu.add(deleteChat);
             moreMenu.add(leaveGroup);
