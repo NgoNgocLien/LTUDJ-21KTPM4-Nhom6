@@ -195,6 +195,19 @@ public class DatabaseHandler {
         return chats;
     }
 
+    public void changeGroupName(int idGroup, String newName){
+        String sql = "UPDATE GROUP_CHAT SET group_name = ? WHERE id_group = ?";
+        PreparedStatement stmt = null;
+        try {
+            stmt = conn.prepareStatement(sql);
+            stmt.setString(1, newName);
+            stmt.setInt(2, idGroup);
+            stmt.executeUpdate();
+        } catch (SQLException throwables) {
+            throwables.printStackTrace(System.out);
+        }
+    }
+
     public ArrayList<ChatInfo> getAllChats(String myUsername) throws SQLException {
         String sql = "WITH Messages AS ( " +
                 "(WITH RankedMessages AS (   " +
@@ -1085,14 +1098,14 @@ public class DatabaseHandler {
     }
 
     public ArrayList<ChatInfo> getAllStrangers() {
-        String sql = "SELECT username, fullname FROM USER WHERE is_locked = 0 AND username NOT IN (SELECT username1 FROM FRIEND WHERE username2 = ? AND accepted = 1 " +
+        String sql = "SELECT username, fullname FROM USER WHERE is_locked = 0 AND username NOT IN (SELECT username1 FROM FRIEND WHERE username2 = ?" +
                 "UNION " +
-                "SELECT username2 FROM FRIEND WHERE username1 = ? AND accepted = 1 " +
+                "SELECT username2 FROM FRIEND WHERE username1 = ? " +
                 "UNION " +
                 "SELECT block FROM BLOCK WHERE username = ?" +
                 "UNION " +
                 "SELECT username FROM BLOCK WHERE block = ?" +
-                ")";
+                ") AND username != ?";
         PreparedStatement stmt = null;
         try {
             stmt = conn.prepareStatement(sql);
@@ -1100,19 +1113,19 @@ public class DatabaseHandler {
             stmt.setString(2, loginedUsername);
             stmt.setString(3, loginedUsername);
             stmt.setString(4, loginedUsername);
+            stmt.setString(5, loginedUsername);
             ResultSet rs = stmt.executeQuery();
             ArrayList<ChatInfo> users = new ArrayList<>();
             while (rs.next()) {
                 String username = rs.getString("username");
                 String fullname = rs.getString("fullname");
                 users.add(new ChatInfo(fullname, username, username, false));
-                System.out.println(username);
             }
             rs.close();
             stmt.close();
             return users;
         } catch (SQLException throwables) {
-            throwables.printStackTrace();
+            throwables.printStackTrace(System.out);
         }
         return null;
     }

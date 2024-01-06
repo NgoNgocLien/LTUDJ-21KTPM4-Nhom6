@@ -32,7 +32,7 @@ public class ConversationPanel extends JPanel {
     private JPopupMenu moreMenu;
     private JButton moreButton;
 
-    private JMenuItem viewMembers, addMember, leaveGroup, viewProfile, deleteChat, searchMessage;
+    private JMenuItem viewMembers, addMember, leaveGroup, viewProfile, deleteChat, searchMessage, changeGroupName;
     private ArrayList<AMessagePanel> messagePanelList;
     private ArrayList<JMenuItem> moreOptions;
     private boolean searching = false;
@@ -115,12 +115,15 @@ public class ConversationPanel extends JPanel {
         searchMessage.setFont(Constants.FONT_NORMAL);
         viewMembers = new JMenuItem("View members");
         viewMembers.setFont(Constants.FONT_NORMAL);
+        changeGroupName = new JMenuItem("Change group name");
+        changeGroupName.setFont(Constants.FONT_NORMAL);
         addMember = new JMenuItem("Add a member");
         addMember.setFont(Constants.FONT_NORMAL);
         deleteChat = new JMenuItem("Delete chat");
         deleteChat.setFont(Constants.FONT_NORMAL);
         leaveGroup = new JMenuItem("Leave group");
         leaveGroup.setFont(Constants.FONT_NORMAL);
+
 
         viewProfile = new JMenuItem("View profile");
         viewProfile.setFont(Constants.FONT_NORMAL);
@@ -172,6 +175,16 @@ public class ConversationPanel extends JPanel {
                 }
             }
         });
+
+        changeGroupName.addActionListener(e -> {
+            String newGroupName = JOptionPane.showInputDialog(null, "Enter new group name");
+            if (newGroupName == null || newGroupName.isEmpty()) {
+                return;
+            }
+            DB.changeGroupName(chatInfo.getGroupId(), newGroupName);
+            rebuildConversationPanel(chatInfo, null);
+        });
+
         if (chatInfo == null) {
             return;
         }
@@ -201,7 +214,6 @@ public class ConversationPanel extends JPanel {
                 } catch (SQLException ex) {
                     throw new RuntimeException(ex);
                 }
-
             });
 
             // Add JMenuItems to JPopupMenu
