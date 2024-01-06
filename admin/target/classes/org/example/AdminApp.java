@@ -8,6 +8,8 @@ import java.awt.event.*;
 import javax.swing.*;
 import java.io.IOException;
 import java.net.Socket;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.*;
 import java.text.*;
 
@@ -973,7 +975,7 @@ public class AdminApp extends javax.swing.JFrame {
         userScrollPanel.setHorizontalScrollBarPolicy(javax.swing.ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
         userScrollPanel.setMaximumSize(new java.awt.Dimension(1440, 32767));
         userScrollPanel.setPreferredSize(new java.awt.Dimension(1440, 4000));
-
+        userScrollPanel.getVerticalScrollBar().setUnitIncrement(3);
         userPanel.setFocusable(false);
         userPanel.setMaximumSize(new java.awt.Dimension(1440, 4000));
         userPanel.setPreferredSize(new java.awt.Dimension(1440, 1800));
@@ -1501,6 +1503,7 @@ public class AdminApp extends javax.swing.JFrame {
         loginHistoryScrollPanel.setHorizontalScrollBarPolicy(javax.swing.ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
         loginHistoryScrollPanel.setMaximumSize(new java.awt.Dimension(1440, 32767));
         loginHistoryScrollPanel.setPreferredSize(new java.awt.Dimension(1440, 4000));
+        loginHistoryScrollPanel.getVerticalScrollBar().setUnitIncrement(3);
 
         loginHistoryPanel.setFocusable(false);
         loginHistoryPanel.setMaximumSize(new java.awt.Dimension(1440, 4000));
@@ -2378,6 +2381,7 @@ public class AdminApp extends javax.swing.JFrame {
         dataPanel.add(activeUserMonthlyMainPanel);
 
         ScrollPanel.setViewportView(dataPanel);
+        ScrollPanel.getVerticalScrollBar().setUnitIncrement(3);
 
         dataMainPanel.add(ScrollPanel, java.awt.BorderLayout.CENTER);
 
@@ -2711,32 +2715,32 @@ public class AdminApp extends javax.swing.JFrame {
 
         // sort
         TableRowSorter<DefaultTableModel> sorter = new TableRowSorter<>(model);
-        groupTable.setRowSorter(sorter);
 
         Comparator<Integer> integerComparator = Comparator.comparing(Integer::valueOf);
         sorter.setComparator(0, integerComparator);
-        sorter.setSortKeys(
-                java.util.Collections.singletonList(
-                        new javax.swing.RowSorter.SortKey(0, SortOrder.ASCENDING)
-                )
-        );
-        sorter.setSortKeys(
-                java.util.Collections.singletonList(
-                        new javax.swing.RowSorter.SortKey(1, SortOrder.ASCENDING)
-                )
-        );
-        sorter.setSortKeys(
-                java.util.Collections.singletonList(
-                        new javax.swing.RowSorter.SortKey(2, SortOrder.ASCENDING)
-                )
-        );
 
-        sorter = new TableRowSorter<DefaultTableModel>(model) {
+        sorter.setComparator(1, new Comparator<String>() {
             @Override
-            public boolean isSortable(int column) {
-                return (column == 0) || (column == 1) || (column == 2) ;
+            public int compare(String o1, String o2) {
+                // Implement your custom comparison logic for column 1 here
+                // For example, you can use String's compareToIgnoreCase method to sort case-insensitively
+                return o1.compareToIgnoreCase(o2);
             }
-        };
+        });
+
+        sorter.setComparator(2, new Comparator<String>()
+        {
+            @Override
+            public int compare(String o1, String o2)
+            {
+                DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-MM-yyyy HH:mm:ss");
+                LocalDateTime ldt1, ldt2;
+                ldt1 = LocalDateTime.parse(o1, formatter);
+                ldt2 = LocalDateTime.parse(o2, formatter);
+                return ldt1.compareTo(ldt2);
+            }
+        });
+
         groupTable.setRowSorter(sorter);
         customTableSorting(groupTable);
 
@@ -2775,40 +2779,42 @@ public class AdminApp extends javax.swing.JFrame {
 
         // sort
         TableRowSorter<DefaultTableModel> sorter = new TableRowSorter<>(model);
-        userTable.setRowSorter(sorter);
         customTableSorting(userTable);
 
         Comparator<Integer> integerComparator = Comparator.comparing(Integer::valueOf);
         sorter.setComparator(0, integerComparator);
 
-        sorter.setSortKeys(
-                java.util.Collections.singletonList(
-                        new javax.swing.RowSorter.SortKey(0, SortOrder.ASCENDING)
-                )
-        );
-        sorter.setSortKeys(
-                java.util.Collections.singletonList(
-                        new javax.swing.RowSorter.SortKey(1, SortOrder.ASCENDING)
-                )
-        );
-        sorter.setSortKeys(
-                java.util.Collections.singletonList(
-                        new javax.swing.RowSorter.SortKey(2, SortOrder.ASCENDING)
-                )
-        );
 
-        sorter.setSortKeys(
-                java.util.Collections.singletonList(
-                        new javax.swing.RowSorter.SortKey(7, SortOrder.ASCENDING)
-                )
-        );
-
-        sorter = new TableRowSorter<DefaultTableModel>(model) {
+        sorter.setComparator(1, new Comparator<String>() {
             @Override
-            public boolean isSortable(int column) {
-                return (column == 0) || (column == 1) || (column == 2) || (column == 7);
+            public int compare(String o1, String o2) {
+                // Implement your custom comparison logic for column 1 here
+                // For example, you can use String's compareToIgnoreCase method to sort case-insensitively
+                return o1.compareToIgnoreCase(o2);
             }
-        };
+        });
+        sorter.setComparator(2, new Comparator<String>() {
+            @Override
+            public int compare(String o1, String o2) {
+                // Implement your custom comparison logic for column 1 here
+                // For example, you can use String's compareToIgnoreCase method to sort case-insensitively
+                return o1.compareToIgnoreCase(o2);
+            }
+        });
+
+        sorter.setComparator(7, new Comparator<String>()
+        {
+            @Override
+            public int compare(String o1, String o2)
+            {
+                DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-MM-yyyy HH:mm:ss");
+                LocalDateTime ldt1, ldt2;
+                ldt1 = LocalDateTime.parse(o1, formatter);
+                ldt2 = LocalDateTime.parse(o2, formatter);
+                return ldt1.compareTo(ldt2);
+            }
+        });
+
         userTable.setRowSorter(sorter);
         customTableSorting(userTable);
 
@@ -2849,25 +2855,29 @@ public class AdminApp extends javax.swing.JFrame {
 
         // sort
         TableRowSorter<DefaultTableModel> sorter1 = new TableRowSorter<>(model1);
-        friendTable.setRowSorter(sorter1);
+//        friendTable.setRowSorter(sorter1);
 
-        sorter1.setSortKeys(
-                java.util.Collections.singletonList(
-                        new javax.swing.RowSorter.SortKey(2, SortOrder.ASCENDING)
-                )
-        );
-        sorter1.setSortKeys(
-                java.util.Collections.singletonList(
-                        new javax.swing.RowSorter.SortKey(3, SortOrder.ASCENDING)
-                )
-        );
-
-        sorter1 = new TableRowSorter<DefaultTableModel>(model1) {
+        sorter.setComparator(2, new Comparator<String>() {
             @Override
-            public boolean isSortable(int column) {
-                return (column == 2) || (column == 3);
+            public int compare(String o1, String o2) {
+                // Implement your custom comparison logic for column 1 here
+                // For example, you can use String's compareToIgnoreCase method to sort case-insensitively
+                return o1.compareToIgnoreCase(o2);
             }
-        };
+        });
+        sorter1.setComparator(3, new Comparator<String>()
+        {
+            @Override
+            public int compare(String o1, String o2)
+            {
+                DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-MM-yyyy HH:mm:ss");
+                LocalDateTime ldt1, ldt2;
+                ldt1 = LocalDateTime.parse(o1, formatter);
+                ldt2 = LocalDateTime.parse(o2, formatter);
+                return ldt1.compareTo(ldt2);
+            }
+        });
+
         friendTable.setRowSorter(sorter1);
         customTableSorting(friendTable);
 
@@ -2922,35 +2932,33 @@ public class AdminApp extends javax.swing.JFrame {
 
         // sort
         TableRowSorter<DefaultTableModel> sorter1 = new TableRowSorter<>(model1);
-        newUserTable.setRowSorter(sorter1);
+//        newUserTable.setRowSorter(sorter1);
 
         Comparator<Integer> integerComparator = Comparator.comparing(Integer::valueOf);
         sorter1.setComparator(0, integerComparator);
 
-        sorter1.setSortKeys(
-                java.util.Collections.singletonList(
-                        new javax.swing.RowSorter.SortKey(0, SortOrder.ASCENDING)
-                )
-        );
-
-        sorter1.setSortKeys(
-                java.util.Collections.singletonList(
-                        new javax.swing.RowSorter.SortKey(2, SortOrder.ASCENDING)
-                )
-        );
-
-        sorter1.setSortKeys(
-                java.util.Collections.singletonList(
-                        new javax.swing.RowSorter.SortKey(7, SortOrder.ASCENDING)
-                )
-        );
-
-        sorter1 = new TableRowSorter<DefaultTableModel>(model1) {
+        sorter1.setComparator(2, new Comparator<String>() {
             @Override
-            public boolean isSortable(int column) {
-                return (column == 0) || (column == 2) || (column == 7);
+            public int compare(String o1, String o2) {
+                // Implement your custom comparison logic for column 1 here
+                // For example, you can use String's compareToIgnoreCase method to sort case-insensitively
+                return o1.compareToIgnoreCase(o2);
             }
-        };
+        });
+
+        sorter1.setComparator(7, new Comparator<String>()
+        {
+            @Override
+            public int compare(String o1, String o2)
+            {
+                DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-MM-yyyy HH:mm:ss");
+                LocalDateTime ldt1, ldt2;
+                ldt1 = LocalDateTime.parse(o1, formatter);
+                ldt2 = LocalDateTime.parse(o2, formatter);
+                return ldt1.compareTo(ldt2);
+            }
+        });
+
         newUserTable.setRowSorter(sorter1);
         customTableSorting(newUserTable);
 
@@ -3027,32 +3035,31 @@ public class AdminApp extends javax.swing.JFrame {
 
         // sort
         TableRowSorter<DefaultTableModel> sorter = new TableRowSorter<>(model);
-        activeUserTable.setRowSorter(sorter);
 
         Comparator<Integer> integerComparator = Comparator.comparing(Integer::valueOf);
         sorter.setComparator(0, integerComparator);
-        sorter.setSortKeys(
-                java.util.Collections.singletonList(
-                        new javax.swing.RowSorter.SortKey(0, SortOrder.ASCENDING)
-                )
-        );
-        sorter.setSortKeys(
-                java.util.Collections.singletonList(
-                        new javax.swing.RowSorter.SortKey(2, SortOrder.ASCENDING)
-                )
-        );
-        sorter.setSortKeys(
-                java.util.Collections.singletonList(
-                        new javax.swing.RowSorter.SortKey(3, SortOrder.ASCENDING)
-                )
-        );
 
-        sorter = new TableRowSorter<DefaultTableModel>(model) {
+        sorter.setComparator(2, new Comparator<String>() {
             @Override
-            public boolean isSortable(int column) {
-                return (column == 0) || (column == 3) || (column == 2) ;
+            public int compare(String o1, String o2) {
+                // Implement your custom comparison logic for column 1 here
+                // For example, you can use String's compareToIgnoreCase method to sort case-insensitively
+                return o1.compareToIgnoreCase(o2);
             }
-        };
+        });
+        sorter.setComparator(3, new Comparator<String>()
+        {
+            @Override
+            public int compare(String o1, String o2)
+            {
+                DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-MM-yyyy HH:mm:ss");
+                LocalDateTime ldt1, ldt2;
+                ldt1 = LocalDateTime.parse(o1, formatter);
+                ldt2 = LocalDateTime.parse(o2, formatter);
+                return ldt1.compareTo(ldt2);
+            }
+        });
+
         activeUserTable.setRowSorter(sorter);
         customTableSorting(activeUserTable);
 
@@ -3092,32 +3099,31 @@ public class AdminApp extends javax.swing.JFrame {
 
         // sort
         TableRowSorter<DefaultTableModel> sorter = new TableRowSorter<>(model);
-        reportTable.setRowSorter(sorter);
 
         Comparator<Integer> integerComparator = Comparator.comparing(Integer::valueOf);
         sorter.setComparator(0, integerComparator);
-        sorter.setSortKeys(
-                java.util.Collections.singletonList(
-                        new javax.swing.RowSorter.SortKey(0, SortOrder.ASCENDING)
-                )
-        );
-        sorter.setSortKeys(
-                java.util.Collections.singletonList(
-                        new javax.swing.RowSorter.SortKey(1, SortOrder.ASCENDING)
-                )
-        );
-        sorter.setSortKeys(
-                java.util.Collections.singletonList(
-                        new javax.swing.RowSorter.SortKey(2, SortOrder.ASCENDING)
-                )
-        );
-
-        sorter = new TableRowSorter<DefaultTableModel>(model) {
+        sorter.setComparator(1, new Comparator<String>() {
             @Override
-            public boolean isSortable(int column) {
-                return (column == 0) || (column == 1) || (column == 2) ;
+            public int compare(String o1, String o2) {
+                // Implement your custom comparison logic for column 1 here
+                // For example, you can use String's compareToIgnoreCase method to sort case-insensitively
+                return o1.compareToIgnoreCase(o2);
             }
-        };
+        });
+
+        sorter.setComparator(2, new Comparator<String>()
+        {
+            @Override
+            public int compare(String o1, String o2)
+            {
+                DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-MM-yyyy HH:mm:ss");
+                LocalDateTime ldt1, ldt2;
+                ldt1 = LocalDateTime.parse(o1, formatter);
+                ldt2 = LocalDateTime.parse(o2, formatter);
+                return ldt1.compareTo(ldt2);
+            }
+        });
+
         reportTable.setRowSorter(sorter);
         customTableSorting(reportTable);
 
