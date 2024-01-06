@@ -125,11 +125,9 @@ public class ForgotPasswordFrameController {
                     FPF.dispose();
                     LoginFrame LF = new LoginFrame();
                     LoginFrameController LFC = new LoginFrameController(socket, LF, DB);
-                }
-                else{
+                } else{
                     new ErrorMessage(FPF, "Wrong username or email");
                 }
-
             } catch (IOException | ClassNotFoundException ex) {
                 throw new RuntimeException(ex);
             }

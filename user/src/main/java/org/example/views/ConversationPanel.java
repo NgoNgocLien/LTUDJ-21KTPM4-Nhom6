@@ -13,6 +13,7 @@ import javax.swing.*;
 import javax.swing.border.EmptyBorder;
 import java.awt.*;
 import java.awt.event.*;
+import java.sql.Array;
 import java.sql.SQLException;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
@@ -32,7 +33,7 @@ public class ConversationPanel extends JPanel {
     private JPopupMenu moreMenu;
     private JButton moreButton;
 
-    private JMenuItem viewMembers, addMember, leaveGroup, viewProfile, deleteChat, searchMessage, changeGroupName;
+    private JMenuItem viewMembers, addMember, leaveGroup, viewProfile, deleteChat, searchMessage, changeGroupName, removeMember;
     private ArrayList<AMessagePanel> messagePanelList;
     private ArrayList<JMenuItem> moreOptions;
     private boolean searching = false;
@@ -119,6 +120,8 @@ public class ConversationPanel extends JPanel {
         changeGroupName.setFont(Constants.FONT_NORMAL);
         addMember = new JMenuItem("Add a member");
         addMember.setFont(Constants.FONT_NORMAL);
+        removeMember = new JMenuItem("Remove a member");
+        removeMember.setFont(Constants.FONT_NORMAL);
         deleteChat = new JMenuItem("Delete chat");
         deleteChat.setFont(Constants.FONT_NORMAL);
         leaveGroup = new JMenuItem("Leave group");
@@ -176,13 +179,63 @@ public class ConversationPanel extends JPanel {
             }
         });
 
+        viewMembers.addActionListener(e -> {
+            ArrayList<ChatInfo> members = DB.viewGroupChatMembers(chatInfo.getGroupId());
+            StringBuilder memberList = new StringBuilder();
+            for (ChatInfo member : members) {
+                memberList.append(member.getUsername()).append("\n");
+            }
+            JOptionPane.showMessageDialog(null, memberList.toString(), "Members", JOptionPane.INFORMATION_MESSAGE);
+        });
+
         changeGroupName.addActionListener(e -> {
             String newGroupName = JOptionPane.showInputDialog(null, "Enter new group name");
             if (newGroupName == null || newGroupName.isEmpty()) {
                 return;
             }
+            JOptionPane.showMessageDialog(null, "Change group name successfully!");
             DB.changeGroupName(chatInfo.getGroupId(), newGroupName);
             rebuildConversationPanel(chatInfo, null);
+        });
+
+        leaveGroup.addActionListener(e -> {
+            int dialogResult = JOptionPane.showConfirmDialog(null, "Are you sure you want to leave the group?", "Confirmation", JOptionPane.YES_NO_OPTION);
+            if (dialogResult == JOptionPane.YES_OPTION) {
+                DB.leaveGroup(DB.getLoginedUsername(), chatInfo.getGroupId());
+                rebuildConversationPanel(chatInfo, null);
+            }
+        });
+
+        removeMember.addActionListener(e -> {
+            if (chatInfo.isGroup()) {
+                ArrayList<ChatInfo> members = DB.getAllMembersNotAdmin(chatInfo.getGroupId());
+                try {
+                    RemoveMemberFrame RMF = new RemoveMemberFrame(members);
+                    RMF.getRemoveMemberButton().addActionListener(new ActionListener() {
+                        @Override
+                        public void actionPerformed(ActionEvent e) {
+                            ArrayList<String> removeMembers = new ArrayList<>();
+                            ArrayList<JCheckBox> removeMemberBoxes = RMF.getMemberCheckBoxes();
+
+                            for (JCheckBox box : removeMemberBoxes) {
+                                if (box.isSelected()) {
+                                    removeMembers.add(box.getActionCommand());
+                                }
+                            }
+
+                            int dialogResult = JOptionPane.showConfirmDialog(null, "Are you sure you want to remove these members?", "Confirmation", JOptionPane.YES_NO_OPTION);
+                            if (dialogResult == JOptionPane.YES_OPTION) {
+//                                DB.removeMember(chatInfo.getGroupId(), username);
+                                rebuildConversationPanel(chatInfo, null);
+                            }
+                        }
+                    });
+
+                } catch (SQLException ex) {
+                    throw new RuntimeException(ex);
+                }
+            }
+
         });
 
         if (chatInfo == null) {
@@ -191,12 +244,14 @@ public class ConversationPanel extends JPanel {
         if (chatInfo.isGroup()) {
             moreMenu.removeAll();
             moreMenu.setBackground(Constants.COLOR_BACKGROUND);
-            moreMenu.setPreferredSize(new Dimension(180, 200));
+            moreMenu.setPreferredSize(new Dimension(240, 280));
 
             // Add JMenuItems to JPopupMenu
             moreMenu.add(searchMessage);
             moreMenu.add(viewMembers);
             moreMenu.add(addMember);
+            moreMenu.add(removeMember);
+            moreMenu.add(changeGroupName);
             moreMenu.add(deleteChat);
             moreMenu.add(leaveGroup);
 
@@ -223,7 +278,6 @@ public class ConversationPanel extends JPanel {
         }
 
 //         Create an ActionListener
-
 
         moreButton.addActionListener(new ActionListener() {
             @Override

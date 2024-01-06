@@ -153,65 +153,6 @@ public class UserDatabase {
         return null;
     }
 
-//    public ArrayList<Message> getGroupMessages(String myUsername, int idGroup) {
-////        SELECT delete_history
-////        FROM GROUP_MEMBER
-////        WHERE username = 'hlong' and id_group = 5;
-//        ArrayList<Message> messages = new ArrayList<>();
-//        String tempSql = "SELECT delete_history " +
-//                "FROM GROUP_MEMBER " +
-//                "WHERE username = ? and id_group = ?";
-//        PreparedStatement tempStmt = null;
-//        try {
-//            tempStmt = conn.prepareStatement(tempSql);
-//            tempStmt.setString(1, myUsername);
-//            tempStmt.setInt(2, idGroup);
-//            ResultSet tempRs = tempStmt.executeQuery();
-//            if (tempRs.next()) {
-//                Timestamp deleteHistory = tempRs.getTimestamp("delete_history");
-//                tempRs.close();
-//                tempStmt.close();
-//                if (deleteHistory != null) {
-//                    String sql = "WITH GroupMessage AS ( " +
-//                            "SELECT M.sender, M.sent_time, M.content, M.id_message, " +
-//                            "ROW_NUMBER() OVER (PARTITION BY M.sent_time) AS rnk " +
-//                            "FROM MESSAGE M " +
-//                            "WHERE M.to_group = ?) " +
-//                            "SELECT sender, sent_time, content, id_message " +
-//                            "FROM GroupMessage " +
-//                            "WHERE rnk = 1 AND (sent_time > ?)";
-//                    PreparedStatement stmt = null;
-//                    try {
-//                        stmt = conn.prepareStatement(sql);
-//                        stmt.setInt(1, idGroup);
-//                        stmt.setTimestamp(2, deleteHistory);
-//                        ResultSet rs = stmt.executeQuery();
-//                        while (rs.next()) {
-//                            int id;
-//                            String sender, content;
-//                            Timestamp sent_time;
-//
-//                            id = rs.getInt("id_message");
-//                            sender = rs.getString("sender");
-//                            content = rs.getString("content");
-//                            sent_time = rs.getTimestamp("sent_time");
-//
-//                            messages.add(new Message(id, sender, "", idGroup, content, sent_time.toLocalDateTime(), sender.equals(myUsername)));
-//                        }
-//                        rs.close();
-//                        stmt.close();
-//                        return messages;
-//                    } catch (SQLException throwables) {
-//                        throwables.printStackTrace();
-//                    }
-//                }
-//            }
-//        } catch (SQLException throwables) {
-//            throwables.printStackTrace();
-//        }
-//        return messages;
-//    }
-
     Object[][] getGroupMessages(String myUsername, int idGroup, String lastMessage) {
 //        SELECT M.id_message, M.sender, M.to_user, M.content, M.sent_time
 //        FROM MESSAGE M

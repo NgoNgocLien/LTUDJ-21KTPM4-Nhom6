@@ -29,7 +29,7 @@ public class ForgetPwd extends SwingWorker<Void, Void> {
         int bytesRead = inputStream.read(buffer);
         String response = new String(buffer, 0, bytesRead, StandardCharsets.UTF_8);
         System.out.println(response);
-        return response.equals("true");
+        return response.contains("true");
     }
 
     @Override
